@@ -14,7 +14,7 @@
 	<c:forEach var="events" items="${eventlist}" begin="0" varStatus="loop"> 
 	<center>
 	<h3>Event ${loop.index+1}</h3>
-	<h4>Title : <i>${events.title} </i>   By: <i> ${events.creatorid }</i></h4> 
+	<h4>Title : <i>${events.title} </i>   By: <i> ${events.userModel.uname }</i></h4> 
 	<p> <b>Description:</b>  ${events.description} </p> 
 	<b>Last Date:</b> <span id="lastdate${loop.index}"></span><br><br>
 	<b> Pending : </b> <span id="pending${loop.index}"></span>
@@ -22,10 +22,12 @@
 	
 	
 	<script>
-		document.getElementById('lastdate${loop.index}').innerHTML=new Date(${events.enddate});
+		var endDate=${events.enddate};
+		document.getElementById('lastdate${loop.index}').innerHTML=new Date(endDate);
 		if("${events.pending}"== "false")
-			{document.getElementById('pending${loop.index}').innerHTML="YES";
-			}
+		{
+			document.getElementById('pending${loop.index}').innerHTML="YES";
+		}
 		else
 			document.getElementById('pending${loop.index}').innerHTML="NO";
 	</script>

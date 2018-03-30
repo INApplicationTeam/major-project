@@ -6,7 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import model.UserModel;
 
 @Entity
 @Table(name="event")
@@ -32,8 +36,9 @@ public class Events {
 	@Column(name="pending")
 	private Boolean pending;
 	
-	@Column(name="creatorid")
-	private String creatorid;
+	@OneToOne
+	@JoinColumn(name="creatorid")
+	private UserModel userModel;
 
 	
 	
@@ -85,19 +90,18 @@ public class Events {
 		this.enddate = enddate;
 	}
 	
-
-	public String getCreatorid() {
-		return creatorid;
+	public UserModel getUserModel() {
+		return userModel;
 	}
 
-	public void setCreatorid(String creatorid) {
-		this.creatorid = creatorid;
+	public void setUserModel(UserModel userModel) {
+		this.userModel = userModel;
 	}
 
 	@Override
 	public String toString() {
 		return "Events [eid=" + eid + ", title=" + title + ", description=" + description + ", startdate=" + startdate
-				+ ", enddate=" + enddate + ", pending=" + pending + ", creatorid=" + creatorid + "]";
+				+ ", enddate=" + enddate + ", pending=" + pending + ", creator=" + userModel + "]";
 	}
 
 	

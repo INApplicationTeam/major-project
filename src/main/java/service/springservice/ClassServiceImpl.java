@@ -129,6 +129,12 @@ public class ClassServiceImpl implements ClassService {
 	public void postCommentReply(ClassDiscussionReply reply) {
 		classdao.postCommentReply(reply);
 	}
+
+	@Override
+	@Transactional
+	public List<Object> showClassPosts(String classid) {
+		return classdao.showClassPosts(classid);
+	}
 	
 	
 

@@ -129,7 +129,7 @@ public class Question {
 	@Override
 	public String toString() {
 		return "Question [qid=" + qid + ", que=" + que + ", userModel=" + userModel + ", reportAbuseCount="
-				+ reportAbuseCount + ", domain=" + domain + ", timestamp=" + timestamp + ", tags=" + tags + ",answers = "+answers+"]";
+				+ reportAbuseCount + ", domain=" + domain + ", timestamp=" + timestamp + ", tags=" + tags +"]";
 	}
 
 	public List<Answer> getAnswers() {
