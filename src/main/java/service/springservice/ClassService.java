@@ -53,6 +53,8 @@ public interface ClassService {
 
 	void postCommentReply(ClassDiscussionReply reply);
 
+	List<Object> showClassPosts(String classid);
+
 
 	
 }

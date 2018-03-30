@@ -53,5 +53,7 @@ public interface ClassDAO {
 
 	void postCommentReply(ClassDiscussionReply reply);
 
+	List<Object> showClassPosts(String classid);
+
 	
 }

@@ -237,6 +237,59 @@ public class ClassDAOImpl implements ClassDAO {
 		Session currentSession=sessionFactory.getCurrentSession();
 		int replyId=(Integer)currentSession.save(reply);
 	}
+
+	@Override
+	public List<Object> showClassPosts(String classid) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();
+		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid",ClassPosts.class);
+		qr.setParameter("classid",classid);
+		List<ClassPosts> classPosts=(List<ClassPosts>)qr.getResultList();
+		List<Object> classPostsDetails=new ArrayList<>();
+		
+		Query<ClassDiscussion> qrForDiscussion=currentSession.createQuery("from ClassDiscussion where id=:postId",ClassDiscussion.class);
+		Query<Events> qrForEvent=currentSession.createQuery("from Events where eid=:postId",Events.class);
+		Query<PollQueDetails> qrForPoll=currentSession.createQuery("from PollQueDetails where queid=:postId",PollQueDetails.class);
+		Query<Question> qrForQuestion=currentSession.createQuery("from Question where qid=:postId",Question.class);
+
+		ClassDiscussion discussion=null;
+		Events event=null;
+		PollQueDetails poll=null;
+		Question question=null;
+		
+		
+		for(ClassPosts classPost : classPosts)
+		{
+			if(classPost.getPost_type().equals("discussion"))
+			{
+				qrForDiscussion.setParameter("postId",classPost.getPostid());
+				discussion=qrForDiscussion.getSingleResult();
+				classPostsDetails.add(0,discussion);
+			}
+			else if(classPost.getPost_type().equals("event"))
+			{
+				qrForEvent.setParameter("postId",classPost.getPostid());
+				event=qrForEvent.getSingleResult();
+				classPostsDetails.add(0,event);
+			}
+			else if(classPost.getPost_type().equals("poll"))
+			{
+				qrForPoll.setParameter("postId",classPost.getPostid());
+				poll=qrForPoll.getSingleResult();
+				classPostsDetails.add(0,poll);		
+			}
+			else if(classPost.getPost_type().equals("question"))
+			{
+				qrForQuestion.setParameter("postId",classPost.getPostid());
+				question=qrForQuestion.getSingleResult();
+				System.out.println(question.getMostUpvotedAnswer());
+				classPostsDetails.add(0,question);
+			}
+			
+		}
+		
+		return classPostsDetails;
+	}
 	
 	
 				 

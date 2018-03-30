@@ -8,9 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import model.UserModel;
 
 @Entity
 @Table(name="pollquedetails")
@@ -23,8 +26,9 @@ public class PollQueDetails {
 	@Column(name="question")
 	private String question;
 	
-	@Column(name="creator_id")
-	private	String creatorid;
+	@OneToOne
+	@JoinColumn(name="creator_id")
+	private	UserModel userModel;
 	
 	@Column(name="pollviewstatus")
 	private int pollviewstatus;
@@ -48,12 +52,12 @@ public class PollQueDetails {
 		this.queid = queid;
 	}
 
-	public String getCreatorid() {
-		return creatorid;
+	public UserModel getUserModel() {
+		return userModel;
 	}
 
-	public void setCreatorid(String creatorid) {
-		this.creatorid = creatorid;
+	public void setUserModel(UserModel userModel) {
+		this.userModel = userModel;
 	}
 
 	public int getPollviewstatus() {
@@ -76,7 +80,7 @@ public class PollQueDetails {
 	
 @Override
 	public String toString() {
-		return "PollQueDetails [queid=" + queid + ", question=" + question + ", creatorid=" + creatorid
+		return "PollQueDetails [queid=" + queid + ", question=" + question + ", creatorid=" + userModel
 				+ ", pollviewstatus=" + pollviewstatus + ", options=" + options + "]";
 	}
 

@@ -65,6 +65,9 @@ public class ClassController
 			List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 			theModel.addAttribute("classCoordinator", theClassCoordinator);	
 			
+			List<Object> allClassPosts=classservice.showClassPosts(classid);
+			theModel.addAttribute("allClassPosts",allClassPosts);
+			
 			String currentsem =new UserModel().getSem(object);
 			String selectedsem=currentsem;
 			theModel.addAttribute("currentsem",currentsem);
@@ -153,9 +156,10 @@ public class ClassController
 	{	
 		HttpSession session=request.getSession();
 		
-		String creatorid=new UserModel().getUserId(session.getAttribute("userModel"));
+		UserModel um=new UserModel();
+		um.setUid(um.getUserId(session.getAttribute("userModel")));
 		
-		theEvents.setCreatorid(creatorid);
+		theEvents.setUserModel(um);
 		theEvents.setPending(false);
 		int id= eventservice.addEvent(theEvents);
 		

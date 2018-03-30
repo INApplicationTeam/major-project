@@ -107,18 +107,21 @@
                                 
 	<c:if test="${fn:length(question.mostUpvotedAnswer) == 0}">
 		<script>
+			var index=${queLoop.index};
 			document.getElementById("answerer${queLoop.index}").innerHTML="No One";
 			quillAnswers.push({"ops":[{"insert":""}]});
-			document.getElementsByClassName("read")[${queLoop.index}].innerHTML="";
+			document.getElementsByClassName("read")[index].innerHTML="";
 		</script>
 	</c:if>
 	
 	<c:if test="${fn:length(question.mostUpvotedAnswer) gt 0}">
 		<c:forEach var="answer" items="${question.mostUpvotedAnswer}">
 			<script>
+				var index=${queLoop.index};
 				document.getElementById("answerer${queLoop.index}").innerHTML='${answer.userModel.uname}';
-				quillAnswers.push(${answer.answer});									
-	        	window.delta=${answer.answer};
+				var answerText=${answer.answer};
+				quillAnswers.push(answerText);									
+	        	window.delta=answerText;
 	        	var content="";
 	        	var imgObj,count=0,count1=0;
 	        
@@ -150,7 +153,7 @@
 					var opsarr={"ops":[{"insert":""}]};
 					opsarr.ops[0].insert=imgObj;
 					quillque.setContents(opsarr);
-					var imgarea=document.getElementsByClassName("ansImg")[${queLoop.index}];
+					var imgarea=document.getElementsByClassName("ansImg")[index];
 					imgarea.innerHTML=quillque.root.innerHTML;
 					var imgTag=imgarea.getElementsByTagName('p')[0].childNodes[0];
 					imgTag.setAttribute("class","resize");
@@ -161,14 +164,14 @@
 	                                 
 	        	if(content.length>500)
 	        	{
-	          		c[${queLoop.index}].innerText=content.substr(0,500)+"...";
+	          		c[index].innerText=content.substr(0,500)+"...";
 	        	}
 	                               
 	        	else
 	       	 	{
-	          		c[${queLoop.index}].innerText=content;
-	          		instantiateEditor(${queLoop.index});
-	        	}	        
+	          		c[index].innerText=content;
+	          		instantiateEditor(index);
+	        	}
 			</script>
 		</c:forEach>
 	</c:if>	
