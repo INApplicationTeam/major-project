@@ -396,6 +396,13 @@ body {
         <div class="modal-body">
 <div id='TextBoxesGroup'>
 	<div id="TextBoxDiv1">
+	
+	 <div class="group" style="margin-bottom:30px;">      
+      <textarea  name="Description" id="desc" placeholder="Description" required></textarea>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+    </div>
+    
     <div class="group" style="margin-bottom:30px;">      
       <input type="text" id='textbox1' required>
       <span class="highlight"></span>
@@ -410,12 +417,21 @@ body {
       <label>Option 2</label>
     </div>
     </div>
+    
+        
+     
 </div>
-          
+       <div class="group">      
+	<input type="datetime-local"  id="deadline"/>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+      <label>Deadline</label>
+    </div>   
    </div>
    
 </div>
 </div>
+
 
            <div align="center" style="margin-left:240px;">
         <button class="ui huge inverted blue button" value='Add OPTION' id='addButton'>ADD OPTION</button>
@@ -426,6 +442,9 @@ body {
 <div id="p1" style="display: none">
                   <form action="../SetDataPoll" method="post" id="form">
              QUESTION<input  name="que" id="que1" required><br/>
+             Description<input name="desc" id="description" required><br/>
+             Deadline <input type="number" name="deadline" id="enddate"/>
+             
              OPTION-1<input type="text" name="option" id="fop1" required><br/>
              OPTION-2<input type="text" name="option" id="fop2" required><br/>
              OPTION-3<input type="text" name="option" id="fop3" ><br/>
@@ -497,9 +516,12 @@ $(document).ready(function(){
        var a;
        a = document.getElementById("qu").value;
                     document.getElementById("que1").value=a;
-
+                    
+           document.getElementById("description").value=document.getElementById("desc").value;
+           document.getElementById("enddate").value =new Date(document.getElementById("deadline").value).getTime();
+		  console.log(document.getElementById("enddate").value);
 	
-	for(i=1; i<counter; i++){
+	for(i=1; i<counter; i++){	
    	  document.getElementById("fop"+i).value= $('#textbox' + i).val();
 	}
 //        document.getElementById("p1").style.display="block";
