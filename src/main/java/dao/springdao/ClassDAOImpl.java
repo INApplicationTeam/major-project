@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import model.FacultyModel;
 import model.StudentModel;
-import model.springmodel.Answer;
 import model.springmodel.ClassDiscussion;
 import model.springmodel.ClassDiscussionComment;
 import model.springmodel.ClassDiscussionReply;

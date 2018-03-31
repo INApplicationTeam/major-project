@@ -214,13 +214,11 @@
     
 
 <h1>CLASS DISCUSSION FORUM</h1>
-<select name="Session" onchange="location = this.value;">
+	<select name="Session" onchange="location = this.value;">
     	<option selected disabled>Semester</option>
-    	<c:forEach varStatus="sem" begin="1" end="${currentsem}">
-    	
-	 	<option value="showSession?sem=${sem.index}">${sem.index}</option> 
-	  	
-	 	 </c:forEach>
+    	<c:forEach varStatus="sem" begin="1" end="${currentsem}">	
+	 		<option value="showSession?sem=${sem.index}">${sem.index}</option> 
+	 	</c:forEach>
 	</select>
 	
 <a href="../../MyFeed">MY FEED</a>
@@ -263,8 +261,12 @@
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>DISCUSSION</b><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
 			<div id="disEditor${postLoop.index}"></div>
-			<script>setDiscussion('${postLoop.index}',${posts.content});</script>
+			<script>
+				var disContent=${posts.content};
+				setDiscussion('${postLoop.index}',disContent);
+			</script>
 			<hr>
+			
 		</c:if>
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
@@ -314,7 +316,8 @@
 			<c:if test="${fn:length(posts.mostUpvotedAnswer) gt 0}">
 				<c:forEach var="answer" items="${posts.mostUpvotedAnswer}">
 					<script>
-						setAnswer(quillAnswers.length,'${postLoop.index}',${answer.answer},'${answer.userModel.uname}');
+						var answer=${answer.answer};
+						setAnswer(quillAnswers.length,'${postLoop.index}',answer,'${answer.userModel.uname}');
 					</script>
 				</c:forEach>
 			</c:if>	

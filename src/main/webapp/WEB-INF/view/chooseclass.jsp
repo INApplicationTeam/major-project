@@ -21,7 +21,13 @@
 			<td>--${coordinator.sem}--</td>
 			<td>--${coordinator.sec}--</td>
 			<td>--${coordinator.batch}--</td>
-			<td><a href="classdiscussionfaculty?classId=${coordinator.classid}&year=${currentYear}">Go To Class</a></td>
+			<td>
+				<form:form action="classdiscussionfaculty" modelAttribute="choosedClass" method="POST">
+					<form:hidden path="classid" value="${coordinator.classid}"/>
+					<form:hidden path="yearOfTeaching" value="${currentYear}"/>
+					<input type="submit" value="Go To Class">
+				</form:form>
+			</td>
 		</tr>
 	</c:forEach>
 	</table>
@@ -45,7 +51,13 @@
 			<td>--${subjectClass.sem}--</td>
 			<td>--${subjectClass.sec}--</td>
 			<td>--${subjectClass.batch}--</td>
-			<td><a href="classdiscussionfaculty?classId=${subjectClass.classid}&year=${currentYear}">Go To Class</a></td>
+			<td>
+				<form:form action="classdiscussionfaculty" modelAttribute="choosedClass" method="POST">
+					<form:hidden path="classid" value="${subjectClass.classid}"/>
+					<form:hidden path="yearOfTeaching" value="${currentYear}"/>
+					<input type="submit" value="Go To Class">
+				</form:form>
+			</td>
 		</tr>
 	</c:forEach>
 	</table>

@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -54,7 +55,34 @@ public class StudentModel {
 	@Column(name="batch")
     private int batch;
 
-    public int getBatch() {
+	@Transient
+	String classId;
+	
+	
+    public String getClassId() {
+		return classId;
+	}
+
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+
+	public void setClassId()
+	{
+		classId=branch+"-"+semester+"-"+section+"-"+batch;
+	}
+	
+	public void setClassAttributes(String classid)
+	{
+		this.classId=classid;
+		String temp[]=classid.split("-");
+		this.branch=temp[0];
+		this.semester=temp[1];
+		this.section=temp[2];
+		this.batch=Integer.parseInt(temp[3]);
+		
+	}
+	public int getBatch() {
 		return batch;
 	}
 

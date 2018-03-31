@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import model.FacultyModel;
-import model.QuestionModel;
 import model.StudentModel;
 import model.UserModel;
 import model.springmodel.Events;
@@ -40,6 +38,7 @@ public class ClassController
 {	
 	@Autowired
 	private ClassService classservice;
+	
 	@Autowired
 	private EventService eventservice;
 	
@@ -79,6 +78,60 @@ public class ClassController
 	
 	}
 	
+	@PostMapping("/classdiscussionfaculty")
+	public String classdiscussionfaculty(HttpServletRequest request,Model theModel,@ModelAttribute("choosedClass") ClassSubjectFaculty choosedClass)
+	{
+		String classId=choosedClass.getClassid();
+		int year=choosedClass.getYearOfTeaching();
+		
+		HttpSession session=request.getSession();
+		session.setAttribute("classid",classId);
+		session.setAttribute("year",year);
+		Object object=session.getAttribute("userModel");
+		FacultyModel fm=null;
+		
+		fm=(FacultyModel)object;
+		String fid=fm.getFid();
+			
+		Boolean coordinatorflag=classservice.checkCoordinator(fid,classId);
+		Boolean isCurrentYear=false;
+		
+		if(year==Calendar.getInstance().get(Calendar.YEAR))
+		{
+			isCurrentYear=true;
+		}
+		
+		if(coordinatorflag)
+		{	String utype="coordinator";
+			theModel.addAttribute("type",utype);
+		}
+		else
+		{	String utype="faculty";
+			theModel.addAttribute("type",utype);	
+		}
+		
+		StudentModel sm=new StudentModel();
+		sm.setClassAttributes(classId);
+		
+		List<StudentModel> theClassMembers= classservice.showClassMembers(sm);
+		theModel.addAttribute("classmembers", theClassMembers);
+		
+		List<ClassRepresentative> theCR= classservice.showClassCR(sm);
+		theModel.addAttribute("CR", theCR);
+		
+		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
+		theModel.addAttribute("classCoordinator", theClassCoordinator);	
+		
+		List<Object> allClassPosts=classservice.showClassPosts(classId);
+		theModel.addAttribute("allClassPosts",allClassPosts);
+		
+		theModel.addAttribute("isCurrentYear",isCurrentYear);
+		theModel.addAttribute("classid", classId);
+		
+		return "CDFhomefaculty";
+		
+	}
+	
 	@GetMapping("/CDFhomefaculty")
 	public String showCDF(HttpServletRequest request,Model theModel,@RequestParam(value = "year",required = false) Integer year)
 	{	
@@ -108,12 +161,12 @@ public class ClassController
 					subjectFaculty.setClassAttributes(classId);
 					coordinatorClassList.add(subjectFaculty);
 				}
-				
 			}
 			
 			theModel.addAttribute("subjectClassList", subjectClassList);
 			theModel.addAttribute("coordinatorClassList",coordinatorClassList);
 			theModel.addAttribute("currentYear",year);
+			theModel.addAttribute("choosedClass",new ClassSubjectFaculty());
 				
 		}
 		return "chooseclass";		
@@ -138,7 +191,6 @@ public class ClassController
 		
 		String classid= (String) session.getAttribute("classid");
 		List<PollQueDetails> theCreateNewPollModel =classservice.showPoll(classid);
-		System.out.println(theCreateNewPollModel);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
 		return "showpoll";
 	}
@@ -226,40 +278,7 @@ public class ClassController
 		
 	}
 
-	@GetMapping("/classdiscussionfaculty")
-	public String classdiscussionfaculty(HttpServletRequest request,Model theModel,@RequestParam("classId") String classId,@RequestParam("year")int year)
-	{
-		HttpSession session=request.getSession();
-		session.setAttribute("classid",classId);
-		session.setAttribute("year",year);
-		Object object=session.getAttribute("userModel");
-		FacultyModel fm=null;
-		
-		fm=(FacultyModel)object;
-		String fid=fm.getFid();
-			
-		Boolean coordinatorflag=classservice.checkCoordinator(fid,classId);
-		Boolean isCurrentYear=false;
-		
-		if(year==Calendar.getInstance().get(Calendar.YEAR))
-		{
-			isCurrentYear=true;
-		}
-		
-		if(coordinatorflag)
-		{	String utype="coordinator";
-			theModel.addAttribute("type",utype);
-		}
-		else
-		{	String utype="faculty";
-			theModel.addAttribute("type",utype);	
-		}
-		
-		theModel.addAttribute("isCurrentYear",isCurrentYear);
-		theModel.addAttribute("classid", classId);
-		return "CDFhomefaculty";
-		
-	}
+	
 	
 	@GetMapping("/showEvents")
 	public String showEvents(HttpServletRequest request, Model theModel)
@@ -326,11 +345,12 @@ public class ClassController
 		Object object=session.getAttribute("userModel");
 		StudentModel sm=null;
 		StudentModel tempStudent=null;
+		String classid=null;
 		
 		if(object instanceof StudentModel)
 		{
 			sm=(StudentModel)object;
-			String classid=sm.getBranch()+"-"+selectedsem+"-"+sm.getSection()+"-"+sm.getBatch();
+			classid=sm.getBranch()+"-"+selectedsem+"-"+sm.getSection()+"-"+sm.getBatch();
 			
 			tempStudent=new StudentModel();
 			tempStudent.setBranch(sm.getBranch());
@@ -349,6 +369,9 @@ public class ClassController
 		
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
+		
+		List<Object> allClassPosts=classservice.showClassPosts(classid);
+		theModel.addAttribute("allClassPosts",allClassPosts);
 		
 		String currentsem =new UserModel().getSem(object);
 		theModel.addAttribute("currentsem",currentsem);
@@ -381,6 +404,18 @@ public class ClassController
 		theModel.addAttribute("questionList",classQuestions);
 		
 		return "showClassQuestions";
+	}
+	
+	@GetMapping("/showPendingPosts")
+	public String showPendingPosts(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		String classId=(String)session.getAttribute("classid");
+		
+		List<Object> pendingPostsList=classservice.getPendingPosts(classId);
+		theModel.addAttribute("pendingPosts",pendingPostsList);
+		
+		return "showPendingPosts";
 	}
 }
 
