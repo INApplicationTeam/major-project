@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import model.FacultyModel;
 import model.StudentModel;
+import model.UserModel;
 import model.pollmodel.CreateNewPollModel;
 
 /**
@@ -30,6 +31,8 @@ public class ViewMyPollDao {
          con=(Connection) context.getAttribute("datacon");
          String type=(String) session.getAttribute("utype");
             String creator_id = null;
+            String creatorname=null;
+           
               if(type.equals("student"))
               { 
                   StudentModel sm;
@@ -42,9 +45,10 @@ public class ViewMyPollDao {
                   FacultyModel fm;
                   fm=(FacultyModel) session.getAttribute("userModel");
                   creator_id=fm.getFid();
+
               }
         
-        String qr1="select queid,question,pollviewstatus  from pollquedetails where creator_id=?";
+        String qr1="select queid,question,pollviewstatus,description,deadline  from pollquedetails where creator_id=?";
         PreparedStatement ps;
         ps=con.prepareStatement(qr1);
             ps.setString(1, creator_id);
@@ -60,13 +64,17 @@ public class ViewMyPollDao {
             {
                int pollqueid=rs.getInt(1);
                 String que=rs.getString(2);
+                String description=rs.getString(4);
                 int pollviewstatus=rs.getInt(3);
+                Long deadline=rs.getLong(5);
                 CreateNewPollModel cm=new CreateNewPollModel();
                 
                 System.out.println("Question no:"+pollqueid);
                 cm.setPollqueid(pollqueid);
                 cm.setQue(que);
                 cm.setPollviewstatus(pollviewstatus);
+                cm.setDeadline(deadline);
+                cm.setDescription(description);
                 System.out.println("2nd query:");
                 qr2="select options,count  from polloptiondetails NATURAl JOIN pollvoteresult where queid=?";
         

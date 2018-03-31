@@ -1,4 +1,4 @@
-<%-- 
+	<%-- 
     Document   : votepoll
     Created on : Apr 14, 2017, 1:47:11 PM
     Author     : Lenovo
@@ -305,6 +305,60 @@ label .glyphicon {
         </style>
         
         <script>
+        
+        function time_ago(time) {
+
+  		  switch (typeof time) {
+  		    case 'number':
+  		      break;
+  		    case 'string':
+  		      time = +new Date(time);
+  		      break;
+  		    case 'object':
+  		      if (time.constructor === Date) time = time.getTime();
+  		      break;
+  		    default:
+  		      time = +new Date();
+  		  }
+  		  var time_formats = [
+  		    [60, 'seconds', 1], // 60
+  		    [120, '1 minute ago', '1 minute from now'], // 60*2
+  		    [3600, 'minutes', 60], // 60*60, 60
+  		    [7200, '1 hour ago', '1 hour from now'], // 60*60*2
+  		    [86400, 'hours', 3600], // 60*60*24, 60*60
+  		    [172800, 'Yesterday', 'Tomorrow'], // 60*60*24*2
+  		    [604800, 'days', 86400], // 60*60*24*7, 60*60*24
+  		  ];
+  		  var seconds = (+new Date() - time) / 1000,
+  		    token = 'ago',
+  		    list_choice = 1;
+
+  		  if (seconds == 0) {
+  		    return 'Just now'
+  		  }
+  		  if (seconds < 0) {
+  		    seconds = Math.abs(seconds);
+  		    token = 'from now';
+  		    list_choice = 2;
+  		  }
+  		  var i = 0,
+  		    format;
+  		  while (format = time_formats[i++])
+  		    if (seconds < format[0]) {
+  		      if (typeof format[2] == 'string')
+  		        return format[list_choice];
+  		      else
+  		        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
+  		    }
+  		  return new Date(time).toUTCString();
+  		}
+
+        
+        </script>
+        
+        
+        
+        <script>
             $(document).ready(function() {
       $('.progress .progress-bar').css("width",
                 function() {
@@ -369,6 +423,7 @@ $(function(){
                   tempqueid=currentque.getPollqueid();
                   xz=currentque.getCount();
               }
+              int k=1;
                 for(CreateNewPollModel ab: cpm)
             {%>
             
@@ -384,8 +439,21 @@ $(function(){
             
              
                  
-            <h3><span class="label label-warning" id="qid">Q.</span> <%=ab.getQue()%> ?</h3>
+            <h3><span class="label label-warning" id="qid">Q.</span> <%=ab.getQue()%> ?</h3><h4><b> Created By :</b><%=ab.getCreatorName()%></h4>
+                <b>Deadline: </b><i><span id="enddate<%=k%>"></span></i>
+                <script>
+                var a=<%=ab.getDeadline()%>
+                document.getElementById("enddate<%=k%>").innerHTML= time_ago(new Date (a) );
+
+                </script>
+               
+               <h5>      <b>Description: </b><i><%=ab.getDescription()%> </i></h5>
+               <h5>      <b>Status: </b><i><%=ab.getStatus()%> </i></h5>
+               
+               
+           
         </div>
+        
         <div class="modal-body">
             
 
@@ -437,6 +505,7 @@ $(function(){
                      i++;
                      no++;
                    }
+                    k++;
                    }
                  %>
                  <div  class="abc" style="display: none">
@@ -454,13 +523,7 @@ $(function(){
 
 </div>
 </div>
-</div>
-            
-            
-            
-            
-            
-            
+</div>     
               
 
                    <% 
@@ -478,13 +541,23 @@ $(function(){
                  xz2=ab2.getCount();
         %>    
        
-        
+       
                <div class="container-fluid bg-info" style="background-color: white">
             <div class="modal-dialog">
              <div class="modal-content">
          
             <div class="modal-header">
-               <h3><span class="label label-warning" id="qid">Q.</span> <%=ab2.getQue()%> ?</h3>
+               <h3><span class="label label-warning" id="qid">Q.</span><%=ab2.getQue()%> ?</h3> <h4><b> Created By : </b><%=ab2.getCreatorName()%></h4>
+                <b>Deadline: </b><i><span id="enddate<%=j%>"></span></i>
+                <script>
+                var a=<%=ab2.getDeadline()%>
+                document.getElementById("enddate<%=j%>").innerHTML= time_ago(new Date (a) );
+
+                </script>
+               
+               <h5>      <b>Description: </b><i><%=ab2.getDescription()%> </i></h5>
+               <h5>      <b>Status: </b><i><%=ab2.getStatus()%> </i></h5>
+               
                    </div>
         <div class="modal-body">
           <%      for(String bc:ab2.getOption())
@@ -523,6 +596,7 @@ $(function(){
             %>
         
             <script>
+            
                 $(window).scroll(function() {
   sessionStorage.scrollTop = $(this).scrollTop();
 });
@@ -533,5 +607,8 @@ $(document).ready(function() {
   }
 });
             </script> 
+            
+            
+        
     </body>
 </html>

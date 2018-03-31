@@ -153,9 +153,9 @@
       <select name="ty3" id="selsection" onkeydown="if (event.keyCode === 13)
                         document.getElementById('b7').click()" class="ui selection dropdown">
                  <option value="0">ALL SECTION</option>
-                 <option value="1">1</option>
-                 <option value="2">2</option>
-                 <option value="3">3</option>
+                 <option value="A">A</option>
+                 <option value="B">B</option>
+                 <option value="C">C</option>
                  
                      </select>
       </div>

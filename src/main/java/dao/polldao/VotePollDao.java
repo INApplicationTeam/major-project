@@ -29,6 +29,7 @@ public class VotePollDao {
     {
          System.out.println("VOTE FOR POLL");
          con=(Connection) context.getAttribute("datacon");
+         
          String type=(String) session.getAttribute("utype");
             String user_id = null,branch = null,sem = null,sec = null,usertype = null;
               if(type.equals("student"))
@@ -54,7 +55,6 @@ public class VotePollDao {
                   fd.getMyDetails(fm, context);
                   branch=fm.getDepartment();
               }
-              System.out.println("---------------branch"+branch+"---------sem"+sem+"---------sec"+sec+"---------------");
               
               
               int tempqueid=0;
@@ -87,35 +87,100 @@ public class VotePollDao {
            // ps.setString(4, sec);
         }
         
-       
+        	String qr5=null;
+        	PreparedStatement ps5=null;
+        	
             
             ResultSet rs=ps.executeQuery();
            
             String qr2,qr3;
+            String pollviewerp = null,branchp=null,semp=null,secp=null;
             PreparedStatement ps2,ps3;
             int i;
             ArrayList<CreateNewPollModel> cm=new ArrayList<>();
             ArrayList<CreateNewPollModel> cm2=new ArrayList<>();
             while(rs.next())
-            {
+            { String status=null;
               int pollqueid=rs.getInt(1);
               
-              qr2="select question,pollviewstatus from pollquedetails where queid=?";
+              qr2="select question,pollviewstatus,description,deadline,creator_id,uname from pollquedetails inner JOIN allusers on pollquedetails.creator_id = allusers.uid where queid=?";
               ps2=con.prepareStatement(qr2);
               ps2.setInt(1,pollqueid);
               ResultSet rs2=ps2.executeQuery();
-              
+					             
+              					  qr5="select * from pollpriviledges where queid=?";
+					              ps5=con.prepareStatement(qr5);
+					              ps5.setInt(1, pollqueid);
+					              ResultSet rs5=ps5.executeQuery();
+					              while(rs5.next())
+					              {
+					            	   pollviewerp=rs5.getString(2);
+					            	   branchp=rs5.getString(3);
+					            	   semp=rs5.getString(4);
+					            	   secp=rs5.getString(5);
+					              }
+					              System.out.println("poll id:"+pollqueid+"priviledges are viewer: "+pollviewerp+"  branch:"+branchp+"  sem:"+semp+"  sec:"+secp);
+			
+					              if(pollviewerp.trim().equals("all") && branchp.trim().equals("all") && semp.trim().equals("0") && secp.trim().equals("0"))
+									{
+					            	  System.out.println("insideif");
+										status="global";
+									}
+					              else if(pollviewerp.trim().equals("student") && branchp.trim().equals("all") && semp.trim().equals("0") && secp.trim().equals("0"))
+					              {
+										status="all students";
+
+					              }
+					              
+					              else if(pollviewerp.trim().equals("faculty") && branchp.trim().equals("all") && semp.trim().equals("0") && secp.trim().equals("0"))
+					              {
+										status="all faculties";
+					              }
+					              
+					              else if(pollviewerp.trim().equals("student") && !branchp.trim().equals("all")  && semp.trim().equals("0") && secp.trim().equals("0"))
+					              {
+										status="all "+branchp+" students";
+
+					              }
+					              
+					              else if(pollviewerp.trim().equals("faculty") && !branchp.trim().equals("all")  && semp.trim().equals("0") && secp.trim().equals("0"))
+					              {
+										status="all "+branchp+" faculties";
+
+					              }
+					              
+					              else if(pollviewerp.trim().equals("student") && branchp.trim().equals("all") && !semp.trim().equals("0") && secp.trim().equals("0"))
+					              {
+					            	  status="all "+semp+" semester students";
+					              }
+					              
+					              else if(pollviewerp.trim().equals("student") && !branchp.trim().equals("all") && !semp.trim().equals("0") && secp.trim().equals("0"))
+					              {
+					            	  status= branchp+" branch "+semp+" semester students";
+					              }
+					              
+					              else if(pollviewerp.trim().equals("student") && !branchp.trim().equals("all") && !semp.trim().equals("0") && !secp.trim().equals("0"))
+					              {
+					            	  status= branchp+" branch "+semp+" semester  "+secp+ " section students";
+					              }
+					              
+					              
+					              
+				System.out.println(status);		              
                while(rs2.next())
                {
                    int pollviewstatus=rs2.getInt(2);
                    String que=rs2.getString(1);
+                   String description=rs2.getString(3);
+                   Long deadline=rs2.getLong(4);
+                   String creatorid=rs2.getString(5);
+                   String creatorname=rs2.getString(6);
                   qr3="select options,count  from polloptiondetails NATURAl JOIN pollvoteresult where polloptiondetails.queid=? and polloptiondetails.opid=pollvoteresult.opid";
         
                 ps3=con.prepareStatement(qr3);
                 ps3.setInt(1, pollqueid);
             
                 ResultSet rs3=ps3.executeQuery();
-                System.out.println(ps3);
                 String option[] = new String[10];
                 int voteresult[]=new int[10];
                 int totalvote=0;
@@ -127,9 +192,9 @@ public class VotePollDao {
                    totalvote=totalvote+voteresult[i];
                     i++;
                 }
-                System.out.println("queid="+pollqueid);
+               /* System.out.println("queid="+pollqueid);
                    System.out.println("totalvote="+totalvote);
-                 
+                 */
                 if(totalvote>0)
                 {
                     while(i>0)
@@ -145,6 +210,12 @@ public class VotePollDao {
                 cpm.setQue(que);
                 cpm.setOption(option);
                 cpm.setCount(voteresult);
+                cpm.setDeadline(deadline);
+                cpm.setDescription(description);
+                cpm.setCreatorName(creatorname);
+                cpm.setCreatorId(creatorid);
+                cpm.setStatus(status);
+                System.out.println(cpm.toString());
                 String qr4="select * from pollvotestatus where ccode=? and queid=? and votestatus=1";
                 PreparedStatement ps4;
                   ps4 = con.prepareStatement(qr4);
@@ -173,7 +244,6 @@ public class VotePollDao {
                }
               
             }
-            System.out.println("here");
             session.setAttribute("votepollnow", cm);
             session.setAttribute("votedpollresult", cm2);
 //            System.out.println("MYYYYYYY  POLLLLLLLLLLLLLLLLLL");

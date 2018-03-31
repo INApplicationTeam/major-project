@@ -5,6 +5,8 @@
  */
 package model.pollmodel;
 
+import java.util.Arrays;
+
 /**
  *
  * @author rohan
@@ -14,10 +16,37 @@ public class CreateNewPollModel {
    private String que,pollviewer,branch,sem,sec;
    private String option[],creatorId,creatorName;
    private int pollqueid ,optid,count[], pollviewstatus;
+   private long deadline;
+   private String description;
+   private String status;
    
    
 
-    public String getCreatorId() {
+    public String getStatus() {
+	return status;
+}
+
+public void setStatus(String status) {
+	this.status = status;
+}
+
+	public long getDeadline() {
+	return deadline;
+}
+
+public void setDeadline(long deadline) {
+	this.deadline = deadline;
+}
+
+public String getDescription() {
+	return description;
+}
+
+public void setDescription(String description) {
+	this.description = description;
+}
+
+	public String getCreatorId() {
 	return creatorId;
 }
 
@@ -120,5 +149,15 @@ public void setCreatorName(String creatorName) {
         this.option = option;
     }
 
+	@Override
+	public String toString() {
+		return "CreateNewPollModel [que=" + que + ", pollviewer=" + pollviewer + ", branch=" + branch + ", sem=" + sem
+				+ ", sec=" + sec + ", option=" + Arrays.toString(option) + ", creatorId=" + creatorId + ", creatorName="
+				+ creatorName + ", pollqueid=" + pollqueid + ", optid=" + optid + ", count=" + Arrays.toString(count)
+				+ ", pollviewstatus=" + pollviewstatus + ", deadline=" + deadline + ", description=" + description
+				+ ", status=" + status + "]";
+	}
+
+    
     
 }
