@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -238,7 +240,7 @@ public class ClassDAOImpl implements ClassDAO {
 	}
 
 	@Override
-	public List<Object> showClassPosts(String classid) {
+	public List<Object> showClassPosts(String classid,Boolean isPending) {
 		
 		Session currentSession=sessionFactory.getCurrentSession();
 		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid",ClassPosts.class);
@@ -246,8 +248,8 @@ public class ClassDAOImpl implements ClassDAO {
 		List<ClassPosts> classPosts=(List<ClassPosts>)qr.getResultList();
 		List<Object> classPostsDetails=new ArrayList<>();
 		
-		Query<ClassDiscussion> qrForDiscussion=currentSession.createQuery("from ClassDiscussion where id=:postId",ClassDiscussion.class);
-		Query<Events> qrForEvent=currentSession.createQuery("from Events where eid=:postId",Events.class);
+		Query<ClassDiscussion> qrForDiscussion=currentSession.createQuery("from ClassDiscussion where id=:postId and isReviewed=:isReviewed",ClassDiscussion.class);
+		Query<Events> qrForEvent=currentSession.createQuery("from Events where eid=:postId and pending=:isPending",Events.class);
 		Query<PollQueDetails> qrForPoll=currentSession.createQuery("from PollQueDetails where queid=:postId",PollQueDetails.class);
 		Query<Question> qrForQuestion=currentSession.createQuery("from Question where qid=:postId",Question.class);
 
@@ -262,32 +264,82 @@ public class ClassDAOImpl implements ClassDAO {
 			if(classPost.getPost_type().equals("discussion"))
 			{
 				qrForDiscussion.setParameter("postId",classPost.getPostid());
+				qrForDiscussion.setParameter("isReviewed",!isPending);
+				
+				try{
 				discussion=qrForDiscussion.getSingleResult();
 				classPostsDetails.add(0,discussion);
+				}
+				catch(NoResultException noResultException)
+				{
+					
+				}
 			}
 			else if(classPost.getPost_type().equals("event"))
 			{
 				qrForEvent.setParameter("postId",classPost.getPostid());
+				qrForEvent.setParameter("isPending",!isPending);
+				
+				try{
 				event=qrForEvent.getSingleResult();
 				classPostsDetails.add(0,event);
+				}
+				catch(NoResultException noResultException)
+				{
+					
+				}
 			}
-			else if(classPost.getPost_type().equals("poll"))
+			else if(classPost.getPost_type().equals("poll") && !isPending)
 			{
 				qrForPoll.setParameter("postId",classPost.getPostid());
+				
+				try{
 				poll=qrForPoll.getSingleResult();
-				classPostsDetails.add(0,poll);		
+				classPostsDetails.add(0,poll);
+				}
+				catch(NoResultException noResultException)
+				{
+					
+				}
 			}
-			else if(classPost.getPost_type().equals("question"))
+			else if(classPost.getPost_type().equals("question") && !isPending)
 			{
 				qrForQuestion.setParameter("postId",classPost.getPostid());
+				
+				try{
 				question=qrForQuestion.getSingleResult();
 				System.out.println(question.getMostUpvotedAnswer());
 				classPostsDetails.add(0,question);
+				}
+				catch(NoResultException noResultException)
+				{
+					
+				}
 			}
 			
 		}
 		
 		return classPostsDetails;
+	}
+
+	@Override
+	public void acceptOrRejectPost(ClassPosts theClassPost) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();	
+		
+		if(theClassPost.getPost_type().equals("event"))
+		{
+			Events event=currentSession.get(Events.class,theClassPost.getPostid());
+			event.setPending(theClassPost.isReviewed());
+			currentSession.update(event);
+		}
+		else if(theClassPost.getPost_type().equals("discussion"))
+		{
+			Query qr=currentSession.createQuery("update ClassDiscussion set isReviewed=:result where id=:id");
+			qr.setParameter("result",theClassPost.isReviewed());
+			qr.setParameter("id",theClassPost.getPostid());
+			qr.executeUpdate();
+		}
 	}
 	
 	

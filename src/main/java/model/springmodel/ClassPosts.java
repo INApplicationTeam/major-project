@@ -6,11 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="classposts")
 public class ClassPosts implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="postid")
 	private int postid;
@@ -22,6 +28,18 @@ public class ClassPosts implements Serializable
 	@Column(name="classid")
 	private String classid;
 	
+	@Transient
+	private boolean reviewed;
+	
+	
+	public boolean isReviewed() {
+		return reviewed;
+	}
+
+	public void setReviewed(boolean reviewed) {
+		this.reviewed = reviewed;
+	}
+
 	public String getClassid() {
 		return classid;
 	}
@@ -48,7 +66,7 @@ public class ClassPosts implements Serializable
 
 	@Override
 	public String toString() {
-		return "ClassPosts [classid=" + classid + ", postid=" + postid + ", post_type=" + post_type + "]";
+		return "ClassPosts [classid=" + classid + ", postid=" + postid + ", post_type=" + post_type +", isReviewed = "+reviewed+"]";
 	}
 
 	

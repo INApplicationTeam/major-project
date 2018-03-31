@@ -9,13 +9,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.sound.midi.Soundbank;
 
 @Entity
 @Table(name="class_subject_faculty")
 public class ClassSubjectFaculty implements Serializable
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="uid")
 	private String id;
