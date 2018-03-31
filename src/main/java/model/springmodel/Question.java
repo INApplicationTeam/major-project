@@ -17,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Where;
 
 import model.DomainContentModel;

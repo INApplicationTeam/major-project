@@ -53,8 +53,8 @@ public interface ClassService {
 
 	void postCommentReply(ClassDiscussionReply reply);
 
-	List<Object> showClassPosts(String classid);
+	List<Object> showClassPosts(String classid,Boolean isPending);
 
+	void acceptOrRejectPost(ClassPosts theClassPost);
 
-	
 }

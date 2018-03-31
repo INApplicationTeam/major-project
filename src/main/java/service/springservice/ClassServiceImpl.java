@@ -132,12 +132,16 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	@Transactional
-	public List<Object> showClassPosts(String classid) {
-		return classdao.showClassPosts(classid);
+	public List<Object> showClassPosts(String classid,Boolean isPending) {
+		return classdao.showClassPosts(classid,isPending);
 	}
-	
-	
+
+	@Override
+	@Transactional
+	public void acceptOrRejectPost(ClassPosts theClassPost) {
+		classdao.acceptOrRejectPost(theClassPost);
+	}
 
 	
-	}
+}
 

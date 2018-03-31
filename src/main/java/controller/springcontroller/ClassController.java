@@ -64,7 +64,7 @@ public class ClassController
 			List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 			theModel.addAttribute("classCoordinator", theClassCoordinator);	
 			
-			List<Object> allClassPosts=classservice.showClassPosts(classid);
+			List<Object> allClassPosts=classservice.showClassPosts(classid,false);
 			theModel.addAttribute("allClassPosts",allClassPosts);
 			
 			String currentsem =new UserModel().getSem(object);
@@ -122,7 +122,7 @@ public class ClassController
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
-		List<Object> allClassPosts=classservice.showClassPosts(classId);
+		List<Object> allClassPosts=classservice.showClassPosts(classId,false);
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		
 		theModel.addAttribute("isCurrentYear",isCurrentYear);
@@ -370,7 +370,7 @@ public class ClassController
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
-		List<Object> allClassPosts=classservice.showClassPosts(classid);
+		List<Object> allClassPosts=classservice.showClassPosts(classid,false);
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		
 		String currentsem =new UserModel().getSem(object);
@@ -412,10 +412,19 @@ public class ClassController
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
 		
-		List<Object> pendingPostsList=classservice.getPendingPosts(classId);
+		List<Object> pendingPostsList=classservice.showClassPosts(classId,true);
 		theModel.addAttribute("pendingPosts",pendingPostsList);
 		
+		theModel.addAttribute("acceptOrReject",new ClassPosts());
+		
 		return "showPendingPosts";
+	}
+	
+	@PostMapping("/acceptOrRejectPost")
+	public String acceptOrRejectPost(@ModelAttribute("acceptOrReject") ClassPosts theClassPost)
+	{
+		classservice.acceptOrRejectPost(theClassPost);
+		return "redirect:/major/class/showPendingPosts";
 	}
 }
 
