@@ -36,18 +36,18 @@ public class QueVotedController extends HttpServlet implements Servlet {
           
                   ServletContext context=getServletContext();
             
-            
+           /* 
             System.out.println(" QUE VOTED CONTROLLER");
             
-            System.out.println(" optid "+request.getParameter("opt") );
+            System.out.println(" optid "+request.getParameter("opt") );*/
            // int queid=Integer.parseInt(request.getParameter("queid"));
             String optque=request.getParameter("opt");
             String[] optque1 = optque.split(",");
             int optid=Integer.parseInt(optque1[0]);
             int queid=Integer.parseInt(optque1[1]);
             //System.out.println(" QUEid "+ queid);
-            System.out.println(" optid "+ optid);
-            
+/*            System.out.println(" optid "+ optid);
+*/            
             HttpSession session;
             session=request.getSession();
             CreateNewPollModel cm=new CreateNewPollModel();

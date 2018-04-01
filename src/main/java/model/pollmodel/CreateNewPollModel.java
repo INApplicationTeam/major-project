@@ -19,10 +19,28 @@ public class CreateNewPollModel {
    private long deadline;
    private String description;
    private String status;
+   private String showresult;
+   private String opid[];
    
    
 
-    public String getStatus() {
+    public String[] getOpid() {
+	return opid;
+}
+
+public void setOpid(String[] opid) {
+	this.opid = opid;
+}
+
+	public String getShowresult() {
+	return showresult;
+}
+
+public void setShowresult(String showresult) {
+	this.showresult = showresult;
+}
+
+	public String getStatus() {
 	return status;
 }
 

@@ -71,23 +71,24 @@ public class QueVotedDao {
             {
                 
                 count[k]=rs2.getInt(1);
-//            System.out.println("count["+k+"]="+count[k]);
+           System.out.println("count["+k+"]="+count[k]);
                 totalvote=totalvote+count[k];
                 option[k]=rs2.getString(2);
                 k++;
                 
-            }   //        System.out.println(ps2);
-//        System.out.println("total vote="+totalvote);
-//        System.out.println("count[1]="+count[0]);
-//        System.out.println("count[2]="+count[1]);
+            }          
+            System.out.println(ps2);
+      System.out.println("total vote="+totalvote);
+        System.out.println("count[1]="+count[0]);
+        System.out.println("count[2]="+count[1]);
             while(k>0)
             {
                 count[k-1]=(count[k-1]*100)/totalvote;
                 k--;
             }
-//        System.out.println("total vote="+totalvote);
-//        System.out.println("count[1]="+count[0]);
-//        System.out.println("count[2]="+count[1]);
+        System.out.println("total vote="+totalvote);
+       System.out.println("count[1]="+count[0]);
+        System.out.println("count[2]="+count[1]);
             cpm.setPollqueid(cm.getPollqueid());
             cpm.setOption(option);
             cpm.setCount(count);

@@ -103,7 +103,7 @@ public class VotePollDao {
             { String status=null;
               int pollqueid=rs.getInt(1);
               
-              qr2="select question,pollviewstatus,description,deadline,creator_id,uname from pollquedetails inner JOIN allusers on pollquedetails.creator_id = allusers.uid where queid=?";
+              qr2="select question,pollviewstatus,description,deadline,creator_id,uname,showresult from pollquedetails inner JOIN allusers on pollquedetails.creator_id = allusers.uid where queid=?";
               ps2=con.prepareStatement(qr2);
               ps2.setInt(1,pollqueid);
               ResultSet rs2=ps2.executeQuery();
@@ -175,19 +175,22 @@ public class VotePollDao {
                    Long deadline=rs2.getLong(4);
                    String creatorid=rs2.getString(5);
                    String creatorname=rs2.getString(6);
-                  qr3="select options,count  from polloptiondetails NATURAl JOIN pollvoteresult where polloptiondetails.queid=? and polloptiondetails.opid=pollvoteresult.opid";
+                   String showresult=rs2.getString(7);
+                  qr3="select options,count,opid  from polloptiondetails NATURAl JOIN pollvoteresult where polloptiondetails.queid=? and polloptiondetails.opid=pollvoteresult.opid";
         
                 ps3=con.prepareStatement(qr3);
                 ps3.setInt(1, pollqueid);
             
                 ResultSet rs3=ps3.executeQuery();
                 String option[] = new String[10];
+                String opid[]=new String [10];
                 int voteresult[]=new int[10];
                 int totalvote=0;
                  i=0;
                 while(rs3.next())
                 {
                    option[i]=rs3.getString(1);
+                   opid[i]=rs3.getString(3);
                    voteresult[i]=rs3.getInt(2);
                    totalvote=totalvote+voteresult[i];
                     i++;
@@ -215,6 +218,8 @@ public class VotePollDao {
                 cpm.setCreatorName(creatorname);
                 cpm.setCreatorId(creatorid);
                 cpm.setStatus(status);
+                cpm.setShowresult(showresult);
+                cpm.setOpid(opid);
                 System.out.println(cpm.toString());
                 String qr4="select * from pollvotestatus where ccode=? and queid=? and votestatus=1";
                 PreparedStatement ps4;

@@ -49,7 +49,7 @@ public class CreateNewPollDao {
               System.out.println("Poll dao me aagaya");
             int status=1;
             String qr1;
-            qr1="insert into pollquedetails values(?,?,?,?,?,?)";
+            qr1="insert into pollquedetails values(?,?,?,?,?,?,?)";
             
             PreparedStatement ps;
             ps=con.prepareStatement(qr1);
@@ -59,6 +59,8 @@ public class CreateNewPollDao {
             ps.setInt(4, status);
             ps.setLong(5,c.getDeadline());
             ps.setString(6,c.getDescription());
+            ps.setString(7,c.getShowresult());
+
             ps.executeUpdate();
             
             PreparedStatement ps11;

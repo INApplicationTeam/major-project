@@ -425,15 +425,21 @@ body {
 	<input type="datetime-local"  id="deadline"/>
       <span class="highlight"></span>
       <span class="bar"></span>
-      <label>Deadline</label>
+      <label>Deadline</label><br>
+      <div>
+      <h4>  <input type="checkbox" name="showresult" value="doNotShow" id="showresult" style="display:inline"/>Do not Show Results</h4>
+      </div>
     </div>   
    </div>
+ 
+  
    
 </div>
+
 </div>
 
-
            <div align="center" style="margin-left:240px;">
+           
         <button class="ui huge inverted blue button" value='Add OPTION' id='addButton'>ADD OPTION</button>
 <button class="ui huge inverted blue button" value='Remove OPTION' id='removeButton'>REMOVE OPTION</button>
 <button class="ui huge inverted blue button" value='PROCEED' id='getButtonValue' >PROCEED</button>
@@ -444,7 +450,7 @@ body {
              QUESTION<input  name="que" id="que1" required><br/>
              Description<input name="desc" id="description" required><br/>
              Deadline <input type="number" name="deadline" id="enddate"/>
-             
+             Results <input type="checkbox" name="result" id="result"/>
              OPTION-1<input type="text" name="option" id="fop1" required><br/>
              OPTION-2<input type="text" name="option" id="fop2" required><br/>
              OPTION-3<input type="text" name="option" id="fop3" ><br/>
@@ -518,9 +524,12 @@ $(document).ready(function(){
                     document.getElementById("que1").value=a;
                     
            document.getElementById("description").value=document.getElementById("desc").value;
+           document.getElementById("result").value=document.getElementById("showresult").value;
+           document.getElementById("result").checked=true;
            document.getElementById("enddate").value =new Date(document.getElementById("deadline").value).getTime();
 		  console.log(document.getElementById("enddate").value);
-	
+		  console.log(document.getElementById("result").value);
+
 	for(i=1; i<counter; i++){	
    	  document.getElementById("fop"+i).value= $('#textbox' + i).val();
 	}
