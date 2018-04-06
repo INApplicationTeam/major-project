@@ -99,7 +99,7 @@
 		<a href="">| ${tag.kname} </a>
 	</c:forEach>
 	</b>
-	<h1>${question.que}</h1>
+	<h1><a href="../question/allAnswers?qid=${question.qid}">${question.que}</a></h1>
 	
 	<a href="" id="answerer${queLoop.index}" style="color: #0099cc;"></a> answered<br>
 	<div style="width:1000px;"><span class="ansImg" ></span><div class="ans" style="margin-bottom: 1px" id="ansEditor${queLoop.index}"></div></div>	    
@@ -115,64 +115,66 @@
 	</c:if>
 	
 	<c:if test="${fn:length(question.mostUpvotedAnswer) gt 0}">
-		<c:forEach var="answer" items="${question.mostUpvotedAnswer}">
-			<script>
-				var index=${queLoop.index};
-				document.getElementById("answerer${queLoop.index}").innerHTML='${answer.userModel.uname}';
-				var answerText=${answer.answer};
-				quillAnswers.push(answerText);									
-	        	window.delta=answerText;
-	        	var content="";
-	        	var imgObj,count=0,count1=0;
-	        
-	        	for(var i=0;i<delta.ops.length;i++)
-				{
-					var del=delta.ops[i];
-						
-					if(typeof del.insert!=='object' && count1==1)
+		<c:forEach var="answer" items="${question.mostUpvotedAnswer}" begin="0" varStatus="UpVotedAnswer">
+			<c:if test="${UpVotedAnswer.index == 0}">
+				<script>
+					var index=${queLoop.index};
+					document.getElementById("answerer${queLoop.index}").innerHTML='${answer.userModel.uname}';
+					var answerText=${answer.answer};
+					quillAnswers.push(answerText);									
+		        	window.delta=answerText;
+		        	var content="";
+		        	var imgObj,count=0,count1=0;
+		        
+		        	for(var i=0;i<delta.ops.length;i++)
 					{
-						count1=0;
-						content=content+del.insert.substr(1,del.insert.length);
-						continue;
+						var del=delta.ops[i];
+							
+						if(typeof del.insert!=='object' && count1==1)
+						{
+							count1=0;
+							content=content+del.insert.substr(1,del.insert.length);
+							continue;
+						}
+					
+						if(typeof del.insert !== 'object')
+						{
+							content=content+del.insert;
+						}						
+						else if(count==0)
+						{
+							count++;
+							imgObj=del.insert;
+							count1=1;
+						}
 					}
-				
-					if(typeof del.insert !== 'object')
+									
+					if(imgObj!== undefined)
 					{
-						content=content+del.insert;
-					}						
-					else if(count==0)
-					{
-						count++;
-						imgObj=del.insert;
-						count1=1;
-					}
-				}
-								
-				if(imgObj!== undefined)
-				{
-					var opsarr={"ops":[{"insert":""}]};
-					opsarr.ops[0].insert=imgObj;
-					quillque.setContents(opsarr);
-					var imgarea=document.getElementsByClassName("ansImg")[index];
-					imgarea.innerHTML=quillque.root.innerHTML;
-					var imgTag=imgarea.getElementsByTagName('p')[0].childNodes[0];
-					imgTag.setAttribute("class","resize");
-					imgObj=undefined;							
-				}                                               
-	        
-				var c=document.getElementsByClassName("ans");
-	                                 
-	        	if(content.length>500)
-	        	{
-	          		c[index].innerText=content.substr(0,500)+"...";
-	        	}
-	                               
-	        	else
-	       	 	{
-	          		c[index].innerText=content;
-	          		instantiateEditor(index);
-	        	}
-			</script>
+						var opsarr={"ops":[{"insert":""}]};
+						opsarr.ops[0].insert=imgObj;
+						quillque.setContents(opsarr);
+						var imgarea=document.getElementsByClassName("ansImg")[index];
+						imgarea.innerHTML=quillque.root.innerHTML;
+						var imgTag=imgarea.getElementsByTagName('p')[0].childNodes[0];
+						imgTag.setAttribute("class","resize");
+						imgObj=undefined;							
+					}                                               
+		        
+					var c=document.getElementsByClassName("ans");
+		                                 
+		        	if(content.length>500)
+		        	{
+		          		c[index].innerText=content.substr(0,500)+"...";
+		        	}
+		                               
+		        	else
+		       	 	{
+		          		c[index].innerText=content;
+		          		instantiateEditor(index);
+		        	}
+				</script>
+			</c:if>
 		</c:forEach>
 	</c:if>	
 	

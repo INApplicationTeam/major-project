@@ -23,6 +23,7 @@ import model.UserModel;
 import model.springmodel.Events;
 import model.springmodel.PollQueDetails;
 import model.springmodel.Question;
+import model.springmodel.Answer;
 import model.springmodel.ClassDiscussion;
 import model.springmodel.ClassDiscussionComment;
 import model.springmodel.ClassDiscussionReply;
@@ -30,7 +31,10 @@ import model.springmodel.ClassPosts;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
 import service.springservice.ClassService;
+import service.springservice.DiscussionService;
 import service.springservice.EventService;
+import service.springservice.PollService;
+import service.springservice.QuestionService;
 
 @Controller
 @RequestMapping("/class")
@@ -41,6 +45,15 @@ public class ClassController
 	
 	@Autowired
 	private EventService eventservice;
+	
+	@Autowired
+	private DiscussionService discussionservice;
+	
+	@Autowired
+	private QuestionService questionservice;
+	
+	@Autowired
+	private PollService pollservice;
 	
 	@GetMapping("/CDFhomestudent")
 	public String CDFhome(HttpServletRequest request,Model theModel)
@@ -71,6 +84,12 @@ public class ClassController
 			String selectedsem=currentsem;
 			theModel.addAttribute("currentsem",currentsem);
 			theModel.addAttribute("selectedsem",selectedsem);
+			
+			ClassDiscussionComment cdc=new ClassDiscussionComment();
+			theModel.addAttribute("ClassCommentModel",cdc);
+			
+			ClassDiscussionReply cdr=new ClassDiscussionReply();
+			theModel.addAttribute("ClassReplyModel",cdr);
 			
 			return "CDFhomestudent";
 		}
@@ -190,7 +209,7 @@ public class ClassController
 		HttpSession session=request.getSession();
 		
 		String classid= (String) session.getAttribute("classid");
-		List<PollQueDetails> theCreateNewPollModel =classservice.showPoll(classid);
+		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
 		return "showpoll";
 	}
@@ -211,6 +230,7 @@ public class ClassController
 		UserModel um=new UserModel();
 		um.setUid(um.getUserId(session.getAttribute("userModel")));
 		
+		theEvents.setTimestamp(new Date().getTime());
 		theEvents.setUserModel(um);
 		theEvents.setPending(false);
 		int id= eventservice.addEvent(theEvents);
@@ -238,7 +258,7 @@ public class ClassController
 		
 		cd.setUserModel(um);
 		cd.setTimeStamp(new Date().getTime());
-		int id=classservice.addDiscussion(cd);
+		int id=discussionservice.addDiscussion(cd);
 		
 		ClassPosts cp=new ClassPosts();
 		cp.setClassid((String)session.getAttribute("classid"));
@@ -262,7 +282,7 @@ public class ClassController
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
 		
-		List<ClassDiscussion> discussionsList=classservice.showDiscussions(classId);
+		List<ClassDiscussion> discussionsList=discussionservice.showDiscussions(classId);
 		model.addAttribute("discussionsList",discussionsList);
 		
 		return "classDiscussions";
@@ -287,7 +307,7 @@ public class ClassController
 		HttpSession session= request.getSession();
 		String classid=(String)session.getAttribute("classid");
 		
-		List<Events> eventlist=classservice.showEvents(classid);
+		List<Events> eventlist=eventservice.showEvents(classid);
 		theModel.addAttribute("eventlist", eventlist);
 		
 		return "classevents";
@@ -310,7 +330,7 @@ public class ClassController
 		comment.setUserModel(um);
 		comment.setTimestamp(new Date().getTime());
 		
-		classservice.postComment(comment);
+		discussionservice.postComment(comment);
 		
 		return "redirect:/major/class/CDFhomestudent";
 	}
@@ -330,7 +350,7 @@ public class ClassController
 		reply.setUserModel(um);
 		reply.setTimestamp(new Date().getTime());
 		
-		classservice.postCommentReply(reply);
+		discussionservice.postCommentReply(reply);
 		
 		return "redirect:/major/class/CDFhomestudent";
 	}
@@ -400,7 +420,7 @@ public class ClassController
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
 		
-		List<Question> classQuestions=classservice.showClassQuestions(classId);
+		List<Question> classQuestions=questionservice.showClassQuestions(classId);
 		theModel.addAttribute("questionList",classQuestions);
 		
 		return "showClassQuestions";
@@ -426,6 +446,7 @@ public class ClassController
 		classservice.acceptOrRejectPost(theClassPost);
 		return "redirect:/major/class/showPendingPosts";
 	}
+	
 }
 
 

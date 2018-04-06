@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.AnswerDao;
 import dao.NotificationDao;
+import dao.QuestionDao;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import model.FacultyModel;
 import model.NotificationModel;
 import model.QuestionModel;
 import model.StudentModel;
+import model.UserModel;
 
 
 /**
@@ -56,31 +58,43 @@ public class PostAnswer extends HttpServlet {
           
           ServletContext context=getServletContext();
           HttpSession session=request.getSession();
+          UserModel um=new UserModel();
+          String answererId=um.getUserId(session.getAttribute("userModel"));
+          String answererName=um.getUserName(session.getAttribute("userModel")); 
           
-         
           int ansindex=Integer.parseInt(request.getParameter("ansindex"));
           String btnvalue=request.getParameter("btnvalue");
+          String qid=request.getParameter("qid");
+          String que=request.getParameter("que");
+          String queUserId=request.getParameter("queUserId");
           String json=null;
           BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
          
           if(br != null)
           {
-          json = br.readLine();
+        	  json = br.readLine();
           }
             
           
-          QuestionModel qm=(QuestionModel)session.getAttribute("currQues");
-         
-          AnswerModel am=(AnswerModel)session.getAttribute("currAns");
-          AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
-          ArrayList<AnswerModel> answers = null;
-          if(aam!=null)
-          answers=aam.getAllans();
-         
+          //QuestionModel qm=(QuestionModel)session.getAttribute("currQues");
+          QuestionModel qm=new QuestionModel();
+          qm.setQid(Integer.parseInt(qid));
+          qm.setQue(que);
+          qm.setUid(queUserId);
           
+          //AnswerModel am=(AnswerModel)session.getAttribute("currAns");
+          //AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
+          //ArrayList<AnswerModel> answers = null;
+          //if(aam!=null)
+          //answers=aam.getAllans();
+         
+          AnswerModel am=new AnswerModel();
           am.setText(json);
           am.setAnswer(json);
           am.setAnsDate(DateFormat.getDateInstance().format(new Date()).toString());
+          am.setQid(Integer.parseInt(qid));
+          am.setUid(answererId);
+          am.setUname(answererName);
           
           AnswerDao ad=new AnswerDao();
           NotificationDao nd=new NotificationDao();
@@ -91,7 +105,7 @@ public class PostAnswer extends HttpServlet {
           if(btnvalue.equals("POST ANSWER"))
           {
               ad.insertAnswer(am,context);
-              answers.add(am);
+             // answers.add(am);
            
               nm.setUid(qm.getUid());
               nm.setMessage(am.getUname()+" answered: "+qm.getQue());
@@ -107,14 +121,14 @@ public class PostAnswer extends HttpServlet {
           {
               if(!(am.getReportAbuseCount()>=5))
               { 
-                answers.remove(ansindex);
+                //answers.remove(ansindex);
                 ad.updateAnswer(am,context);
-                answers.add(ansindex,am);
+                //answers.add(ansindex,am);
               }
               else
               {
                 ad.updateAnswer(am,context);
-                answers.add(am);
+                //answers.add(am);
               }
               
               nm.setUid(qm.getUid());
@@ -127,11 +141,11 @@ public class PostAnswer extends HttpServlet {
               
                   
           }
-          aam.setAllans(answers);
-          session.setAttribute("allAns",aam);
-          session.setAttribute("currAns",am);
+          //aam.setAllans(answers);
+          //session.setAttribute("allAns",aam);
+          //session.setAttribute("currAns",am);
            
-          System.out.println(returnJSON);
+          //System.out.println(returnJSON);
           response.getWriter().write(returnJSON);
          
         }

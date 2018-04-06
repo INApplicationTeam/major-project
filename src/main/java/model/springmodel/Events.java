@@ -26,6 +26,9 @@ public class Events {
 	@Column(name="description")
 	private String description;
 	
+	@Column(name="timestamp")
+	private Long timestamp;
+	
 	@Column(name="startdate")
 	private Long startdate;
 	
@@ -39,7 +42,13 @@ public class Events {
 	@JoinColumn(name="creatorid")
 	private UserModel userModel;
 
-	
+	public Long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Long timestamp) {
+		this.timestamp = timestamp;
+	}
 	
 	public Boolean getPending() {
 		return pending;

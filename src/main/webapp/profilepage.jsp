@@ -331,7 +331,7 @@ font-size: 90%;
                                                                 | Semester <%= mymodel.getSem() %></h6>
                                                                 <%}%>
                                                                 <%if(!mymodel.getUid().equalsIgnoreCase(uid)){ %>
-                            <button class="btn btn-info btn-sm" id="followbtn" style="font-size: 16px" onclick="followUser('<%=mymodel.getUid()%>')"></button>
+                            <br><button class="btn btn-info btn-sm" id="followbtn" style="font-size: 16px" onclick="followUser('<%=mymodel.getUid()%>')"></button>
 	                        <%}%>
 	                        </div>
 	                    </div>
@@ -385,7 +385,7 @@ font-size: 90%;
                                                                         <label class="label" style="background-color: #ff5d00;"><%=tags%></label>
 						                        <%}%>
 						            		</div>
-                                                                        <h3 style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px; font-weight: bold;"><a href="AllAnswer?id=<%=i%>&cat=cat1" style="color:black"><%=qm.getQue() %></a></h3>
+                                                                        <h3 style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px; font-weight: bold;"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color:black"><%=qm.getQue() %></a></h3>
 
 						            		<div class="row" style="padding-left: 5px;">
 
@@ -519,7 +519,7 @@ font-size: 90%;
                                                                         <label class="label" style="background-color: #ff5d00;"><%=tags%></label>
 						                        <%}%>
 						            		</div>
-                                                                        <h3 style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px; font-weight: bold;"><a href="AllAnswer?id=<%=i%>&cat=cat2" style="color:black"><%= qm.getQue() %></a></h3>
+                                                                        <h3 style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px; font-weight: bold;"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color:black"><%= qm.getQue() %></a></h3>
 
 						            		<div class="row" style="padding-left: 5px;">
 

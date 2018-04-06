@@ -426,7 +426,7 @@ font-size: 90%;
                                 <label class="badge" style="background-color: #ff5d00;"><%=tags%></label>
 	                        <%}%>
 	            		
-                                <h3 style="margin-top: 5px;margin-bottom: 5px;font-weight: bold;"><a href="AllAnswer?id=<%=i%>&cat=cat1" style="color: black"><%=qm.getQue()%></a></h3>
+                                <h3 style="margin-top: 5px;margin-bottom: 5px;font-weight: bold;"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color: black"><%=qm.getQue()%></a></h3>
 
 	            		<div class="row" style="padding-left: 5px;">
 

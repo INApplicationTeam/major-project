@@ -61,17 +61,17 @@ public class ReportAnswer extends HttpServlet {
             FacultyModel fm=(FacultyModel)session.getAttribute("userModel");
             int d=ad.deleteAnswer(am,context);
             
-            AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
-            ArrayList<AnswerModel> answers=aam.getAllans();
-            answers.remove(answerindex);
-            aam.setAllans(answers);
-            session.setAttribute("allAns",aam);
+            //AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
+            //ArrayList<AnswerModel> answers=aam.getAllans();
+            //answers.remove(answerindex);
+            //aam.setAllans(answers);
+            //session.setAttribute("allAns",aam);
             
            if(am.getUid().equals(fm.getFid()))
             {
-               AnswerModel am1=(AnswerModel)session.getAttribute("currAns");
-               am1.setReportAbuseCount(5);
-               session.setAttribute("currAns",am1);
+               //AnswerModel am1=(AnswerModel)session.getAttribute("currAns");
+               //am1.setReportAbuseCount(5);
+               //session.setAttribute("currAns",am1);
             }
             
             out.println("DELETED"+answerindex);

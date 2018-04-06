@@ -21,16 +21,15 @@ public class CoordinatorServiceImpl implements CoordinatorService {
 	@Override
 	@Transactional
 	public void addCoordinator(Coordinator theCoordinator) 
-	{	System.out.println("in coordinatorservice impl");
-		System.out.println(theCoordinator.toString());
+	{	
 		coordinatorDAO.addCoordinator(theCoordinator);
 	}
 
 	@Override
 	@Transactional
-	public List<Coordinator> getCoordinators() {
-			
-	return coordinatorDAO.getCoordinators();
+	public List<Coordinator> getCoordinators() 
+	{		
+		return coordinatorDAO.getCoordinators();
 	}
 
 	@Override

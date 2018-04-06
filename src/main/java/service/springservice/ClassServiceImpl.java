@@ -50,26 +50,14 @@ public class ClassServiceImpl implements ClassService {
 		return classdao.showClassCoordinator(sm);
 	}
 
-	@Override
-	@Transactional
-	public List<PollQueDetails> showPoll(String classid) {
-		
-		return classdao.showPoll(classid);
-		
-	}
-
+	
 	@Override
 	@Transactional
 	public Boolean checkCoordinator(String fid,String classId) {
 		return classdao.checkCoordinator(fid,classId);
 	}
 
-	@Override
-	@Transactional
-	public int addDiscussion(ClassDiscussion cd) {
-		return classdao.addDiscussion(cd);
-		
-	}
+	
 
 	@Override
 	@Transactional
@@ -78,12 +66,7 @@ public class ClassServiceImpl implements ClassService {
 		
 	}
 
-	@Override
-	@Transactional
-	public List<ClassDiscussion> showDiscussions(String classId) {
-		return classdao.showDiscussions(classId);
-	}
-
+	
 	
 	@Override
 	@Transactional
@@ -105,31 +88,8 @@ public class ClassServiceImpl implements ClassService {
 	public List<String> getCoordiatorDetails(String fid,int year) {
 		return classdao.getCoordinatorDetails(fid,year);
 	}
-
-	@Override
-	@Transactional
-	public List<Events> showEvents(String classid) {
-		return classdao.showEvents(classid);
-    }
 	
-	@Override
-	@Transactional
-	public void postComment(ClassDiscussionComment cdc) {
-		classdao.postComment(cdc);		
-	}
-
-	@Override
-	@Transactional
-	public List<Question> showClassQuestions(String classId) {
-		return classdao.fetchClassQuestions(classId);
-	}
-
-	@Override
-	@Transactional
-	public void postCommentReply(ClassDiscussionReply reply) {
-		classdao.postCommentReply(reply);
-	}
-
+	
 	@Override
 	@Transactional
 	public List<Object> showClassPosts(String classid,Boolean isPending) {

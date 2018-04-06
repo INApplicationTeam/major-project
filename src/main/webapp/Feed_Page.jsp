@@ -342,7 +342,7 @@ font-size: 90%;
 	                        <%for(String tags: qm.getTags() ){%>
                                 <label class="label" style="background-color: #F80;"><%=tags%></label><%}%>
 	            		</div>
-                                <h3 style="margin-top: 5px;margin-bottom: 5px;font-weight: bold;"><a href="AllAnswer?id=<%=i%>&cat=cat1" style="color : black "><%= qm.getQue() %></a></h3>
+                                <h3 style="margin-top: 5px;margin-bottom: 5px;font-weight: bold;"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color : black "><%= qm.getQue() %></a></h3>
                                 
 	            		<div class="row" style="padding-left: 5px;">
 
@@ -454,7 +454,7 @@ font-size: 90%;
 							<h4>Questions For You </h4>
 							<%if(rlqm1!=null && rlqm1.getRelatedque()!=null ){int i=0;for(QuestionModel qm: rlqm1.getRelatedque()){ %>
 							<p>
-                                                            <a href="AllAnswer?id=<%=i%>&cat=cat2" style="color: #0099cc;"><%= qm.getQue() %></a>
+                                                            <a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color: #0099cc;"><%= qm.getQue() %></a>
 							</p>
                                                         <%i++;}}%>
 						</div>

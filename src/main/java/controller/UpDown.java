@@ -53,8 +53,8 @@ public class UpDown extends HttpServlet {
             JsonObject jsObj;
             int up=0,down=0;
             
-            AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
-            ArrayList<AnswerModel> alam=aam.getAllans();
+            //AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
+            //ArrayList<AnswerModel> alam=aam.getAllans();
             
             
             String uvote=request.getParameter("uvote");
@@ -100,8 +100,8 @@ public class UpDown extends HttpServlet {
             }
             
             
-            am=alam.get(index);
-            alam.remove(index);
+           // am=alam.get(index);
+            //alam.remove(index);
             if(votecount!=null)
             {
             	up=votecount.getUpvotes();
@@ -109,9 +109,9 @@ public class UpDown extends HttpServlet {
             	am.setUpvotes(votecount.getUpvotes());
             	am.setDownvotes(votecount.getDownvotes());
             }
-            alam.add(index, am);
-            aam.setAllans(alam);
-            session.setAttribute("allAns", aam);
+            //alam.add(index, am);
+            //aam.setAllans(alam);
+            //session.setAttribute("allAns", aam);
             
             jsObj =  (JsonObject) new Gson().toJsonTree(votecount);
             jsObj.addProperty("uvotes",up);
@@ -123,12 +123,12 @@ public class UpDown extends HttpServlet {
            else
            {
         	   System.out.println("-------------yououu cannot voooote-----------------");
-        	   AnswerModel votecount1=alam.get(index);
-        	   jsObj =  (JsonObject) new Gson().toJsonTree(votecount1);
-               jsObj.addProperty("uvotes",votecount1.getUpvotes());
-               jsObj.addProperty("dvotes",votecount1.getDownvotes());
+        	  // AnswerModel votecount1=alam.get(index);
+        	   //jsObj =  (JsonObject) new Gson().toJsonTree(votecount1);
+               //jsObj.addProperty("uvotes",votecount1.getUpvotes());
+               //jsObj.addProperty("dvotes",votecount1.getDownvotes());
                
-               out.println(jsObj);
+               //Sout.println(jsObj);
            }
         }
 
