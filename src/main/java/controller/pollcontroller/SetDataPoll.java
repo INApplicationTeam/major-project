@@ -43,6 +43,12 @@ public class SetDataPoll extends HttpServlet {
                     HttpSession session;
                      String que=request.getParameter("que");
                      String desc=request.getParameter("desc");
+                     String showresult=request.getParameter("result");
+                     System.out.println("result:===================="+showresult);
+                     if(showresult==null)
+                     {
+                    	 showresult="showResult";
+                     }
                      Long deadline=Long.parseLong(request.getParameter("deadline"));
                      String check=request.getParameter("var");
                      String option[]=request.getParameterValues("option");
@@ -55,6 +61,7 @@ public class SetDataPoll extends HttpServlet {
                      cpm.setCreatorName(new UserModel().getUserName(um));
                      cpm.setDeadline(deadline);
                      cpm.setDescription(desc);
+                     cpm.setShowresult(showresult);
                      System.out.println(cpm.getQue());
                      
                      String arr[]=cpm.getOption();

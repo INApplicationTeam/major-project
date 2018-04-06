@@ -73,6 +73,7 @@
 
 .progress-bar {
   text-align: left;
+ background-color:green;
   transition-duration: 3s;
 }
 
@@ -449,6 +450,7 @@ $(function(){
                
                <h5>      <b>Description: </b><i><%=ab.getDescription()%> </i></h5>
                <h5>      <b>Status: </b><i><%=ab.getStatus()%> </i></h5>
+               <h5>      <b>Result: </b><i><%=ab.getShowresult()%> </i></h5>
                
                
            
@@ -461,22 +463,54 @@ $(function(){
                     
                    if(ab.getPollqueid()==tempqueid)
                    {
+                	   
                        for(String bc:ab.getOption() )
                        { 
                           if(bc==null)
                                break;   
                        
                  %>  
-                 
+                  <%if(ab.getShowresult().trim().equals("showResult"))
+			                				{%>	
                <div class="progress skill-bar ">
+				                  
+				                	
                 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=xz[j]%>" aria-valuemin="0" aria-valuemax="100">
 <!--                    <span class="skill" > <%=bc%><i class="val" style="color: white"><%=xz[j]%> %</i></span>-->
                 </div>
                
                    <span class="progress-type" style="color: black; font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=bc%></span>
+                     
+                    
                      <span class="progress-completed" style="color: black;font-size: 20px;"><%=xz[j]%>  %&nbsp;&nbsp; &nbsp;&nbsp;</span>
-            
+            	
             </div>
+            <%} %>
+            
+            
+            
+            <%if(ab.getShowresult().trim().equals("doNotShow"))
+			                				{%>	
+               <div class="progress skill-bar ">
+				                  
+				                	
+                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+<!--                    <span class="skill" > <%=bc%><i class="val" style="color: white"><%=xz[j]%> %</i></span>-->
+                </div>
+               
+                   <span class="progress-type" style="color: black; font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=bc%></span>
+                     
+                    
+            	
+            </div>
+            <%} %>
+					            
+						          
+						            
+						            
+						            
+						            
+									
                  
                  <%   
                          j++;
@@ -488,7 +522,8 @@ $(function(){
                 
                 <%
                    
-                   }else{
+                   }else{String []opid=ab.getOpid();
+            	   int op=0;
                     for(String bc:ab.getOption())
                 { 
 
@@ -499,11 +534,12 @@ $(function(){
                  
                  
           <div class="quiz" id="quiz" data-toggle="buttons">
-           <label class=" element-animation<%=no%> btn btn-lg btn-primary btn-block" style="background-color: #26c6da"><span class="btn-label" style=""><i class="glyphicon glyphicon-chevron-right"></i></span><input type="radio"  id="opt" value="<%=i%>,<%=ab.getPollqueid()%>" ><%=bc%></label> 
+           <label class=" element-animation<%=no%> btn btn-lg btn-primary btn-block" style="background-color: #26c6da"><span class="btn-label" style=""><i class="glyphicon glyphicon-chevron-right"></i></span><input type="radio"  id="opt" value="<%=opid[op]%>,<%=ab.getPollqueid()%>" ><%=bc%></label> 
            </div>
             <% 
                      i++;
                      no++;
+                     op++;
                    }
                     k++;
                    }
@@ -557,6 +593,7 @@ $(function(){
                
                <h5>      <b>Description: </b><i><%=ab2.getDescription()%> </i></h5>
                <h5>      <b>Status: </b><i><%=ab2.getStatus()%> </i></h5>
+                <h5>      <b>Result: </b><i><%=ab2.getShowresult()%> </i></h5>
                
                    </div>
         <div class="modal-body">
@@ -566,19 +603,49 @@ $(function(){
                        break;   
                     
                 %>
+                
+                
+                			 
+			                <%if(ab2.getShowresult().trim().equals("showResult"))
+			                				{%>	
              <div class="progress skill-bar ">
                 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%=xz2[j]%>" aria-valuemin="0" aria-valuemax="100">
 <!--                    <span class="skill"> <%=bc%><i class="val" style="color: white"><%=xz2[j]%> %</i></span>-->
                 </div>
                 <span class="progress-type" style="color: black; font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=bc%></span>
+               
+               
                      <span class="progress-completed" style="color: black;font-size: 20px;"><%=xz2[j]%>  % &nbsp;&nbsp;&nbsp;&nbsp;</span>
-            
+            	 
+            	  
             </div>
+            								<%} %>
+            
+            
+            
+            
+            
+                  <%if(ab2.getShowresult().trim().equals("doNotShow"))
+			                				{%>	
+             <div class="progress skill-bar ">
+                <div class="progress-bar " role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+<!--                    <span class="skill"> <%=bc%><i class="val" style="color: white"><%=xz2[j]%> %</i></span>-->
+                </div>
+                <span class="progress-type" style="color: black; font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=bc%></span>
+               
+               
+            	 
+            	  
+            </div>
+            								<%} %>
+            
+            
+            
+            
+            	 <%} %>
+            		
                  
-                 <%   
-                        j++;
-                      }
-                %>
+                 
                  
              </div>
             </div>
