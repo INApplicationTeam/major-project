@@ -107,8 +107,13 @@
   		      else
   		        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
   		    }
-  		  return new Date(time).toDateString();
+  		  return "on "+new Date(time).toDateString();
   		}
+        
+        function setTime(id,time)
+        {
+        	document.getElementById(id).innerHTML=time_ago(new Date(time));
+        }
         
         var quillAnswers=[];
         
@@ -131,7 +136,6 @@
         
         function instantiateEditor(index,postIndex)
         {
-        	console.log(index);
            ans=quillAnswers[index];
            quillShowAns=new Quill('#ansEditor'+postIndex,configForShow);
            quillShowAns.setContents(ans);
@@ -149,7 +153,7 @@
         
         function setAnswer(index,postIndex,answerText,answererName)
         {
-			document.getElementById("answerer"+postIndex).innerHTML=answererName;
+        	document.getElementById("answerer"+postIndex).innerHTML=answererName;
 			quillAnswers.push(answerText);									
         	window.delta=answerText;
         	var content="";
@@ -256,14 +260,50 @@
 	<c:set var="countQue" value="-1" scope="page" />
 	
 	<c:forEach var="posts" items="${allClassPosts}" begin="0" varStatus="postLoop">
+		
 		<c:if test="${posts.getClass().name == 'model.springmodel.ClassDiscussion'}">
 			
-			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>DISCUSSION</b><br>
+			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>DISCUSSION</b> <span id="discussionTime${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
 			<div id="disEditor${postLoop.index}"></div>
 			<script>
 				var disContent=${posts.content};
 				setDiscussion('${postLoop.index}',disContent);
+			</script>
+			
+			<c:forEach var="classComment" items="${posts.classCommentList}" begin="0" varStatus="commentLoop">
+				<h3 style="display: inline;">${classComment.userModel.uname}</h3> commented <span id="commenttimestamp${postLoop.index}${commentLoop.index}"></span><br>
+				<textarea cols="100" readonly="readonly">${classComment.commentText}</textarea><br><br>
+			
+				<c:forEach var="commentReply" items="${classComment.commentReplyList}" begin="0" varStatus="replyLoop">
+					<h3 style="display: inline;">${commentReply.userModel.uname}</h3> replied <span id="replytimestamp${postLoop.index}${commentLoop.index}${replyLoop.index}"></span><br>
+					<textarea cols="100" readonly="readonly">${commentReply.replyText}</textarea><br><br>
+					
+					<script type="text/javascript">
+						var commentReplyTime=${commentReply.timestamp};
+						setTime('replytimestamp${postLoop.index}${commentLoop.index}${replyLoop.index}',commentReplyTime);
+					</script>
+				</c:forEach>
+					
+					<form:form action="postCommentReply?commentId=${classComment.commentId}" modelAttribute="ClassReplyModel" method="POST">
+						<form:textarea rows="5" cols="100" path="replyText" placeholder="Reply..."/>
+						<input type="submit" value="Reply"/>
+					</form:form>
+			
+					<script type="text/javascript">
+						var classCommentTime=${classComment.timestamp};
+						setTime('commenttimestamp${postLoop.index}${commentLoop.index}',classCommentTime);
+					</script>
+			</c:forEach>
+			
+			<form:form action="postComment?disId=${posts.id}" modelAttribute="ClassCommentModel" method="POST">
+				<form:textarea rows="5" cols="100" path="commentText" placeholder="Write Your Comment Here..."/>
+				<input type="submit" value="Comment"/>
+			</form:form>
+			
+			<script type="text/javascript">
+				var discussionTime=${posts.timeStamp};
+				setTime('discussionTime${postLoop.index}',discussionTime);
 			</script>
 			<hr>
 			
@@ -271,7 +311,7 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
 			
-			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>EVENT</b><br>
+			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="eventtimestamp${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
 			<p><b>Description:</b>  ${posts.description} </p>
 			<b>Start Date:</b> <span id="startdate${postLoop.index}"></span><br><br>
@@ -279,11 +319,13 @@
 			<hr>
 			
 			<script>
-			var startDate=${posts.startdate};
-			var endDate=${posts.enddate};
+				var startDate=${posts.startdate};
+				var endDate=${posts.enddate};
+				var creationDate=${posts.timestamp}
 			
-			document.getElementById("startdate${postLoop.index}").innerHTML=time_ago(new Date(startDate));
-			document.getElementById("lastdate${postLoop.index}").innerHTML=time_ago(new Date(endDate));
+				setTime('startdate${postLoop.index}',startDate);
+				setTime('lastdate${postLoop.index}',endDate);
+				setTime('eventtimestamp${postLoop.index}',creationDate);
 			</script>
 		</c:if>
 		
@@ -300,8 +342,8 @@
 		<c:if test="${posts.getClass().name == 'model.springmodel.Question'}">
 			<c:set var="countQue" value="${countQue + 1}" scope="page"/>
 			
-			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>QUESTION</b><br>
-			<h4>${posts.que}</h4>
+			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>QUESTION</b> on <span id="questiontime${postLoop.index}">${posts.timestamp}</span><br>
+			<h4><a href="../question/allAnswers?qid=${posts.qid}">${posts.que}</a></h4>
 			
 			<a href="" id="answerer${postLoop.index}" style="color: #0099cc;"></a> answered<br>
 			<div style="width:1000px;"><span class="ansImg" ></span><div class="ans" style="margin-bottom: 1px" id="ansEditor${postLoop.index}"></div></div>	    
@@ -309,19 +351,24 @@
                                 
 			<c:if test="${fn:length(posts.mostUpvotedAnswer) == 0}">
 				<script>
-					setNoOne(quillAnswers.length,'${postLoop.index}');
+					setNoOne('${countQue}','${postLoop.index}');
 				</script>
 			</c:if>
 	
 			<c:if test="${fn:length(posts.mostUpvotedAnswer) gt 0}">
-				<c:forEach var="answer" items="${posts.mostUpvotedAnswer}">
-					<script>
-						var answer=${answer.answer};
-						setAnswer(quillAnswers.length,'${postLoop.index}',answer,'${answer.userModel.uname}');
-					</script>
+				<c:forEach var="answer" items="${posts.mostUpvotedAnswer}" begin="0" varStatus="mostUpvoted">
+					<c:if test="${mostUpvoted.index == 0}">
+						<script>
+							var answer=${answer.answer};
+							setAnswer('${countQue}','${postLoop.index}',answer,'${answer.userModel.uname}');
+						</script>
+					</c:if>
+					
+					<c:if test="${mostUpvoted.index gt 0}">
+					
+					</c:if>
 				</c:forEach>
 			</c:if>	
-			
 			<hr>
 		</c:if>	
 	</c:forEach>

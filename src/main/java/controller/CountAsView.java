@@ -37,21 +37,27 @@ public class CountAsView extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	
-		System.out.println("hello i am on servlet");
-		int index=Integer.parseInt(request.getParameter("index"));
-		HttpSession session=request.getSession();
-		ServletContext context=getServletContext();
+		 System.out.println("hello i am on servlet");
+		 int index=Integer.parseInt(request.getParameter("index"));
+		 HttpSession session=request.getSession();
+		 ServletContext context=getServletContext();
 		
-		AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
-		ArrayList <AnswerModel> alam=aam.getAllans();
-		AnswerModel am=alam.get(index);
-		
+		 //AllAnswerModel aam=(AllAnswerModel)session.getAttribute("allAns");
+		 //ArrayList <AnswerModel> alam=aam.getAllans();
+		 //AnswerModel am=alam.get(index);
+		 
+		 AnswerModel am=new AnswerModel();
+		 am.setQid(Integer.parseInt(request.getParameter("qid")));
+		 am.setUid(request.getParameter("uid"));
+		 am.setViews(Integer.parseInt(request.getParameter("views")));
+		 
 		 boolean isViewed=(Boolean)session.getAttribute("viewing");
 		
 		 String utype=(String)session.getAttribute("utype");
          StudentModel sm;
          FacultyModel fm;
          String id="";
+         
          if(utype.equals("student"))
          { 
              sm=(StudentModel)session.getAttribute("userModel");
@@ -74,12 +80,13 @@ public class CountAsView extends HttpServlet {
 			System.out.println(index +"viewed...");
 			if(ad.countAsView(am,context,id))
 				{
-				alam.remove(index);
+				System.out.println(index +"vieweddd--------////...");
+				//alam.remove(index);
 				am.setViews(am.getViews()+1);
 				am.setViewed(true);
-				alam.add(index,am);
-				aam.setAllans(alam);
-				session.setAttribute("allAns",aam);
+				//alam.add(index,am);
+				//aam.setAllans(alam);
+				//session.setAttribute("allAns",aam);
 				out.println(am.getViews());
 				}
 			else

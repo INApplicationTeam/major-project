@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -12,16 +14,16 @@ import javax.persistence.Transient;
 @Table(name="classposts")
 public class ClassPosts implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="postid")
-	private int postid;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+	
+	@Column(name="postid")
+	private int postid;
+
 	@Column(name="post_type")
 	private String post_type;
 
@@ -31,6 +33,13 @@ public class ClassPosts implements Serializable
 	@Transient
 	private boolean reviewed;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public boolean isReviewed() {
 		return reviewed;

@@ -2,13 +2,17 @@ package model.springmodel;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.transaction.Transactional;
 
 import model.UserModel;
 
@@ -51,6 +55,17 @@ public class Answer implements Serializable {
 	
 	@Column(name="views")
 	private int views;
+	
+	@Transient
+	private boolean viewed;
+
+	public boolean isViewed() {
+		return viewed;
+	}
+
+	public void setViewed(boolean isViewed) {
+		this.viewed = isViewed;
+	}
 
 	public Question getQuestion() {
 		return question;
@@ -131,7 +146,7 @@ public class Answer implements Serializable {
 	@Override
 	public String toString() {
 		return "Answer [userModel=" + userModel + ", timestamp=" + timestamp + ", upvotes=" + upvotes
-				+ ", reportAbuseCount=" + reportAbuseCount + ", downvotes=" + downvotes + ", views=" + views + "]";
+				+ ", reportAbuseCount=" + reportAbuseCount + ", downvotes=" + downvotes + ", views=" + views + ", isViewed="+viewed+"]";
 	}
 	
 	

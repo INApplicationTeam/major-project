@@ -97,7 +97,7 @@
 	<div id="toolbarque" style="display: none"></div>
     <div id="editorque" style="display: none"></div>
     
-    <script>
+   <script>
         function time_ago(time) {
 
   		  switch (typeof time) {
@@ -166,7 +166,6 @@
         
         function instantiateEditor(index,postIndex)
         {
-        	console.log(index);
            ans=quillAnswers[index];
            quillShowAns=new Quill('#ansEditor'+postIndex,configForShow);
            quillShowAns.setContents(ans);
@@ -184,7 +183,7 @@
         
         function setAnswer(index,postIndex,answerText,answererName)
         {
-			document.getElementById("answerer"+postIndex).innerHTML=answererName;
+        	document.getElementById("answerer"+postIndex).innerHTML=answererName;
 			quillAnswers.push(answerText);									
         	window.delta=answerText;
         	var content="";
@@ -245,16 +244,19 @@
         	quillShowDis.setContents(discussionContent);
         	quillShowDis.enable(false);
         }
-	</script>
+        </script>
+    
 
-	<hr>	
-		<select name="SHOW" onchange="location = this.value;">
-    		<option selected disabled>Show</option>
-	 		<option value="showPoll">Polls</option>
-	 		<option value="showClassQuestions">Questions</option>
-	 		<option value="showDiscussions">Discussions</option>
-	 		<option value="showEvents">Events</option>
-		</select>
+<h1>CLASS DISCUSSION FORUM</h1>
+	
+<a href="../../MyFeed">MY FEED</a>
+	<select name="SHOW" onchange="location = this.value;">
+    	<option selected disabled>Show</option>
+	 	<option value="showPoll">Polls</option>
+	 	<option value="showClassQuestions">Questions</option>
+	 	<option value="showDiscussions">Discussions</option>
+	 	<option value="showEvents">Events</option>
+	</select>
 	<hr>
 	<h3>Class Members</h3>
 		<c:forEach var="temp1" items="${classmembers}" > 
@@ -270,7 +272,7 @@
 		<c:forEach var="temp3" items="${classCoordinator}" > 
 			${temp3.name} &nbsp;		
 		</c:forEach>
-	<hr>   
+	<hr>
 	<center><h1>CLASS POSTS</h1></center>
 	<c:set var="countQue" value="-1" scope="page" />
 	
@@ -328,23 +330,37 @@
                                 
 			<c:if test="${fn:length(posts.mostUpvotedAnswer) == 0}">
 				<script>
-					setNoOne(quillAnswers.length,'${postLoop.index}');
+					setNoOne('${countQue}','${postLoop.index}');
 				</script>
 			</c:if>
 	
 			<c:if test="${fn:length(posts.mostUpvotedAnswer) gt 0}">
-				<c:forEach var="answer" items="${posts.mostUpvotedAnswer}">
-					<script>
-						var answer=${answer.answer};
-						setAnswer(quillAnswers.length,'${postLoop.index}',answer,'${answer.userModel.uname}');
-					</script>
+				<c:forEach var="answer" items="${posts.mostUpvotedAnswer}" begin="0" varStatus="mostUpvoted">
+					<c:if test="${mostUpvoted.index == 0}">
+						<script>
+							var answer=${answer.answer};
+							setAnswer('${countQue}','${postLoop.index}',answer,'${answer.userModel.uname}');
+						</script>
+					</c:if>
+					
+					<c:if test="${mostUpvoted.index gt 0}">
+					
+					</c:if>
 				</c:forEach>
 			</c:if>	
 			
 			<hr>
 		</c:if>	
 	</c:forEach>
-	
+    <script>
+    	if('${selectedsem}'!='${currentsem}')
+    	{
+    		document.getElementById("create_que").disabled = true;
+    		document.getElementById("create_event").disabled = true;
+    		document.getElementById("create_poll").disabled = true;
+    		document.getElementById("create_disc").disabled = true;
+    	}
+    </script>
 
 </body>
 </html>

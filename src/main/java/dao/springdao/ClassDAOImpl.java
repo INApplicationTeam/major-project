@@ -3,6 +3,7 @@ package dao.springdao;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +38,6 @@ public class ClassDAOImpl implements ClassDAO {
 	public List<StudentModel> showClassMembers(StudentModel sm) 
 	{
 		Session currentSession= sessionFactory.getCurrentSession();
-		
 		Query<StudentModel> qr= currentSession.createQuery("from StudentModel where branch =:branch AND batch =:batch"
 														 + " AND section =:section",StudentModel.class);
 		
@@ -77,28 +77,7 @@ public class ClassDAOImpl implements ClassDAO {
 		return classCoordinator;
 	}
 
-	@Override
-	public List<PollQueDetails> showPoll(String classid) {
-		
-		Session currentSession= sessionFactory.getCurrentSession();
-		List <PollQueDetails> polldata= new ArrayList();	
-		Query<Integer> qr= currentSession.createQuery("select postid from ClassPosts where classid =:id AND post_type='poll'",Integer.class);
-		qr.setParameter("id", classid);
 	
-		List<Integer> queid= qr.list();
-	  Iterator<Integer> it = queid.iterator();
-	    
-	  while(it.hasNext())
-	  {
-	    int pollqueid=(int) it.next();
-	    PollQueDetails pqd= currentSession.get(PollQueDetails.class,pollqueid);
-	    System.out.println(pqd);
-	    polldata.add(pqd);
-	  }
-
-		return polldata;			
-	}
-
 	@Override
 	public Boolean checkCoordinator(String fid,String classId)
 	{	
@@ -120,13 +99,7 @@ public class ClassDAOImpl implements ClassDAO {
 		
 	}
 
-	@Override
-	public int addDiscussion(ClassDiscussion cd) 
-	{
-		Session currentSession=sessionFactory.getCurrentSession();
-		int id=(Integer)currentSession.save(cd);
-		return id;
-	}
+	
 
 	@Override
 	public void addClassPost(ClassPosts cp) 
@@ -135,24 +108,7 @@ public class ClassDAOImpl implements ClassDAO {
 		currentSession.save(cp);
 	}
 
-	@Override
-	public List<ClassDiscussion> showDiscussions(String classId) 
-	{
-		Session currentSession=sessionFactory.getCurrentSession();
-		Query<ClassDiscussion> qr=currentSession.createQuery("from ClassDiscussion cd where cd.id in (select postid from ClassPosts where classid =:classid and post_type='discussion')",ClassDiscussion.class);
-		qr.setParameter("classid", classId);
-		List<ClassDiscussion> discussionList=qr.getResultList();
 	
-		return discussionList;
-	}
-
-	@Override
-	public void postComment(ClassDiscussionComment cdc) 
-	{
-		Session currentSession=sessionFactory.getCurrentSession();
-		int commentId=(Integer)currentSession.save(cdc);
-	}
-
 	@Override
 	public Set<String> getClassDetails(String fid,boolean isCurrent) {
 		
@@ -206,47 +162,17 @@ public class ClassDAOImpl implements ClassDAO {
 
 	}
 
-	@Override
-	public List<Events> showEvents(String classid) {
-		
-    Session currentSession= sessionFactory.getCurrentSession();
-		Query<Events> qr= currentSession.createQuery("from Events where eid in(select postid from ClassPosts where classid=:classid and post_type='event')",Events.class);
-		qr.setParameter("classid", classid);
-		
-		return qr.getResultList();
-	}
-
-	@Override
-	public List<Question> fetchClassQuestions(String classId) {
-		
-		Session currentSession= sessionFactory.getCurrentSession();
-		Query<Question> qr=currentSession.createQuery("from Question where qid in (select postid from ClassPosts where classid=:classid and post_type='question')",Question.class);
-		qr.setParameter("classid",classId);
-		List<Question> queList=(List<Question>)qr.getResultList();
-		
-		for(Question que: queList)
-		{
-			System.out.println(que.getMostUpvotedAnswer());
-		}
-		
-		return queList;
-	}
-
-	@Override
-	public void postCommentReply(ClassDiscussionReply reply) {
-		
-		Session currentSession=sessionFactory.getCurrentSession();
-		int replyId=(Integer)currentSession.save(reply);
-	}
-
+	
+	
+	
 	@Override
 	public List<Object> showClassPosts(String classid,Boolean isPending) {
 		
 		Session currentSession=sessionFactory.getCurrentSession();
-		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid",ClassPosts.class);
+		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid order by id desc",ClassPosts.class);
 		qr.setParameter("classid",classid);
-		List<ClassPosts> classPosts=(List<ClassPosts>)qr.getResultList();
-		List<Object> classPostsDetails=new ArrayList<>();
+		List<ClassPosts> classPosts=(ArrayList<ClassPosts>)qr.getResultList();
+		List<Object> classPostsDetails=new LinkedList<>();
 		
 		Query<ClassDiscussion> qrForDiscussion=currentSession.createQuery("from ClassDiscussion where id=:postId and isReviewed=:isReviewed",ClassDiscussion.class);
 		Query<Events> qrForEvent=currentSession.createQuery("from Events where eid=:postId and pending=:isPending",Events.class);
@@ -268,11 +194,11 @@ public class ClassDAOImpl implements ClassDAO {
 				
 				try{
 				discussion=qrForDiscussion.getSingleResult();
-				classPostsDetails.add(0,discussion);
+				classPostsDetails.add(discussion);
 				}
 				catch(NoResultException noResultException)
 				{
-					
+					noResultException.printStackTrace();
 				}
 			}
 			else if(classPost.getPost_type().equals("event"))
@@ -282,11 +208,11 @@ public class ClassDAOImpl implements ClassDAO {
 				
 				try{
 				event=qrForEvent.getSingleResult();
-				classPostsDetails.add(0,event);
+				classPostsDetails.add(event);
 				}
 				catch(NoResultException noResultException)
 				{
-					
+					noResultException.printStackTrace();
 				}
 			}
 			else if(classPost.getPost_type().equals("poll") && !isPending)
@@ -295,11 +221,11 @@ public class ClassDAOImpl implements ClassDAO {
 				
 				try{
 				poll=qrForPoll.getSingleResult();
-				classPostsDetails.add(0,poll);
+				classPostsDetails.add(poll);
 				}
 				catch(NoResultException noResultException)
 				{
-					
+					noResultException.printStackTrace();
 				}
 			}
 			else if(classPost.getPost_type().equals("question") && !isPending)
@@ -309,16 +235,16 @@ public class ClassDAOImpl implements ClassDAO {
 				try{
 				question=qrForQuestion.getSingleResult();
 				System.out.println(question.getMostUpvotedAnswer());
-				classPostsDetails.add(0,question);
+				classPostsDetails.add(question);
 				}
 				catch(NoResultException noResultException)
 				{
-					
+					noResultException.printStackTrace();
 				}
 			}
 			
 		}
-		
+				
 		return classPostsDetails;
 	}
 

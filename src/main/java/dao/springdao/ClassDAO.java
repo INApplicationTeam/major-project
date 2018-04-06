@@ -29,29 +29,15 @@ public interface ClassDAO {
 
 	List<FacultyModel> showClassCoordinator(StudentModel sm);
 
-	List<PollQueDetails> showPoll(String classid);
-
 	Boolean checkCoordinator(String fid,String classId);
-
-	int addDiscussion(ClassDiscussion cd);
 
 	void addClassPost(ClassPosts cp);
 
-	List<ClassDiscussion> showDiscussions(String classId);
-
-	void postComment(ClassDiscussionComment cdc);
-
 	Set<String> getClassDetails(String fid,boolean isCurrent);
-
-	List<Events> showEvents(String classid);
 
 	List<String> getCoordinatorDetails(String fid,int year);
 
 	List<ClassSubjectFaculty> getSubjectClassDetails(String fid,int year);
-
-	List<Question> fetchClassQuestions(String classId);
-
-	void postCommentReply(ClassDiscussionReply reply);
 
 	List<Object> showClassPosts(String classid,Boolean isPending);
 

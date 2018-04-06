@@ -28,7 +28,7 @@ public class Question {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="qid" ,updatable = false, nullable = false)
+	@Column(name="qid", updatable = false, nullable = false)
 	private int qid;
 
 	@Column(name="que")
@@ -59,7 +59,6 @@ public class Question {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="question",cascade=CascadeType.ALL)
 	@Where(clause="upvotes = (select max(a.upvotes) from answer a where a.qid = qid)")
 	private List<Answer> mostUpvotedAnswer;
-	
 	
 	public List<Answer> getMostUpvotedAnswer() {
 		return mostUpvotedAnswer;
