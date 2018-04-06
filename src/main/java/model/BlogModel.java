@@ -5,19 +5,49 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author rohan
  */
 public class BlogModel {
     private int blogId,upvotes,did;
-    private String blogContent,timestamp,uid,uname,dname,title;
+    private String blogContent,uid,uname,dname,title;
+    private ArrayList<BlogCommentModel> arbcm;
+    private String timestamp;
 
-    public String getUname() {
+    private Long timestamp1;
+
+	public Long getTimestamp1() {
+		return timestamp1;
+	}
+
+	public void setTimestamp1(Long timestamp1) {
+		this.timestamp1 = timestamp1;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public String getUname() {
         return uname;
     }
 
-    public void setUname(String uname) {
+    public ArrayList<BlogCommentModel> getArbcm() {
+		return arbcm;
+	}
+
+	public void setArbcm(ArrayList<BlogCommentModel> arbcm) {
+		this.arbcm = arbcm;
+	}
+
+	public void setUname(String uname) {
         this.uname = uname;
     }
 
@@ -78,14 +108,7 @@ public class BlogModel {
         this.blogContent = blogContent;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
+    
    
     
     

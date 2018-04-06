@@ -14,7 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import model.AllBlogModel;
+import model.BlogCommentModel;
 import model.BlogModel;
+import model.BlogReplyModel;
 
 /**
  *
@@ -135,6 +137,96 @@ public class BlogDao {
             Logger.getLogger(BlogDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
+    }
+    
+    public BlogModel getBlogById(int bid,ServletContext context)
+    {
+    	con=(Connection)context.getAttribute("datacon");
+    	String qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,did,blogtitle,uname from blogs inner join allusers on blogs.uid=allusers.uid where blogid=?";
+    	try {
+			ps=con.prepareStatement(qr);
+			ps.setInt(1, bid);
+			
+			rs=ps.executeQuery();
+			
+			BlogModel bm=new BlogModel();
+			ArrayList<String> dlist=(ArrayList<String>)context.getAttribute("dlist");
+            //String dname=dlist.get(did-1);
+			
+			if(rs.next())
+			{
+				bm.setBlogId(rs.getInt(1));
+	            bm.setUid(rs.getString(2));
+	            bm.setBlogContent(rs.getString(3));
+	            bm.setTimestamp1(rs.getLong(4));
+	            bm.setUpvotes(rs.getInt(5));
+	            bm.setDid(rs.getInt(6));
+	            bm.setTitle(rs.getString(7));
+	            bm.setUname(rs.getString(8));
+	            bm.setDname(dlist.get(rs.getInt(6)-1));
+			}
+			
+			String qr1="select bid,cid,comment,timestamp,allusers.uid,likes,flag,uname from blogcomments inner join allusers on blogcomments.uid=allusers.uid where bid=?";
+			ps=con.prepareStatement(qr1);
+			ps.setInt(1, bid);
+			
+			rs=ps.executeQuery();
+			BlogCommentModel bcm;
+			ArrayList<BlogCommentModel> arbcm=new ArrayList<>();
+			
+			PreparedStatement ps1=null;
+			ResultSet rs1=null;
+			
+			while(rs.next())
+			{
+				bcm=new BlogCommentModel();
+				bcm.setBid(bid);
+				bcm.setCid(rs.getInt(2));
+				bcm.setComment(rs.getString(3));
+				bcm.setTimestamp(rs.getLong(4));
+				bcm.setUid(rs.getString(5));
+				bcm.setLikes(rs.getInt(6));
+				bcm.setFlags(rs.getInt(7));
+				bcm.setUname(rs.getString(8));
+				
+				String qr2="select rid,cid,reply,timestamp,likes,flag,allusers.uid,uname from blog_comment_replies inner join allusers on blog_comment_replies.uid=allusers.uid where cid=?";
+				ps1=con.prepareStatement(qr2);
+				ps1.setInt(1, rs.getInt(2));
+				
+				rs1=ps1.executeQuery();
+				BlogReplyModel brm;
+				ArrayList<BlogReplyModel> arbrm=new ArrayList<>();
+				
+				while(rs1.next())
+				{
+					brm=new BlogReplyModel();
+					brm.setRid(rs.getInt(1));
+					brm.setCid(rs.getInt(2));
+					brm.setReply(rs.getString(3));
+					brm.setTimestamp(rs.getLong(4));
+					brm.setLikes(rs.getInt(5));
+					brm.setFlags(rs.getInt(6));
+					brm.setUid(rs.getString(7));
+					brm.setUname(rs.getString(8));
+					
+					arbrm.add(brm);
+				}
+				bcm.setArbrm(arbrm);
+				
+				arbcm.add(bcm);
+				
+			}
+			bm.setArbcm(arbcm);
+			
+			return bm;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		return null;
+    	
     }
     
     public int incVote(BlogModel bm,ServletContext context)
