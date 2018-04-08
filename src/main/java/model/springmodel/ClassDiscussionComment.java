@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Where;
 
 import model.UserModel;
 
@@ -49,6 +52,16 @@ private long timestamp;
 @OneToMany(fetch = FetchType.EAGER,mappedBy="comment",cascade=CascadeType.ALL)
 private List<ClassDiscussionReply> commentReplyList;
 
+@Transient
+private boolean liked;
+
+public boolean isLiked() {
+	return liked;
+}
+
+public void setLiked(boolean liked) {
+	this.liked = liked;
+}
 
 public List<ClassDiscussionReply> getCommentReplyList() {
 	return commentReplyList;

@@ -23,6 +23,7 @@ import model.springmodel.ClassDiscussionReply;
 import model.springmodel.ClassPosts;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
+import model.springmodel.CommentLikers;
 import model.springmodel.Coordinator;
 import model.springmodel.Events;
 import model.springmodel.PollQueDetails;
@@ -166,7 +167,7 @@ public class ClassDAOImpl implements ClassDAO {
 	
 	
 	@Override
-	public List<Object> showClassPosts(String classid,Boolean isPending) {
+	public List<Object> showClassPosts(String classid,Boolean isPending,String userId) {
 		
 		Session currentSession=sessionFactory.getCurrentSession();
 		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid order by id desc",ClassPosts.class);
@@ -194,6 +195,23 @@ public class ClassDAOImpl implements ClassDAO {
 				
 				try{
 				discussion=qrForDiscussion.getSingleResult();
+				
+				CommentLikers commentLikers=null;
+					
+				for(ClassDiscussionComment comment:discussion.getClassCommentList())
+				{
+					commentLikers=currentSession.get(CommentLikers.class,new CommentLikers(comment.getCommentId(),userId));
+					
+					if(commentLikers!=null)
+					{
+						comment.setLiked(true);
+					}
+					else
+					{
+						comment.setLiked(false);
+					}
+				}
+				
 				classPostsDetails.add(discussion);
 				}
 				catch(NoResultException noResultException)

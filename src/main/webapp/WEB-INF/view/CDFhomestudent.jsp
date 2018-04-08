@@ -274,7 +274,10 @@
 			<c:forEach var="classComment" items="${posts.classCommentList}" begin="0" varStatus="commentLoop">
 				<h3 style="display: inline;">${classComment.userModel.uname}</h3> commented <span id="commenttimestamp${postLoop.index}${commentLoop.index}"></span><br>
 				<textarea cols="100" readonly="readonly">${classComment.commentText}</textarea><br><br>
-			
+				<a href="#no" id="likeComment${postLoop.index}${commentLoop.index}" onclick="likeComment('${postLoop.index}${commentLoop.index}','${classComment.commentId}','${classComment.liked}')">Like</a>&nbsp;&nbsp;<span id="showLikes${postLoop.index}${commentLoop.index}">${classComment.likes}</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="">Report</a><br>
+				
 				<c:forEach var="commentReply" items="${classComment.commentReplyList}" begin="0" varStatus="replyLoop">
 					<h3 style="display: inline;">${commentReply.userModel.uname}</h3> replied <span id="replytimestamp${postLoop.index}${commentLoop.index}${replyLoop.index}"></span><br>
 					<textarea cols="100" readonly="readonly">${commentReply.replyText}</textarea><br><br>
@@ -291,6 +294,9 @@
 					</form:form>
 			
 					<script type="text/javascript">
+						if('${classComment.liked}'=='true')
+							document.getElementById('likeComment${postLoop.index}${commentLoop.index}').innerHTML="Liked";
+						
 						var classCommentTime=${classComment.timestamp};
 						setTime('commenttimestamp${postLoop.index}${commentLoop.index}',classCommentTime);
 					</script>
@@ -380,7 +386,85 @@
     		document.getElementById("create_poll").disabled = true;
     		document.getElementById("create_disc").disabled = true;
     	}
-    </script>
+   
+    	function getXmlHttpRequestObject()
+		{
+			var xmlHttpReq;
+	
+			if(window.XMLHttpRequest){
+			    request=new window.XMLHttpRequest();
+			}
+			else if(window.ActiveXObject){
+			    request=new window.ActiveXObject();
+			}
+			else{
+			    request=null;
+			}
+			return request;
+		}
+
+		var likeIndex;
+		function likeComment(x,commentId,isLiked)
+		{   	
+			
+			likeIndex=x;
+			var likesCount=document.getElementById("showLikes"+likeIndex).innerHTML;
+			var innerText=document.getElementById("likeComment"+likeIndex).innerHTML;
+			
+			if(innerText=='Like')
+			{	
+				
+			    request=getXmlHttpRequestObject();
+			    request.onreadystatechange=commentLiked;
+			    request.open("post","LikeComment",true);
+			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+			    var data="commentId="+commentId+"&likesCount="+parseInt(likesCount);
+			    request.send(data);
+			}
+			else if(innerText=='Liked')
+			{
+				request=getXmlHttpRequestObject();
+			    request.onreadystatechange=commentUnLiked;
+			    request.open("post","UnLikeComment",true);
+			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+			    var data="commentId="+commentId+"&likesCount="+parseInt(likesCount);
+			    request.send(data);
+			}
+		}
+		
+		function commentLiked()
+		{
+		    if(request.readyState===4 && request.status===200)
+		    {
+		        var result=request.responseText; 
+		     
+		        if(result==1)
+		    	{
+		        	var showLikes=document.getElementById("showLikes"+likeIndex);
+		        	showLikes.innerHTML=parseFloat(showLikes.innerHTML)+1;
+		        	document.getElementById("likeComment"+likeIndex).innerHTML="Liked";
+		    	}
+		    }
+		}
+		
+		function commentUnLiked()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+		        var result=request.responseText; 
+		     
+		        if(result==1)
+		    	{
+		        	var showLikes=document.getElementById("showLikes"+likeIndex);
+		        	showLikes.innerHTML=parseFloat(showLikes.innerHTML)-1;
+		        	document.getElementById("likeComment"+likeIndex).innerHTML="Like";
+		    	}
+		    }
+		}
+
+		
+		
+		</script>
 
 </body>
 </html>
