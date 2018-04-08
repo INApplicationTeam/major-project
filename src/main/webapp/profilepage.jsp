@@ -339,7 +339,7 @@ font-size: 90%;
 	                <div class="description text-center">
                         <p><%= mymodel.getAboutme() %></p><br>
 	                </div>
-					
+	                
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="profile-tabs">
@@ -368,6 +368,13 @@ font-size: 90%;
 				                            <a href="#blog" role="tab" data-toggle="tab">
 												<i class="material-icons">favorite</i>
 				                                Blogs
+				                            </a>
+				                        </li>
+				                        
+				                         <li>
+				                            <a href="major/message/DMform?id=<%=mymodel.getUid()%>&name=<%= mymodel.getUname()%>" >
+												
+				                                Message
 				                            </a>
 				                        </li>
 				                        
@@ -937,6 +944,7 @@ font-size: 90%;
 
         </script>   
         
-        <script src="js/Notifications.js"></script> 
+        <script src="js/Notifications.js">
+        </script> 
 </body>
 </html>

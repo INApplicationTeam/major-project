@@ -396,6 +396,12 @@ font-size: 90%;
 				                                My blogs
 				                            </a>
 				                        </li>
+				                         <li>
+				                            <a href="major/message/inbox" >
+												
+				                               My Messages
+				                            </a>
+				                        </li>
 				                        
 				                    </ul>
 
