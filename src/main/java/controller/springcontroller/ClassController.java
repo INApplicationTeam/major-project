@@ -1,11 +1,13 @@
 package controller.springcontroller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,7 @@ import model.springmodel.ClassDiscussionReply;
 import model.springmodel.ClassPosts;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
+import model.springmodel.CommentLikers;
 import service.springservice.ClassService;
 import service.springservice.DiscussionService;
 import service.springservice.EventService;
@@ -77,7 +80,7 @@ public class ClassController
 			List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 			theModel.addAttribute("classCoordinator", theClassCoordinator);	
 			
-			List<Object> allClassPosts=classservice.showClassPosts(classid,false);
+			List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid());
 			theModel.addAttribute("allClassPosts",allClassPosts);
 			
 			String currentsem =new UserModel().getSem(object);
@@ -141,7 +144,7 @@ public class ClassController
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
-		List<Object> allClassPosts=classservice.showClassPosts(classId,false);
+		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid);
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		
 		theModel.addAttribute("isCurrentYear",isCurrentYear);
@@ -282,7 +285,10 @@ public class ClassController
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
 		
-		List<ClassDiscussion> discussionsList=discussionservice.showDiscussions(classId);
+		UserModel um=new UserModel();
+		String userId=um.getUserId(session.getAttribute("userModel"));
+		
+		List<ClassDiscussion> discussionsList=discussionservice.showDiscussions(classId,userId);
 		model.addAttribute("discussionsList",discussionsList);
 		
 		return "classDiscussions";
@@ -390,7 +396,7 @@ public class ClassController
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
-		List<Object> allClassPosts=classservice.showClassPosts(classid,false);
+		List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid());
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		
 		String currentsem =new UserModel().getSem(object);
@@ -432,7 +438,10 @@ public class ClassController
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
 		
-		List<Object> pendingPostsList=classservice.showClassPosts(classId,true);
+		UserModel um=new UserModel();
+		String userId=um.getUserId(session.getAttribute("userModel"));
+		
+		List<Object> pendingPostsList=classservice.showClassPosts(classId,true,userId);
 		theModel.addAttribute("pendingPosts",pendingPostsList);
 		
 		theModel.addAttribute("acceptOrReject",new ClassPosts());
@@ -447,6 +456,47 @@ public class ClassController
 		return "redirect:/major/class/showPendingPosts";
 	}
 	
+	@PostMapping("/LikeComment")
+	public void likeComment(@RequestParam("commentId") Integer commentId,@RequestParam("likesCount")Integer likesCount,HttpServletRequest request,HttpServletResponse response)
+	{
+		HttpSession session=request.getSession();
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		
+		CommentLikers commentLikers=new CommentLikers();
+		commentLikers.setCommentId(commentId);
+		commentLikers.setUid(userId);
+		
+		int result=discussionservice.likeComment(commentLikers);
+		
+		try {
+				response.getWriter().println(result);
+		} catch (IOException e) 
+		{	
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@PostMapping("/UnLikeComment")
+	public void unLikeComment(@RequestParam("commentId") Integer commentId,@RequestParam("likesCount")Integer likesCount,HttpServletRequest request,HttpServletResponse response)
+	{
+		HttpSession session=request.getSession();
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		
+		CommentLikers commentLikers=new CommentLikers();
+		commentLikers.setCommentId(commentId);
+		commentLikers.setUid(userId);
+		
+		int result=discussionservice.unLikeComment(commentLikers);
+		
+		try {
+				response.getWriter().println(result);
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+	}
 }
 
 

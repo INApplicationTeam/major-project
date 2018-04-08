@@ -92,8 +92,8 @@ public class ClassServiceImpl implements ClassService {
 	
 	@Override
 	@Transactional
-	public List<Object> showClassPosts(String classid,Boolean isPending) {
-		return classdao.showClassPosts(classid,isPending);
+	public List<Object> showClassPosts(String classid,Boolean isPending,String userId) {
+		return classdao.showClassPosts(classid,isPending,userId);
 	}
 
 	@Override

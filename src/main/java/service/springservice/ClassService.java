@@ -39,7 +39,7 @@ public interface ClassService {
 
 	List<ClassSubjectFaculty> getSubjectClassDetails(String fid,int year);
 
-	List<Object> showClassPosts(String classid,Boolean isPending);
+	List<Object> showClassPosts(String classid,Boolean isPending,String userId);
 
 	void acceptOrRejectPost(ClassPosts theClassPost);
 
