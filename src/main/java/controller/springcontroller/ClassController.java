@@ -83,6 +83,9 @@ public class ClassController
 			List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
 			theModel.addAttribute("allClassPosts",allClassPosts);
 			
+			List<Object> allPinnedPosts=classservice.showPinnedPosts(classid,false,sm.getSid());
+			theModel.addAttribute("allPinnedPosts",allPinnedPosts);		
+					
 			String currentsem =new UserModel().getSem(object);
 			String selectedsem=currentsem;
 			theModel.addAttribute("currentsem",currentsem);
@@ -148,6 +151,9 @@ public class ClassController
 		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid,checkPinned);
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		theModel.addAttribute("checkPinned",checkPinned);
+		
+		List<Object> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
+		theModel.addAttribute("allPinnedPosts",allPinnedPosts);
 		
 		theModel.addAttribute("isCurrentYear",isCurrentYear);
 		theModel.addAttribute("classid", classId);
@@ -568,6 +574,9 @@ public class ClassController
 		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid,checkPinned);
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		theModel.addAttribute("checkPinned",checkPinned);
+		
+		List<Object> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
+		theModel.addAttribute("allPinnedPosts",allPinnedPosts);
 		
 		theModel.addAttribute("isCurrentYear",isCurrentYear);
 		theModel.addAttribute("classid", classId);

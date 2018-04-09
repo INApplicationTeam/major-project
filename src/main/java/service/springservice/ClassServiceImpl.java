@@ -115,6 +115,14 @@ public class ClassServiceImpl implements ClassService {
 		return classdao.unPinPost(pinnedClassPost);
 		
 	}
+
+	@Override
+	@Transactional
+	public List<Object> showPinnedPosts(String classid, boolean isPending, String userId) {
+		return classdao.showPinnedPosts(classid,isPending,userId);
+	}
+	
+	
 	
 }
 

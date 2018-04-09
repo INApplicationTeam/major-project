@@ -46,5 +46,7 @@ public interface ClassDAO {
 	int pinPost(ClassPosts pinnedClassPost);
 
 	int unPinPost(ClassPosts pinnedClassPost);
+
+	List<Object> showPinnedPosts(String classid, boolean isPending, String userId);
 	
 }
