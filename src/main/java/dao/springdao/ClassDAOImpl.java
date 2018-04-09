@@ -167,7 +167,7 @@ public class ClassDAOImpl implements ClassDAO {
 	
 	
 	@Override
-	public List<Object> showClassPosts(String classid,Boolean isPending,String userId) {
+	public List<Object> showClassPosts(String classid,Boolean isPending,String userId,List<Boolean> isPinned) {
 		
 		Session currentSession=sessionFactory.getCurrentSession();
 		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid order by id desc",ClassPosts.class);
@@ -261,6 +261,11 @@ public class ClassDAOImpl implements ClassDAO {
 				}
 			}
 			
+			if(!isPending && (userId.startsWith("F") || userId.startsWith("f")))
+			{
+				isPinned.add(classPost.isPinned());
+			}
+			
 		}
 				
 		return classPostsDetails;
@@ -284,6 +289,30 @@ public class ClassDAOImpl implements ClassDAO {
 			qr.setParameter("id",theClassPost.getPostid());
 			qr.executeUpdate();
 		}
+	}
+
+	@Override
+	public int pinPost(ClassPosts pinnedClassPost) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();	
+		Query qr=currentSession.createQuery("update ClassPosts set pinned=:pinned where postid=:postid and post_type=:post_type");
+		qr.setParameter("pinned",true);
+		qr.setParameter("postid",pinnedClassPost.getPostid());
+		qr.setParameter("post_type",pinnedClassPost.getPost_type());
+		int result=qr.executeUpdate();
+		return result;
+	}
+	
+	@Override
+	public int unPinPost(ClassPosts pinnedClassPost) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();	
+		Query qr=currentSession.createQuery("update ClassPosts set pinned=:pinned where postid=:postid and post_type=:post_type");
+		qr.setParameter("pinned",false);
+		qr.setParameter("postid",pinnedClassPost.getPostid());
+		qr.setParameter("post_type",pinnedClassPost.getPost_type());
+		int result=qr.executeUpdate();
+		return result;
 	}
 	
 	

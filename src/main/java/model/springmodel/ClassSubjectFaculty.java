@@ -131,7 +131,7 @@ public class ClassSubjectFaculty implements Serializable
 	@Override
 	public String toString() {
 		return "ClassSubjectFaculty [id=" + id + ", branch=" + branch + ", sem=" + sem + ", sec=" + sec + ", batch="
-				+ batch + ", classid=" + classid + ", subcode=" + subject.getSubcode() + "]";
+				+ batch + ", classid=" + classid + ", subcode=" + "" + "]";
 	}
 
 }
