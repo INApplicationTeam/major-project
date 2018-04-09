@@ -289,7 +289,44 @@
 			${temp3.name} &nbsp;		
 		</c:forEach>
 	<hr>
-		
+	
+	<center><h1>PINNED POSTS</h1></center>
+	<table>
+		<c:forEach var="pinpost" items="${allPinnedPosts}" begin="0" varStatus="pendingPostLoop">
+			<c:if test="${pinpost.getClass().name == 'model.springmodel.ClassDiscussion'}">
+				<tr>
+					<td><b>[DISCUSSION]</b></td>
+					<td><i>${pinpost.title}</i></td>
+					<td></td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${pinpost.getClass().name == 'model.springmodel.Events'}">
+				<tr>
+					<td><b>[EVENT]</b></td>
+					<td><i>${pinpost.title}</i></td>
+					<td></td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${pinpost.getClass().name == 'model.springmodel.PollQueDetails'}">
+				<tr>
+					<td><b>[POLL]</b></td>
+					<td><i>${pinpost.question}</i></td>
+					<td></td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${pinpost.getClass().name == 'model.springmodel.Question'}">
+				<tr>
+					<td><b>[QUESTION]</b></td> 
+					<td><i>${pinpost.que}</i></td>
+					<td></td>
+				</tr>
+			</c:if>
+		</c:forEach>
+	</table>
+	<hr>	
 	<center><h1>CLASS POSTS</h1></center>
 	<c:set var="countQue" value="-1" scope="page" />
 	
