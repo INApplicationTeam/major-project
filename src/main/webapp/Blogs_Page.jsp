@@ -150,9 +150,9 @@
                         
                         
                         <button value="upvote&bid=<%= bm.getBlogId() %>&index=<%=i%>" class="up btn btn-info" onclick="upvote(<%=i%>)"><i class="fa fa-smile-o"></i>&nbsp;&nbsp;Voilà!</button>
-                        <span class="votecount"> <%=bm.getUpvotes()%></span>
+                        <span class="upvotecount"> <%=bm.getUpvotes()%></span>
                         <button value="downvote&bid=<%=bm.getBlogId() %>&index=<%=i%>"  class="down btn btn-unique " onclick="downvote(<%=i%>)"><i class=" fa fa-meh-o"></i>&nbsp;&nbsp;Bléh!</button>
-                        
+                        <span class="downvotecount"> <%=bm.getDownvotes()%></span>
                         
                         <!--"Read more" button-->
 <!--                        <button class="btn btn-info">Read more</button>-->
@@ -314,9 +314,12 @@ function downvote(x)
 function showVoteCount()
 {
     if(request.readyState===4 && request.status===200){
-        var p=document.getElementsByClassName("votecount");
+        var p=document.getElementsByClassName("upvotecount");
+        var q=document.getElementsByClassName("downvotecount");
+        var updowncount=JSON.parse(request.responseText);
         console.log(request.responseText);
-        p[index].innerHTML=request.responseText;
+        p[index].innerHTML=updowncount.uvotes;
+        q[index].innerHTML=updowncount.dvotes;
     }
 }
 

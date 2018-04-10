@@ -12,12 +12,27 @@ import java.util.ArrayList;
  * @author rohan
  */
 public class BlogModel {
-    private int blogId,upvotes,did;
+    private int blogId,upvotes,did,downvotes;
     private String blogContent,uid,uname,dname,title;
     private ArrayList<BlogCommentModel> arbcm;
-    
     private Long timestamp;
 
+  @Override
+	public String toString() {
+		return "BlogModel [blogId=" + blogId + ", upvotes=" + upvotes + ", did=" + did + ", uid=" + uid + ", uname="
+				+ uname + ", dname=" + dname + ", title=" + title + ", timestamp=" + timestamp + "]";
+	}
+
+	
+    public int getDownvotes() {
+		return downvotes;
+	}
+
+	public void setDownvotes(int downvotes) {
+		this.downvotes = downvotes;
+	}
+    
+	
 	public Long getTimestamp() {
 		return timestamp;
 	}
