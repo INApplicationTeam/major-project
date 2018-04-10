@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import model.AllBlogModel;
+import model.AnswerModel;
 import model.BlogCommentModel;
 import model.BlogModel;
 import model.BlogReplyModel;
@@ -22,11 +23,52 @@ import model.BlogReplyModel;
  *
  * @author rohan
  */
+@SuppressWarnings("unchecked")
 public class BlogDao {
     Connection con;
     PreparedStatement ps;
     String qr;
     ResultSet rs;
+    
+    public ArrayList<BlogModel> getBlogFeed(String uid, ServletContext context)
+    {
+    	con=(Connection)context.getAttribute("datacon");
+    	ArrayList<String> dlist=(ArrayList<String>)context.getAttribute("dlist");
+    	qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,blogs.did,blogtitle,uname,downvotes from blogs inner join allusers on blogs.uid=allusers.uid where did in (select did from userdomain where uid=?) or blogs.uid in (select otherUserId from userfollowers where myUserId=?) order by blogid desc";
+		try {
+			ps=con.prepareStatement(qr);
+			ps.setString(1, uid);
+			ps.setString(2, uid);
+			
+			rs=ps.executeQuery();
+			
+			BlogModel bm;
+			ArrayList<BlogModel> arbm=new ArrayList<>();
+			
+			while(rs.next())
+			{
+				bm=new BlogModel();
+				bm.setBlogId(rs.getInt(1));
+				bm.setUid(rs.getString(2));
+				bm.setBlogContent(rs.getString(3));
+				bm.setTimestamp(rs.getString(4));
+				bm.setUpvotes(rs.getInt(5));
+				bm.setDid(rs.getInt(6));
+				bm.setTitle(rs.getString(7));
+				bm.setDname(dlist.get(bm.getDid()-1));
+				bm.setUname(rs.getString(8));
+				bm.setDownvotes(rs.getInt(9));
+				
+				arbm.add(bm);
+			}
+			return arbm;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    	return null;
+    }
     
     public boolean insertBlog(BlogModel bm,ServletContext context)
     {
@@ -35,14 +77,13 @@ public class BlogDao {
             ArrayList<String> dlist=(ArrayList<String>)context.getAttribute("dlist");
             bm.setDname(dlist.get(bm.getDid()-1));
             
-            qr="insert into blogs(uid,blogcontent,timestamp,upvote,did,blogtitle) values(?,?,?,?,?,?)";
+            qr="insert into blogs(uid,blogcontent,timestamp,did,blogtitle) values(?,?,?,?,?)";
             ps=con.prepareStatement(qr);
             ps.setString(1,bm.getUid());
             ps.setString(2,bm.getBlogContent());
             ps.setString(3,bm.getTimestamp());
-            ps.setInt(4,bm.getUpvotes());
-            ps.setInt(5,bm.getDid());
-            ps.setString(6,bm.getTitle());
+            ps.setInt(4,bm.getDid());
+            ps.setString(5,bm.getTitle());
             
             return (ps.executeUpdate()>0);
         } catch (SQLException ex) {
@@ -53,7 +94,7 @@ public class BlogDao {
     
     public void getMyBlogs(AllBlogModel abm,String id,ServletContext context)
     {
-        qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,did,blogtitle,allusers.uname from blogs natural join allusers where uid=? order by blogid desc";
+        qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,did,blogtitle,allusers.uname,downvotes from blogs natural join allusers where uid=? order by blogid desc";
         con=(Connection)context.getAttribute("datacon");
         ArrayList<String>dlist=(ArrayList<String>)context.getAttribute("dlist");
         BlogModel bm;
@@ -76,6 +117,7 @@ public class BlogDao {
              bm.setTitle(rs.getString(7));
              bm.setUname(rs.getString(8));
              bm.setDname(dlist.get(rs.getInt(6)-1));
+             bm.setDownvotes(rs.getInt(9));
              
              albm.add(bm);
             }
@@ -105,7 +147,7 @@ public class BlogDao {
     {
         try {
             con=(Connection)context.getAttribute("datacon");
-            String qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,did,blogtitle,uname from blogs inner join allusers on blogs.uid=allusers.uid where did=? order by blogid desc";
+            String qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,did,blogtitle,uname,downvotes from blogs inner join allusers on blogs.uid=allusers.uid where did=? order by blogid desc";
             ps=con.prepareStatement(qr);
             ps.setInt(1, did);
             rs=ps.executeQuery();
@@ -127,6 +169,7 @@ public class BlogDao {
             bm.setTitle(rs.getString(7));
             bm.setUname(rs.getString(8));
             bm.setDname(dname);
+            bm.setDownvotes(rs.getInt(9));;
             
             albm.add(bm);
             }
@@ -142,7 +185,7 @@ public class BlogDao {
     public BlogModel getBlogById(int bid,ServletContext context)
     {
     	con=(Connection)context.getAttribute("datacon");
-    	String qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,did,blogtitle,uname from blogs inner join allusers on blogs.uid=allusers.uid where blogid=?";
+    	String qr="select blogid,blogs.uid,blogcontent,timestamp,upvote,did,blogtitle,uname,downvotes from blogs inner join allusers on blogs.uid=allusers.uid where blogid=?";
     	try {
 			ps=con.prepareStatement(qr);
 			ps.setInt(1, bid);
@@ -164,6 +207,7 @@ public class BlogDao {
 	            bm.setTitle(rs.getString(7));
 	            bm.setUname(rs.getString(8));
 	            bm.setDname(dlist.get(rs.getInt(6)-1));
+	            bm.setDownvotes(rs.getInt(9));
 			}
 			
 			String qr1="select bid,cid,comment,timestamp,allusers.uid,likes,flag,uname from blogcomments inner join allusers on blogcomments.uid=allusers.uid where bid=?";
@@ -189,6 +233,8 @@ public class BlogDao {
 				bcm.setFlags(rs.getInt(7));
 				bcm.setUname(rs.getString(8));
 				
+				System.out.println(rs.getString(3)+"\n");
+				
 				String qr2="select rid,cid,reply,timestamp,likes,flag,allusers.uid,uname from blog_comment_replies inner join allusers on blog_comment_replies.uid=allusers.uid where cid=?";
 				ps1=con.prepareStatement(qr2);
 				ps1.setInt(1, rs.getInt(2));
@@ -200,14 +246,14 @@ public class BlogDao {
 				while(rs1.next())
 				{
 					brm=new BlogReplyModel();
-					brm.setRid(rs.getInt(1));
-					brm.setCid(rs.getInt(2));
-					brm.setReply(rs.getString(3));
-					brm.setTimestamp(rs.getLong(4));
-					brm.setLikes(rs.getInt(5));
-					brm.setFlags(rs.getInt(6));
-					brm.setUid(rs.getString(7));
-					brm.setUname(rs.getString(8));
+					brm.setRid(rs1.getInt(1));
+					brm.setCid(rs1.getInt(2));
+					brm.setReply(rs1.getString(3));
+					brm.setTimestamp(rs1.getLong(4));
+					brm.setLikes(rs1.getInt(5));
+					brm.setFlags(rs1.getInt(6));
+					brm.setUid(rs1.getString(7));
+					brm.setUname(rs1.getString(8));
 					
 					arbrm.add(brm);
 				}
@@ -229,18 +275,17 @@ public class BlogDao {
     	
     }
     
-    public int incVote(BlogModel bm,ServletContext context)
+    public void incVote(BlogModel bm,ServletContext context,String id)
     {
         try {
             con=(Connection)context.getAttribute("datacon");
-            String qr0="select status from voterblogdetail where bid=? and voterid=?";
+            String qr0="select status,voterid from voterblogdetail where bid=? and voterid=?";
             ps=con.prepareStatement(qr0);
             ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
-            
+            ps.setString(2,id);
             rs=ps.executeQuery();
             boolean flag=rs.next();
-            if(!flag) //
+            if(!flag) 
             {
             String qr="update blogs set upvote=upvote+1 where blogid=?";
             
@@ -252,76 +297,84 @@ public class BlogDao {
             ps=con.prepareStatement(qr1);
             
             ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
+            ps.setString(2,id);
             ps.setString(3,"up");
             ps.executeUpdate();
             }
+            
             else 
             {
-            if(rs.getString(1).equals("down"))
-            {
-            String qr3="update blogs set upvote=upvote+2 where blogid=?";
+	            if(rs.getString(1).equals("down"))
+	            {
+	            String qr3="update blogs set upvote=upvote+1 where blogid=?";
+	            
+	            ps=con.prepareStatement(qr3);
+	            ps.setInt(1,bm.getBlogId());
+	            ps.executeUpdate();
+	            
+	            String qr4="update voterblogdetail set status='up' where bid=? and voterid=?";
+	            ps=con.prepareStatement(qr4);
+	            ps.setInt(1,bm.getBlogId());
+	            ps.setString(2,id);
+	            ps.executeUpdate();
+	            
+	            String qr7="update blogs set downvotes=downvotes-1 where blogid=?";
+	            ps=con.prepareStatement(qr7);
+	            ps.setInt(1,bm.getBlogId());
+	            ps.executeUpdate();
+	            }
             
-            ps=con.prepareStatement(qr3);
-            ps.setInt(1,bm.getBlogId());
-            ps.executeUpdate();
-            
-            String qr4="update voterblogdetail set status='up' where bid=? and voterid=?";
-            ps=con.prepareStatement(qr4);
-            ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
-            ps.executeUpdate();
+	            else if(rs.getString(1).equals("up"))
+	            {
+	            String qr5="update blogs set upvote=upvote-1 where blogid=?";
+	            
+	            ps=con.prepareStatement(qr5);
+	            ps.setInt(1,bm.getBlogId());
+	            ps.executeUpdate();
+	            
+	            String qr6="delete from voterblogdetail where bid=? and voterid=?";
+	            ps=con.prepareStatement(qr6);
+	            ps.setInt(1,bm.getBlogId());
+	            ps.setString(2,id);
+	            ps.executeUpdate();
+	            }
             }
-            else if(rs.getString(1).equals("up"))
-            {
-            String qr5="update blogs set upvote=upvote-1 where blogid=?";
             
-            ps=con.prepareStatement(qr5);
-            ps.setInt(1,bm.getBlogId());
-            ps.executeUpdate();
-            
-            String qr6="delete from voterblogdetail where bid=? and voterid=?";
-            ps=con.prepareStatement(qr6);
-            ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
-            ps.executeUpdate();
-            }
-            }
-            
-            String qr2="select upvote from blogs where blogid=?";
+            String qr2="select upvote,downvotes from blogs where blogid=?";
             ps=con.prepareStatement(qr2);
             ps.setInt(1,bm.getBlogId());
             rs=ps.executeQuery();
             
-            int voteCount=0;
+            int upvoteCount=0,downvoteCount=0;
             if(rs.next())
             {
-                voteCount=rs.getInt(1);
+                upvoteCount=rs.getInt(1);
+                downvoteCount=rs.getInt(2);
             }
-            return voteCount;
+            bm.setDownvotes(downvoteCount);
+            bm.setUpvotes(upvoteCount);
+            
         } catch (SQLException ex) {
             Logger.getLogger(BlogDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-    return 0;
     }
     
     
     
     
-    public int decVote(BlogModel bm,ServletContext context)
+    public void decVote(BlogModel bm,ServletContext context,String id)
     {
         try {
             con=(Connection)context.getAttribute("datacon");
-            String qr0="select status from voterblogdetail where bid=? and voterid=?";
+            String qr0="select status,voterid from voterblogdetail where bid=? and voterid=?";
             ps=con.prepareStatement(qr0);
             ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
-            
+            ps.setString(2,id);
             rs=ps.executeQuery();
             boolean flag=rs.next();
-            if(!flag) //
+            if(!flag)
             {
-            String qr="update blogs set upvote=upvote-1 where blogid=?";
+            String qr="update blogs set downvotes=downvotes+1 where blogid=?";
             
             ps=con.prepareStatement(qr);
             ps.setInt(1,bm.getBlogId());
@@ -331,7 +384,7 @@ public class BlogDao {
             ps=con.prepareStatement(qr1);
             
             ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
+            ps.setString(2,id);
             ps.setString(3,"down");
             ps.executeUpdate();
             }
@@ -339,7 +392,7 @@ public class BlogDao {
             {
             if(rs.getString(1).equals("up"))
             {
-            String qr3="update blogs set upvote=upvote-2 where blogid=?";
+            String qr3="update blogs set upvote=upvote-1 where blogid=?";
             
             ps=con.prepareStatement(qr3);
             ps.setInt(1,bm.getBlogId());
@@ -348,12 +401,18 @@ public class BlogDao {
             String qr4="update voterblogdetail set status='down' where bid=? and voterid=?";
             ps=con.prepareStatement(qr4);
             ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
+            ps.setString(2,id);
             ps.executeUpdate();
+            
+            String qr7="update blogs set downvotes=downvotes+1 where blogid=?";
+            ps=con.prepareStatement(qr7);
+            ps.setInt(1,bm.getBlogId());
+            ps.executeUpdate();
+            
             }
             else if(rs.getString(1).equals("down"))
             {
-            String qr5="update blogs set upvote=upvote+1 where blogid=?";
+            String qr5="update blogs set downvotes=downvotes-1 where blogid=?";
             
             ps=con.prepareStatement(qr5);
             ps.setInt(1,bm.getBlogId());
@@ -362,27 +421,31 @@ public class BlogDao {
             String qr6="delete from voterblogdetail where bid=? and voterid=?";
             ps=con.prepareStatement(qr6);
             ps.setInt(1,bm.getBlogId());
-            ps.setString(2,bm.getUid());
+            ps.setString(2,id);
             ps.executeUpdate();
             }
             }
             
-            String qr2="select upvote from blogs where blogid=?";
+            String qr2="select upvote,downvotes from blogs where blogid=?";
             ps=con.prepareStatement(qr2);
             ps.setInt(1,bm.getBlogId());
             rs=ps.executeQuery();
             
-            int voteCount=0;
+            int upvoteCount=0,downvoteCount=0;
             if(rs.next())
             {
-                voteCount=rs.getInt(1);
+                upvoteCount=rs.getInt(1);
+                downvoteCount=rs.getInt(2);
             }
-            return voteCount;
+            bm.setDownvotes(downvoteCount);
+            bm.setUpvotes(upvoteCount);
+            
         } catch (SQLException ex) {
             Logger.getLogger(BlogDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-    return 0;
+        
     }
+    
     
     public void deleteBlog(BlogModel bm,ServletContext context)
     {
