@@ -15,26 +15,18 @@ public class BlogModel {
     private int blogId,upvotes,did;
     private String blogContent,uid,uname,dname,title;
     private ArrayList<BlogCommentModel> arbcm;
-    private String timestamp;
+    
+    private Long timestamp;
 
-    private Long timestamp1;
-
-	public Long getTimestamp1() {
-		return timestamp1;
-	}
-
-	public void setTimestamp1(Long timestamp1) {
-		this.timestamp1 = timestamp1;
-	}
-
-	public String getTimestamp() {
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 
+	
 	public String getUname() {
         return uname;
     }

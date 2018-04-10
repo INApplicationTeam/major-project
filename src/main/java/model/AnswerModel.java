@@ -11,9 +11,9 @@ package model;
  */
 public class AnswerModel {
     private int qid,upvotes,downvotes,reportAbuseCount,views;
-    private String text="",ansDate,uid,uname,answer="";
+    private String text="",uid,uname,answer="";
     private boolean isViewed;
-    
+    private Long ansDate;
     
     
     public boolean isViewed() {
@@ -81,11 +81,11 @@ public class AnswerModel {
         this.text = text;
     }
 
-    public String getAnsDate() {
+    public Long getAnsDate() {
         return ansDate;
     }
 
-    public void setAnsDate(String ansDate) {
+    public void setAnsDate(Long ansDate) {
         this.ansDate = ansDate;
     }
 

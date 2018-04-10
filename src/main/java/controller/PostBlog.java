@@ -82,7 +82,7 @@ public class PostBlog extends HttpServlet {
             bm.setBlogContent(json);
             bm.setDid(did);
             bm.setTitle(title);
-            bm.setTimestamp(DateFormat.getDateInstance().format(new Date()).toString());
+            bm.setTimestamp(new Date().getTime());
             
             BlogDao bd=new BlogDao();
             bd.insertBlog(bm,context);

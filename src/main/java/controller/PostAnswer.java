@@ -91,7 +91,7 @@ public class PostAnswer extends HttpServlet {
           AnswerModel am=new AnswerModel();
           am.setText(json);
           am.setAnswer(json);
-          am.setAnsDate(DateFormat.getDateInstance().format(new Date()).toString());
+          am.setAnsDate(new Date().getTime());
           am.setQid(Integer.parseInt(qid));
           am.setUid(answererId);
           am.setUname(answererName);

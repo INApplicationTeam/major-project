@@ -131,7 +131,7 @@ public class DomainDao {
                qm.setUid(rs.getString(3));
                qm.setReportAbuseCount(rs.getInt(4));
                qm.setDomain(rs.getInt(5));
-               qm.setQuedate(rs.getString(6));
+               qm.setQuedate(rs.getLong(6));
                qm.setUname(rs.getString(7));
                qm.setdName(dcm.getDname());
                

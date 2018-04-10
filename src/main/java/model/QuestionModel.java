@@ -14,9 +14,10 @@ import java.util.ArrayList;
  */
 public class QuestionModel {
     private int qid,reportAbuseCount,domain;
-    private String que,uid,uname,quedate,dName,mostUpvotedAnswer="",topAnswerer,answererName="No one";
+    private String que,uid,uname,dName,mostUpvotedAnswer="",topAnswerer,answererName="No one";
     private ArrayList<String> tags;
     private boolean isFollowed;
+    private Long quedate;
     
     public String getdName() {
         return dName;
@@ -50,11 +51,11 @@ public class QuestionModel {
         this.dName = dName;
     }
 
-    public String getQuedate() {
+    public Long getQuedate() {
         return quedate;
     }
 
-    public void setQuedate(String quedate) {
+    public void setQuedate(Long quedate) {
         this.quedate = quedate;
     }
 

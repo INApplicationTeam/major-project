@@ -36,7 +36,7 @@ public class Answer implements Serializable {
 	private UserModel userModel;
 	
 	@Column(name="timestamp")
-	private String timestamp;
+	private Long timestamp;
 	
 	@Column(name="upvotes")
 	private int upvotes;
@@ -83,11 +83,11 @@ public class Answer implements Serializable {
 		this.userModel = userModel;
 	}
 
-	public String getTimestamp() {
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 

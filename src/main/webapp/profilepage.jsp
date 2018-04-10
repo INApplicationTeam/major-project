@@ -48,93 +48,97 @@
 
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-        <link rel="icon" type="image/png" href="MDB Free/img/img1.png">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta charset="utf-8" />
+<link rel="apple-touch-icon" sizes="76x76"
+	href="../assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="MDB Free/img/img1.png">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Korero</title>
+<title>Korero</title>
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
 
-	<!--     Fonts and icons     -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
-	<link rel="stylesheet" href="MDB Free/font-awesome-4.7.0/css/font-awesome.min.css" />
+<!--     Fonts and icons     -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+<link rel="stylesheet" type="text/css"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+<link rel="stylesheet"
+	href="MDB Free/font-awesome-4.7.0/css/font-awesome.min.css" />
 
-	<!-- CSS Files -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/material-kit.css" rel="stylesheet"/>
-    
-     <script src="https://cdn.quilljs.com/1.2.3/quill.js"></script>
-     <script src="https://cdn.quilljs.com/1.2.3/quill.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-     <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css" rel="stylesheet">
-     <link href="https://cdn.quilljs.com/1.1.3/quill.bubble.css" rel="stylesheet">
-	
-	 <style type="text/css">
-    	
-        .limittext {
-    white-space: nowrap; 
-    width: 100%; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
+<!-- CSS Files -->
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/material-kit.css" rel="stylesheet" />
+
+<script src="https://cdn.quilljs.com/1.2.3/quill.js"></script>
+<script src="https://cdn.quilljs.com/1.2.3/quill.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link href="https://cdn.quilljs.com/1.1.3/quill.snow.css"
+	rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.1.3/quill.bubble.css"
+	rel="stylesheet">
+
+<style type="text/css">
+.limittext {
+	white-space: nowrap;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 img.resize {
-  max-width:15%;
-  max-height:15%;
-  float: right;
+	max-width: 15%;
+	max-height: 15%;
+	float: right;
 }
 
 .card img {
-    width: auto;
-    height: auto;
+	width: auto;
+	height: auto;
 }
 
 .profile-page .gallery img {
-  width: auto;
-  margin-bottom: 30px;
+	width: auto;
+	margin-bottom: 30px;
 }
 
-
-.ans, .editormyans, .myblogeditor{
-		  font-family: "roboto";
-		  font-size: 21px;
-		  font-weight: 300;
-		  word-wrap: break-word;
-	}
-	
-	b, strong {
-    font-weight: bold;
+.ans, .editormyans, .myblogeditor {
+	font-family: "roboto";
+	font-size: 21px;
+	font-weight: 300;
+	word-wrap: break-word;
 }
 
-pre{
+b, strong {
+	font-weight: bold;
+}
 
-font-size: 90%;
+pre {
+	font-size: 90%;
 }
 
 .ql-container.ql-snow {
-    border: 0px solid #ccc;
+	border: 0px solid #ccc;
 }
 
 .ql-snow .ql-editor img {
-    max-width: 50%;
-    max-height: 50%;
+	max-width: 50%;
+	max-height: 50%;
 }
+</style>
 
 
-    </style>
-    
-     
 
 </head>
 
 <body class="profile-page">
-         <div id="toolbarque" style="display: none"></div>
-         <div id="editorque" style="display: none"></div>
-         
-         <script>
+	<div id="toolbarque" style="display: none"></div>
+	<div id="editorque" style="display: none"></div>
+
+	<script>
          
          var isNoOne=false;
          var quillAnswers=[];
@@ -255,156 +259,230 @@ font-size: 90%;
                 }
             
         </script>
+
+	<script type="text/javascript">
+    	function time_ago(time) {
+
+  		  switch (typeof time) {
+  		    case 'number':
+  		      break;
+  		    case 'string':
+  		      time = +new Date(time);
+  		      break;
+  		    case 'object':
+  		      if (time.constructor === Date) time = time.getTime();
+  		      break;
+  		    default:
+  		      time = +new Date();
+  		  }
+  		  var time_formats = [
+  		    [60, 'seconds', 1], // 60
+  		    [120, '1 minute ago', '1 minute from now'], // 60*2
+  		    [3600, 'minutes', 60], // 60*60, 60
+  		    [7200, '1 hour ago', '1 hour from now'], // 60*60*2
+  		    [86400, 'hours', 3600], // 60*60*24, 60*60
+  		    [172800, 'Yesterday', 'Tomorrow'], // 60*60*24*2
+  		    [604800, 'days', 86400], // 60*60*24*7, 60*60*24
+  		  ];
+  		  var seconds = (+new Date() - time) / 1000,
+  		    token = 'ago',
+  		    list_choice = 1;
+
+  		  if (seconds == 0) {
+  		    return 'Just now'
+  		  }
+  		  if (seconds < 0) {
+  		    seconds = Math.abs(seconds);
+  		    token = 'from now';
+  		    list_choice = 2;
+  		  }
+  		  var i = 0,
+  		    format;
+  		  while (format = time_formats[i++])
+  		    if (seconds < format[0]) {
+  		      if (typeof format[2] == 'string')
+  		        return format[list_choice];
+  		      else
+  		        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
+  		    }
+  		  return "on "+new Date(time).toDateString();
+  		}
         
-        
-         
-	<nav class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
-    	<div class="container">
-        	<!-- Brand and toggle get grouped for better mobile display -->
-        	<div class="navbar-header">
-        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
-            		<span class="sr-only">Toggle navigation</span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-        		</button>
-        		<a class="navbar-brand" href="MyFeed">
-                <img src="MDB Free/img/logo.png" class="img-fluid" style="width: 180px">
-            </a>
-        	</div>
+        function setTime(id,time)
+        {
+        	document.getElementById(id).innerHTML=time_ago(new Date(time));
+        }
+  	
+        </script>
 
-        	<div class="collapse navbar-collapse" id="navigation-example">
-        		<ul class="nav navbar-nav navbar-right">
-					<li>
-    					<a href="MyFeed">
-    						Home
-    					</a>
-    				</li>
-    				<li class="dropdown">
-			        			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">person</i></a>
-			        			<ul class="dropdown-menu">
-								 
-								 
-								  <li><a href="EditProfile">Edit Profile</a></li>
-								  <li class="divider"></li>
-								  <li><a href="ChangePassword.jsp?uid=<%=uid%>">Change Password</a></li>
-								  <li class="divider"></li>
-							      <li><a href="LogOut">Log Out</a></li>
-			        			</ul>
-			        		</li>
-		            
-        		</ul>
-        	</div>
-    	</div>
-    </nav>
-
-    <div class="wrapper">
-		
-
-		<div class="header header-filter" style="background-image: url('img/testd.jpg');">
+	<nav
+		class="navbar navbar-info navbar-transparent navbar-fixed-top navbar-color-on-scroll">
 		<div class="container">
-		<br><br><br>
-			<div class="col-md-4 text-center"><h2 style="font-weight: bold;color: #ffffff;">Questions Asked:</h2>
-				<br><label class="label label-info" style="font-size: 50px;"><%= rqm.getRelatedque().size() %></label>
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#navigation-example">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="MyFeed"> <img
+					src="MDB Free/img/logo.png" class="img-fluid" style="width: 180px">
+				</a>
 			</div>
-			<div class="col-md-4 text-center"><h2 style="font-weight: bold;color: #ffffff;">Answers Written:</h2>
-				<br><label class="label label-info" style="font-size: 50px;"><%= qam.getAlam().size() %></label>
-			</div>
-			<div class="col-md-4 text-center"><h2 style="font-weight: bold;color: #ffffff;">Blogs: </h2>
-				<br><label class="label label-info" style="font-size: 50px;"><%= abm.getAbm().size() %></label>
+
+			<div class="collapse navbar-collapse" id="navigation-example">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="MyFeed"> Home </a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"><i class="material-icons">person</i></a>
+						<ul class="dropdown-menu">
+
+
+							<li><a href="EditProfile">Edit Profile</a></li>
+							<li class="divider"></li>
+							<li><a href="ChangePassword.jsp?uid=<%=uid%>">Change
+									Password</a></li>
+							<li class="divider"></li>
+							<li><a href="LogOut">Log Out</a></li>
+						</ul></li>
+
+				</ul>
 			</div>
 		</div>
-</div>
+	</nav>
+
+	<div class="wrapper">
+
+
+		<div class="header header-filter"
+			style="background-image: url('img/testd.jpg');">
+			<div class="container">
+				<br>
+				<br>
+				<br>
+				<div class="col-md-4 text-center">
+					<h2 style="font-weight: bold; color: #ffffff;">Questions
+						Asked:</h2>
+					<br>
+					<label class="label label-info" style="font-size: 50px;"><%= rqm.getRelatedque().size() %></label>
+				</div>
+				<div class="col-md-4 text-center">
+					<h2 style="font-weight: bold; color: #ffffff;">Answers
+						Written:</h2>
+					<br>
+					<label class="label label-info" style="font-size: 50px;"><%= qam.getAlam().size() %></label>
+				</div>
+				<div class="col-md-4 text-center">
+					<h2 style="font-weight: bold; color: #ffffff;">Blogs:</h2>
+					<br>
+					<label class="label label-info" style="font-size: 50px;"><%= abm.getAbm().size() %></label>
+				</div>
+			</div>
+		</div>
 
 		<div class="main main-raised">
 			<div class="profile-content">
-	            <div class="container">
-	                <div class="row">
-	                    <div class="profile">
-	                        <div class="avatar">
-	                            <img src="ImageLoader?uid=<%= mymodel.getUid() %>" alt="Circle Image" class="img-circle img-responsive img-raised">
-	                        </div>
-	                        <div class="name">
-	                            <h3 class="title"><%= mymodel.getUname() %></h3>
+				<div class="container">
+					<div class="row">
+						<div class="profile">
+							<div class="avatar">
+								<img src="ImageLoader?uid=<%= mymodel.getUid() %>"
+									alt="Circle Image" class="img-circle img-responsive img-raised">
+							</div>
+							<div class="name">
+								<h3 class="title"><%= mymodel.getUname() %></h3>
 								<h6><%= mymodel.getUtype()+" | "+ mymodel.getDept() %>
-                                                                <%if(mymodel.getUtype().equals("Student")){%>
-                                                                | Semester <%= mymodel.getSem() %></h6>
-                                                                <%}%>
-                                                                <%if(!mymodel.getUid().equalsIgnoreCase(uid)){ %>
-                            <br><button class="btn btn-info btn-sm" id="followbtn" style="font-size: 16px" onclick="followUser('<%=mymodel.getUid()%>')"></button>
-	                        <%}%>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="description text-center">
-                        <p><%= mymodel.getAboutme() %></p><br>
-	                </div>
-	                
+									<%if(mymodel.getUtype().equals("Student")){%>
+									| Semester
+									<%= mymodel.getSem() %></h6>
+								<%}%>
+								<%if(!mymodel.getUid().equalsIgnoreCase(uid)){ %>
+								<br>
+								<button class="btn btn-info btn-sm" id="followbtn"
+									style="font-size: 16px"
+									onclick="followUser('<%=mymodel.getUid()%>')"></button>
+								<%}%>
+							</div>
+						</div>
+					</div>
+					<div class="description text-center">
+						<p><%= mymodel.getAboutme() %></p>
+						<br>
+					</div>
+
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
 							<div class="profile-tabs">
-			                    <div class="nav-align-center">
+								<div class="nav-align-center">
 									<ul class="nav nav-pills nav-pills-info" role="tablist">
-										<li class="active">
-											<a href="#questions" role="tab" data-toggle="tab">
-												<i class="material-icons">camera</i>
+										<li class="active"><a href="#questions" role="tab"
+											data-toggle="tab"> <i class="material-icons">camera</i>
 												Questions
-											</a>
-										</li>
-										<li>
-				                            <a href="#work" role="tab" data-toggle="tab">
-												<i class="fa fa-pencil"></i>
-				                                Answers
-				                            </a>
-				                        </li>
+										</a></li>
+										<li><a href="#work" role="tab" data-toggle="tab"> <i
+												class="fa fa-pencil"></i> Answers
+										</a></li>
 
-										<li>
-				                            <a href="#shows" role="tab" data-toggle="tab">
-												<i class="material-icons">palette</i>
-												Workspaces
-				                            </a>
-				                        </li>
-				                        <li>
-				                            <a href="#blog" role="tab" data-toggle="tab">
-												<i class="material-icons">favorite</i>
-				                                Blogs
-				                            </a>
-				                        </li>
-				                        
-				                         <li>
-				                            <a href="major/message/DMform?id=<%=mymodel.getUid()%>&name=<%= mymodel.getUname()%>" >
-												
-				                                Message
-				                            </a>
-				                        </li>
-				                        
-				                    </ul>
+										<li><a href="#shows" role="tab" data-toggle="tab"> <i
+												class="material-icons">palette</i> Workspaces
+										</a></li>
+										<li><a href="#blog" role="tab" data-toggle="tab"> <i
+												class="material-icons">favorite</i> Blogs
+										</a></li>
 
-				                    <div class="tab-content gallery">
-                                                        <div class="tab-pane active" id="questions">
-                                                        <%if(rqm!=null){int i=0;for(QuestionModel qm: rqm.getRelatedque()){%>
-				                        <div class="row">
-										<div class="col-md-12">
-										 <div class="card card-content" style="text-align: left;">
-						                    <div class="category" style="margin-top: 15px;margin-left: 20px;"><a style="color: #0099cc;"><%=mymodel.getUname() %></a> asked in 
-						                    	<label class="label label-info"><a href="WorkSpaceContent?did=<%= qm.getDomain() %>&dname=<%= qm.getdName() %>" style="color: #FFFFFF;"><%=qm.getdName()%></a></label> with 
-						                       <%for(String tags:qm.getTags()){%>
-                                                                        <label class="label" style="background-color: #ff5d00;"><%=tags%></label>
-						                        <%}%>
-						            		</div>
-                                                                        <h3 style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px; font-weight: bold;"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color:black"><%=qm.getQue() %></a></h3>
+										<li><a
+											href="major/message/DMform?id=<%=mymodel.getUid()%>&name=<%= mymodel.getUname()%>">
 
-						            		<div class="row" style="padding-left: 5px;">
+												Message </a></li>
 
-						            			<div class="col-md-1 col-sm-1"> 
-						            				<img src="ImageLoader?uid=<%= qm.getTopAnswerer() %>" alt="Circle Image" class="img-circle img-responsive" style="margin-left: 10px;">
-						            			</div>
-						            			<div class="col-md-11 col-sm-11" style="padding-left: 1px;">
-                                                                                   <%if(qm.getAnswererName().equals("No one")){%><a style="color: #0099cc;"> <%= qm.getAnswererName() %></a><script>isNoOne=true; console.log("in isno one");</script><%}else{%><a href="UserProfile?uid=<%= qm.getTopAnswerer() %>" style="color: #0099cc;"> <%= qm.getAnswererName() %></a><%}%> answered
-                                                                                   <br><span class="ansImg" ></span><div class="lead ans" style="margin-bottom: 1px;"></div>
-													<a class="read" href="#no" style="color: #0099cc;" onclick="instantiateEditor('<%=i%>')">Read more</a><br>
-													<!--  <a class="read" href="#no" style="color: #0099cc;" onclick="show('ans<%=i%>','read<%=i%>')">Read more</a> -->
-											<script>				
+									</ul>
+
+									<div class="tab-content gallery">
+										<div class="tab-pane active" id="questions">
+											<%if(rqm!=null){int i=0;for(QuestionModel qm: rqm.getRelatedque()){%>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="card card-content" style="text-align: left;">
+														<div class="category"
+															style="margin-top: 15px; margin-left: 20px;">
+															<a style="color: #0099cc;"><%=mymodel.getUname() %></a>
+															asked in <label class="label label-info"><a
+																href="WorkSpaceContent?did=<%= qm.getDomain() %>&dname=<%= qm.getdName() %>"
+																style="color: #FFFFFF;"><%=qm.getdName()%></a></label> with
+															<%for(String tags:qm.getTags()){%>
+															<label class="label" style="background-color: #ff5d00;"><%=tags%></label>
+															<%}%>
+														</div>
+														<h3
+															style="margin-top: 10px; margin-bottom: 5px; margin-left: 20px; font-weight: bold;">
+															<a href="major/question/allAnswers?qid=<%=qm.getQid()%>"
+																style="color: black"><%=qm.getQue() %></a>
+														</h3>
+
+														<div class="row" style="padding-left: 5px;">
+
+															<div class="col-md-1 col-sm-1">
+																<img src="ImageLoader?uid=<%= qm.getTopAnswerer() %>"
+																	alt="Circle Image" class="img-circle img-responsive"
+																	style="margin-left: 10px;">
+															</div>
+															<div class="col-md-11 col-sm-11"
+																style="padding-left: 1px;">
+																<%if(qm.getAnswererName().equals("No one")){%><a
+																	style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
+																<script>isNoOne=true; console.log("in isno one");</script>
+																<%}else{%><a
+																	href="UserProfile?uid=<%= qm.getTopAnswerer() %>"
+																	style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
+																<%}%>
+																answered <br>
+																<span class="ansImg"></span>
+																<div class="lead ans" style="margin-bottom: 1px;"></div>
+																<a class="read" href="#no" style="color: #0099cc;"
+																	onclick="instantiateEditor('<%=i%>')">Read more</a><br>
+																<!--  <a class="read" href="#no" style="color: #0099cc;" onclick="show('ans<%=i%>','read<%=i%>')">Read more</a> -->
+																<script>				
 																							
 																							if(!isNoOne)
 																							{
@@ -481,22 +559,24 @@ font-size: 90%;
     		                                                                                    	isNoOne=false;
     		                                                                                    	c[<%=i%>].innerText=content;
     		                                                                                    }
-                                                                                        </script>	
-                                                                                </div>
-						            		</div>
-					            		
-						            		<div class="card-footer">
-												<div class="stats">
-													<i class="material-icons">update</i> <%= qm.getQuedate() %>
+                                                                                        </script>
+															</div>
+														</div>
+
+														<div class="card-footer">
+															<div class="stats">
+																<i class="material-icons">update</i> <span id="q<%=i%>"></span>
+																<%= qm.getQuedate() %>
+															</div>
+															<script type="text/javascript">setTime("q<%=i%>",<%=qm.getQuedate() %>)</script>
+														</div>
+													</div>
+													<!--card-1-->
 												</div>
 											</div>
-					        		    </div>
-        		    		<!--card-1-->		
-									</div>
-								</div>
-                                                        <hr>
-                                                               <%i++;}%>
-        <script>
+											<hr>
+											<%i++;}%>
+											<script>
         var ansElements = document.querySelectorAll('.ans');
         var readElements = document.querySelectorAll('.read');
        
@@ -514,53 +594,72 @@ font-size: 90%;
         
         
        
-        </script><%}%>
-				                        </div>
-				                        <div class="tab-pane" id="work">
-										<%if(qam!=null){int i=0;for(QuestionModel qm : qam.getAlqm()){%><div class="row">
-										<div class="col-md-12">
-										 <div class="card card-content" style="text-align: left;">
-						                    <div class="category" style="margin-top: 15px;margin-left: 20px;"><a href="UserProfile?uid=<%= qm.getUid() %>" style="color: #0099cc;"> <%= qm.getUname() %></a> asked in 
-						                    	<label class="label label-info"><a href="WorkSpaceContent?did=<%= qm.getDomain() %>&dname=<%= qm.getdName() %>" style="color: #FFFFFF;"><%= qm.getdName() %></a></label> with 
-						                        <%for(String tags: qm.getTags()){%>
-                                                                        <label class="label" style="background-color: #ff5d00;"><%=tags%></label>
-						                        <%}%>
-						            		</div>
-                                                                        <h3 style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px; font-weight: bold;"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color:black"><%= qm.getQue() %></a></h3>
+        </script>
+											<%}%>
+										</div>
+										<div class="tab-pane" id="work">
+											<%if(qam!=null){int i=0;for(QuestionModel qm : qam.getAlqm()){%><div
+												class="row">
+												<div class="col-md-12">
+													<div class="card card-content" style="text-align: left;">
+														<div class="category"
+															style="margin-top: 15px; margin-left: 20px;">
+															<a href="UserProfile?uid=<%= qm.getUid() %>"
+																style="color: #0099cc;"> <%= qm.getUname() %></a> asked
+															in <label class="label label-info"><a
+																href="WorkSpaceContent?did=<%= qm.getDomain() %>&dname=<%= qm.getdName() %>"
+																style="color: #FFFFFF;"><%= qm.getdName() %></a></label> with
+															<%for(String tags: qm.getTags()){%>
+															<label class="label" style="background-color: #ff5d00;"><%=tags%></label>
+															<%}%>
+														</div>
+														<h3
+															style="margin-top: 10px; margin-bottom: 5px; margin-left: 20px; font-weight: bold;">
+															<a href="major/question/allAnswers?qid=<%=qm.getQid()%>"
+																style="color: black"><%= qm.getQue() %></a>
+														</h3>
 
-						            		<div class="row" style="padding-left: 5px;">
+														<div class="row" style="padding-left: 5px;">
 
-						            			<div class="col-md-1 col-sm-1"> 
-						            				<img src="ImageLoader?uid=<%= mymodel.getUid() %>" alt="Circle Image" class="img-circle img-responsive" style="margin-left: 10px;">
-						            			</div>
-						            			<div class="col-md-11 col-sm-11" style="padding-left: 1px;">
-                                                                                    <a style="color: #0099cc;"> <%= mymodel.getUname() %></a> answered
-						            				<div class="lead" style="margin-bottom: 1px;"> 
-                                                                                            <!--<button class="btn btn-info btn-sm" onclick="showAns(<%=i%>)"><i class="fa fa-pencil"></i></button>-->
-      
-        <form class="edittext">
-        <div class="toolbarmyans"></div>
-        <div class="editormyans"></div>
-        <!--<input type="button" class="btn btn-info btn-sm updatebtn" value="update" style="display: none" onclick="setArg(<%=i%>)"/>-->
+															<div class="col-md-1 col-sm-1">
+																<img src="ImageLoader?uid=<%= mymodel.getUid() %>"
+																	alt="Circle Image" class="img-circle img-responsive"
+																	style="margin-left: 10px;">
+															</div>
+															<div class="col-md-11 col-sm-11"
+																style="padding-left: 1px;">
+																<a style="color: #0099cc;"> <%= mymodel.getUname() %></a>
+																answered
+																<div class="lead" style="margin-bottom: 1px;">
+																	<!--<button class="btn btn-info btn-sm" onclick="showAns(<%=i%>)"><i class="fa fa-pencil"></i></button>-->
 
-        </form>
-        
-                                                                                        </div>
-						            			</div>
-						            		</div>
-					            		
-						            		<div class="card-footer">
-												<div class="stats">
-                                                                                                    <i class="material-icons">update</i> <%= alam.get(i).getAnsDate() %>
+																	<form class="edittext">
+																		<div class="toolbarmyans"></div>
+																		<div class="editormyans"></div>
+																		<!--<input type="button" class="btn btn-info btn-sm updatebtn" value="update" style="display: none" onclick="setArg(<%=i%>)"/>-->
+
+																	</form>
+
+																</div>
+															</div>
+														</div>
+
+														<div class="card-footer">
+															<div class="stats">
+																<i class="material-icons">update</i> <span id="a<%=i%>"></span>
+						
+															</div>
+															<script type="text/javascript">setTime("a<%=i%>",<%=alam.get(i).getAnsDate() %>)</script>
+														</div>
+													</div>
+													<!--card-1-->
 												</div>
 											</div>
-					        		    </div>
-        		    		<!--card-1-->		
-									</div>
-        </div><hr><%i++;}}%>
-												</div>
-			                        <div class="tab-pane" id="blog">
-<!--    <button id="BlogBtn" onclick="showBlog()" class="btn btn-info btn-sm">Write Blog..</button><br><br>
+											<hr>
+											<%i++;}}%>
+										</div>
+										<div class="tab-pane" id="blog">
+											<!--    <button id="BlogBtn" onclick="showBlog()" class="btn btn-info btn-sm">Write Blog..</button><br><br>
         <form id="blogform" style="display: none">
         Select Blog Domain<select name="cars" id="blogdid">
     <option value="1">Computer science</option>
@@ -595,71 +694,92 @@ font-size: 90%;
         <br>
         <input type="button" class="btn btn-info btn-sm" value="Post Blog" onclick="postBlog()"/>
         </form>-->
-                                                                        <%if(abm!=null){int i=0;for(BlogModel bm : abm.getAbm()){%>
-										<div class="row">
-										<div class="col-md-12">
-										 <div class="card card-content" style="text-align: left;">
-						                    <div class="category" style="margin-top: 15px;margin-left: 20px;"><a style="color: #0099cc;"> <%= mymodel.getUname() %> </a>wrote in 
-						                    	<label class="label label-info"><a href="WorkSpaceContent?did=<%= bm.getDid() %>&dname=<%= bm.getDname() %>" style="color: #FFFFFF;"> <%= bm.getDname() %></a></label>
-						            		</div>
-						                        <h3 style="margin-top: 10px;margin-bottom: 5px;margin-left: 20px; font-weight: bold;"><%= bm.getTitle() %></h3>
-                                                                        
+											<%if(abm!=null){int i=0;for(BlogModel bm : abm.getAbm()){%>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="card card-content" style="text-align: left;">
+														<div class="category"
+															style="margin-top: 15px; margin-left: 20px;">
+															<a style="color: #0099cc;"> <%= mymodel.getUname() %>
+															</a>wrote in <label class="label label-info"><a
+																href="WorkSpaceContent?did=<%= bm.getDid() %>&dname=<%= bm.getDname() %>"
+																style="color: #FFFFFF;"> <%= bm.getDname() %></a></label>
+														</div>
+														<h3
+															style="margin-top: 10px; margin-bottom: 5px; margin-left: 20px; font-weight: bold;"><%= bm.getTitle() %></h3>
 
-                                                                        <div class="lead" style="margin-bottom: 1px;margin-left: 20px;">
-<!--                                                                         <button onclick="showmyblog(<%=i%>)" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>-->
-        <div class="myblogtool"></div>
-        <div class="myblogeditor"></div>
-<!--        <input type="button" class="btn btn-info btn-sm updateblog" value="update" style="display: none" onclick="setblogarg(<%=i%>)"/>   -->
-                                                                        </div>
-						            		
-						            		<div class="card-footer">
-												<div class="stats">
-													<i class="material-icons">update</i> <%= bm.getTimestamp() %>
+
+														<div class="lead"
+															style="margin-bottom: 1px; margin-left: 20px;">
+															<!--                                                                         <button onclick="showmyblog(<%=i%>)" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></button>-->
+															<div class="myblogtool"></div>
+															<div class="myblogeditor"></div>
+															<!--        <input type="button" class="btn btn-info btn-sm updateblog" value="update" style="display: none" onclick="setblogarg(<%=i%>)"/>   -->
+														</div>
+
+														<div class="card-footer">
+															<div class="stats">
+																<i class="material-icons">update</i> <span id="b<%=i%>"></span>
+																
+															</div>
+															<script type="text/javascript">setTime("b<%=i%>",<%=bm.getTimestamp() %>)</script>
+														</div>
+													</div>
+													<!--card-1-->
 												</div>
 											</div>
-					        		    </div>
-        		    		<!--card-1-->		
-									</div>
-								</div><hr><% i++;}}%>
-												</div>
+											<hr>
+											<% i++;}}%>
+										</div>
 										<div class="tab-pane text-center" id="shows">
 											<div class="row">
-												 <table class="table">
-                                                                                            <% for(int i=0;i<dm.getDomainList().size();i++) {%>
-                                                                                            <tr>
-                                                                                                <td> <img src="imagesdomain/<%= dm.getDomainImg().get(i) %>" class="img-rounded" style="width: 150px; height: 150px"/></td>
-                                                                                                
-                                                                                                
-                                                                                                <td>  <h2> <button class="btn btn-info btn-lg"><a href="WorkSpaceContent?did=<%= dm.getDomainIdList().get(i) %>&dname=<%= dm.getDomainList().get(i) %>" style="text-decoration: none;color: white;font-size: 16px"><%= dm.getDomainList().get(i) %></a></button></h2></td>
-                                                                                                
-                                                                                    </tr>
-                                                                                    
-                                                                                               <%}%>
-                                                                                    </table>  
-											</div>
-				                        </div>
+												<table class="table">
+													<% for(int i=0;i<dm.getDomainList().size();i++) {%>
+													<tr>
+														<td><img
+															src="imagesdomain/<%= dm.getDomainImg().get(i) %>"
+															class="img-rounded" style="width: 150px; height: 150px" /></td>
 
-				                    </div>
+
+														<td>
+															<h2>
+																<button class="btn btn-info btn-lg">
+																	<a
+																		href="WorkSpaceContent?did=<%= dm.getDomainIdList().get(i) %>&dname=<%= dm.getDomainList().get(i) %>"
+																		style="text-decoration: none; color: white; font-size: 16px"><%= dm.getDomainList().get(i) %></a>
+																</button>
+															</h2>
+														</td>
+
+													</tr>
+
+													<%}%>
+												</table>
+											</div>
+										</div>
+
+									</div>
 								</div>
 							</div>
 							<!-- End Profile Tabs -->
 						</div>
-	                </div>
+					</div>
 
-	            </div>
-	        </div>
+				</div>
+			</div>
 		</div>
 
-    </div>
-    <footer class="footer">
-        <div class="container">
-            
-            <div class="copyright pull-right">
-                &copy; 2017, made with <i class="fa fa-heart heart"></i> by team Korero
-            </div>
-        </div>
-    </footer>
-                                                       
+	</div>
+	<footer class="footer">
+		<div class="container">
+
+			<div class="copyright pull-right">
+				&copy; 2017, made with <i class="fa fa-heart heart"></i> by team
+				Korero
+			</div>
+		</div>
+	</footer>
+
 
 
 
@@ -675,9 +795,9 @@ font-size: 90%;
 	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 	<script src="js/material-kit.js" type="text/javascript"></script>
 	<script src="MDB Free/js/limittext.js"></script>
-        
-        
-        <script>
+
+
+	<script>
         var toolbarElements = document.querySelectorAll('.toolbarmyans');
         var editorElements = document.querySelectorAll('.editormyans');
         var formElements = document.querySelectorAll('.edittext');
@@ -695,8 +815,8 @@ font-size: 90%;
         quill.enable(false);
         <%}%>
         </script>
-        
-        <script>
+
+	<script>
             function showAns(i)
             {
                 var btn=document.getElementsByClassName("updatebtn");
@@ -724,9 +844,9 @@ font-size: 90%;
         }
     }
         </script>
-        
-       
-       <script>
+
+
+	<script>
             var toolbarOptionsBlog =[
                 ['bold','italic','underline','strike'], 
                 ['blockquote','code-block'],
@@ -829,8 +949,8 @@ font-size: 90%;
             console.log(quill);
         }
         </script>
-        
-        <script>
+
+	<script>
         var toolbarblogElements = document.querySelectorAll('.myblogtool');
         var editorblogElements = document.querySelectorAll('.myblogeditor');
 
@@ -846,8 +966,8 @@ font-size: 90%;
         quillForShowBlog.enable(false);
         <%}%>
         </script>
-        
-     <script>
+
+	<script>
             function showmyblog(i)
             {
                 var btn=document.getElementsByClassName("updateblog");
@@ -942,9 +1062,9 @@ font-size: 90%;
             	
             }
 
-        </script>   
-        
-        <script src="js/Notifications.js">
-        </script> 
+        </script>
+
+	<script src="js/Notifications.js">
+        </script>
 </body>
 </html>
