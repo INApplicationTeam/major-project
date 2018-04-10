@@ -31,7 +31,7 @@ public class AnswerDao {
             ps=con.prepareStatement(qr);
             ps.setInt(1,am.getQid());
             ps.setString(2,am.getUid());
-            ps.setString(3,am.getAnsDate());
+            ps.setLong(3,am.getAnsDate());
             ps.setInt(4,am.getUpvotes());
             ps.setInt(5,am.getReportAbuseCount());
             
@@ -58,7 +58,7 @@ public class AnswerDao {
             qr="update answer set text=?,timestamp=?,reportabusecount=0,answer=? where qid=? and uid=? ";
             ps=con.prepareStatement(qr);
             ps.setString(1,am.getText());
-            ps.setString(2,am.getAnsDate());
+            ps.setLong(2,am.getAnsDate());
             ps.setString(3,am.getText());
             ps.setInt(4,am.getQid());
             ps.setString(5,am.getUid());
@@ -87,7 +87,7 @@ public class AnswerDao {
             {
                 am.setQid(rs.getInt(1));
                 am.setUid(rs.getString(2));
-                am.setAnsDate(rs.getString(3));
+                am.setAnsDate(rs.getLong(3));
                 am.setUpvotes(rs.getInt(4));
                 am.setReportAbuseCount(rs.getInt(5));
                 am.setText(rs.getString(6));
@@ -124,7 +124,7 @@ public class AnswerDao {
                 am=new AnswerModel();
                 am.setQid(rs.getInt(1));
                 am.setUid(rs.getString(2));
-                am.setAnsDate(rs.getString(3));
+                am.setAnsDate(rs.getLong(3));
                 am.setUpvotes(rs.getInt(4));
                 am.setReportAbuseCount(rs.getInt(5));
                 
@@ -433,8 +433,8 @@ public class AnswerDao {
              qm.setQue(rs.getString(1)); 
              qm.setUid(rs.getString(2));
              qm.setQid(rs.getInt(3));
-             qm.setQuedate(rs.getString(4));
-             am.setAnsDate(rs.getString(5));
+             qm.setQuedate(rs.getLong(4));
+             am.setAnsDate(rs.getLong(5));
              qm.setDomain(rs.getInt(6));
              am.setUpvotes(rs.getInt(7));
              am.setAnswer(rs.getString(8));

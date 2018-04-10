@@ -15,16 +15,15 @@ public class BlogModel {
     private int blogId,upvotes,did,downvotes;
     private String blogContent,uid,uname,dname,title;
     private ArrayList<BlogCommentModel> arbcm;
-    @Override
+    private Long timestamp;
+
+  @Override
 	public String toString() {
 		return "BlogModel [blogId=" + blogId + ", upvotes=" + upvotes + ", did=" + did + ", uid=" + uid + ", uname="
 				+ uname + ", dname=" + dname + ", title=" + title + ", timestamp=" + timestamp + "]";
 	}
 
-	private String timestamp;
-
-    private Long timestamp1;
-
+	
     public int getDownvotes() {
 		return downvotes;
 	}
@@ -33,22 +32,16 @@ public class BlogModel {
 		this.downvotes = downvotes;
 	}
     
-	public Long getTimestamp1() {
-		return timestamp1;
-	}
-
-	public void setTimestamp1(Long timestamp1) {
-		this.timestamp1 = timestamp1;
-	}
-
-	public String getTimestamp() {
+	
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 
+	
 	public String getUname() {
         return uname;
     }
