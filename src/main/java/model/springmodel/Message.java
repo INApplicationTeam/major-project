@@ -27,7 +27,7 @@ public class Message
 	@Column(name="message")
 	private String message;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name="senderid")
 	private UserModel sender;
 	
