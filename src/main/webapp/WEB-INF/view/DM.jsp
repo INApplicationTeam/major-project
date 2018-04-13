@@ -109,7 +109,7 @@ tr:nth-child(even) {
 			
 			<form:form action="sendDM" modelAttribute="message" method="POST">
 				<label>To: </label> <br>
-				<form:input path="receiver.uid"/>
+				<form:input path="receiver.uname"/>
 				<br>
 				<label>Message</label><br>
 				<form:textarea path="message"/>

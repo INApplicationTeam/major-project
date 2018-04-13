@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import model.UserModel;
 import model.springmodel.Message;
@@ -92,5 +95,27 @@ public class DirectMessage
 		
 	}
 	
+	@RequestMapping(value = "/conversation", method = RequestMethod.GET)
+    public String showConversation(HttpServletRequest request,Model theModel) 
+	{
+		HttpSession session=request.getSession();
+		String id=request.getParameter("id");
+		String name=request.getParameter("name");
 
+		UserModel receiver= new UserModel();
+		Object object=session.getAttribute("userModel");
+		
+		Message themessage= new Message();
+		receiver.setUname(name);
+		receiver.setUid(id);
+
+		themessage.setReceiver(receiver);
+
+		String userid=receiver.getUserId(object);
+		List<Message> theConversation =dmservice.showConversation(id, userid);
+		theModel.addAttribute("message", themessage);
+		
+		theModel.addAttribute("conversation", theConversation);
+
+		return "DM";    }
 }

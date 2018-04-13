@@ -85,7 +85,7 @@ tr:nth-child(even) {
 				
 			<tr>
 			
-				<td> ${temp.value} </td>
+				<td><a href="<c:url value="conversation?id=${temp.key}&name=${temp.value}" />">${temp.value}</a></td>
 				
 			</tr>
 			
