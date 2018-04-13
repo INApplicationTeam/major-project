@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -50,6 +51,7 @@ private String commentText;
 private long timestamp;
 
 @OneToMany(fetch = FetchType.EAGER,mappedBy="comment",cascade=CascadeType.ALL)
+@OrderBy("replyId")
 private List<ClassDiscussionReply> commentReplyList;
 
 @Transient

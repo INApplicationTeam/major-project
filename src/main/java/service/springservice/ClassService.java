@@ -39,6 +39,8 @@ public interface ClassService {
 
 	int unPinPost(ClassPosts pinnedClassPost);
 
-	List<Object> showPinnedPosts(String classid, boolean isPending, String userId);
+	List<ClassPosts> showPinnedPosts(String classid, boolean isPending, String userId);
+
+	Object renderPinnedPost(Integer postId, String postType, String userId);
 
 }

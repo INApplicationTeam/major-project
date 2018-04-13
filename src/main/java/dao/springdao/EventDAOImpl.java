@@ -22,7 +22,6 @@ public class EventDAOImpl implements EventDAO {
 		
 		Session currentSession= sessionFactory.getCurrentSession();
 		int id= (Integer)currentSession.save(theEvents);
-		System.out.println("final event--"+theEvents.toString());
 		return id;
 	}
 	
