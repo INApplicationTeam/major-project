@@ -51,7 +51,7 @@ public class BlogDao {
 				bm.setBlogId(rs.getInt(1));
 				bm.setUid(rs.getString(2));
 				bm.setBlogContent(rs.getString(3));
-				bm.setTimestamp(rs.getString(4));
+				bm.setTimestamp(rs.getLong(4));
 				bm.setUpvotes(rs.getInt(5));
 				bm.setDid(rs.getInt(6));
 				bm.setTitle(rs.getString(7));
@@ -81,7 +81,7 @@ public class BlogDao {
             ps=con.prepareStatement(qr);
             ps.setString(1,bm.getUid());
             ps.setString(2,bm.getBlogContent());
-            ps.setString(3,bm.getTimestamp());
+            ps.setLong(3,bm.getTimestamp());
             ps.setInt(4,bm.getDid());
             ps.setString(5,bm.getTitle());
             
