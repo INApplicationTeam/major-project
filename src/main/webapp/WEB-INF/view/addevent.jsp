@@ -1,4 +1,6 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -58,8 +60,7 @@
 </head>
 <body>
 	<h1>CREATE EVENT</h1>
-	<form:form action="addEvent" modelAttribute="Events" method="POST" onsubmit=" return setFormFields()">
-			
+	<form:form action="addEvent" modelAttribute="Events" method="POST" onsubmit=" return setFormFields()">			
 			<table>
 				<tr>
 					<td><label>Title</label></td>
@@ -86,6 +87,15 @@
 					 <td><input type="datetime-local"  id="end"/></td>
 					 <form:hidden id="endLong" path="enddate"/>
 				</tr>
+				<tr>
+				<td><label>Scope</label></td>
+				<td>
+				<form:select path="scope" >
+				<form:option value="${Events.scope}">${Events.scope}</form:option>
+				</form:select>
+				</td>
+					
+				</tr>
 				
 				
 				<tr>
@@ -93,7 +103,7 @@
 					<td><input type="submit" value="POST EVENT" /></td>
 					
 				</tr>
-			</table>		
+			</table>
   
   	</form:form>
   	

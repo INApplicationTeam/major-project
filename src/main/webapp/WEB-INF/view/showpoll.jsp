@@ -1,4 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -315,12 +317,15 @@ label .glyphicon {
              <c:forEach var="optiondetails" items="${poll.options}" begin="0" varStatus="innerloop">
                  
                 <div class="progress skill-bar ">
+                <form:form action="votepoll" method="post" modelattribute="poll" >
                 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
                 </div>
                
                    <span class="progress-type" style="color: black; font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${ optiondetails.options}</span>
                      <span class="progress-completed" style="color: black;font-size: 20px;">&nbsp;&nbsp; &nbsp;&nbsp;</span>
-            
+                     <form:radiobutton path="queid" value="${optiondetails.pollResult.opid}"/>
+                     
+            </form:form>
             </div>
             </c:forEach>
              
@@ -355,6 +360,6 @@ label .glyphicon {
 			
 				 --%>
 					
-			<a href="home">Admin home</a>
+			<a href="CDFhomestudent">Back</a>
 </body>
 </html>

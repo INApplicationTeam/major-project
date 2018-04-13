@@ -247,6 +247,12 @@ font-size: 90%;
 							<li class="active"><a href="MyFeed">Home</a></li>
 			        		<li><a href="MyProfile">Profile</a></li>
 			        		<li><a href="Post_Question.jsp">Ask a question</a></li>
+			        		<%if(utype.equals("faculty"))
+							{ %>
+							
+						<li><a href="major/class/addEventForm?type=<%=utype%>">Create Event</a></li>
+							
+							<%} %>
                                                  <li><a href="AboutUs.jsp">About Us</a></li>
 				    		</ul>
 						<ul class="nav navbar-nav navbar-right">
