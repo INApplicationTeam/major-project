@@ -1,4 +1,6 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -11,8 +13,9 @@
 <body>
 
 
+		
 
-	<form:form action="addEvent" modelAttribute="Events" method="POST" onsubmit=" return setlongdates()">
+	<form:form action="addEvent" modelAttribute="Events" method="POST" onsubmit=" return setlongdates()" items="${Events}" var="temp" >
 			
 			<table>
 				<tr>
@@ -36,6 +39,15 @@
 					 <td><input type="datetime-local"  id="end"/></td>
 					 <form:hidden id="endLong" path="enddate"/>
 				</tr>
+				<tr>
+				<td><label>Scope</label></td>
+				<td>
+				<form:select path="scope" >
+				<form:option value="${Events.scope}">${Events.scope}</form:option>
+				</form:select>
+				</td>
+					
+				</tr>
 				
 				
 				<tr>
@@ -46,6 +58,7 @@
 			</table>
 			
 			<a href="#" onclick="show()">show</a>
+								
 				
   
   	</form:form>

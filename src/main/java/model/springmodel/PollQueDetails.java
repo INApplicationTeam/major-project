@@ -35,6 +35,7 @@ public class PollQueDetails {
 	
 	@OneToMany (fetch = FetchType.EAGER,mappedBy="pqd",cascade=CascadeType.ALL)
 	private List<PollOptionDetails> options;
+	
 
 	public String getQuestion() {
 		return question;

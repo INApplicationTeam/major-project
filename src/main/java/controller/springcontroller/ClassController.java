@@ -210,7 +210,6 @@ public class ClassController
 	public String showPoll(HttpServletRequest request, Model theModel)
 	{	
 		HttpSession session=request.getSession();
-		
 		String classid= (String) session.getAttribute("classid");
 		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
@@ -218,10 +217,20 @@ public class ClassController
 	}
 	
 	@GetMapping("/addEventForm")
-	public String addEventForm(Model theModel )
+	public String addEventForm(Model theModel,@RequestParam(value = "type",required = false) String type )
 	{	
 		Events theEvents = new Events();
+		if(type.equals("faculty"))
+		{
+			theEvents.setScope("global");
+		}
+		else
+		{
+			theEvents.setScope("class");
+		}
 		theModel.addAttribute("Events",theEvents);
+
+		
 		return "addevent";
 	}
 	
@@ -237,14 +246,21 @@ public class ClassController
 		theEvents.setUserModel(um);
 		theEvents.setPending(false);
 		int id= eventservice.addEvent(theEvents);
-		
+		if(theEvents.getScope().equals("class"))
+		{
 		ClassPosts theclasspost = new ClassPosts();
 		theclasspost.setClassid((String)session.getAttribute("classid"));
 		theclasspost.setPost_type("event");
 		theclasspost.setPostid(id);
 		
 		classservice.addClassPost(theclasspost);
+		}
+		if(theEvents.getScope().equals("global"))
+		{
+			return "Feed_Page";
+		}
 	    return "redirect:/major/class/CDFhomestudent";
+		
  
 	}
 	
@@ -497,6 +513,18 @@ public class ClassController
 		}
 		
 	}
+	
+	
+	
+	@PostMapping("/votepoll")
+	public String votepoll(@ModelAttribute ("poll") PollQueDetails thevotepoll,HttpServletRequest request)
+	{
+		return null;	
+		
+ 
+	}
+	
+	
 }
 
 

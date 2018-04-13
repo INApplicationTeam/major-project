@@ -230,7 +230,7 @@
 <h3>CHOOSE YOUR POST TYPE...</h3>
 <a href="../../poll/createpoll.jsp?var=classpoll"><button id="create_poll">Create Poll</button></a>
 <a href="../../Post_Question.jsp?classQue=true"><button id="create_que">Ask question</button></a>
-<a href="addEventForm"><button id="create_event">Create Event</button></a>
+<a href="addEventForm?type=student"><button id="create_event">Create Event</button></a>
 <a href="startClassDiscussion"><button id="create_disc">Start Discussion</button></a>
 
 	<select name="SHOW" onchange="location = this.value;">
