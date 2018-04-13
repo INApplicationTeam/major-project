@@ -80,9 +80,12 @@ public class ClassController
 			List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 			theModel.addAttribute("classCoordinator", theClassCoordinator);	
 			
-			List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid());
+			List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
 			theModel.addAttribute("allClassPosts",allClassPosts);
 			
+			List<Object> allPinnedPosts=classservice.showPinnedPosts(classid,false,sm.getSid());
+			theModel.addAttribute("allPinnedPosts",allPinnedPosts);		
+					
 			String currentsem =new UserModel().getSem(object);
 			String selectedsem=currentsem;
 			theModel.addAttribute("currentsem",currentsem);
@@ -144,11 +147,25 @@ public class ClassController
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
-		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid);
+		List<Boolean> checkPinned=new ArrayList<>();
+		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid,checkPinned);
 		theModel.addAttribute("allClassPosts",allClassPosts);
+		theModel.addAttribute("checkPinned",checkPinned);
+		
+		List<Object> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
+		theModel.addAttribute("allPinnedPosts",allPinnedPosts);
 		
 		theModel.addAttribute("isCurrentYear",isCurrentYear);
 		theModel.addAttribute("classid", classId);
+		
+		ClassDiscussionComment cdc=new ClassDiscussionComment();
+		theModel.addAttribute("ClassCommentModel",cdc);
+		
+		ClassDiscussionReply cdr=new ClassDiscussionReply();
+		theModel.addAttribute("ClassReplyModel",cdr);
+		
+		ClassPosts pinnedClassPost=new ClassPosts();
+		theModel.addAttribute("pinnedClassPost",pinnedClassPost);
 		
 		return "CDFhomefaculty";
 		
@@ -412,7 +429,7 @@ public class ClassController
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
-		List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid());
+		List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		
 		String currentsem =new UserModel().getSem(object);
@@ -457,7 +474,7 @@ public class ClassController
 		UserModel um=new UserModel();
 		String userId=um.getUserId(session.getAttribute("userModel"));
 		
-		List<Object> pendingPostsList=classservice.showClassPosts(classId,true,userId);
+		List<Object> pendingPostsList=classservice.showClassPosts(classId,true,userId,null);
 		theModel.addAttribute("pendingPosts",pendingPostsList);
 		
 		theModel.addAttribute("acceptOrReject",new ClassPosts());
@@ -514,17 +531,85 @@ public class ClassController
 		
 	}
 	
-	
-	
-	@PostMapping("/votepoll")
-	public String votepoll(@ModelAttribute ("poll") PollQueDetails thevotepoll,HttpServletRequest request)
+
+	@PostMapping("/pinClassPost")
+	public String pinClassPost(@ModelAttribute("pinnedClassPost") ClassPosts pinnedClassPost)
 	{
-		return null;	
-		
- 
+		classservice.pinPost(pinnedClassPost);
+		return "redirect:/major/class/redirectFacultyHome";
 	}
 	
+	@PostMapping("/unPinClassPost")
+	public String unPinClassPost(@ModelAttribute("pinnedClassPost") ClassPosts pinnedClassPost)
+	{
+		classservice.unPinPost(pinnedClassPost);
+		return "redirect:/major/class/redirectFacultyHome";
+	}
 	
+	@GetMapping("/redirectFacultyHome")
+	public String facultyHome(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		String classId=(String)session.getAttribute("classid");
+		Integer year=(Integer)session.getAttribute("year");
+		Object object=session.getAttribute("userModel");
+		FacultyModel fm=null;
+		
+		fm=(FacultyModel)object;
+		String fid=fm.getFid();
+			
+		Boolean coordinatorflag=classservice.checkCoordinator(fid,classId);
+		Boolean isCurrentYear=false;
+		
+		if(year==Calendar.getInstance().get(Calendar.YEAR))
+		{
+			isCurrentYear=true;
+		}
+		
+		if(coordinatorflag)
+		{	String utype="coordinator";
+			theModel.addAttribute("type",utype);
+		}
+		else
+		{	String utype="faculty";
+			theModel.addAttribute("type",utype);	
+		}
+		
+		StudentModel sm=new StudentModel();
+		sm.setClassAttributes(classId);
+		
+		List<StudentModel> theClassMembers= classservice.showClassMembers(sm);
+		theModel.addAttribute("classmembers", theClassMembers);
+		
+		List<ClassRepresentative> theCR= classservice.showClassCR(sm);
+		theModel.addAttribute("CR", theCR);
+		
+		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
+		theModel.addAttribute("classCoordinator", theClassCoordinator);	
+		
+		List<Boolean> checkPinned=new ArrayList<>(); 
+		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid,checkPinned);
+		theModel.addAttribute("allClassPosts",allClassPosts);
+		theModel.addAttribute("checkPinned",checkPinned);
+		
+		List<Object> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
+		theModel.addAttribute("allPinnedPosts",allPinnedPosts);
+		
+		theModel.addAttribute("isCurrentYear",isCurrentYear);
+		theModel.addAttribute("classid", classId);
+		
+		ClassDiscussionComment cdc=new ClassDiscussionComment();
+		theModel.addAttribute("ClassCommentModel",cdc);
+		
+		ClassDiscussionReply cdr=new ClassDiscussionReply();
+		theModel.addAttribute("ClassReplyModel",cdr);
+		
+		ClassPosts pinnedClassPost=new ClassPosts();
+		theModel.addAttribute("pinnedClassPost",pinnedClassPost);
+		
+		return "CDFhomefaculty";
+		
+	}
 }
 
 

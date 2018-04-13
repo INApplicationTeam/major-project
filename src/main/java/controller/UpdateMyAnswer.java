@@ -62,7 +62,7 @@ public class UpdateMyAnswer extends HttpServlet {
             AnswerModel am=alam.get(ansindex);
             am.setText(json);
             am.setAnswer(json);
-            am.setAnsDate(DateFormat.getDateInstance().format(new Date()).toString());
+            am.setAnsDate(new Date().getTime());
             
             AnswerDao ad=new AnswerDao();
             alam.remove(ansindex);

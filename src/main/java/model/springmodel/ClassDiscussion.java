@@ -35,9 +35,6 @@ public class ClassDiscussion {
 	@Column(name="timestamp")
 	private long timeStamp;
 	
-	@Column(name="ispinned")
-	private boolean isPinned;
-	
 	@Column(name="flagcount")
 	private int flagCount;
 	
@@ -57,7 +54,7 @@ public class ClassDiscussion {
 	@Override
 	public String toString() {
 		return "ClassDiscussion [id=" + id + ", isReviewed=" + isReviewed + ", title=" + title + ", timeStamp="
-				+ timeStamp + ", isPinned=" + isPinned + ", flagCount=" + flagCount + ", isClosed=" + isClosed
+				+ timeStamp +", flagCount=" + flagCount + ", isClosed=" + isClosed
 				+ ", content=" + "i am content"+ ", userModel=" + userModel + ", classCommentList=" + classCommentList + "]";
 	}
 	
@@ -96,12 +93,7 @@ public class ClassDiscussion {
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	public boolean isPinned() {
-		return isPinned;
-	}
-	public void setPinned(boolean isPinned) {
-		this.isPinned = isPinned;
-	}
+	
 	public int getFlagCount() {
 		return flagCount;
 	}

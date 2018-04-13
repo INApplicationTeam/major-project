@@ -167,14 +167,32 @@ public class ClassDAOImpl implements ClassDAO {
 	
 	
 	@Override
-	public List<Object> showClassPosts(String classid,Boolean isPending,String userId) {
+	public List<Object> showClassPosts(String classid,Boolean isPending,String userId,List<Boolean> isPinned) {
 		
 		Session currentSession=sessionFactory.getCurrentSession();
 		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid order by id desc",ClassPosts.class);
 		qr.setParameter("classid",classid);
 		List<ClassPosts> classPosts=(ArrayList<ClassPosts>)qr.getResultList();
-		List<Object> classPostsDetails=new LinkedList<>();
 		
+		return fetchAllPosts(currentSession,classPosts,isPending,userId,isPinned);
+	}
+	
+	@Override
+	public List<Object> showPinnedPosts(String classid, boolean isPending, String userId) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();
+		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid and pinned=:pinned order by id desc",ClassPosts.class);
+		qr.setParameter("classid",classid);
+		qr.setParameter("pinned",true);
+		List<ClassPosts> classPosts=(ArrayList<ClassPosts>)qr.getResultList();
+		
+		return fetchAllPosts(currentSession,classPosts,isPending,userId,null);
+	}
+	
+	
+	public List<Object> fetchAllPosts(Session currentSession,List<ClassPosts> classPosts,Boolean isPending,String userId,List<Boolean> isPinned)
+	{
+		List<Object> classPostsDetails=new LinkedList<>();
 		Query<ClassDiscussion> qrForDiscussion=currentSession.createQuery("from ClassDiscussion where id=:postId and isReviewed=:isReviewed",ClassDiscussion.class);
 		Query<Events> qrForEvent=currentSession.createQuery("from Events where eid=:postId and pending=:isPending",Events.class);
 		Query<PollQueDetails> qrForPoll=currentSession.createQuery("from PollQueDetails where queid=:postId",PollQueDetails.class);
@@ -261,9 +279,15 @@ public class ClassDAOImpl implements ClassDAO {
 				}
 			}
 			
+			if(isPinned!=null && !isPending && (userId.startsWith("F") || userId.startsWith("f")))
+			{
+				isPinned.add(classPost.isPinned());
+			}
+			
 		}
-				
+		
 		return classPostsDetails;
+
 	}
 
 	@Override
@@ -285,9 +309,32 @@ public class ClassDAOImpl implements ClassDAO {
 			qr.executeUpdate();
 		}
 	}
+
+	@Override
+	public int pinPost(ClassPosts pinnedClassPost) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();	
+		Query qr=currentSession.createQuery("update ClassPosts set pinned=:pinned where postid=:postid and post_type=:post_type");
+		qr.setParameter("pinned",true);
+		qr.setParameter("postid",pinnedClassPost.getPostid());
+		qr.setParameter("post_type",pinnedClassPost.getPost_type());
+		int result=qr.executeUpdate();
+		return result;
+	}
 	
-	
-				 
+	@Override
+	public int unPinPost(ClassPosts pinnedClassPost) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();	
+		Query qr=currentSession.createQuery("update ClassPosts set pinned=:pinned where postid=:postid and post_type=:post_type");
+		qr.setParameter("pinned",false);
+		qr.setParameter("postid",pinnedClassPost.getPostid());
+		qr.setParameter("post_type",pinnedClassPost.getPost_type());
+		int result=qr.executeUpdate();
+		return result;
+	}
+
+			 
 }
 
 

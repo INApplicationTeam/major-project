@@ -73,7 +73,7 @@ public class QuestionDao {
             quemod.setUname(rs1.getString(3));
             quemod.setUid(rs1.getString(4));
             quemod.setdName(dlist.get(rs1.getInt(5)-1));
-            quemod.setQuedate(rs1.getString(6));
+            quemod.setQuedate(rs1.getLong(6));
             quemod.setDomain(rs1.getInt(5));
             
              ps1=con.prepareStatement(qr);
@@ -112,7 +112,7 @@ public class QuestionDao {
                 quemod.setUname(rs1.getString(3));
                 quemod.setUid(rs1.getString(4));
                 quemod.setdName(dlist.get(rs1.getInt(5)-1));
-                quemod.setQuedate(rs1.getString(6));
+                quemod.setQuedate(rs1.getLong(6));
                 quemod.setDomain(rs1.getInt(5));
                 
                 ps1=con.prepareStatement(qr);
@@ -227,7 +227,7 @@ public class QuestionDao {
              quemod.setUname(rs.getString(3));
              quemod.setUid(rs.getString(4));
              quemod.setdName(dlist.get(rs.getInt(5)-1));
-             quemod.setQuedate(rs.getString(6));
+             quemod.setQuedate(rs.getLong(6));
              quemod.setDomain(rs.getInt(5));
              
              ps=con.prepareStatement(qr1);
@@ -273,7 +273,7 @@ public class QuestionDao {
             ps.setString(2,qm.getUid());
             ps.setInt(3, qm.getReportAbuseCount());
             ps.setInt(4,qm.getDomain());
-            ps.setString(5,DateFormat.getDateInstance().format(new Date()).toString());
+            ps.setLong(5,new Date().getTime());
             if(ps.executeUpdate()>0)
             {
              String qr2="select max(qid) from question";
@@ -454,7 +454,7 @@ public class QuestionDao {
                 qm.setQid(rs.getInt(1));
                 qm.setQue(rs.getString(2));
                 qm.setDomain(rs.getInt(3));
-                qm.setQuedate(rs.getString(4));
+                qm.setQuedate(rs.getLong(4));
                 qm.setReportAbuseCount(rs.getInt(5));
                 qm.setdName(dlist.get(rs.getInt(3)-1));
                 qm.setUid(id);
@@ -522,7 +522,7 @@ public class QuestionDao {
                 qm.setUid(rs.getString(3));
                 qm.setReportAbuseCount(rs.getInt(4));
                 qm.setDomain(rs.getInt(5));
-                qm.setQuedate(rs.getString(6));
+                qm.setQuedate(rs.getLong(6));
                 qm.setUname(rs.getString(7));
                 qm.setdName(dlist.get(qm.getDomain()-1));
                 
@@ -575,7 +575,7 @@ public class QuestionDao {
                qm.setDomain(rs.getInt(3));
                qm.setUid(rs.getString(4));
                qm.setUname(rs.getString(5));
-               qm.setQuedate(rs.getString(6));
+               qm.setQuedate(rs.getLong(6));
                qm.setReportAbuseCount(rs.getInt(7));
                qm.setdName(dlist.get(qm.getDomain()-1));
                
@@ -621,7 +621,7 @@ public class QuestionDao {
                qm.setDomain(rs.getInt(3));
                qm.setUid(rs.getString(4));
                qm.setUname(rs.getString(5));
-               qm.setQuedate(rs.getString(6));
+               qm.setQuedate(rs.getLong(6));
                qm.setReportAbuseCount(rs.getInt(7));
                qm.setdName(dlist.get(qm.getDomain()-1));
                

@@ -92,8 +92,8 @@ public class ClassServiceImpl implements ClassService {
 	
 	@Override
 	@Transactional
-	public List<Object> showClassPosts(String classid,Boolean isPending,String userId) {
-		return classdao.showClassPosts(classid,isPending,userId);
+	public List<Object> showClassPosts(String classid,Boolean isPending,String userId, List<Boolean> checkPinned) {
+		return classdao.showClassPosts(classid,isPending,userId,checkPinned);
 	}
 
 	@Override
@@ -102,6 +102,27 @@ public class ClassServiceImpl implements ClassService {
 		classdao.acceptOrRejectPost(theClassPost);
 	}
 
+	@Override
+	@Transactional
+	public int pinPost(ClassPosts pinnedClassPost) {
+		return classdao.pinPost(pinnedClassPost);
+		
+	}
+
+	@Override
+	@Transactional
+	public int unPinPost(ClassPosts pinnedClassPost) {
+		return classdao.unPinPost(pinnedClassPost);
+		
+	}
+
+	@Override
+	@Transactional
+	public List<Object> showPinnedPosts(String classid, boolean isPending, String userId) {
+		return classdao.showPinnedPosts(classid,isPending,userId);
+	}
+	
+	
 	
 }
 

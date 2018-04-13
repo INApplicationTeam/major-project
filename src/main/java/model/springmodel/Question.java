@@ -46,7 +46,7 @@ public class Question {
 	private DomainContentModel domain;
 	
 	@Column(name="timestamp")
-	private String timestamp;
+	private Long timestamp;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="questionkeyword",joinColumns=@JoinColumn(name="qid"),inverseJoinColumns=@JoinColumn(name="kid"))
@@ -108,11 +108,11 @@ public class Question {
 		this.domain = domain;
 	}
 
-	public String getTimestamp() {
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 

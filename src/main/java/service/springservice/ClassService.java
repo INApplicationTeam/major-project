@@ -8,15 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 import model.FacultyModel;
-import model.QuestionModel;
 import model.StudentModel;
-import model.pollmodel.CreateNewPollModel;
-import model.springmodel.Events;
-import model.springmodel.PollQueDetails;
-import model.springmodel.Question;
-import model.springmodel.ClassDiscussion;
-import model.springmodel.ClassDiscussionComment;
-import model.springmodel.ClassDiscussionReply;
 import model.springmodel.ClassPosts;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
@@ -39,8 +31,14 @@ public interface ClassService {
 
 	List<ClassSubjectFaculty> getSubjectClassDetails(String fid,int year);
 
-	List<Object> showClassPosts(String classid,Boolean isPending,String userId);
+	List<Object> showClassPosts(String classid,Boolean isPending,String userId, List<Boolean> checkPinned);
 
 	void acceptOrRejectPost(ClassPosts theClassPost);
+
+	int pinPost(ClassPosts pinnedClassPost);
+
+	int unPinPost(ClassPosts pinnedClassPost);
+
+	List<Object> showPinnedPosts(String classid, boolean isPending, String userId);
 
 }

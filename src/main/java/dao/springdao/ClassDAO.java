@@ -39,8 +39,14 @@ public interface ClassDAO {
 
 	List<ClassSubjectFaculty> getSubjectClassDetails(String fid,int year);
 
-	List<Object> showClassPosts(String classid,Boolean isPending,String userId);
+	List<Object> showClassPosts(String classid,Boolean isPending,String userId, List<Boolean> checkPinned);
 
 	void acceptOrRejectPost(ClassPosts theClassPost);
+
+	int pinPost(ClassPosts pinnedClassPost);
+
+	int unPinPost(ClassPosts pinnedClassPost);
+
+	List<Object> showPinnedPosts(String classid, boolean isPending, String userId);
 	
 }

@@ -30,9 +30,20 @@ public class ClassPosts implements Serializable
 	@Column(name="classid")
 	private String classid;
 	
+	@Column(name="isPinned")
+	private boolean pinned;
+	
 	@Transient
 	private boolean reviewed;
 	
+	public boolean isPinned() {
+		return pinned;
+	}
+
+	public void setPinned(boolean pinned) {
+		this.pinned = pinned;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -75,7 +86,7 @@ public class ClassPosts implements Serializable
 
 	@Override
 	public String toString() {
-		return "ClassPosts [classid=" + classid + ", postid=" + postid + ", post_type=" + post_type +", isReviewed = "+reviewed+"]";
+		return "ClassPosts [classid=" + classid + ", postid=" + postid + ", post_type=" + post_type +", isReviewed = "+reviewed+", pinned = "+pinned+"]";
 	}
 
 	
