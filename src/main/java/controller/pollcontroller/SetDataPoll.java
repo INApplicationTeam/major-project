@@ -5,10 +5,14 @@
  */
 package controller.pollcontroller;
 
+import dao.NotificationDao;
 import dao.polldao.CreateNewPollDao;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
+import model.NotificationModel;
 import model.UserModel;
 import model.pollmodel.CreateNewPollModel;
 
@@ -54,6 +61,7 @@ public class SetDataPoll extends HttpServlet {
                      String option[]=request.getParameterValues("option");
                       session=request.getSession();
                      Object um = session.getAttribute("userModel");
+                     String userName=new UserModel().getUserName(um);
                      CreateNewPollModel cpm=new CreateNewPollModel();
                      cpm.setQue(que);
                      cpm.setOption(option);
@@ -83,7 +91,16 @@ public class SetDataPoll extends HttpServlet {
                     	 if(check!=null)
                     	 	{
                     		 int pollqid= cpm.getPollqueid();
-                    		 response.sendRedirect("/korero-maven/major/class/addPoll?pollid="+pollqid);
+                    		 
+                    	   NotificationModel nm=new NotificationModel();
+                      	   nm.setTimestamp(new Date().getTime());
+                      	   nm.setMessage(userName+" Posted Poll :"+cpm.getQue()+" in Class Discussion Forum.");
+                      	   
+                      	   NotificationDao nd=new NotificationDao();
+                      	   ArrayList<NotificationModel> alnm=nd.addClassPostNotification(nm,(String)session.getAttribute("classid"),context);
+                      	   String returnJson=new Gson().toJson(alnm);
+                      	   System.out.println(alnm.size()+"-----");
+                    	   response.sendRedirect("/korero-maven/major/class/addPoll?pollid="+pollqid);
                     	 	}
                     	
                     	 else

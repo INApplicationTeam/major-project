@@ -118,8 +118,14 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	@Transactional
-	public List<Object> showPinnedPosts(String classid, boolean isPending, String userId) {
+	public List<ClassPosts> showPinnedPosts(String classid, boolean isPending, String userId) {
 		return classdao.showPinnedPosts(classid,isPending,userId);
+	}
+
+	@Override
+	@Transactional
+	public Object renderPinnedPost(Integer postId, String postType,String userId) {
+		return classdao.renderPinnedPost(postId,postType,userId);
 	}
 	
 	

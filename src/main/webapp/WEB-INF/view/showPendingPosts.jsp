@@ -142,6 +142,7 @@
 				<form:hidden path="postid" value="${posts.id}"/>
 				<form:hidden path="post_type" value="discussion"/>
 				<form:hidden path="reviewed" id="isReviewed${postLoop.index}"/>
+				<form:hidden path="title" value="${posts.title}"/>
 				<input type="submit" value="Approve" onclick="acceptPost('${postLoop.index}')"><input type="submit" value="Reject" onclick="rejectPost('${postLoop.index}')">
 			</form:form>
 		</c:if>
@@ -165,6 +166,7 @@
 				<form:hidden path="postid" value="${posts.eid}"/>
 				<form:hidden path="post_type" value="event"/>
 				<form:hidden path="reviewed" id="isReviewed${postLoop.index}"/>
+				<form:hidden path="title" value="${posts.title}"/>
 				<input type="submit" value="Approve" onclick="acceptPost('${postLoop.index}')"><input type="submit" value="Reject" onclick="rejectPost('${postLoop.index}')">
 			</form:form>
 		</c:if>

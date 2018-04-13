@@ -178,7 +178,7 @@ public class ClassDAOImpl implements ClassDAO {
 	}
 	
 	@Override
-	public List<Object> showPinnedPosts(String classid, boolean isPending, String userId) {
+	public List<ClassPosts> showPinnedPosts(String classid, boolean isPending, String userId) {
 		
 		Session currentSession=sessionFactory.getCurrentSession();
 		Query<ClassPosts> qr=currentSession.createQuery("from ClassPosts where classid=:classid and pinned=:pinned order by id desc",ClassPosts.class);
@@ -186,7 +186,75 @@ public class ClassDAOImpl implements ClassDAO {
 		qr.setParameter("pinned",true);
 		List<ClassPosts> classPosts=(ArrayList<ClassPosts>)qr.getResultList();
 		
-		return fetchAllPosts(currentSession,classPosts,isPending,userId,null);
+		Query<String> qrForDiscussion=currentSession.createQuery("select title from ClassDiscussion where id=:postId and isReviewed=:isReviewed",String.class);
+		Query<String> qrForEvent=currentSession.createQuery("select title from Events where eid=:postId and pending=:isPending",String.class);
+		Query<String> qrForPoll=currentSession.createQuery("select question from PollQueDetails where queid=:postId",String.class);
+		Query<String> qrForQuestion=currentSession.createQuery("select que from Question where qid=:postId",String.class);
+
+		String title=null;
+		
+		for(ClassPosts classPost : classPosts)
+		{
+			if(classPost.getPost_type().equals("discussion"))
+			{
+				qrForDiscussion.setParameter("postId",classPost.getPostid());
+				qrForDiscussion.setParameter("isReviewed",!isPending);
+				
+				try{
+					title=qrForDiscussion.getSingleResult();	
+					classPost.setTitle(title);
+				}
+				catch(NoResultException noResultException)
+				{
+					noResultException.printStackTrace();
+				}
+			}
+			else if(classPost.getPost_type().equals("event"))
+			{
+				qrForEvent.setParameter("postId",classPost.getPostid());
+				qrForEvent.setParameter("isPending",!isPending);
+				
+				try{
+					title=qrForEvent.getSingleResult();
+					classPost.setTitle(title);
+				}
+				catch(NoResultException noResultException)
+				{
+					noResultException.printStackTrace();
+				}
+			}
+			else if(classPost.getPost_type().equals("poll") && !isPending)
+			{
+				qrForPoll.setParameter("postId",classPost.getPostid());
+				
+				try{
+					title=qrForPoll.getSingleResult();
+					classPost.setTitle(title);
+				}
+				catch(NoResultException noResultException)
+				{
+					noResultException.printStackTrace();
+				}
+			}
+			else if(classPost.getPost_type().equals("question") && !isPending)
+			{
+				qrForQuestion.setParameter("postId",classPost.getPostid());
+				
+				try{
+					title=qrForQuestion.getSingleResult();
+					classPost.setTitle(title);
+				}
+				catch(NoResultException noResultException)
+				{
+					noResultException.printStackTrace();
+				}
+			}
+		
+		}
+		
+		return classPosts;
+
+		
 	}
 	
 	
@@ -231,6 +299,11 @@ public class ClassDAOImpl implements ClassDAO {
 				}
 				
 				classPostsDetails.add(discussion);
+				
+					if(isPinned!=null && !isPending && (userId.startsWith("F") || userId.startsWith("f")))
+					{
+						isPinned.add(classPost.isPinned());
+					}
 				}
 				catch(NoResultException noResultException)
 				{
@@ -245,6 +318,11 @@ public class ClassDAOImpl implements ClassDAO {
 				try{
 				event=qrForEvent.getSingleResult();
 				classPostsDetails.add(event);
+				
+					if(isPinned!=null && !isPending && (userId.startsWith("F") || userId.startsWith("f")))
+					{
+						isPinned.add(classPost.isPinned());
+					}
 				}
 				catch(NoResultException noResultException)
 				{
@@ -258,6 +336,11 @@ public class ClassDAOImpl implements ClassDAO {
 				try{
 				poll=qrForPoll.getSingleResult();
 				classPostsDetails.add(poll);
+				
+					if(isPinned!=null && !isPending && (userId.startsWith("F") || userId.startsWith("f")))
+					{
+						isPinned.add(classPost.isPinned());
+					}
 				}
 				catch(NoResultException noResultException)
 				{
@@ -272,6 +355,12 @@ public class ClassDAOImpl implements ClassDAO {
 				question=qrForQuestion.getSingleResult();
 				System.out.println(question.getMostUpvotedAnswer());
 				classPostsDetails.add(question);
+					
+					if(isPinned!=null && !isPending && (userId.startsWith("F") || userId.startsWith("f")))
+					{
+						isPinned.add(classPost.isPinned());
+					}
+				
 				}
 				catch(NoResultException noResultException)
 				{
@@ -279,10 +368,7 @@ public class ClassDAOImpl implements ClassDAO {
 				}
 			}
 			
-			if(isPinned!=null && !isPending && (userId.startsWith("F") || userId.startsWith("f")))
-			{
-				isPinned.add(classPost.isPinned());
-			}
+			
 			
 		}
 		
@@ -334,7 +420,94 @@ public class ClassDAOImpl implements ClassDAO {
 		return result;
 	}
 
-			 
+	@Override
+	public Object renderPinnedPost(Integer postId, String postType,String userId) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();	
+		Query<ClassDiscussion> qrForDiscussion=currentSession.createQuery("from ClassDiscussion where id=:postId",ClassDiscussion.class);
+		Query<Events> qrForEvent=currentSession.createQuery("from Events where eid=:postId",Events.class);
+		Query<PollQueDetails> qrForPoll=currentSession.createQuery("from PollQueDetails where queid=:postId",PollQueDetails.class);
+		Query<Question> qrForQuestion=currentSession.createQuery("from Question where qid=:postId",Question.class);
+
+		ClassDiscussion discussion=null;
+		Events event=null;
+		PollQueDetails poll=null;
+		Question question=null;
+		
+		if(postType.equals("discussion"))
+		{
+			qrForDiscussion.setParameter("postId",postId);
+			
+			try{
+				discussion=qrForDiscussion.getSingleResult();
+				CommentLikers commentLikers=null;
+				
+				for(ClassDiscussionComment comment:discussion.getClassCommentList())
+				{
+					commentLikers=currentSession.get(CommentLikers.class,new CommentLikers(comment.getCommentId(),userId));
+					
+					if(commentLikers!=null)
+					{
+						comment.setLiked(true);
+					}
+					else
+					{
+						comment.setLiked(false);
+					}
+				}
+				return discussion;
+				
+			}
+			catch(NoResultException noResultException)
+			{
+				noResultException.printStackTrace();
+			}
+		}
+		else if(postType.equals("event"))
+		{
+			qrForEvent.setParameter("postId",postId);
+			
+			try{
+				event=qrForEvent.getSingleResult();
+				return event;
+			}
+			catch(NoResultException noResultException)
+			{
+				noResultException.printStackTrace();
+			}
+		}
+		else if(postType.equals("poll"))
+		{
+			qrForPoll.setParameter("postId",postId);
+			
+			try{
+				poll=qrForPoll.getSingleResult();
+				return poll;
+			}
+			catch(NoResultException noResultException)
+			{
+				noResultException.printStackTrace();
+			}
+		}
+		else if(postType.equals("question"))
+		{
+			qrForQuestion.setParameter("postId",postId);
+			
+			try{
+				question=qrForQuestion.getSingleResult();
+				System.out.println(question.getMostUpvotedAnswer());
+				return question;
+			}
+			catch(NoResultException noResultException)
+			{
+				noResultException.printStackTrace();
+			}
+			
+		}
+	
+		return null;
+	}
+	
 }
 
 

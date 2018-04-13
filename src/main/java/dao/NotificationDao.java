@@ -14,6 +14,7 @@ import model.AnswerModel;
 import model.NotificationModel;
 import model.QuestionModel;
 import model.pollmodel.CreateNewPollModel;
+import model.springmodel.ClassSubjectFaculty;
 
 public class NotificationDao {
 	
@@ -400,6 +401,67 @@ public class NotificationDao {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public ArrayList<NotificationModel> addClassPostNotification(NotificationModel nm, String classId,ServletContext context) 
+	{
+		ClassSubjectFaculty classSubjectFaculty=new ClassSubjectFaculty();
+		classSubjectFaculty.setClassAttributes(classId);
+		
+		con=(Connection)context.getAttribute("datacon");
+		qr="insert into notifications(message,timestamp) values(?,?)";
+		qr1="insert into usernotifications(nid,uid,isViewed) values(?,?,?)";
+		qr2="select EnrollmentNo from student where branch=? and sem=? and section=? and batch=? union select uid from class_subject_faculty where classid=? union select uid from class_coordinators where classid=?";
+		
+		ArrayList<NotificationModel> alnm=new ArrayList<>();
+		NotificationModel nm1;
+		 
+		try {
+			
+			 ps=con.prepareStatement(qr,Statement.RETURN_GENERATED_KEYS);
+			 ps.setString(1,nm.getMessage());
+			 ps.setLong(2,nm.getTimestamp());
+			 ps.executeUpdate();
+			 rs = ps.getGeneratedKeys();
+			 
+			 if(rs.next())
+			 {
+				 nm.setNid(rs.getInt(1));
+			 }
+			
+			 ps=con.prepareStatement(qr2);
+			 ps.setString(1,classSubjectFaculty.getBranch());
+			 ps.setInt(2,classSubjectFaculty.getSem());
+			 ps.setString(3,classSubjectFaculty.getSec()+"");
+			 ps.setInt(4,classSubjectFaculty.getBatch());
+			 ps.setString(5,classSubjectFaculty.getClassid());
+			 ps.setString(6,classSubjectFaculty.getClassid());
+			 rs=ps.executeQuery();
+			 
+			 while(rs.next())
+			 {
+				 ps=con.prepareStatement(qr1);
+				 ps.setInt(1,nm.getNid());
+				 ps.setString(2,rs.getString(1));
+				 ps.setBoolean(3,false);
+				 ps.executeUpdate();
+				 
+				 nm1=new NotificationModel();
+				 nm1.setMessage(nm.getMessage());
+				 nm1.setNid(nm.getNid());
+				 nm1.setTimestamp(nm.getTimestamp());
+				 nm1.setViewed(false);
+				 nm1.setUid(rs.getString(1));
+				 
+				 alnm.add(nm1);
+			 }
+			 
+			return alnm;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
