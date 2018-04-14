@@ -1,4 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -85,7 +88,7 @@ tr:nth-child(even) {
 				
 			<tr>
 			
-				<td><a href="<c:url value="conversation?id=${temp.key}&name=${temp.value}" />">${temp.value}</a></td>
+				<td><a href="<c:url value="inbox?id=${temp.key}" />">${temp.value}</a></td>
 				
 			</tr>
 			
@@ -93,6 +96,52 @@ tr:nth-child(even) {
 			
 				
 			</table>
+			
+			
+			<center>
+		<c:if test="${fn:length(conversation) gt 0}">
+			
+			<table>
+			<tr>
+		<th>Messages</th>
+		<th>By</th>
+		<th>At</th>
+		</tr>
+		<c:forEach var="temp" items="${conversation}" begin="0" varStatus="loop"> 
+				
+				
+			<tr>
+				<td> ${temp.message}</td>
+				<td> ${temp.sender.uname} </td>
+				<td id="time${loop.index}" ></td>
+				
+			</tr>
+			
+			
+			
+			<script>
+				document.getElementById("time${loop.index}").innerHTML=time_ago(new Date (${temp.timestamp}) ) +" " +new Date(${temp.timestamp});
+				console.log(time_ago(new Date (${temp.timestamp})));
+				</script>
+			</c:forEach>
+			</table>
+			
+			<form:form action="sendDM?id=${message.receiver.uid}" modelAttribute="message" method="POST">
+					<br>
+					<form:hidden path="receiver.uid"/>
+				<label>Message</label><br>
+				<form:textarea path="message"/>
+				<br>
+						
+					<input type="submit" value="SEND" />
+					
+			
+		</form:form>
+		</c:if>
+		
+		
+		
+		</center>
 			
 			
 </body>
