@@ -37,10 +37,10 @@ public class DirectMessage
 
 		UserModel sender= new UserModel();
 		Object object=session.getAttribute("userModel");
-		
 		String senderid=sender.getUserId(object);
 		sender.setUid(senderid);		
 		themessage.setSender(sender);
+		
 		Long timestamp= System.currentTimeMillis();
 		themessage.setTimestamp(timestamp);
 		dmservice.sendDM(themessage);
