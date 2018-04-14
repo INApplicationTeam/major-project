@@ -170,6 +170,8 @@
         
         var quillNotices=[];
         
+        var postTypes=[];
+        
         var configque = {
             "theme": "snow",
             "modules": {
@@ -376,16 +378,26 @@
         	quillShowEvent.setContents(eventContent);
         	quillShowEvent.enable(false);
         }
+      
+        var post_type,post_id;
         
-        function setPinButton(isPinned,postIndex)
+        /* function setPinButton(isPinned,postIndex,postid,posttype)
         {
         	if(isPinned)
 			{
-				document.getElementById("pin"+postIndex).value="Un Pin Post";
-				document.getElementById("pinform"+postIndex).setAttribute("action","unPinClassPost");
-				document.getElementById("pinform"+postIndex).setAttribute("onsubmit","return unPinPost();");
+        		var attr="unPinPost("+postid+","+String(posttype)+","+"pin"+postIndex+")";
+				document.getElementById("pin"+postIndex).innerHTML="Un Pin Post";
+				document.getElementById("pin"+postIndex).setAttribute("onclick",attr);
 			}
-        }
+           else
+        	{
+        		var attr="unPinPost("+postid+","+String(posttype)+","+"pin"+postIndex+")";
+        		document.getElementById("pin"+postIndex).innerHTML="Pin Post";
+				document.getElementById("pin"+postIndex).setAttribute("onclick",attr);
+        	}  
+        } */
+        
+      
         </script>
     
 
@@ -549,16 +561,21 @@
 	
 		<c:if test="${posts.getClass().name == 'model.springmodel.ClassDiscussion'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.id}"/>
-				<form:hidden path="post_type" value="discussion"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>DISCUSSION</b> <span id="discussionTime${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
 			<div id="disEditor${postLoop.index}"></div>
 			<script>
+				postTypes.push("discussion");
 				var disContent=${posts.content};
 				setDiscussion('${postLoop.index}',disContent);
 			</script>
@@ -609,11 +626,15 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.eid}"/>
-				<form:hidden path="post_type" value="event"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="eventtimestamp${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
@@ -624,6 +645,7 @@
 			<hr>
 			
 			<script>
+				postTypes.push("event");
 				var startDate=${posts.startdate};
 				var endDate=${posts.enddate};
 				var creationDate=${posts.timestamp};
@@ -639,11 +661,15 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.PollQueDetails'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.queid}"/>
-				<form:hidden path="post_type" value="poll"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>POLL</b><br>
 			<h4>${posts.question}</h4>
@@ -651,15 +677,23 @@
 				<i>${option.options}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${option.pollResult.count}<br>
 			</c:forEach>
 			<hr>
+			<script>
+				postTypes.push("poll");
+			</script>
+			
 		</c:if>
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Question'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.qid}"/>
-				<form:hidden path="post_type" value="question"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
 			
 			<c:set var="countQue" value="${countQue + 1}" scope="page"/>
 			
@@ -691,14 +725,10 @@
 				</c:forEach>
 			</c:if>	
 			<hr>
-		</c:if>	
-		
-		<script>
-				var isPinned=${checkPinned[postLoop.index]};
-				var postIndex=${postLoop.index};
-				setPinButton(isPinned,postIndex);
-		</script>
-			
+			<script>
+				postTypes.push("question");
+			</script>
+		</c:if>				
 	</c:forEach>
     <script>
     	if('${selectedsem}'!='${currentsem}')
@@ -784,16 +814,62 @@
 		    }
 		}
 
-		function pinPost()
+		var setIndex,setPostId;
+		function pinPost(postId,index)
 		{
-			return confirm('Do You Want To Pin This Post?');
+			if(confirm('Do You Want To Pin This Post?'))
+			{
+				setIndex=index;
+				setPostId=postId;
+				request=getXmlHttpRequestObject();
+			    request.onreadystatechange=postPinned;
+			    request.open("post","pinClassPost",true);
+			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+			    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
+			    request.send(data);
+			}
 		}
 		
-		function unPinPost()
+		function unPinPost(postId,index)
 		{
-			return confirm('Do You Want To Un-Pin This Post?');
+			if(confirm('Do You Want To Un-Pin This Post?'))
+			{
+				setIndex=index;
+				setPostId=postId;
+				request=getXmlHttpRequestObject();
+			    request.onreadystatechange=postUnPinned;
+			    request.open("post","unPinClassPost",true);
+			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+			    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
+			    request.send(data);
+			}
 		}
 		
+		function postPinned()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+				if(request.responseText==1)
+				{
+					console.log("pinned");
+					document.getElementById('pin'+setIndex).innerHTML="UNPIN POST";
+					document.getElementById('pin'+setIndex).setAttribute("onclick","unPinPost("+setPostId+","+setIndex+")");
+				}
+		    }
+		}
+		
+		function postUnPinned()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+				if(request.responseText==1)
+				{
+					console.log("unpinned");
+					document.getElementById('pin'+setIndex).innerHTML="PIN POST";
+					document.getElementById('pin'+setIndex).setAttribute("onclick","pinPost("+setPostId+","+setIndex+")");
+				}
+		    }
+		}
 		</script>
 	
 </body>

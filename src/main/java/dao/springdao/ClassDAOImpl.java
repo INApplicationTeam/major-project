@@ -507,6 +507,44 @@ public class ClassDAOImpl implements ClassDAO {
 	
 		return null;
 	}
+
+	@Override
+	public List<Object> getMyPosts(String classId, String userId, String postType) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();
+		Query<Object>qr=null;
+		
+		List<Object> myPosts=null;
+		
+		if(postType.equals("question"))
+			qr=currentSession.createQuery("from Question where qid in (select postid from ClassPosts where post_type=:post_type and classid=:classid) and userModel.uid=:uid",Object.class);
+			
+		else if(postType.equals("poll"))
+			qr=currentSession.createQuery("from PollQueDetails where queid in (select postid from ClassPosts where post_type=:post_type and classid=:classid) and userModel.uid=:uid",Object.class);
+		
+		else if(postType.equals("event"))
+			qr=currentSession.createQuery("from Events where eid in (select postid from ClassPosts where post_type=:post_type and classid=:classid) and userModel.uid=:uid",Object.class);
+
+		else if(postType.equals("discussion"))
+			qr=currentSession.createQuery("from ClassDiscussion where id in (select postid from ClassPosts where post_type=:post_type and classid=:classid) and userModel.uid=:uid",Object.class);
+		
+		qr.setParameter("post_type",postType);
+		qr.setParameter("classid",classId);
+		qr.setParameter("uid",userId);
+		
+		try{
+			myPosts=qr.getResultList();
+		}
+		catch(NoResultException noResultException)
+		{
+			System.out.println("No Post Found...!!!");
+		}
+		
+		System.out.println(myPosts.size());
+		return myPosts;
+	}
+	
+	
 	
 }
 

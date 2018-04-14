@@ -127,6 +127,13 @@ public class ClassServiceImpl implements ClassService {
 	public Object renderPinnedPost(Integer postId, String postType,String userId) {
 		return classdao.renderPinnedPost(postId,postType,userId);
 	}
+
+	@Override
+	@Transactional
+	public List<Object> getMyPosts(String classId, String userId, String postType) {
+		return classdao.getMyPosts(classId,userId,postType);
+	}
+	
 	
 	
 	
