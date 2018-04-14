@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import model.UserModel;
 import model.springmodel.Coordinator;
 import model.springmodel.Message;
 
@@ -56,7 +57,8 @@ public class DirectMessageDAOImpl implements DirectMessageDAO {
 
 
 	@Override
-	public HashMap<String, String> getMessageThreads(String id) {
+	public HashMap<String, String> getMessageThreads(String id) 
+	{
 		Session currentSession= sessionFactory.getCurrentSession();
 		Query<Object[]> qr= currentSession.createQuery("select distinct sender.uid, sender.uname from Message where (receiverid =:id) order by timestamp ",Object[].class);
 		Query<Object[]> qr1= currentSession.createQuery("select distinct receiver.uid, receiver.uname from Message where (senderid =:id) order by timestamp ",Object[].class);
@@ -69,22 +71,32 @@ public class DirectMessageDAOImpl implements DirectMessageDAO {
 		List<Object[]> threads1  =qr1.getResultList();
 		threads.addAll(threads1);
 		
-		HashMap<String, String> conversation = new HashMap<>();		for(Object[] o: threads)
+		HashMap<String, String> conversation = new HashMap<>();	
+		for(Object[] o: threads)
 		{
 			
 				conversation.put(o[0].toString(),o[1].toString());
-				System.out.println(o[0].toString());
-				System.out.println(o[1].toString());
-
-			System.out.println("-----------");
+				
 		}
 		
-		
-		
-		
-		
-		
+			return conversation;
+			
+	}
 
-		return conversation;	}
+
+
+	@Override
+	public List<UserModel> searchThreadName(String name)
+	{
+		Session currentSession= sessionFactory.getCurrentSession();
+		Query<UserModel> qr= currentSession.createQuery(" from UserModel where uname like :name",UserModel.class);
+		
+		qr.setParameter("name", name+"%");
+		List<UserModel> threadNames  =qr.getResultList();
+		
+		
+		
+		return threadNames;
+	}
 
 }

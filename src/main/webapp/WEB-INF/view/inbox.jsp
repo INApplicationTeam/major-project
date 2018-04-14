@@ -80,7 +80,9 @@ tr:nth-child(even) {
 
 </head>
 <body>
-				<table >
+<input type="text" id="searchname" onkeyup="searchName()" placeholder="search name here....">
+
+				<table id="threadname" >
 				
 				
 			<c:forEach var="temp" items="${threads}" begin="0" varStatus="loop"> 
@@ -95,9 +97,7 @@ tr:nth-child(even) {
 			</c:forEach>	
 			
 				
-			</table>
-			
-			
+			</table>						
 			<center>
 		<c:if test="${fn:length(conversation) gt 0}">
 			
@@ -126,6 +126,14 @@ tr:nth-child(even) {
 			</c:forEach>
 			</table>
 			
+			
+		
+		</c:if>
+		
+		
+		
+						<c:if test="${flag==true}">
+						
 			<form:form action="sendDM?id=${message.receiver.uid}" modelAttribute="message" method="POST">
 					<br>
 					<form:hidden path="receiver.uid"/>
@@ -140,9 +148,58 @@ tr:nth-child(even) {
 		</c:if>
 		
 		
+		<c:if test="${flag==false}">
+		<h2>Welcome to messaging</h2>
+		</c:if>
+		
 		
 		</center>
-			
+
+<script>
+
+function getXmlHttpRequestObject()
+{
+var xmlHttpReq;
+
+if(window.XMLHttpRequest){
+    request=new window.XMLHttpRequest();
+}
+else if(window.ActiveXObject){
+    request=new window.ActiveXObject();
+}
+else{
+    request=null;
+}
+return request;
+}
+
+
+
+function searchName()
+{
+	var name=document.getElementById("searchname").value;
+	console.log(name);
+	request=getXmlHttpRequestObject();
+	request.onreadystatechange=threadNames;
+    request.open("post","searchThreadName",true);
+    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+    var data="searchedname="+name;
+    request.send(data);
+}
+
+
+function threadNames()
+{
+	if(request.readyState===4 && request.status===200)
+    {
+		
+		document.getElementById("threadname").innerHTML=request.responseText;
+           }
+	
+}
+
+
+</script>			
 			
 </body>
 </html>

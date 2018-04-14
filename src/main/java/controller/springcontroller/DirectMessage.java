@@ -1,9 +1,12 @@
 package controller.springcontroller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sound.midi.Soundbank;
 
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.google.gson.Gson;
 
 import model.UserModel;
 import model.springmodel.Message;
@@ -70,17 +75,47 @@ public class DirectMessage
 		
 		//conversation
 				
+		if(receiverid!=null)
+		{
+			theModel.addAttribute("flag", true);
+		}
+		else
+		{
+			theModel.addAttribute("flag", false);
+
+		}
 		Message themessage= new Message(); 
 		
 		UserModel receiver= new UserModel();
 		receiver.setUid(receiverid);
 		themessage.setReceiver(receiver);
 		List<Message> theConversation =dmservice.showConversation(receiverid, senderid);
+		System.out.println(theConversation.toString());
 		theModel.addAttribute("conversation", theConversation);
 		theModel.addAttribute("message", themessage);
 		
 		return "inbox";
 		
+	}
+	
+	@PostMapping("/searchThreadName")
+	public void searchThreadName(@RequestParam("searchedname")String name,HttpServletResponse response)
+	{
+		System.out.println("name--------.-.-"+name);
+		List<UserModel> theThreads= dmservice.searchThreadName(name);
+		try {
+			PrintWriter out= response.getWriter();
+			for(UserModel um : theThreads)
+			out.println("<tr><td><a href='inbox?id="+um.getUid()+"'>"+um.getUname()+"</a></td></tr>");
+			
+			/*String returnJson= new Gson().toJson(theThreads);
+			response.getWriter().println(returnJson);*/
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
