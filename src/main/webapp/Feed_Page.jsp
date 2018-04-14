@@ -251,6 +251,7 @@ pre {
 					<li><a href="MyProfile">Profile</a></li>
 					<li><a href="Post_Question.jsp">Ask a question</a></li>
 					<li><a href="AboutUs.jsp">About Us</a></li>
+					<li><a href="LoadBlogFeed">Blogs</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 

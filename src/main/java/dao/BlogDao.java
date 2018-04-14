@@ -488,5 +488,29 @@ public class BlogDao {
         return 0;
     }
 
+	public void insertComment(BlogCommentModel bcm, ServletContext context) {
+		// TODO Auto-generated method stub
+		
+		con=(Connection)context.getAttribute("datacon");
+		
+		String qr="insert into blogcomments(bid,comment,timestamp,uid) values (?,?,?,?)";
+		
+		try {
+			ps=con.prepareStatement(qr);
+			
+			ps.setInt(1, bcm.getBid());
+			ps.setString(2, bcm.getComment());
+			ps.setLong(3, bcm.getTimestamp());
+			ps.setString(4, bcm.getUid());
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
     
 }

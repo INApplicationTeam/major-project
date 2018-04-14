@@ -39,12 +39,13 @@ public class BlogContentSingle extends HttpServlet {
            ServletContext context=getServletContext();
            HttpSession session=request.getSession();
            
-           //int bid=Integer.parseInt(request.getParameter("bid"));
-           int bid=2;
+           int bid=Integer.parseInt(request.getParameter("bid"));
+           //int bid=2;
            
            BlogDao bd=new BlogDao();
            System.out.println("innnnnnnnn servlet ");
            BlogModel bm=bd.getBlogById(bid, context);
+           bm.setBlogId(bid);
            System.out.println("innnnnnnnn servlet ");
            session.setAttribute("blogmodel",bm);
            response.sendRedirect("Blog_Page.jsp");
