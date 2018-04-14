@@ -402,4 +402,63 @@ public class NotificationDao {
 		return false;
 	}
 
+	public ArrayList<NotificationModel> notifyBlog(NotificationModel nm, ServletContext context) {
+		// TODO Auto-generated method stub
+		
+		con=(Connection)context.getAttribute("datacon");
+		String qr="insert into notifications(message,timestamp) values(?,?)";
+		String qr1="insert into usernotifications values(?,?,?)";
+		String qr2="select otherUserId from userfollowers where myUserId=?";
+		
+		try {
+			ps=con.prepareStatement(qr,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, nm.getMessage());
+			ps.setLong(2, nm.getTimestamp());
+			
+			if(ps.executeUpdate()>0)
+			{
+				rs=ps.getGeneratedKeys();
+				if(rs.next())
+				{
+				nm.setNid(rs.getInt(1));
+				
+				ps=con.prepareStatement(qr2);
+				ps.setString(1, nm.getUid());
+				rs=ps.executeQuery();
+				
+				NotificationModel nm1;
+				ArrayList<NotificationModel> alnm=new ArrayList<>();
+				
+				while(rs.next())
+				{
+					nm1=new NotificationModel();
+					ps=con.prepareStatement(qr1);
+					ps.setInt(1, nm.getNid());
+					ps.setString(2, rs.getString(1));
+					ps.setBoolean(3, false);
+					
+					ps.executeUpdate();
+					
+					nm1.setNid(nm.getNid());
+					nm1.setUid(rs.getString(1));
+					nm1.setViewed(false);
+					nm1.setMessage(nm.getMessage());
+					nm1.setTimestamp(nm.getTimestamp());
+					
+					alnm.add(nm1);
+				}
+				return alnm;
+				}
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
 }
