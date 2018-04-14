@@ -35,22 +35,22 @@ public class DirectMessage
 	{
 		HttpSession session=request.getSession();
 
-
-		UserModel receiver=new UserModel();
+		UserModel um=new UserModel();
 		Object object=session.getAttribute("userModel");
-
-		String senderid=receiver.getUserId(object);
-
-		Message themessage= new Message();
+		String senderid=um.getUserId(object);
+		
+		UserModel receiver=new UserModel();
 		String receiverid=request.getParameter("id");
-		String username=request.getParameter("name");
-		System.out.println("name------"+username);
+		String receivername=request.getParameter("name");
 		receiver.setUid(receiverid);
-		receiver.setUname(username);
+		receiver.setUname(receivername);
+		
+		Message themessage= new Message();
+		themessage.setReceiver(receiver);
 		theModel.addAttribute("message", themessage);
+		
 		List <Message> theConversation=dmservice.showConversation(receiverid,senderid);
 		theModel.addAttribute("conversation", theConversation);
-		themessage.setReceiver(receiver);
 		
 		return "DM";
 	}
@@ -59,14 +59,15 @@ public class DirectMessage
 	@PostMapping("/sendDM")
 	public String sendDM(@ModelAttribute ("message") Message themessage, HttpServletRequest request)
 	{	
+		System.out.println(themessage.getReceiver().getUid()+"0---------------------->>>>>>>>>>>");
 		HttpSession session=request.getSession();
 
 		UserModel sender= new UserModel();
 		Object object=session.getAttribute("userModel");
-		
 		String senderid=sender.getUserId(object);
 		sender.setUid(senderid);		
 		themessage.setSender(sender);
+		
 		Long timestamp= System.currentTimeMillis();
 		themessage.setTimestamp(timestamp);
 		dmservice.sendDM(themessage);
