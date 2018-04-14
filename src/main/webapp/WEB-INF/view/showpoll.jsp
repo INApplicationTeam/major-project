@@ -323,7 +323,7 @@ label .glyphicon {
                
                    <span class="progress-type" style="color: black; font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${ optiondetails.options}</span>
                      <span class="progress-completed" style="color: black;font-size: 20px;">&nbsp;&nbsp; &nbsp;&nbsp;</span>
-                     <form:radiobutton path="queid" value="${optiondetails.pollResult.opid}"/>
+                     <%-- <form:radiobutton path="queid" value="${optiondetails.pollResult.opid}"/> --%>
                      
             </form:form>
             </div>

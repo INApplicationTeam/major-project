@@ -32,6 +32,7 @@ import model.springmodel.Events;
 import model.springmodel.Notice;
 import model.springmodel.PollQueDetails;
 import model.springmodel.Question;
+import model.springmodel.SavedPosts;
 import model.springmodel.Answer;
 import model.springmodel.ClassDiscussion;
 import model.springmodel.ClassDiscussionComment;
@@ -380,10 +381,12 @@ public class ClassController implements ServletContextAware
 	}
 	
 	@GetMapping("/addEventForm")
-	public String addEventForm(Model theModel,@RequestParam(value = "type",required = false) String type )
+	public String addEventForm(Model theModel,HttpServletRequest request,@RequestParam(name="type", required=false)String type)
 	{	
+		HttpSession session=request.getSession();
 		Events theEvents = new Events();
-		if(type.equals("faculty"))
+		
+		if(type!=null && type.equals("faculty"))
 		{
 			theEvents.setScope("global");
 		}
@@ -956,6 +959,31 @@ public class ClassController implements ServletContextAware
 		theModel.addAttribute("myDiscussion",myDiscussions);
 		
 		return "myPosts";
+	}
+	
+	@PostMapping("/saveAsBookmark")
+	public void saveAsBookmark(HttpServletRequest request,HttpServletResponse response,@RequestParam("postId")Integer postId,@RequestParam("postType")String postType)
+	{
+		HttpSession session=request.getSession();
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		
+		SavedPosts savedPosts=new SavedPosts();
+		savedPosts.setUid(userId);
+		savedPosts.setTimestamp(new Date().getTime());
+		
+		int result=-1;
+		if(classservice.getClassPostId(postId,postType)!=-1)
+		{
+			savedPosts.setId(classservice.getClassPostId(postId,postType));
+			result=classservice.saveAsBookMark(savedPosts);
+		}
+		
+		try {
+			response.getWriter().println(result);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 
