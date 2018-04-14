@@ -253,6 +253,15 @@ font-size: 90%;
 						<li><a href="major/class/addEventForm?type=<%=utype%>">Create Event</a></li>
 							
 							<%} %>
+							
+							<li><a
+											href="major/message/inbox">
+
+												Message 
+												
+												
+						    </a></li>
+							
                                                  <li><a href="AboutUs.jsp">About Us</a></li>
 				    		</ul>
 						<ul class="nav navbar-nav navbar-right">

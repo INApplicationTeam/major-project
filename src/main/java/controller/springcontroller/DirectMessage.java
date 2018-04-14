@@ -28,38 +28,11 @@ public class DirectMessage
 
 	@Autowired
 	private DirectMessageService dmservice;
-	
-	
-	@GetMapping("/DMform")
-	public String directMessageform(HttpServletRequest request, Model theModel)
-	{
-		HttpSession session=request.getSession();
-
-		UserModel um=new UserModel();
-		Object object=session.getAttribute("userModel");
-		String senderid=um.getUserId(object);
 		
-		UserModel receiver=new UserModel();
-		String receiverid=request.getParameter("id");
-		String receivername=request.getParameter("name");
-		receiver.setUid(receiverid);
-		receiver.setUname(receivername);
-		
-		Message themessage= new Message();
-		themessage.setReceiver(receiver);
-		theModel.addAttribute("message", themessage);
-		
-		List <Message> theConversation=dmservice.showConversation(receiverid,senderid);
-		theModel.addAttribute("conversation", theConversation);
-		
-		return "DM";
-	}
-	
 	
 	@PostMapping("/sendDM")
-	public String sendDM(@ModelAttribute ("message") Message themessage, HttpServletRequest request)
+	public String sendDM(@ModelAttribute ("message") Message themessage, HttpServletRequest request,Model theModel,@RequestParam (name="id",required=false) String receiverid)
 	{	
-		System.out.println(themessage.getReceiver().getUid()+"0---------------------->>>>>>>>>>>");
 		HttpSession session=request.getSession();
 
 		UserModel sender= new UserModel();
@@ -72,14 +45,15 @@ public class DirectMessage
 		themessage.setTimestamp(timestamp);
 		dmservice.sendDM(themessage);
 		
-		return "profilepage";
 		
+		
+        return "redirect:/major/message/inbox?id="+receiverid 	;	
 	}
 	
 	
 	
 	@GetMapping("/inbox")
-	public String myMessages(HttpServletRequest request, Model theModel)
+	public String myMessages(HttpServletRequest request, Model theModel, @RequestParam (name="id",required=false) String receiverid  )
 	{
 		HttpSession session=request.getSession();
 
@@ -87,36 +61,27 @@ public class DirectMessage
 		UserModel um= new UserModel();
 		Object object=session.getAttribute("userModel");
 		
-		String id=um.getUserId(object);
+		String senderid=um.getUserId(object);
 		
-		HashMap<String, String> theThreads= dmservice.getMessageThreads(id);
+		HashMap<String, String> theThreads= dmservice.getMessageThreads(senderid);
 		
 		theModel.addAttribute("threads", theThreads);
+		
+		
+		//conversation
+				
+		Message themessage= new Message(); 
+		
+		UserModel receiver= new UserModel();
+		receiver.setUid(receiverid);
+		themessage.setReceiver(receiver);
+		List<Message> theConversation =dmservice.showConversation(receiverid, senderid);
+		theModel.addAttribute("conversation", theConversation);
+		theModel.addAttribute("message", themessage);
+		
 		return "inbox";
 		
 	}
 	
-	@RequestMapping(value = "/conversation", method = RequestMethod.GET)
-    public String showConversation(HttpServletRequest request,Model theModel) 
-	{
-		HttpSession session=request.getSession();
-		String id=request.getParameter("id");
-		String name=request.getParameter("name");
-
-		UserModel receiver= new UserModel();
-		Object object=session.getAttribute("userModel");
-		
-		Message themessage= new Message();
-		receiver.setUname(name);
-		receiver.setUid(id);
-
-		themessage.setReceiver(receiver);
-
-		String userid=receiver.getUserId(object);
-		List<Message> theConversation =dmservice.showConversation(id, userid);
-		theModel.addAttribute("message", themessage);
-		
-		theModel.addAttribute("conversation", theConversation);
-
-		return "DM";    }
+	
 }
