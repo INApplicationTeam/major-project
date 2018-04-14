@@ -45,7 +45,6 @@ public class DirectMessage
 		themessage.setTimestamp(timestamp);
 		dmservice.sendDM(themessage);
 		
-		System.out.println("id+++++++++++++++++>"+receiverid);
 		
 		
         return "redirect:/major/message/inbox?id="+receiverid 	;	
@@ -84,27 +83,5 @@ public class DirectMessage
 		
 	}
 	
-	/*@RequestMapping(value = "/conversation", method = RequestMethod.GET)
-    public String showConversation(HttpServletRequest request,Model theModel) 
-	{
-		HttpSession session=request.getSession();
-		String id=request.getParameter("id");
-		String name=request.getParameter("name");
-
-		UserModel receiver= new UserModel();
-		Object object=session.getAttribute("userModel");
-		
-		Message themessage= new Message();
-		receiver.setUname(name);
-		receiver.setUid(id);
-
-		themessage.setReceiver(receiver);
-
-		String userid=receiver.getUserId(object);
-		List<Message> theConversation =dmservice.showConversation(id, userid);
-		theModel.addAttribute("message", themessage);
-		
-		theModel.addAttribute("conversation", theConversation);
-
-		return "inbox";    }*/
+	
 }
