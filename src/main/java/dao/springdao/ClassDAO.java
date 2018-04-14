@@ -50,5 +50,7 @@ public interface ClassDAO {
 	List<ClassPosts> showPinnedPosts(String classid, boolean isPending, String userId);
 
 	Object renderPinnedPost(Integer postId, String postType, String userId);
+
+	List<Object> getMyPosts(String classId, String userId, String postType);
 	
 }

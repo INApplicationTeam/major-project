@@ -700,17 +700,35 @@ public class ClassController implements ServletContextAware
 	
 
 	@PostMapping("/pinClassPost")
-	public String pinClassPost(@ModelAttribute("pinnedClassPost") ClassPosts pinnedClassPost)
+	public void pinClassPost(@RequestParam("postId")Integer postId,@RequestParam("postType")String postType,HttpServletResponse response)
 	{
-		classservice.pinPost(pinnedClassPost);
-		return "redirect:/major/class/redirectFacultyHome";
+		ClassPosts pinnedClassPost=new ClassPosts();
+		pinnedClassPost.setPostid(postId);
+		pinnedClassPost.setPost_type(postType);
+		
+		int result=classservice.pinPost(pinnedClassPost);
+		
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@PostMapping("/unPinClassPost")
-	public String unPinClassPost(@ModelAttribute("pinnedClassPost") ClassPosts pinnedClassPost)
+	public void unPinClassPost(@RequestParam("postId")Integer postId,@RequestParam("postType")String postType,HttpServletResponse response)
 	{
-		classservice.unPinPost(pinnedClassPost);
-		return "redirect:/major/class/redirectFacultyHome";
+		ClassPosts pinnedClassPost=new ClassPosts();
+		pinnedClassPost.setPostid(postId);
+		pinnedClassPost.setPost_type(postType);
+		
+		int result=classservice.unPinPost(pinnedClassPost);
+		
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@GetMapping("/redirectFacultyHome")
@@ -915,6 +933,29 @@ public class ClassController implements ServletContextAware
 		theModel.addAttribute("classNotices",classNotices);
 		
 		return "noticePage";
+	}
+	
+	@GetMapping("/showMyPosts")
+	public String showMyPosts(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		String classId=(String)session.getAttribute("classid");
+		
+		List<Object> myQuestions=classservice.getMyPosts(classId,userId,"question");
+		theModel.addAttribute("myQuestions",myQuestions);
+		
+		List<Object> myPolls=classservice.getMyPosts(classId,userId,"poll");
+		theModel.addAttribute("myPolls",myPolls);
+		
+		List<Object> myEvents=classservice.getMyPosts(classId,userId,"event");
+		theModel.addAttribute("myEvents",myEvents);
+		
+		List<Object> myDiscussions=classservice.getMyPosts(classId,userId,"discussion");
+		theModel.addAttribute("myDiscussion",myDiscussions);
+		
+		return "myPosts";
 	}
 }
 
