@@ -381,23 +381,6 @@
       
         var post_type,post_id;
         
-        /* function setPinButton(isPinned,postIndex,postid,posttype)
-        {
-        	if(isPinned)
-			{
-        		var attr="unPinPost("+postid+","+String(posttype)+","+"pin"+postIndex+")";
-				document.getElementById("pin"+postIndex).innerHTML="Un Pin Post";
-				document.getElementById("pin"+postIndex).setAttribute("onclick",attr);
-			}
-           else
-        	{
-        		var attr="unPinPost("+postid+","+String(posttype)+","+"pin"+postIndex+")";
-        		document.getElementById("pin"+postIndex).innerHTML="Pin Post";
-				document.getElementById("pin"+postIndex).setAttribute("onclick",attr);
-        	}  
-        } */
-        
-      
         </script>
     
 
@@ -526,7 +509,10 @@
 			
 			<i><a href="">${pinnedPost.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="pinnedeventtimestamp"></span><br>
 			<h4>Title : <i>${pinnedPost.title}</i></h4> 
-			<p><b>Description:</b>  ${pinnedPost.description} </p>
+			<p>
+			<b>Description:</b><br>
+			<div id="eventEditor-1"></div>
+			</p>
 			<b>Start Date:</b> <span id="pinnedstartdate"></span><br><br>
 			<b>Last Date:</b> <span id="pinnedlastdate"></span><br><br>
 
@@ -535,10 +521,12 @@
 				var pinstartDate=${pinnedPost.startdate};
 				var pinendDate=${pinnedPost.enddate};
 				var pincreationDate=${pinnedPost.timestamp};
+				var eventContent=${pinnedPost.description};
 			
 				setTime('pinnedstartdate',pinstartDate);
 				setTime('pinnedlastdate',pinendDate);
 				setTime('pinnedeventtimestamp',pincreationDate);
+				setEventContent('-1',eventContent);
 			</script>
 		</c:if>
 		
@@ -570,6 +558,8 @@
 					<a href="#no" onclick="unPinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
 				</c:if>
 			</div>
+			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.id}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>DISCUSSION</b> <span id="discussionTime${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
@@ -636,6 +626,8 @@
 				</c:if>
 			</div>
 			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.eid}','${postLoop.index}');">Save As Bookmark</a><br>
+			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="eventtimestamp${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
 			<b>Description:</b><br>
@@ -671,6 +663,8 @@
 				</c:if>
 			</div>
 			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.queid}','${postLoop.index}');">Save As Bookmark</a><br>
+			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>POLL</b><br>
 			<h4>${posts.question}</h4>
 			<c:forEach var="option" items="${posts.options}">
@@ -694,6 +688,8 @@
 					<a href="#no" onclick="unPinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
 				</c:if>
 			</div>
+			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.qid}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<c:set var="countQue" value="${countQue + 1}" scope="page"/>
 			
@@ -765,7 +761,6 @@
 			
 			if(innerText=='Like')
 			{	
-				
 			    request=getXmlHttpRequestObject();
 			    request.onreadystatechange=commentLiked;
 			    request.open("post","LikeComment",true);
@@ -867,6 +862,33 @@
 					console.log("unpinned");
 					document.getElementById('pin'+setIndex).innerHTML="PIN POST";
 					document.getElementById('pin'+setIndex).setAttribute("onclick","pinPost("+setPostId+","+setIndex+")");
+				}
+		    }
+		}
+		
+		function saveAsBookmark(postId,index)
+		{
+			request=getXmlHttpRequestObject();
+		    request.onreadystatechange=bookmarkSaved;
+		    request.open("post","saveAsBookmark",true);
+		    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+		    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
+		    request.send(data);
+		}
+		
+		function bookmarkSaved()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+				if(request.responseText!=-1)
+				{
+					console.log("saved");
+					alert('Saved Successfully...');
+				}
+				else
+				{
+					console.log("already saved");
+					alert('Post Is Already Saved...');
 				}
 		    }
 		}

@@ -131,6 +131,7 @@
         
         var quillAnswers=[];
         var quillNotices=[];
+        var postTypes=[];
         
         
         var configque = {
@@ -148,7 +149,7 @@
         };
         
         var quillque=new Quill('#editorque',configque);
-        var quillShowAns,quillShowDis,quillShowNotice;
+        var quillShowAns,quillShowDis,quillShowNotice,quillShowEvent;
         
         function instantiateEditor(index,postIndex)
         {
@@ -332,6 +333,14 @@
         	quillShowDis.setContents(discussionContent);
         	quillShowDis.enable(false);
         }
+        
+        function setEventContent(index,eventContent)
+        {
+        	quillShowEvent=new Quill('#eventEditor'+index,configForShow);
+        	quillShowEvent.setContents(eventContent);
+        	quillShowEvent.enable(false);
+        }
+      
         </script>
     
 
@@ -473,7 +482,9 @@
 			
 			<i><a href="">${pinnedPost.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="pinnedeventtimestamp"></span><br>
 			<h4>Title : <i>${pinnedPost.title}</i></h4> 
-			<p><b>Description:</b>  ${pinnedPost.description} </p>
+			<p><b>Description:</b> <br>
+			<div id="eventEditor-1"></div>
+			</p>
 			<b>Start Date:</b> <span id="pinnedstartdate"></span><br><br>
 			<b>Last Date:</b> <span id="pinnedlastdate"></span><br><br>
 
@@ -482,10 +493,12 @@
 				var pinstartDate=${pinnedPost.startdate};
 				var pinendDate=${pinnedPost.enddate};
 				var pincreationDate=${pinnedPost.timestamp};
-			
+				var eventContent=${pinnedPost.description};
+				
 				setTime('pinnedstartdate',pinstartDate);
 				setTime('pinnedlastdate',pinendDate);
 				setTime('pinnedeventtimestamp',pincreationDate);
+				setEventContent('-1',eventContent);
 			</script>
 		</c:if>
 		
@@ -507,10 +520,13 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.ClassDiscussion'}">
 			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.id}','${postLoop.index}');">Save As Bookmark</a><br>
+			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>DISCUSSION</b> <span id="discussionTime${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
 			<div id="disEditor${postLoop.index}"></div>
 			<script>
+				postTypes.push("discussion");
 				var disContent=${posts.content};
 				setDiscussion('${postLoop.index}',disContent);
 			</script>
@@ -561,25 +577,34 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
 			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.eid}','${postLoop.index}');">Save As Bookmark</a><br>
+			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="eventtimestamp${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
-			<p><b>Description:</b>  ${posts.description} </p>
+			<p><b>Description:</b> <br>
+			<div id="eventEditor${postLoop.index}"></div>
+			</p>
 			<b>Start Date:</b> <span id="startdate${postLoop.index}"></span><br><br>
 			<b>Last Date:</b> <span id="lastdate${postLoop.index}"></span><br><br>
 			<hr>
 			
 			<script>
+				postTypes.push("event");
 				var startDate=${posts.startdate};
 				var endDate=${posts.enddate};
-				var creationDate=${posts.timestamp}
+				var creationDate=${posts.timestamp};
+				var eventContent=${posts.description};
 			
 				setTime('startdate${postLoop.index}',startDate);
 				setTime('lastdate${postLoop.index}',endDate);
 				setTime('eventtimestamp${postLoop.index}',creationDate);
+				setEventContent('${postLoop.index}',eventContent);
 			</script>
 		</c:if>
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.PollQueDetails'}">
+				
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.queid}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>POLL</b><br>
 			<h4>${posts.question}</h4>
@@ -587,9 +612,16 @@
 				<i>${option.options}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${option.pollResult.count}<br>
 			</c:forEach>
 			<hr>
+			<script>
+				postTypes.push("poll");
+			</script>
+			
 		</c:if>
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Question'}">
+			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.qid}','${postLoop.index}');">Save As Bookmark</a><br>
+			
 			<c:set var="countQue" value="${countQue + 1}" scope="page"/>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>QUESTION</b> on <span id="questiontime${postLoop.index}">${posts.timestamp}</span><br>
@@ -620,6 +652,9 @@
 				</c:forEach>
 			</c:if>	
 			<hr>
+			<script>
+				postTypes.push("question");
+			</script>
 		</c:if>	
 	</c:forEach>
     <script>
@@ -706,6 +741,33 @@
 		    }
 		}
 
+		function saveAsBookmark(postId,index)
+		{
+			request=getXmlHttpRequestObject();
+		    request.onreadystatechange=bookmarkSaved;
+		    request.open("post","saveAsBookmark",true);
+		    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+		    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
+		    request.send(data);
+		}
+		
+		function bookmarkSaved()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+				if(request.responseText!=-1)
+				{
+					console.log("saved");
+					alert('Saved Successfully...');
+				}
+				else
+				{
+					console.log("already saved");
+					alert('Post Is Already Saved...');
+				}
+		    }
+		}
+	
 		
 		
 		</script>

@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,7 @@ import model.springmodel.Coordinator;
 import model.springmodel.Events;
 import model.springmodel.PollQueDetails;
 import model.springmodel.Question;
+import model.springmodel.SavedPosts;
 
 @Repository
 public class ClassDAOImpl implements ClassDAO {
@@ -366,12 +368,9 @@ public class ClassDAOImpl implements ClassDAO {
 				{
 					noResultException.printStackTrace();
 				}
-			}
-			
-			
-			
+			}		
 		}
-		
+	
 		return classPostsDetails;
 
 	}
@@ -543,6 +542,40 @@ public class ClassDAOImpl implements ClassDAO {
 		System.out.println(myPosts.size());
 		return myPosts;
 	}
+
+	@Override
+	public int getClassPostId(Integer postId, String postType) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();
+		Query<Integer> qr=currentSession.createQuery("select id from ClassPosts where postid=:postid and post_type=:post_type",Integer.class);
+		qr.setParameter("postid",postId);
+		qr.setParameter("post_type",postType);
+		
+		try{
+			return qr.getSingleResult();
+		}
+		catch(NoResultException noResult)
+		{
+			System.out.println("No Post Found...!!!");
+		}
+		return -1;
+	}
+
+	@Override
+	public int saveAsBookmark(SavedPosts savedPosts) {
+
+		Session currentSession=sessionFactory.getCurrentSession();
+		SavedPosts isSaved=currentSession.get(SavedPosts.class,savedPosts);
+		
+		if(isSaved!=null)
+			return -1;
+		else
+		{
+			currentSession.save(savedPosts);
+			return 0;
+		}
+	}
+	
 	
 	
 	
