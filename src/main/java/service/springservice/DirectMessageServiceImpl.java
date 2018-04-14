@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.springdao.DirectMessageDAO;
+import model.UserModel;
 import model.springmodel.Message;
 @Service
 public class DirectMessageServiceImpl implements DirectMessageService {
@@ -39,6 +40,14 @@ public class DirectMessageServiceImpl implements DirectMessageService {
 	@Transactional
 	public HashMap<String, String> getMessageThreads(String id) {
 		return dmDAO.getMessageThreads(id);
+	}
+
+
+
+	@Override
+	@Transactional
+	public List<UserModel> searchThreadName(String name) {
+		return dmDAO.searchThreadName(name);
 	}
 
 }
