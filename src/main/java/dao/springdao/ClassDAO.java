@@ -57,5 +57,7 @@ public interface ClassDAO {
 	int getClassPostId(Integer postId, String postType);
 
 	int saveAsBookmark(SavedPosts savedPosts);
+
+	List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
 	
 }

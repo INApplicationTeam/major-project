@@ -51,4 +51,6 @@ public interface ClassService {
 
 	int saveAsBookMark(SavedPosts savedPosts);
 
+	List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
+
 }
