@@ -36,6 +36,17 @@ public class ClassPosts implements Serializable
 	@Transient
 	private boolean reviewed;
 	
+	@Transient
+	private String title;
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public boolean isPinned() {
 		return pinned;
 	}

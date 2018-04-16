@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,18 +14,25 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import dao.NotificationDao;
 import model.FacultyModel;
+import model.NotificationModel;
 import model.StudentModel;
 import model.UserModel;
 import model.springmodel.Events;
+import model.springmodel.Notice;
 import model.springmodel.PollQueDetails;
 import model.springmodel.Question;
+import model.springmodel.SavedPosts;
 import model.springmodel.Answer;
 import model.springmodel.ClassDiscussion;
 import model.springmodel.ClassDiscussionComment;
@@ -36,12 +44,13 @@ import model.springmodel.CommentLikers;
 import service.springservice.ClassService;
 import service.springservice.DiscussionService;
 import service.springservice.EventService;
+import service.springservice.NoticeService;
 import service.springservice.PollService;
 import service.springservice.QuestionService;
 
 @Controller
 @RequestMapping("/class")
-public class ClassController 
+public class ClassController implements ServletContextAware 
 {	
 	@Autowired
 	private ClassService classservice;
@@ -58,8 +67,20 @@ public class ClassController
 	@Autowired
 	private PollService pollservice;
 	
+	@Autowired
+	private NoticeService noticeservice;
+	
+	@Autowired
+	private ServletContext context;
+	
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.context=context;
+		
+	}
+	
 	@GetMapping("/CDFhomestudent")
-	public String CDFhome(HttpServletRequest request,Model theModel)
+	public String CDFhome(HttpServletRequest request,Model theModel,@ModelAttribute("pinnedPostType")String pinnedPostType,@ModelAttribute("pinnedQuestion") Question pinnedQuestion ,@ModelAttribute("pinnedDiscussion") ClassDiscussion pinnedDiscussion, @ModelAttribute("pinnedEvent")Events pinnedEvent,@ModelAttribute("pinnedPoll")PollQueDetails pinnedPoll,BindingResult bindingResult)
 	{	
 		HttpSession session=request.getSession();
 		Object object=session.getAttribute("userModel");
@@ -83,7 +104,7 @@ public class ClassController
 			List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
 			theModel.addAttribute("allClassPosts",allClassPosts);
 			
-			List<Object> allPinnedPosts=classservice.showPinnedPosts(classid,false,sm.getSid());
+			List<ClassPosts> allPinnedPosts=classservice.showPinnedPosts(classid,false,sm.getSid());
 			theModel.addAttribute("allPinnedPosts",allPinnedPosts);		
 					
 			String currentsem =new UserModel().getSem(object);
@@ -97,11 +118,120 @@ public class ClassController
 			ClassDiscussionReply cdr=new ClassDiscussionReply();
 			theModel.addAttribute("ClassReplyModel",cdr);
 			
+			if(pinnedPostType.equals("discussion"))
+			{
+				theModel.addAttribute("pinnedPostType",pinnedPostType);
+				theModel.addAttribute("pinnedPost",pinnedDiscussion);
+			}
+			else if(pinnedPostType.equals("event"))
+			{
+				theModel.addAttribute("pinnedPostType",pinnedPostType);
+				theModel.addAttribute("pinnedPost",pinnedEvent);
+			}
+			else if(pinnedPostType.equals("question"))
+			{
+				theModel.addAttribute("pinnedPostType",pinnedPostType);
+				theModel.addAttribute("pinnedPost",pinnedQuestion);
+			}
+			else if(pinnedPostType.equals("poll"))
+			{
+				theModel.addAttribute("pinnedPostType",pinnedPostType);
+				theModel.addAttribute("pinnedPost",pinnedPoll);
+			}
+			
+			List<Notice> classNotices=noticeservice.getClassNotices(classid);
+			theModel.addAttribute("classNotices",classNotices);
+			
+			theModel.addAttribute("bindingNotice",new Notice());
+			
+			
 			return "CDFhomestudent";
 		}
 		return null;
 	
 	}
+	
+	@GetMapping("/showSession")
+	public String showSession(HttpServletRequest request,Model theModel,@ModelAttribute("pinnedPostType")String pinnedPostType,@ModelAttribute("pinnedQuestion") Question pinnedQuestion ,@ModelAttribute("pinnedDiscussion") ClassDiscussion pinnedDiscussion, @ModelAttribute("pinnedEvent")Events pinnedEvent,@ModelAttribute("pinnedPoll")PollQueDetails pinnedPoll,BindingResult bindingResult)
+	{	
+		String selectedsem=request.getParameter("sem");
+		
+		HttpSession session=request.getSession();
+		Object object=session.getAttribute("userModel");
+		StudentModel sm=null;
+		StudentModel tempStudent=null;
+		String classid=null;
+		
+		if(object instanceof StudentModel)
+		{
+			sm=(StudentModel)object;
+			classid=sm.getBranch()+"-"+selectedsem+"-"+sm.getSection()+"-"+sm.getBatch();
+			
+			tempStudent=new StudentModel();
+			tempStudent.setBranch(sm.getBranch());
+			tempStudent.setSemester(selectedsem);
+			tempStudent.setSection(sm.getSection());
+			tempStudent.setBatch(sm.getBatch());
+			
+			session.setAttribute("classid",classid);
+		}
+
+		List<StudentModel> theClassMembers= classservice.showClassMembers(tempStudent);
+		theModel.addAttribute("classmembers", theClassMembers);
+		
+		List<ClassRepresentative> theCR= classservice.showClassCR(tempStudent);
+		theModel.addAttribute("CR", theCR);
+		
+		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
+		theModel.addAttribute("classCoordinator", theClassCoordinator);	
+		
+		List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
+		theModel.addAttribute("allClassPosts",allClassPosts);
+		
+		List<ClassPosts> allPinnedPosts=classservice.showPinnedPosts(classid,false,sm.getSid());
+		theModel.addAttribute("allPinnedPosts",allPinnedPosts);		
+		
+		String currentsem =new UserModel().getSem(object);
+		theModel.addAttribute("currentsem",currentsem);
+		theModel.addAttribute("selectedsem",selectedsem);
+		
+		ClassDiscussionComment cdc=new ClassDiscussionComment();
+		theModel.addAttribute("ClassCommentModel",cdc);
+		
+		ClassDiscussionReply cdr=new ClassDiscussionReply();
+		theModel.addAttribute("ClassReplyModel",cdr);
+		
+		if(pinnedPostType.equals("discussion"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedDiscussion);
+		}
+		else if(pinnedPostType.equals("event"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedEvent);
+		}
+		else if(pinnedPostType.equals("question"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedQuestion);
+		}
+		else if(pinnedPostType.equals("poll"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedPoll);
+		}
+		
+		List<Notice> classNotices=noticeservice.getClassNotices(classid);
+		theModel.addAttribute("classNotices",classNotices);
+
+		theModel.addAttribute("bindingNotice",new Notice());
+		
+		
+		return "CDFhomestudent";
+	}
+
+
 	
 	@PostMapping("/classdiscussionfaculty")
 	public String classdiscussionfaculty(HttpServletRequest request,Model theModel,@ModelAttribute("choosedClass") ClassSubjectFaculty choosedClass)
@@ -152,7 +282,7 @@ public class ClassController
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		theModel.addAttribute("checkPinned",checkPinned);
 		
-		List<Object> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
+		List<ClassPosts> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
 		theModel.addAttribute("allPinnedPosts",allPinnedPosts);
 		
 		theModel.addAttribute("isCurrentYear",isCurrentYear);
@@ -167,10 +297,16 @@ public class ClassController
 		ClassPosts pinnedClassPost=new ClassPosts();
 		theModel.addAttribute("pinnedClassPost",pinnedClassPost);
 		
+		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		theModel.addAttribute("classNotices",classNotices);
+		
+		theModel.addAttribute("bindingNotice",new Notice());
+		
 		return "CDFhomefaculty";
 		
 	}
 	
+		
 	@GetMapping("/CDFhomefaculty")
 	public String showCDF(HttpServletRequest request,Model theModel,@RequestParam(value = "year",required = false) Integer year)
 	{	
@@ -212,22 +348,32 @@ public class ClassController
 	}
 	
 	@GetMapping("/addPoll")
-	public String addPoll(@RequestParam("pollid") int pollid, HttpSession session)
+	public String addPoll(@RequestParam("pollid") int pollid,HttpServletRequest request)
 	{	
+		HttpSession session=request.getSession();
+		String utype=(String)session.getAttribute("utype");
+		
 		ClassPosts theclassposts=new ClassPosts();
 		theclassposts.setClassid((String)session.getAttribute("classid"));
 		theclassposts.setPost_type("poll");
 		theclassposts.setPostid(pollid);
 		
 		classservice.addClassPost(theclassposts);
-		return "redirect:/major/class/CDFhomestudent";
+		
+		if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		
+		else if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		
+		else
+			return null;
 	}
 	
 	@GetMapping("/showPoll")
 	public String showPoll(HttpServletRequest request, Model theModel)
 	{	
 		HttpSession session=request.getSession();
-		
 		String classid= (String) session.getAttribute("classid");
 		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
@@ -235,10 +381,22 @@ public class ClassController
 	}
 	
 	@GetMapping("/addEventForm")
-	public String addEventForm(Model theModel )
+	public String addEventForm(Model theModel,HttpServletRequest request,@RequestParam(name="type", required=false)String type)
 	{	
+		HttpSession session=request.getSession();
 		Events theEvents = new Events();
+		
+		if(type!=null && type.equals("faculty"))
+		{
+			theEvents.setScope("global");
+		}
+		else
+		{
+			theEvents.setScope("class");
+		}
 		theModel.addAttribute("Events",theEvents);
+
+		
 		return "addevent";
 	}
 	
@@ -249,19 +407,38 @@ public class ClassController
 		
 		UserModel um=new UserModel();
 		um.setUid(um.getUserId(session.getAttribute("userModel")));
+		String utype=(String)session.getAttribute("utype");
 		
 		theEvents.setTimestamp(new Date().getTime());
 		theEvents.setUserModel(um);
-		theEvents.setPending(false);
-		int id= eventservice.addEvent(theEvents);
 		
+		if(utype.equals("faculty"))
+			theEvents.setPending(true);
+		
+		else if(utype.equals("student"))
+			theEvents.setPending(false);
+		
+		int id= eventservice.addEvent(theEvents);
+		if(theEvents.getScope().equals("class"))
+		{
 		ClassPosts theclasspost = new ClassPosts();
 		theclasspost.setClassid((String)session.getAttribute("classid"));
 		theclasspost.setPost_type("event");
 		theclasspost.setPostid(id);
 		
 		classservice.addClassPost(theclasspost);
-	    return "redirect:/major/class/CDFhomestudent";
+		}
+		if(theEvents.getScope().equals("global"))
+		{
+			return "redirect:/MyFeed";
+		}
+		
+		if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		else if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		else
+			return null;
  
 	}
 	
@@ -273,11 +450,19 @@ public class ClassController
 		HttpSession session=request.getSession();
 		
 		UserModel um=new UserModel();
+		String utype=(String)session.getAttribute("utype");
 		String uid=um.getUserId(session.getAttribute("userModel"));
 		um.setUid(uid);
 		
 		cd.setUserModel(um);
 		cd.setTimeStamp(new Date().getTime());
+		
+		if(utype.equals("faculty"))
+			cd.setReviewed(true);
+		
+		else if(utype.equals("student"))
+			cd.setReviewed(false);
+		
 		int id=discussionservice.addDiscussion(cd);
 		
 		ClassPosts cp=new ClassPosts();
@@ -286,7 +471,13 @@ public class ClassController
 		cp.setPostid(id);
 		
 		classservice.addClassPost(cp);
-		return "redirect:/major/class/CDFhomestudent";
+		
+		if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		else if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		else
+			return null;
 		
 	}
 	
@@ -343,6 +534,7 @@ public class ClassController
 	{
 		HttpSession session=request.getSession();
 		
+		String utype=(String)session.getAttribute("utype");
 		UserModel um=new UserModel();
 		um.setUid(um.getUserId(session.getAttribute("userModel")));
 		
@@ -355,7 +547,12 @@ public class ClassController
 		
 		discussionservice.postComment(comment);
 		
-		return "redirect:/major/class/CDFhomestudent";
+		if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		else if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		else
+			return null;
 	}
 	
 	@PostMapping("/postCommentReply")
@@ -363,6 +560,7 @@ public class ClassController
 	{
 		HttpSession session=request.getSession();
 		
+		String utype=(String)session.getAttribute("utype");
 		UserModel um=new UserModel();
 		um.setUid(um.getUserId(session.getAttribute("userModel")));
 		
@@ -375,58 +573,20 @@ public class ClassController
 		
 		discussionservice.postCommentReply(reply);
 		
-		return "redirect:/major/class/CDFhomestudent";
+		if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		else if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		else
+			return null;
 	}
 	
-	@GetMapping("/showSession")
-	public String showSession(HttpServletRequest request,Model theModel)
-	{	
 		
-		String selectedsem=request.getParameter("sem");
-		
-		HttpSession session=request.getSession();
-		Object object=session.getAttribute("userModel");
-		StudentModel sm=null;
-		StudentModel tempStudent=null;
-		String classid=null;
-		
-		if(object instanceof StudentModel)
-		{
-			sm=(StudentModel)object;
-			classid=sm.getBranch()+"-"+selectedsem+"-"+sm.getSection()+"-"+sm.getBatch();
-			
-			tempStudent=new StudentModel();
-			tempStudent.setBranch(sm.getBranch());
-			tempStudent.setSemester(selectedsem);
-			tempStudent.setSection(sm.getSection());
-			tempStudent.setBatch(sm.getBatch());
-			
-			session.setAttribute("classid",classid);
-		}
-
-		List<StudentModel> theClassMembers= classservice.showClassMembers(tempStudent);
-		theModel.addAttribute("classmembers", theClassMembers);
-		
-		List<ClassRepresentative> theCR= classservice.showClassCR(tempStudent);
-		theModel.addAttribute("CR", theCR);
-		
-		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
-		theModel.addAttribute("classCoordinator", theClassCoordinator);	
-		
-		List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
-		theModel.addAttribute("allClassPosts",allClassPosts);
-		
-		String currentsem =new UserModel().getSem(object);
-		theModel.addAttribute("currentsem",currentsem);
-		theModel.addAttribute("selectedsem",selectedsem);
-		
-		return "CDFhomestudent";
-	}
-	
 	@GetMapping("/addClassQue")
 	public String addClassQue(@RequestParam("qid")Integer qid,HttpServletRequest request)
 	{
 		HttpSession session=request.getSession();
+		String utype=(String)session.getAttribute("utype");
 		
 		ClassPosts theclassposts=new ClassPosts();
 		theclassposts.setClassid((String)session.getAttribute("classid"));
@@ -434,7 +594,13 @@ public class ClassController
 		theclassposts.setPostid(qid);
 		
 		classservice.addClassPost(theclassposts);
-		return "redirect:/major/class/CDFhomestudent";
+
+		if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		else if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		else
+			return null;
 	}
 	
 	@GetMapping("/showClassQuestions")
@@ -467,9 +633,29 @@ public class ClassController
 	}
 	
 	@PostMapping("/acceptOrRejectPost")
-	public String acceptOrRejectPost(@ModelAttribute("acceptOrReject") ClassPosts theClassPost)
+	public String acceptOrRejectPost(@ModelAttribute("acceptOrReject") ClassPosts theClassPost,HttpServletRequest request)
 	{
+		HttpSession session=request.getSession();
+		String classId=(String)session.getAttribute("classid");
+		String userName=new UserModel().getUserName(session.getAttribute("userModel"));
+		
 		classservice.acceptOrRejectPost(theClassPost);
+		
+		if(theClassPost.isReviewed())
+		{
+			NotificationModel nm=new NotificationModel();
+			nm.setMessage(userName+" Approved Discussion :"+theClassPost.getTitle());
+			nm.setTimestamp(new Date().getTime());
+			nm.setViewed(false);
+			
+			NotificationDao notificationDao=new NotificationDao();
+			notificationDao.addClassPostNotification(nm, classId, context);
+		}
+		else
+		{
+			System.out.println("not reviewed");
+		}
+		
 		return "redirect:/major/class/showPendingPosts";
 	}
 	
@@ -515,22 +701,41 @@ public class ClassController
 		
 	}
 	
+
 	@PostMapping("/pinClassPost")
-	public String pinClassPost(@ModelAttribute("pinnedClassPost") ClassPosts pinnedClassPost)
+	public void pinClassPost(@RequestParam("postId")Integer postId,@RequestParam("postType")String postType,HttpServletResponse response)
 	{
-		classservice.pinPost(pinnedClassPost);
-		return "redirect:/major/class/redirectFacultyHome";
+		ClassPosts pinnedClassPost=new ClassPosts();
+		pinnedClassPost.setPostid(postId);
+		pinnedClassPost.setPost_type(postType);
+		
+		int result=classservice.pinPost(pinnedClassPost);
+		
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@PostMapping("/unPinClassPost")
-	public String unPinClassPost(@ModelAttribute("pinnedClassPost") ClassPosts pinnedClassPost)
+	public void unPinClassPost(@RequestParam("postId")Integer postId,@RequestParam("postType")String postType,HttpServletResponse response)
 	{
-		classservice.unPinPost(pinnedClassPost);
-		return "redirect:/major/class/redirectFacultyHome";
+		ClassPosts pinnedClassPost=new ClassPosts();
+		pinnedClassPost.setPostid(postId);
+		pinnedClassPost.setPost_type(postType);
+		
+		int result=classservice.unPinPost(pinnedClassPost);
+		
+		try {
+			response.getWriter().println(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@GetMapping("/redirectFacultyHome")
-	public String facultyHome(HttpServletRequest request,Model theModel)
+	public String facultyHome(HttpServletRequest request,Model theModel,@ModelAttribute("pinnedPostType")String pinnedPostType,@ModelAttribute("pinnedQuestion") Question pinnedQuestion ,@ModelAttribute("pinnedDiscussion") ClassDiscussion pinnedDiscussion, @ModelAttribute("pinnedEvent")Events pinnedEvent,@ModelAttribute("pinnedPoll")PollQueDetails pinnedPoll,BindingResult bindingResult)
 	{
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
@@ -575,7 +780,7 @@ public class ClassController
 		theModel.addAttribute("allClassPosts",allClassPosts);
 		theModel.addAttribute("checkPinned",checkPinned);
 		
-		List<Object> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
+		List<ClassPosts> allPinnedPosts=classservice.showPinnedPosts(classId,false,sm.getSid());
 		theModel.addAttribute("allPinnedPosts",allPinnedPosts);
 		
 		theModel.addAttribute("isCurrentYear",isCurrentYear);
@@ -590,8 +795,195 @@ public class ClassController
 		ClassPosts pinnedClassPost=new ClassPosts();
 		theModel.addAttribute("pinnedClassPost",pinnedClassPost);
 		
+		if(pinnedPostType.equals("discussion"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedDiscussion);
+		}
+		else if(pinnedPostType.equals("event"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedEvent);
+		}
+		else if(pinnedPostType.equals("question"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedQuestion);
+		}
+		else if(pinnedPostType.equals("poll"))
+		{
+			theModel.addAttribute("pinnedPostType",pinnedPostType);
+			theModel.addAttribute("pinnedPost",pinnedPoll);
+		}
+		
+		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		theModel.addAttribute("classNotices",classNotices);
+		
+		theModel.addAttribute("bindingNotice",new Notice());
+		
+		
 		return "CDFhomefaculty";
 		
+	}
+	@GetMapping("/showPinnedPost")
+	public String renderPinnedPost(@RequestParam("postId")Integer postId,@RequestParam("postType")String postType,RedirectAttributes redirectAttributes,HttpServletRequest request,HttpServletResponse response,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		UserModel userModel=new UserModel();
+		String userId=userModel.getUserId(session.getAttribute("userModel"));
+		String utype=(String)session.getAttribute("utype");
+		
+		Object pinnedPost=classservice.renderPinnedPost(postId,postType,userId);
+		
+		if(pinnedPost instanceof Question)
+		{
+			redirectAttributes.addFlashAttribute("pinnedQuestion",(Question)pinnedPost);
+		}
+		else if(pinnedPost instanceof Events)
+		{
+			redirectAttributes.addFlashAttribute("pinnedEvent",(Events)pinnedPost);
+		}
+		else if(pinnedPost instanceof ClassDiscussion)
+		{
+			redirectAttributes.addFlashAttribute("pinnedDiscussion",(ClassDiscussion)pinnedPost);
+		}
+		else if(pinnedPost instanceof PollQueDetails)
+		{
+			redirectAttributes.addFlashAttribute("pinnedPoll",(PollQueDetails)pinnedPost);
+		}
+		
+		redirectAttributes.addFlashAttribute("pinnedPostType",postType);
+		
+		if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		
+		else if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		
+		else
+			return null;
+	}
+	
+	@GetMapping("/issueNotice")
+	public String issueNotice(Model theModel)
+	{
+		Notice notice=new Notice();
+		theModel.addAttribute("notice",notice);
+		
+		return "noticeForm";
+	}
+	
+	@PostMapping("/saveNotice")
+	public String saveNotice(@ModelAttribute("notice") Notice notice,HttpServletRequest request)
+	{
+		HttpSession session=request.getSession();
+		
+		String utype=(String)session.getAttribute("utype");
+		String classId=(String)session.getAttribute("classid");
+		
+		UserModel creator=new UserModel();
+		creator.setUid(creator.getUserId(session.getAttribute("userModel")));
+		
+		notice.setCreator(creator);
+		notice.setTimestamp(new Date().getTime());
+		notice.setClosed(false);
+	
+		int noticeId=noticeservice.saveNotice(notice);
+		
+		ClassPosts classPost=new ClassPosts();
+		classPost.setClassid(classId);
+		classPost.setPost_type("notice");
+		classPost.setPostid(noticeId);
+		
+		classservice.addClassPost(classPost);
+		
+		if(utype.equals("faculty"))
+			return "redirect:/major/class/redirectFacultyHome";
+		
+		else if(utype.equals("student"))
+			return "redirect:/major/class/CDFhomestudent";
+		
+		else
+			return null;
+	}
+	
+	@PostMapping("/showNotices")
+	public String showNotices(@ModelAttribute("bindingNotice") Notice notice,HttpServletRequest request,Model theModel)
+	{
+		int nid=notice.getNoticeId();
+		HttpSession session=request.getSession();
+		String classId=(String)session.getAttribute("classid");
+		
+		Notice currentNotice=noticeservice.showNotice(nid);
+		theModel.addAttribute("currentNotice",currentNotice);
+		
+		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		theModel.addAttribute("classNotices",classNotices);
+		
+		return "noticePage";
+	}
+	
+	@GetMapping("/showNotices")
+	public String showAllNotices(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		String classId=(String)session.getAttribute("classid");
+		
+		Notice currentNotice=new Notice();
+		theModel.addAttribute("currentNotice",currentNotice);
+		
+		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		theModel.addAttribute("classNotices",classNotices);
+		
+		return "noticePage";
+	}
+	
+	@GetMapping("/showMyPosts")
+	public String showMyPosts(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		String classId=(String)session.getAttribute("classid");
+		
+		List<Object> myQuestions=classservice.getMyPosts(classId,userId,"question");
+		theModel.addAttribute("myQuestions",myQuestions);
+		
+		List<Object> myPolls=classservice.getMyPosts(classId,userId,"poll");
+		theModel.addAttribute("myPolls",myPolls);
+		
+		List<Object> myEvents=classservice.getMyPosts(classId,userId,"event");
+		theModel.addAttribute("myEvents",myEvents);
+		
+		List<Object> myDiscussions=classservice.getMyPosts(classId,userId,"discussion");
+		theModel.addAttribute("myDiscussion",myDiscussions);
+		
+		return "myPosts";
+	}
+	
+	@PostMapping("/saveAsBookmark")
+	public void saveAsBookmark(HttpServletRequest request,HttpServletResponse response,@RequestParam("postId")Integer postId,@RequestParam("postType")String postType)
+	{
+		HttpSession session=request.getSession();
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		
+		SavedPosts savedPosts=new SavedPosts();
+		savedPosts.setUid(userId);
+		savedPosts.setTimestamp(new Date().getTime());
+		
+		int result=-1;
+		if(classservice.getClassPostId(postId,postType)!=-1)
+		{
+			savedPosts.setId(classservice.getClassPostId(postId,postType));
+			result=classservice.saveAsBookMark(savedPosts);
+		}
+		
+		try {
+			response.getWriter().println(result);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

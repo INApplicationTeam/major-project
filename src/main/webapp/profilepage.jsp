@@ -425,16 +425,11 @@ pre {
 										</a></li>
 
 										<li><a href="#shows" role="tab" data-toggle="tab"> <i
-												class="material-icons">palette</i> Workspaces
+												class="material-icons">Palette</i> Workspaces
 										</a></li>
 										<li><a href="#blog" role="tab" data-toggle="tab"> <i
 												class="material-icons">favorite</i> Blogs
 										</a></li>
-
-										<li><a
-											href="major/message/DMform?id=<%=mymodel.getUid()%>&name=<%= mymodel.getUname()%>">
-
-												Message </a></li>
 
 									</ul>
 

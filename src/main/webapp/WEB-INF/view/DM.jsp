@@ -85,9 +85,11 @@ tr:nth-child(even) {
 
 			
 		<table>
+		<tr>
 		<th>Messages</th>
 		<th>By</th>
 		<th>At</th>
+		</tr>
 		<c:forEach var="temp" items="${conversation}" begin="0" varStatus="loop"> 
 				
 				
@@ -109,12 +111,13 @@ tr:nth-child(even) {
 			
 			<form:form action="sendDM" modelAttribute="message" method="POST">
 				<label>To: </label> <br>
-				<form:input path="receiver.uid"/>
+				<input type="text" value="${ message.receiver.uname}"/>
+				<form:hidden path="receiver.uid"/>
 				<br>
 				<label>Message</label><br>
 				<form:textarea path="message"/>
 				<br>
-						
+						${receiver.uname}
 					<input type="submit" value="SEND" />
 					
 			

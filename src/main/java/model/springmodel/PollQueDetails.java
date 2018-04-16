@@ -35,6 +35,40 @@ public class PollQueDetails {
 	
 	@OneToMany (fetch = FetchType.EAGER,mappedBy="pqd",cascade=CascadeType.ALL)
 	private List<PollOptionDetails> options;
+	
+	@Column(name="deadline")
+	private Long deadline;
+	
+	@Column(name="description")
+	private String description;
+	
+	@Column(name="showResult")
+	private String showResult;
+	
+
+	public Long getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(Long deadline) {
+		this.deadline = deadline;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getShowResult() {
+		return showResult;
+	}
+
+	public void setShowResult(String showResult) {
+		this.showResult = showResult;
+	}
 
 	public String getQuestion() {
 		return question;

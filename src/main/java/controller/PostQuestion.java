@@ -5,18 +5,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao.NotificationDao;
 import dao.QuestionDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+
 import model.FacultyModel;
+import model.NotificationModel;
 import model.QuestionModel;
 import model.StudentModel;
 import model.UserModel;
@@ -47,7 +55,9 @@ public class PostQuestion extends HttpServlet {
            ServletContext context=getServletContext();
            
            QuestionModel qm=new QuestionModel();
-          
+           UserModel usermodel=new UserModel();
+           String userName=usermodel.getUserName(session.getAttribute("userModel"));
+           
            String utype=(String)session.getAttribute("utype");
            StudentModel sm;
            FacultyModel fm;
@@ -93,6 +103,14 @@ public class PostQuestion extends HttpServlet {
            
            if(classQue.equals("true"))
            {
+        	   NotificationModel nm=new NotificationModel();
+        	   nm.setTimestamp(new Date().getTime());
+        	   nm.setMessage(userName+" Asked Question :"+qm.getQue()+" in Class Discussion Forum.");
+        	   
+        	   NotificationDao nd=new NotificationDao();
+        	   ArrayList<NotificationModel> alnm=nd.addClassPostNotification(nm,(String)session.getAttribute("classid"),context);
+        	   String returnJson=new Gson().toJson(alnm);
+        	   
         	   response.sendRedirect("/korero-maven/major/class/addClassQue?qid="+qm.getQid());
            }
            else	   

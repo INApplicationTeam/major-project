@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import model.UserModel;
@@ -49,6 +50,7 @@ public class ClassDiscussion {
 	private UserModel userModel;
 	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="classDiscussion",cascade=CascadeType.ALL)
+	@OrderBy("commentId")
 	private List<ClassDiscussionComment> classCommentList;
 
 	@Override

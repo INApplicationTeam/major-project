@@ -14,6 +14,7 @@ import model.pollmodel.CreateNewPollModel;
 import model.springmodel.Events;
 import model.springmodel.PollQueDetails;
 import model.springmodel.Question;
+import model.springmodel.SavedPosts;
 import model.springmodel.ClassDiscussion;
 import model.springmodel.ClassDiscussionComment;
 import model.springmodel.ClassDiscussionReply;
@@ -47,6 +48,14 @@ public interface ClassDAO {
 
 	int unPinPost(ClassPosts pinnedClassPost);
 
-	List<Object> showPinnedPosts(String classid, boolean isPending, String userId);
+	List<ClassPosts> showPinnedPosts(String classid, boolean isPending, String userId);
+
+	Object renderPinnedPost(Integer postId, String postType, String userId);
+
+	List<Object> getMyPosts(String classId, String userId, String postType);
+
+	int getClassPostId(Integer postId, String postType);
+
+	int saveAsBookmark(SavedPosts savedPosts);
 	
 }

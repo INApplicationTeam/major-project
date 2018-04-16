@@ -25,7 +25,13 @@
   				max-height:15%;
   				float: right;
 		}
-			
+		
+		iframe{
+				width:180px;
+  				height:90px;
+  				float: right;
+  				margin:10px;
+		}	
 		.card img {
     			width: auto;
     			height: auto;
@@ -37,6 +43,13 @@
 
 		.ans{
 		  		font-family: "roboto";
+		  		font-size: 15px;
+		  		font-weight: 300;
+		  		word-wrap: break-word;
+		}
+		
+		.notice{
+				font-family: "roboto";
 		  		font-size: 15px;
 		  		font-weight: 300;
 		  		word-wrap: break-word;
@@ -73,6 +86,7 @@
 			<a href="../../Post_Question.jsp?classQue=true"><button id="create_que">Ask question</button></a>
 			<a href="addEventForm"><button id="create_event">Create Event</button></a>
 			<a href="startClassDiscussion"><button id="create_disc">Start Discussion</button></a>
+			<a href="issueNotice"><button id="create_notice">Issue Notice</button></a>
 		</c:when>
 		
 		<c:when test="${type=='coordinator' && isCurrentYear==false}">
@@ -91,6 +105,7 @@
 			<a href="../../Post_Question.jsp?classQue=true"><button id="create_que">Ask question</button></a>
 			<a href="addEventForm"><button id="create_event">Create Event</button></a>
 			<a href="startClassDiscussion"><button id="create_disc">Start Discussion</button></a>
+			<a href="issueNotice"><button id="create_notice">Issue Notice</button></a>
 		</c:when>
 	</c:choose>
 	
@@ -153,6 +168,10 @@
         
         var quillAnswers=[];
         
+        var quillNotices=[];
+        
+        var postTypes=[];
+        
         var configque = {
             "theme": "snow",
             "modules": {
@@ -168,7 +187,7 @@
         };
         
         var quillque=new Quill('#editorque',configque);
-        var quillShowAns,quillShowDis;
+        var quillShowAns,quillShowDis,quillShowNotice,quillShowEvent;
         
         function instantiateEditor(index,postIndex)
         {
@@ -179,6 +198,7 @@
            document.getElementsByClassName("ansImg")[index].innerHTML="";
            document.getElementsByClassName("read")[index].innerHTML="";
         }
+        
        
         function setNoOne(index,postIndex)
     	{
@@ -244,6 +264,107 @@
         	}
         }
         
+        function setNoticeContent(index,postIndex,noticeText)
+        {
+        	console.log(noticeText);
+			quillNotices.push(noticeText);									
+        	window.delta=noticeText;
+        	var content="";
+        	var imgObj,count=0,count1=0;
+        	var endLineCounter=0;
+        	var isStillLeft=false;
+        	
+        	for(var i=0;i<delta.ops.length;i++)
+			{
+				var del=delta.ops[i];
+					
+				if(typeof del.insert!=='object' && count1==1)
+				{
+					if(del.insert.indexOf("\n")!=-1)
+					{
+						endLineCounter++;	
+					}
+					
+					if(endLineCounter<9)
+					{
+						count1=0;
+						content=content+del.insert.substr(1,del.insert.length);
+						continue;
+					}
+					else
+					{
+						isStillLeft=true;
+						break;
+					}
+					
+				}
+			
+				if(typeof del.insert !== 'object')
+				{
+					if(del.insert.indexOf("\n")!=-1)
+					{
+						endLineCounter++;	
+					}
+					
+					if(endLineCounter<9)
+					{
+						content=content+del.insert;
+					}
+					else
+					{
+						isStillLeft=true;
+						break;
+					}
+				}						
+				else if(count==0)
+				{
+					count++;
+					imgObj=del.insert;
+					count1=1;
+				}
+			}
+							
+			if(imgObj!== undefined)
+			{
+				var opsarr={"ops":[{"insert":""}]};
+				opsarr.ops[0].insert=imgObj;
+				quillque.setContents(opsarr);
+				var imgarea=document.getElementsByClassName("noticeImg")[index];
+				imgarea.innerHTML=quillque.root.innerHTML;
+				
+				if(imgObj.hasOwnProperty('image'))
+				{
+					var imgTag=imgarea.getElementsByTagName('p')[0].childNodes[0];
+					imgTag.setAttribute("class","resize");
+				}
+				else
+				{
+					var imgTag=imgarea.getElementsByTagName('p')[0];
+					imgTag.removeChild(imgarea.getElementsByTagName('p')[0].childNodes[0]);
+				}
+				imgObj=undefined;							
+			}                                               
+        
+			var c=document.getElementsByClassName("notice");
+                                 
+        	if(content.length>500)
+        	{
+          		c[index].innerText=content.substr(0,500)+"...";
+        	}
+                               
+        	else if(isStillLeft)
+        	{
+        		c[index].innerText=content;
+        	}
+        	
+        	else
+       	 	{
+          		c[index].innerText=content;
+          		document.getElementsByClassName("readNotice")[index].innerHTML="";
+        	}
+        	
+        }
+        
         function setDiscussion(index,discussionContent)
         {
         	quillShowDis=new Quill('#disEditor'+index,configForShow);
@@ -251,21 +372,23 @@
         	quillShowDis.enable(false);
         }
         
-        function setPinButton(isPinned,postIndex)
+        function setEventContent(index,eventContent)
         {
-        	if(isPinned)
-			{
-				document.getElementById("pin"+postIndex).value="Un Pin Post";
-				document.getElementById("pinform"+postIndex).setAttribute("action","unPinClassPost");
-				document.getElementById("pinform"+postIndex).setAttribute("onsubmit","return unPinPost();");
-			}
+        	quillShowEvent=new Quill('#eventEditor'+index,configForShow);
+        	quillShowEvent.setContents(eventContent);
+        	quillShowEvent.enable(false);
         }
+      
+        var post_type,post_id;
+        
         </script>
     
 
 <h1>CLASS DISCUSSION FORUM</h1>
 	
 <a href="../../MyFeed">MY FEED</a>
+
+<a href="showNotices">NOTICE</a>
 	<select name="SHOW" onchange="location = this.value;">
     	<option selected disabled>Show</option>
 	 	<option value="showPoll">Polls</option>
@@ -289,61 +412,160 @@
 			${temp3.name} &nbsp;		
 		</c:forEach>
 	<hr>
+	<center><h1>CLASS NOTICES</h1></center>
+	<c:forEach var="notice" items="${classNotices}" begin="0" varStatus="noticeLoop">
+		<a href="#no">${notice.creator.uname}</a> issued NOTICE <span id="noticetimestamp${noticeLoop.index}"></span>
+		<h2>${notice.title}</h2>
+		
+		<div style="width:500px; height:190px;  border: 1px solid black">
+			<span class="noticeImg" ></span>
+			<div class="notice" style="margin-bottom: 1px;" id="noticeEditor${noticeLoop.index}"></div>
+			<form:form action="showNotices" method="POST" modelAttribute="bindingNotice">
+				<form:hidden path="noticeId" value="${notice.noticeId}"/>
+				<input type="submit" class="readNotice" value="View More"><br>
+			</form:form>               
+		</div>	    
+    		
+		<script>
+			var noticeTimeStamp=${notice.timestamp};
+			setTime('noticetimestamp${noticeLoop.index}',noticeTimeStamp);
+			var index=${noticeLoop.index};
+			var noticeText=${notice.noticeText};
+			setNoticeContent(index,index,noticeText);
+		</script>	
+		<br>
+		<hr>
+	</c:forEach>
 	
 	<center><h1>PINNED POSTS</h1></center>
 	<table>
-		<c:forEach var="pinpost" items="${allPinnedPosts}" begin="0" varStatus="pendingPostLoop">
-			<c:if test="${pinpost.getClass().name == 'model.springmodel.ClassDiscussion'}">
-				<tr>
-					<td><b>[DISCUSSION]</b></td>
-					<td><i>${pinpost.title}</i></td>
-					<td></td>
-				</tr>
+		<c:forEach var="pinPost" items="${allPinnedPosts}" begin="0" varStatus="pendingPostLoop">
+			<c:if test="${pinPost.post_type.toUpperCase() == 'QUESTION'}">
+				[${pinPost.post_type.toUpperCase()}]  <a href="../question/allAnswers?qid=${pinPost.postid}">${pinPost.title}</a><br><br>
 			</c:if>
 			
-			<c:if test="${pinpost.getClass().name == 'model.springmodel.Events'}">
-				<tr>
-					<td><b>[EVENT]</b></td>
-					<td><i>${pinpost.title}</i></td>
-					<td></td>
-				</tr>
-			</c:if>
-			
-			<c:if test="${pinpost.getClass().name == 'model.springmodel.PollQueDetails'}">
-				<tr>
-					<td><b>[POLL]</b></td>
-					<td><i>${pinpost.question}</i></td>
-					<td></td>
-				</tr>
-			</c:if>
-			
-			<c:if test="${pinpost.getClass().name == 'model.springmodel.Question'}">
-				<tr>
-					<td><b>[QUESTION]</b></td> 
-					<td><i>${pinpost.que}</i></td>
-					<td></td>
-				</tr>
+			<c:if test="${pinPost.post_type.toUpperCase() != 'QUESTION'}">
+				[${pinPost.post_type.toUpperCase()}]  <a href="showPinnedPost?postId=${pinPost.postid}&postType=${pinPost.post_type}">${pinPost.title}</a><br><br>
 			</c:if>
 		</c:forEach>
 	</table>
-	<hr>	
+	<hr>
+	<center><h1>PINNED POST DETAILS</h1></center>
+	
+	<c:if test="${pinnedPostType == 'discussion'}">
+			
+			<i><a href="">${pinnedPost.userModel.uname}</a></i> Posted <b>DISCUSSION</b> <span id="discussionTime-1"></span><br>
+			<h4>Title : <i>${pinnedPost.title}</i></h4> 
+			<div id="disEditor-1"></div>
+			<script>
+				var pinDisContent=${pinnedPost.content};
+				setDiscussion('-1',pinDisContent);
+			</script>
+			
+			<c:forEach var="classComment" items="${pinnedPost.classCommentList}" begin="0" varStatus="commentLoop">
+				<h3 style="display: inline;">${classComment.userModel.uname}</h3> commented <span id="commenttimestamp-1${commentLoop.index}"></span><br>
+				<textarea cols="100" readonly="readonly">${classComment.commentText}</textarea><br><br>
+				<a href="#no" id="likeComment-1${commentLoop.index}" onclick="likeComment('-1${commentLoop.index}','${classComment.commentId}','${classComment.liked}')">Like</a>&nbsp;&nbsp;<span id="showLikes-1${commentLoop.index}">${classComment.likes}</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="">Report</a><br>
+				
+				<c:forEach var="commentReply" items="${classComment.commentReplyList}" begin="0" varStatus="replyLoop">
+					<h3 style="display: inline;">${commentReply.userModel.uname}</h3> replied <span id="replytimestamp-1${commentLoop.index}${replyLoop.index}"></span><br>
+					<textarea cols="100" readonly="readonly">${commentReply.replyText}</textarea><br><br>
+					
+					<script type="text/javascript">
+						var commentReplyTime=${commentReply.timestamp};
+						setTime('replytimestamp-1${commentLoop.index}${replyLoop.index}',commentReplyTime);
+					</script>
+				</c:forEach>
+					
+					<form:form action="postCommentReply?commentId=${classComment.commentId}" modelAttribute="ClassReplyModel" method="POST">
+						<form:textarea rows="5" cols="100" path="replyText" placeholder="Reply..."/>
+						<input type="submit" value="Reply"/>
+					</form:form>
+			
+					<script type="text/javascript">
+						if('${classComment.liked}'=='true')
+							document.getElementById('likeComment-1${commentLoop.index}').innerHTML="Liked";
+						
+						var classCommentTime=${classComment.timestamp};
+						setTime('commenttimestamp-1${commentLoop.index}',classCommentTime);
+					</script>
+			</c:forEach>
+			
+			<form:form action="postComment?disId=${pinnedPost.id}" modelAttribute="ClassCommentModel" method="POST">
+				<form:textarea rows="5" cols="100" path="commentText" placeholder="Write Your Comment Here..."/>
+				<input type="submit" value="Comment"/>
+			</form:form>
+			
+			<script type="text/javascript">
+				var discussionTime=${pinnedPost.timeStamp};
+				setTime('discussionTime-1',discussionTime);
+			</script>
+			
+		</c:if>
+		
+		<c:if test="${pinnedPostType == 'event'}">
+			
+			<i><a href="">${pinnedPost.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="pinnedeventtimestamp"></span><br>
+			<h4>Title : <i>${pinnedPost.title}</i></h4> 
+			<p>
+			<b>Description:</b><br>
+			<div id="eventEditor-1"></div>
+			</p>
+			<b>Start Date:</b> <span id="pinnedstartdate"></span><br><br>
+			<b>Last Date:</b> <span id="pinnedlastdate"></span><br><br>
+
+			
+			<script>
+				var pinstartDate=${pinnedPost.startdate};
+				var pinendDate=${pinnedPost.enddate};
+				var pincreationDate=${pinnedPost.timestamp};
+				var eventContent=${pinnedPost.description};
+			
+				setTime('pinnedstartdate',pinstartDate);
+				setTime('pinnedlastdate',pinendDate);
+				setTime('pinnedeventtimestamp',pincreationDate);
+				setEventContent('-1',eventContent);
+			</script>
+		</c:if>
+		
+		<c:if test="${pinnedPostType == 'poll'}">
+					
+			<i><a href="">${pinnedPost.userModel.uname}</a></i> Posted <b>POLL</b><br>
+			<h4>${pinnedPost.question}</h4>
+			<c:forEach var="option" items="${pinnedPost.options}">
+				<i>${option.options}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${option.pollResult.count}<br>
+			</c:forEach>
+		
+		</c:if>
+		
+	<hr>
+	
 	<center><h1>CLASS POSTS</h1></center>
 	<c:set var="countQue" value="-1" scope="page" />
 	
 	<c:forEach var="posts" items="${allClassPosts}" begin="0" varStatus="postLoop">
-		
+	
 		<c:if test="${posts.getClass().name == 'model.springmodel.ClassDiscussion'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.id}"/>
-				<form:hidden path="post_type" value="discussion"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
+			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.id}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>DISCUSSION</b> <span id="discussionTime${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
 			<div id="disEditor${postLoop.index}"></div>
 			<script>
+				postTypes.push("discussion");
 				var disContent=${posts.content};
 				setDiscussion('${postLoop.index}',disContent);
 			</script>
@@ -394,37 +616,54 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.eid}"/>
-				<form:hidden path="post_type" value="event"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
+			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.eid}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="eventtimestamp${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
-			<p><b>Description:</b>  ${posts.description} </p>
+			<b>Description:</b><br>
+			<div id="eventEditor${postLoop.index}"></div>   
 			<b>Start Date:</b> <span id="startdate${postLoop.index}"></span><br><br>
 			<b>Last Date:</b> <span id="lastdate${postLoop.index}"></span><br><br>
 			<hr>
 			
 			<script>
+				postTypes.push("event");
 				var startDate=${posts.startdate};
 				var endDate=${posts.enddate};
-				var creationDate=${posts.timestamp}
+				var creationDate=${posts.timestamp};
+				var eventContent=${posts.description};
 			
 				setTime('startdate${postLoop.index}',startDate);
 				setTime('lastdate${postLoop.index}',endDate);
 				setTime('eventtimestamp${postLoop.index}',creationDate);
+				setEventContent('${postLoop.index}',eventContent);
+				
 			</script>
 		</c:if>
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.PollQueDetails'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.queid}"/>
-				<form:hidden path="post_type" value="poll"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
+			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.queid}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>POLL</b><br>
 			<h4>${posts.question}</h4>
@@ -432,15 +671,25 @@
 				<i>${option.options}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${option.pollResult.count}<br>
 			</c:forEach>
 			<hr>
+			<script>
+				postTypes.push("poll");
+			</script>
+			
 		</c:if>
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Question'}">
 			
-			<form:form action="pinClassPost" modelAttribute="pinnedClassPost" onsubmit="return pinPost();" id="pinform${postLoop.index}">
-				<form:hidden path="postid" value="${posts.qid}"/>
-				<form:hidden path="post_type" value="question"/>
-				<input type="submit" value="Pin Post" id="pin${postLoop.index}"><br><br>	
-			</form:form>
+			<div id="PinDiv${postLoop.index}">
+				<c:if test="${checkPinned[postLoop.index]==false}">
+					<a href="#no" onclick="pinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
+				</c:if>
+				
+				<c:if test="${checkPinned[postLoop.index]==true}">
+					<a href="#no" onclick="unPinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
+				</c:if>
+			</div>
+			
+			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.qid}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<c:set var="countQue" value="${countQue + 1}" scope="page"/>
 			
@@ -472,14 +721,10 @@
 				</c:forEach>
 			</c:if>	
 			<hr>
-		</c:if>	
-		
-		<script>
-				var isPinned=${checkPinned[postLoop.index]};
-				var postIndex=${postLoop.index};
-				setPinButton(isPinned,postIndex);
-		</script>
-			
+			<script>
+				postTypes.push("question");
+			</script>
+		</c:if>				
 	</c:forEach>
     <script>
     	if('${selectedsem}'!='${currentsem}')
@@ -516,7 +761,6 @@
 			
 			if(innerText=='Like')
 			{	
-				
 			    request=getXmlHttpRequestObject();
 			    request.onreadystatechange=commentLiked;
 			    request.open("post","LikeComment",true);
@@ -565,17 +809,90 @@
 		    }
 		}
 
-		function pinPost()
+		var setIndex,setPostId;
+		function pinPost(postId,index)
 		{
-			return confirm('Do You Want To Pin This Post?');
+			if(confirm('Do You Want To Pin This Post?'))
+			{
+				setIndex=index;
+				setPostId=postId;
+				request=getXmlHttpRequestObject();
+			    request.onreadystatechange=postPinned;
+			    request.open("post","pinClassPost",true);
+			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+			    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
+			    request.send(data);
+			}
 		}
 		
-		function unPinPost()
+		function unPinPost(postId,index)
 		{
-			return confirm('Do You Want To Un-Pin This Post?');
+			if(confirm('Do You Want To Un-Pin This Post?'))
+			{
+				setIndex=index;
+				setPostId=postId;
+				request=getXmlHttpRequestObject();
+			    request.onreadystatechange=postUnPinned;
+			    request.open("post","unPinClassPost",true);
+			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+			    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
+			    request.send(data);
+			}
+		}
+		
+		function postPinned()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+				if(request.responseText==1)
+				{
+					console.log("pinned");
+					document.getElementById('pin'+setIndex).innerHTML="UNPIN POST";
+					document.getElementById('pin'+setIndex).setAttribute("onclick","unPinPost("+setPostId+","+setIndex+")");
+				}
+		    }
+		}
+		
+		function postUnPinned()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+				if(request.responseText==1)
+				{
+					console.log("unpinned");
+					document.getElementById('pin'+setIndex).innerHTML="PIN POST";
+					document.getElementById('pin'+setIndex).setAttribute("onclick","pinPost("+setPostId+","+setIndex+")");
+				}
+		    }
+		}
+		
+		function saveAsBookmark(postId,index)
+		{
+			request=getXmlHttpRequestObject();
+		    request.onreadystatechange=bookmarkSaved;
+		    request.open("post","saveAsBookmark",true);
+		    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+		    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
+		    request.send(data);
+		}
+		
+		function bookmarkSaved()
+		{
+			if(request.readyState===4 && request.status===200)
+		    {
+				if(request.responseText!=-1)
+				{
+					console.log("saved");
+					alert('Saved Successfully...');
+				}
+				else
+				{
+					console.log("already saved");
+					alert('Post Is Already Saved...');
+				}
+		    }
 		}
 		</script>
-
 	
 </body>
 </html>

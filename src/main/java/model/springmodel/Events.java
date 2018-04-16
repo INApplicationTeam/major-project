@@ -38,6 +38,9 @@ public class Events {
 	@Column(name="pending")
 	private Boolean pending;
 	
+	@Column(name="scope")
+	private String scope;
+	
 	@OneToOne
 	@JoinColumn(name="creatorid")
 	private UserModel userModel;
@@ -106,11 +109,22 @@ public class Events {
 		this.userModel = userModel;
 	}
 
+	public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
 	@Override
 	public String toString() {
-		return "Events [eid=" + eid + ", title=" + title + ", description=" + description + ", startdate=" + startdate
-				+ ", enddate=" + enddate + ", pending=" + pending + ", creator=" + userModel + "]";
+		return "Events [eid=" + eid + ", title=" + title + ", description=" + description + ", timestamp=" + timestamp
+				+ ", startdate=" + startdate + ", enddate=" + enddate + ", pending=" + pending + ", scope=" + scope
+				+ ", userModel=" + userModel + "]";
 	}
+	
+	
 
 	
 	}

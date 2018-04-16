@@ -245,56 +245,71 @@ pre {
 				</a>
 
 			</div>
-			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="MyFeed">Home</a></li>
-					<li><a href="MyProfile">Profile</a></li>
-					<li><a href="Post_Question.jsp">Ask a question</a></li>
-					<li><a href="AboutUs.jsp">About Us</a></li>
-					<li><a href="LoadBlogFeed">Blogs</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
 
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" onclick="showNotifications()"><i
-							class="material-icons">notifications</i> <span
-							class="notification" id="notificationCount"></span> </a>
-						<ul class="dropdown-menu" id="notifications">
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="MyFeed">Home</a></li>
+			        		<li><a href="MyProfile">Profile</a></li>
+			        		<li><a href="Post_Question.jsp">Ask a question</a></li>
+			        		<%if(utype.equals("faculty"))
+							{ %>
+							
+						<li><a href="major/class/addEventForm?type=<%=utype%>">Create Event</a></li>
+							
+							<%} %>
+							
+							<li><a
+											href="major/message/inbox">
 
+												Message 
+												
+												
+						    </a></li>
+							
+                                                 <li><a href="AboutUs.jsp">About Us</a></li>
+				    		</ul>
+						<ul class="nav navbar-nav navbar-right">
+							
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="showNotifications()"><i class="material-icons">notifications</i>
+									<span class="notification" id="notificationCount"></span>
+								</a>
+			        			<ul class="dropdown-menu" id="notifications">
+								 
+								 
+								 
+			        			</ul>
+								
+							</li>
+							<li class="dropdown">
+			        			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">person</i></a>
+			        			<ul class="dropdown-menu">
+								 
+								 
+								  <li><a href="EditProfile">Edit Profile</a></li>
+								  <li class="divider"></li>
+								  <li><a href="ChangePassword.jsp?uid=<%=uid%>">Change Password</a></li>
+								  <li class="divider"></li>
+							      <li><a onclick="destroyHandler()">Log Out</a></li>
+			        			</ul>
+			        		</li>
+										
+						</ul>
 
-
-						</ul></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"><i class="material-icons">person</i></a>
-						<ul class="dropdown-menu">
-
-
-							<li><a href="EditProfile">Edit Profile</a></li>
-							<li class="divider"></li>
-							<li><a href="ChangePassword.jsp?uid=<%=uid%>">Change
-									Password</a></li>
-							<li class="divider"></li>
-							<li><a onclick="destroyHandler()">Log Out</a></li>
-						</ul></li>
-
-				</ul>
-
-				<form class="navbar-form navbar-right" role="search"
-					action="AskQuestion">
-					<div class="form-group  is-empty">
-						<input type="text" class="form-control search"
-							placeholder="Search -- Question,  @Username,  #Workspaces"
-							id="search" name="search" style="width: 400px;"> <span
-							class="material-input"></span>
+						<form class="navbar-form navbar-right" role="search" action="AskQuestion">
+							<div class="form-group  is-empty">
+								<input type="text" class="form-control search" placeholder="Search -- Question,  @Username,  #Workspaces" id="search" name="search" style="width: 400px;">
+								<span class="material-input"></span>
+							</div>
+							<button type="submit" class="btn btn-white btn-round btn-just-icon">
+								<i class="material-icons">search</i>
+                                                                <!--<div class="ripple-container"></div>-->
+							</button>
+						</form>
 					</div>
-					<button type="submit" class="btn btn-white btn-round btn-just-icon">
-						<i class="material-icons">search</i>
-						<!--<div class="ripple-container"></div>-->
-					</button>
-				</form>
-			</div>
-		</div>
-	</nav>
+				</div>
+			</nav>
+
 	<div class="wrapper">
 
 		<div class="sidebar" data-color="blue" data-image="img/testd.jpg"

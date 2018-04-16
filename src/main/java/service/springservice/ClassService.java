@@ -12,6 +12,8 @@ import model.StudentModel;
 import model.springmodel.ClassPosts;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
+import model.springmodel.Question;
+import model.springmodel.SavedPosts;
 
 public interface ClassService {
 
@@ -39,6 +41,14 @@ public interface ClassService {
 
 	int unPinPost(ClassPosts pinnedClassPost);
 
-	List<Object> showPinnedPosts(String classid, boolean isPending, String userId);
+	List<ClassPosts> showPinnedPosts(String classid, boolean isPending, String userId);
+
+	Object renderPinnedPost(Integer postId, String postType, String userId);
+
+	List<Object> getMyPosts(String classId, String userId, String postType);
+
+	int getClassPostId(Integer postId, String postType);
+
+	int saveAsBookMark(SavedPosts savedPosts);
 
 }

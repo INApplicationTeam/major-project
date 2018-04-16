@@ -17,6 +17,7 @@ import model.pollmodel.CreateNewPollModel;
 import model.springmodel.Events;
 import model.springmodel.PollQueDetails;
 import model.springmodel.Question;
+import model.springmodel.SavedPosts;
 import model.springmodel.ClassDiscussion;
 import model.springmodel.ClassDiscussionComment;
 import model.springmodel.ClassDiscussionReply;
@@ -118,9 +119,34 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	@Transactional
-	public List<Object> showPinnedPosts(String classid, boolean isPending, String userId) {
+	public List<ClassPosts> showPinnedPosts(String classid, boolean isPending, String userId) {
 		return classdao.showPinnedPosts(classid,isPending,userId);
 	}
+
+	@Override
+	@Transactional
+	public Object renderPinnedPost(Integer postId, String postType,String userId) {
+		return classdao.renderPinnedPost(postId,postType,userId);
+	}
+
+	@Override
+	@Transactional
+	public List<Object> getMyPosts(String classId, String userId, String postType) {
+		return classdao.getMyPosts(classId,userId,postType);
+	}
+
+	@Override
+	@Transactional
+	public int getClassPostId(Integer postId, String postType) {
+		return classdao.getClassPostId(postId,postType);
+	}
+
+	@Override
+	@Transactional
+	public int saveAsBookMark(SavedPosts savedPosts) {
+		return classdao.saveAsBookmark(savedPosts);
+	}
+	
 	
 	
 	
