@@ -80,6 +80,10 @@
 		<servlet-class>controller.BlogContent</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>BlogContentSingle</servlet-name>
+		<servlet-class>controller.BlogContentSingle</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>CheckDetails</servlet-name>
 		<servlet-class>controller.CheckDetails</servlet-class>
 	</servlet>
@@ -348,6 +352,10 @@
 		<url-pattern>/BlogContent</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>BlogContentSingle</servlet-name>
+		<url-pattern>/BlogContentSingle</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>CheckDetails</servlet-name>
 		<url-pattern>/CheckDetails</url-pattern>
 	</servlet-mapping>
@@ -562,6 +570,20 @@
 		<servlet-name>RequestAnswer</servlet-name>
 		<servlet-class>controller.RequestAnswer</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>LoadBlogFeed</display-name>
+		<servlet-name>LoadBlogFeed</servlet-name>
+		<servlet-class>controller.LoadBlogFeed</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>BlogComment</display-name>
+		<servlet-name>BlogComment</servlet-name>
+		<servlet-class>controller.BlogComment</servlet-class>
+	</servlet>
   
   <servlet-mapping>
     <servlet-name>dispatcher</servlet-name>
@@ -578,6 +600,14 @@
   <servlet-mapping>
   	<servlet-name>RequestAnswer</servlet-name>
   	<url-pattern>/RequestAnswer</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoadBlogFeed</servlet-name>
+  	<url-pattern>/LoadBlogFeed</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BlogComment</servlet-name>
+  	<url-pattern>/BlogComment</url-pattern>
   </servlet-mapping>
   
 	

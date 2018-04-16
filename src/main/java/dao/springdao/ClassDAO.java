@@ -61,5 +61,7 @@ public interface ClassDAO {
 	List<Object> showSavedPosts(String userId, String classId);
 
 	int unSavePost(SavedPosts savedPosts);
+
+  List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
 	
 }

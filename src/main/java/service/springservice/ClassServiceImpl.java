@@ -157,6 +157,12 @@ public class ClassServiceImpl implements ClassService {
 	@Transactional
 	public int unSavePost(SavedPosts savedPosts) {
 		return classdao.unSavePost(savedPosts);
+  }
+  
+  @Override
+  @Transactional
+	public List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm) {
+				return classdao.showClassSubjectFaculty(sm);
 	}
 	
 	

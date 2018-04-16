@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.BlogDao;
+import dao.NotificationDao;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,9 +21,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+
 import model.AllBlogModel;
 import model.BlogModel;
 import model.FacultyModel;
+import model.NotificationModel;
 import model.StudentModel;
 
 
@@ -55,16 +61,19 @@ public class PostBlog extends HttpServlet {
             StudentModel sm;
             String utype=(String)session.getAttribute("utype");
             String id = null;
+            String name="";
             
             if(utype.equals("faculty"))
             {
               fm=(FacultyModel)session.getAttribute("userModel");
               id=fm.getFid();
+              name=fm.getName();
             }
             else if(utype.equals("student"))
             {
               sm=(StudentModel)session.getAttribute("userModel");
               id=sm.getSid();
+              name=sm.getName();
             }
             
             int did=Integer.parseInt(request.getParameter("did"));
@@ -83,9 +92,28 @@ public class PostBlog extends HttpServlet {
             bm.setDid(did);
             bm.setTitle(title);
             bm.setTimestamp(new Date().getTime());
+            bm.setUname(name);
+            
+            NotificationDao nd=new NotificationDao();
+            NotificationModel nm=new NotificationModel();
+            String returnJSON="";
+            ArrayList<NotificationModel> alnm=null;
             
             BlogDao bd=new BlogDao();
             bd.insertBlog(bm,context);
+            
+            nm.setUid(id);
+            nm.setMessage(bm.getUname()+" wrote a blog : "+bm.getTitle());
+            nm.setTimestamp(new Date().getTime());
+            
+            alnm=nd.notifyBlog(nm,context);
+            
+            System.out.println(alnm.toString());
+            
+            Gson gsonObj = new Gson();
+            returnJSON=gsonObj.toJson(alnm);
+            
+            System.out.println(bm.getUname());
             
             AllBlogModel abm=(AllBlogModel)session.getAttribute("myblogs");
             
@@ -101,6 +129,7 @@ public class PostBlog extends HttpServlet {
                 abm.setAbm(albm);
             }
             session.setAttribute("myblogs",abm);
+            session.setAttribute("blogsNotifier", returnJSON);
             
             response.getWriter().write(json);
         }

@@ -55,4 +55,6 @@ public interface ClassService {
 
 	int unSavePost(SavedPosts savedPosts);
 
+  List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
+
 }
