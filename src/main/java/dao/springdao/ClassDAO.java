@@ -58,6 +58,10 @@ public interface ClassDAO {
 
 	int saveAsBookmark(SavedPosts savedPosts);
 
-	List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
+	List<Object> showSavedPosts(String userId, String classId);
+
+	int unSavePost(SavedPosts savedPosts);
+
+  List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
 	
 }

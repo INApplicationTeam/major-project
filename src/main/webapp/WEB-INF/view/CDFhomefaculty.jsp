@@ -386,9 +386,10 @@
 
 <h1>CLASS DISCUSSION FORUM</h1>
 	
-<a href="../../MyFeed">MY FEED</a>
+<a href="../../MyFeed">MY FEED</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="showNotices">NOTICE</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="showSavedPosts">SAVED POSTS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<a href="showNotices">NOTICE</a>
 	<select name="SHOW" onchange="location = this.value;">
     	<option selected disabled>Show</option>
 	 	<option value="showPoll">Polls</option>

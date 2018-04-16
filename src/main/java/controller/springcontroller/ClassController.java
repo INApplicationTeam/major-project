@@ -995,6 +995,51 @@ public class ClassController implements ServletContextAware
 			e.printStackTrace();
 		}
 	}
+	
+	@GetMapping("/showSavedPosts")
+	public String showSavedPosts(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		String classId=(String)session.getAttribute("classid");
+		
+		List<Object> savedPosts=classservice.showSavedPosts(userId, classId);
+		theModel.addAttribute("savedPosts",savedPosts);
+		
+		ClassDiscussionComment cdc=new ClassDiscussionComment();
+		theModel.addAttribute("ClassCommentModel",cdc);
+		
+		ClassDiscussionReply cdr=new ClassDiscussionReply();
+		theModel.addAttribute("ClassReplyModel",cdr);
+		
+		
+		return "savedPosts";
+	}
+	
+	@PostMapping("/unSavePost")
+	public void unSavePost(HttpServletRequest request,HttpServletResponse response,@RequestParam("postId")Integer postId,@RequestParam("postType")String postType)
+	{
+		HttpSession session=request.getSession();
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		
+		SavedPosts savedPosts=new SavedPosts();
+		savedPosts.setUid(userId);
+		
+		int result=-1;
+		if(classservice.getClassPostId(postId,postType)!=-1)
+		{
+			savedPosts.setId(classservice.getClassPostId(postId,postType));
+			result=classservice.unSavePost(savedPosts);
+		}
+		
+		try {
+			response.getWriter().println(result);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 

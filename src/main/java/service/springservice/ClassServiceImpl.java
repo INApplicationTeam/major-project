@@ -149,9 +149,20 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	@Transactional
+	public List<Object> showSavedPosts(String userId, String classId) {
+		return classdao.showSavedPosts(userId,classId);
+	}
+
+	@Override
+	@Transactional
+	public int unSavePost(SavedPosts savedPosts) {
+		return classdao.unSavePost(savedPosts);
+  }
+  
+  @Override
+  @Transactional
 	public List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm) {
-		// TODO Auto-generated method stub
-		return classdao.showClassSubjectFaculty(sm);
+				return classdao.showClassSubjectFaculty(sm);
 	}
 	
 	
