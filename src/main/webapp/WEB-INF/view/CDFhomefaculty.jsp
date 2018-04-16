@@ -412,6 +412,13 @@
 			${temp3.name} &nbsp;		
 		</c:forEach>
 	<hr>
+	
+	<h3>Class Subject Faculty</h3>
+		<c:forEach var="temp4" items="${classSubjectFaculty}" > 
+			${temp4.userModel.uname} - ${temp4.subject.subject},  &nbsp;		
+		</c:forEach>
+	<hr>
+	
 	<center><h1>CLASS NOTICES</h1></center>
 	<c:forEach var="notice" items="${classNotices}" begin="0" varStatus="noticeLoop">
 		<a href="#no">${notice.creator.uname}</a> issued NOTICE <span id="noticetimestamp${noticeLoop.index}"></span>

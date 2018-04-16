@@ -146,6 +146,13 @@ public class ClassServiceImpl implements ClassService {
 	public int saveAsBookMark(SavedPosts savedPosts) {
 		return classdao.saveAsBookmark(savedPosts);
 	}
+
+	@Override
+	@Transactional
+	public List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm) {
+		// TODO Auto-generated method stub
+		return classdao.showClassSubjectFaculty(sm);
+	}
 	
 	
 	

@@ -98,6 +98,9 @@ public class ClassController implements ServletContextAware
 			List<ClassRepresentative> theCR= classservice.showClassCR(sm);
 			theModel.addAttribute("CR", theCR);
 			
+			List<ClassSubjectFaculty> theClassSubjectFaculty= classservice.showClassSubjectFaculty(sm);
+			theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
+			
 			List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 			theModel.addAttribute("classCoordinator", theClassCoordinator);	
 			
@@ -184,6 +187,10 @@ public class ClassController implements ServletContextAware
 		
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
+		
+		List<ClassSubjectFaculty> theClassSubjectFaculty= classservice.showClassSubjectFaculty(tempStudent);
+		theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
+		
 		
 		List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
 		theModel.addAttribute("allClassPosts",allClassPosts);
@@ -277,6 +284,9 @@ public class ClassController implements ServletContextAware
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
+		List<ClassSubjectFaculty> theClassSubjectFaculty= classservice.showClassSubjectFaculty(sm);
+		theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);	
+
 		List<Boolean> checkPinned=new ArrayList<>();
 		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid,checkPinned);
 		theModel.addAttribute("allClassPosts",allClassPosts);

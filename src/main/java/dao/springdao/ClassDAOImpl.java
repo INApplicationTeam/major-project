@@ -575,6 +575,18 @@ public class ClassDAOImpl implements ClassDAO {
 			return 0;
 		}
 	}
+
+	@Override
+	public List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm) {
+		Session currentSession= sessionFactory.getCurrentSession();
+		String id=sm.getBranch()+"-"+sm.getSemester()+"-"+sm.getSection()+"-"+sm.getBatch();
+		
+		Query<ClassSubjectFaculty> qr2= currentSession.createQuery("from ClassSubjectFaculty where classid =:classid",ClassSubjectFaculty.class);
+		qr2.setParameter("classid", id);
+		List<ClassSubjectFaculty> classSubjectFaculty =qr2.getResultList();	
+		System.out.println(classSubjectFaculty);
+		return classSubjectFaculty;
+	}
 	
 	
 	
