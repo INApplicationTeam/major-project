@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.springdao.CoordinatorDAO;
+import model.UserModel;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
 import model.springmodel.Coordinator;
+import model.springmodel.SubjectModel;
 
 @Service
 public class CoordinatorServiceImpl implements CoordinatorService {
@@ -56,6 +58,18 @@ public class CoordinatorServiceImpl implements CoordinatorService {
 	@Transactional
 	public List<ClassSubjectFaculty> showFaculty(String classid) {
 		return coordinatorDAO.showFaculty(classid);
+	}
+
+	@Override
+	@Transactional
+	public List<UserModel> searchName(String name) {
+		return coordinatorDAO.searchName(name);
+	}
+
+	@Override
+	@Transactional
+	public List<SubjectModel> getSubjects(String classId) {
+		return coordinatorDAO.getSubjects(classId);
 	}
 
 }

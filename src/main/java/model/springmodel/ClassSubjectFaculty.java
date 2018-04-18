@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import model.UserModel;
+
 @Entity
 @Table(name="class_subject_faculty")
 public class ClassSubjectFaculty implements Serializable
@@ -21,8 +23,10 @@ public class ClassSubjectFaculty implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="uid")
-	private String id;
+	@OneToOne
+	@JoinColumn(name="uid")
+	private UserModel userModel;
+
 
 	@Transient
 	private String branch;
@@ -96,12 +100,14 @@ public class ClassSubjectFaculty implements Serializable
 		this.batch = batch;
 	}
 
-	public String getId() {
-		return id;
+	
+
+	public UserModel getUserModel() {
+		return userModel;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserModel(UserModel userModel) {
+		this.userModel = userModel;
 	}
 
 	public String getBranch() {
@@ -130,8 +136,13 @@ public class ClassSubjectFaculty implements Serializable
 
 	@Override
 	public String toString() {
-		return "ClassSubjectFaculty [id=" + id + ", branch=" + branch + ", sem=" + sem + ", sec=" + sec + ", batch="
-				+ batch + ", classid=" + classid + ", subcode=" + "" + "]";
+		return "ClassSubjectFaculty [userModel=" + userModel + ", branch=" + branch + ", sem=" + sem + ", sec=" + sec
+				+ ", batch=" + batch + ", classid=" + classid + ", subject=" + subject + ", yearOfTeaching="
+				+ yearOfTeaching + "]";
 	}
+
+	
+	
+	
 
 }
