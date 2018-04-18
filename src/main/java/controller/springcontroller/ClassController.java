@@ -98,6 +98,9 @@ public class ClassController implements ServletContextAware
 			List<ClassRepresentative> theCR= classservice.showClassCR(sm);
 			theModel.addAttribute("CR", theCR);
 			
+			List<ClassSubjectFaculty> theClassSubjectFaculty= classservice.showClassSubjectFaculty(sm);
+			theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
+			
 			List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 			theModel.addAttribute("classCoordinator", theClassCoordinator);	
 			
@@ -184,6 +187,10 @@ public class ClassController implements ServletContextAware
 		
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(tempStudent);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
+		
+		List<ClassSubjectFaculty> theClassSubjectFaculty= classservice.showClassSubjectFaculty(tempStudent);
+		theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
+		
 		
 		List<Object> allClassPosts=classservice.showClassPosts(classid,false,sm.getSid(),null);
 		theModel.addAttribute("allClassPosts",allClassPosts);
@@ -277,6 +284,9 @@ public class ClassController implements ServletContextAware
 		List<FacultyModel> theClassCoordinator= classservice.showClassCoordinator(sm);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);	
 		
+		List<ClassSubjectFaculty> theClassSubjectFaculty= classservice.showClassSubjectFaculty(sm);
+		theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);	
+
 		List<Boolean> checkPinned=new ArrayList<>();
 		List<Object> allClassPosts=classservice.showClassPosts(classId,false,fid,checkPinned);
 		theModel.addAttribute("allClassPosts",allClassPosts);
@@ -976,6 +986,51 @@ public class ClassController implements ServletContextAware
 		{
 			savedPosts.setId(classservice.getClassPostId(postId,postType));
 			result=classservice.saveAsBookMark(savedPosts);
+		}
+		
+		try {
+			response.getWriter().println(result);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@GetMapping("/showSavedPosts")
+	public String showSavedPosts(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session=request.getSession();
+		
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		String classId=(String)session.getAttribute("classid");
+		
+		List<Object> savedPosts=classservice.showSavedPosts(userId, classId);
+		theModel.addAttribute("savedPosts",savedPosts);
+		
+		ClassDiscussionComment cdc=new ClassDiscussionComment();
+		theModel.addAttribute("ClassCommentModel",cdc);
+		
+		ClassDiscussionReply cdr=new ClassDiscussionReply();
+		theModel.addAttribute("ClassReplyModel",cdr);
+		
+		
+		return "savedPosts";
+	}
+	
+	@PostMapping("/unSavePost")
+	public void unSavePost(HttpServletRequest request,HttpServletResponse response,@RequestParam("postId")Integer postId,@RequestParam("postType")String postType)
+	{
+		HttpSession session=request.getSession();
+		String userId=new UserModel().getUserId(session.getAttribute("userModel"));
+		
+		SavedPosts savedPosts=new SavedPosts();
+		savedPosts.setUid(userId);
+		
+		int result=-1;
+		if(classservice.getClassPostId(postId,postType)!=-1)
+		{
+			savedPosts.setId(classservice.getClassPostId(postId,postType));
+			result=classservice.unSavePost(savedPosts);
 		}
 		
 		try {

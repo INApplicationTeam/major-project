@@ -10,6 +10,7 @@
 <%@page import="model.QuestionModel"%>
 <%@page import="model.UserModel"%>
 <%@page import="model.RelatedQuestionModel"%>
+<%@page import="model.NotificationModel"%>
 <!doctype html>
 <%
     UserModel mymodel=(UserModel)session.getAttribute("mymodel");
@@ -19,6 +20,9 @@
     ArrayList<QuestionModel> alqm=qam.getAlqm();
     ArrayList<AnswerModel> alam=qam.getAlam();
     DomainModel dm=(DomainModel)session.getAttribute("myworkspaces");
+    
+    String returnJSON=(String)session.getAttribute("blogsNotifier");
+    
     
     RelatedQuestionModel rqm1=new RelatedQuestionModel();
     if(alqm!=null)
@@ -74,6 +78,9 @@ else if(utype.equals("faculty"))
 
 <script src="https://cdn.quilljs.com/1.2.3/quill.js"></script>
 <script src="https://cdn.quilljs.com/1.2.3/quill.min.js"></script>
+
+<script src="js/Notifications.js"></script>
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css"
@@ -387,25 +394,20 @@ pre {
 		<div class="header header-filter"
 			style="background-image: url('img/testd.jpg');">
 			<div class="container">
-				<br>
-				<br>
-				<br>
+				<br> <br> <br>
 				<div class="col-md-4 text-center">
 					<h2 style="font-weight: bold; color: #ffffff;">Questions
 						Asked:</h2>
-					<br>
-					<label class="label label-info" style="font-size: 50px;"><%= rqm.getRelatedque().size() %></label>
+					<br> <label class="label label-info" style="font-size: 50px;"><%= rqm.getRelatedque().size() %></label>
 				</div>
 				<div class="col-md-4 text-center">
 					<h2 style="font-weight: bold; color: #ffffff;">Answers
 						Written:</h2>
-					<br>
-					<label class="label label-info" style="font-size: 50px;"><%= qam.getAlam().size() %></label>
+					<br> <label class="label label-info" style="font-size: 50px;"><%= qam.getAlam().size() %></label>
 				</div>
 				<div class="col-md-4 text-center">
 					<h2 style="font-weight: bold; color: #ffffff;">Blogs:</h2>
-					<br>
-					<label class="label label-info" style="font-size: 50px;"><%= abm.getAbm().size() %></label>
+					<br> <label class="label label-info" style="font-size: 50px;"><%= abm.getAbm().size() %></label>
 				</div>
 			</div>
 		</div>
@@ -503,8 +505,7 @@ pre {
 																	href="UserProfile?uid=<%= qm.getTopAnswerer() %>"
 																	style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
 																<%}%>
-																answered <br>
-																<span class="ansImg"></span>
+																answered <br> <span class="ansImg"></span>
 																<div class="lead ans" style="margin-bottom: 1px;"></div>
 																<a class="read" href="#no" style="color: #0099cc;"
 																	onclick="instantiateEditor('<%=i%>')">Read more</a><br>
@@ -687,8 +688,8 @@ pre {
 															<div class="stats">
 
 																<i class="material-icons">update</i> <span id="a<%=i%>"></span>
-																
-																	
+
+
 
 															</div>
 															<script type="text/javascript">setTime("a<%=i%>",<%=alam.get(i).getAnsDate() %>)</script>
@@ -703,8 +704,7 @@ pre {
 										<div class="tab-pane" id="blog">
 											<button id="BlogBtn" onclick="showBlog()"
 												class="btn btn-info btn-sm">Write Blog..</button>
-											<br>
-											<br>
+											<br> <br>
 											<form id="blogform" style="display: none">
 												Select Blog Domain<select name="cars" id="blogdid">
 													<option value="1">Computer science</option>
@@ -733,8 +733,7 @@ pre {
 													<option value="24">Korero</option>
 													<option value="25">Other</option>
 												</select>&nbsp;&nbsp;&nbsp; Blog Title<input type="text"
-													id="blogtitle" /><br>
-												<br>
+													id="blogtitle" /><br> <br>
 												<div id="blogtoolbar"></div>
 												<div id="blogeditor"></div>
 												<br> <input type="button" class="btn btn-info btn-sm"
@@ -776,7 +775,7 @@ pre {
 														<div class="card-footer">
 															<div class="stats">
 																<i class="material-icons">update</i><span id="b<%=i%>"></span>
-																
+
 															</div>
 															<script type="text/javascript">setTime("b<%=i%>",<%= bm.getTimestamp() %>)</script>
 														</div>
@@ -1149,6 +1148,12 @@ function confirmDelete()
             document.getElementById(id).className = "myblogeditor ql-container ql-snow";
         }
     }
+            var json=<%= returnJSON %>;
+            console.log(json);
+            if(json!=null)
+            	{
+            	websocket.send(JSON.stringify(json));
+            	}
         </script>
 
 

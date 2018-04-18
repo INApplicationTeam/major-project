@@ -575,9 +575,141 @@ public class ClassDAOImpl implements ClassDAO {
 			return 0;
 		}
 	}
+
+	@Override
+	public List<Object> showSavedPosts(String userId, String classId) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();
+		List<Object[]> savedPostsId=null;
+		List<Object>savedPosts=new ArrayList<>();
+		
+		Query<Object[]> qr=currentSession.createQuery("select cp.postid,cp.post_type from SavedPosts sp inner join ClassPosts cp on cp.id=sp.id where uid=:uid and sp.id in (select id from ClassPosts where classid=:classid) order by timestamp desc",Object[].class);
+		qr.setParameter("uid",userId);
+		qr.setParameter("classid",classId);
+		
+		Query<ClassDiscussion> qrForDiscussion=currentSession.createQuery("from ClassDiscussion where id=:postId",ClassDiscussion.class);
+		Query<Events> qrForEvent=currentSession.createQuery("from Events where eid=:postId",Events.class);
+		Query<PollQueDetails> qrForPoll=currentSession.createQuery("from PollQueDetails where queid=:postId",PollQueDetails.class);
+		Query<Question> qrForQuestion=currentSession.createQuery("from Question where qid=:postId",Question.class);
+
+		ClassDiscussion discussion=null;
+		Events event=null;
+		PollQueDetails poll=null;
+		Question question=null;
+		
+		int postId;
+		String postType;
+		
+		try{
+			savedPostsId=qr.getResultList();
+			
+			for(Object o[]:savedPostsId)
+			{
+				postId=(Integer)o[0];
+				postType=(String)o[1];
+				
+				if(postType.equals("discussion"))
+				{
+					qrForDiscussion.setParameter("postId",postId);
+					
+					try{
+						discussion=qrForDiscussion.getSingleResult();
+						CommentLikers commentLikers=null;
+						
+						for(ClassDiscussionComment comment:discussion.getClassCommentList())
+						{
+							commentLikers=currentSession.get(CommentLikers.class,new CommentLikers(comment.getCommentId(),userId));
+							
+							if(commentLikers!=null)
+							{
+								comment.setLiked(true);
+							}
+							else
+							{
+								comment.setLiked(false);
+							}
+						}
+						
+						savedPosts.add(discussion);
+						
+					}
+					catch(NoResultException noResultException)
+					{
+						noResultException.printStackTrace();
+					}
+				}
+				else if(postType.equals("event"))
+				{
+					qrForEvent.setParameter("postId",postId);
+					
+					try{
+						event=qrForEvent.getSingleResult();
+						savedPosts.add(event);
+					}
+					catch(NoResultException noResultException)
+					{
+						noResultException.printStackTrace();
+					}
+				}
+				else if(postType.equals("poll"))
+				{
+					qrForPoll.setParameter("postId",postId);
+					
+					try{
+						poll=qrForPoll.getSingleResult();
+						savedPosts.add(poll);
+					}
+					catch(NoResultException noResultException)
+					{
+						noResultException.printStackTrace();
+					}
+				}
+				else if(postType.equals("question"))
+				{
+					qrForQuestion.setParameter("postId",postId);
+					
+					try{
+						question=qrForQuestion.getSingleResult();
+						System.out.println(question.getMostUpvotedAnswer());
+						savedPosts.add(question);
+					}
+					catch(NoResultException noResultException)
+					{
+						noResultException.printStackTrace();
+					}
+					
+				}
+
+			}
+			
+			return savedPosts;
+		}
+		catch(NoResultException noResult)
+		{
+			System.out.println("No Saved Posts Found");
+		}
+		return null;
+	}
+
+	@Override
+	public int unSavePost(SavedPosts savedPosts) {
+		
+		Session currentSession=sessionFactory.getCurrentSession();
+		currentSession.delete(savedPosts);
+		return 0;
+	}
 	
-	
-	
+  @Override
+	public List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm) {
+		Session currentSession= sessionFactory.getCurrentSession();
+		String id=sm.getBranch()+"-"+sm.getSemester()+"-"+sm.getSection()+"-"+sm.getBatch();
+		
+		Query<ClassSubjectFaculty> qr2= currentSession.createQuery("from ClassSubjectFaculty where classid =:classid",ClassSubjectFaculty.class);
+		qr2.setParameter("classid", id);
+		List<ClassSubjectFaculty> classSubjectFaculty =qr2.getResultList();	
+		System.out.println(classSubjectFaculty);
+		return classSubjectFaculty;
+	}
 	
 }
 

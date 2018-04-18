@@ -51,4 +51,10 @@ public interface ClassService {
 
 	int saveAsBookMark(SavedPosts savedPosts);
 
+	List<Object> showSavedPosts(String userId, String classId);
+
+	int unSavePost(SavedPosts savedPosts);
+
+  List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
+
 }

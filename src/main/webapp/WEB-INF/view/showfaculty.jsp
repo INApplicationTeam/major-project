@@ -13,6 +13,8 @@
 				
 				<tr>
 					<th> Faculty ID </th>
+					<th> Faculty Name </th>
+					
 					<th> Class ID </th>				
 				</tr>
 				
@@ -20,7 +22,8 @@
 				
 				
 			<tr>
-				<td> ${temp.id} </td>
+				<td> ${temp.userModel.uid} </td>
+				<td>${temp.userModel.uname}</td>	
 				<td> ${temp.classid} </td>
 			</tr>
 			
