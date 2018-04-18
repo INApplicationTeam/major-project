@@ -35,6 +35,12 @@ public class Notice {
 	
 	@Column(name="isClosed")
 	private Boolean closed;
+	
+	@Column(name="file_data")
+	private byte[] data;
+	
+	@Column (name="file_name")
+	private String file_name;
 
 	public int getNoticeId() {
 		return noticeId;
@@ -82,6 +88,24 @@ public class Notice {
 
 	public void setClosed(Boolean closed) {
 		this.closed = closed;
+	}
+	
+	
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public String getFile_name() {
+		return file_name;
+	}
+
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
 	}
 
 	@Override
