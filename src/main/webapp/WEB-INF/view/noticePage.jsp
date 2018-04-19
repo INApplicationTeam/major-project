@@ -55,6 +55,8 @@
         
         </style>
         <script>
+        var isviewed=[];
+        
         function time_ago(time) {
 
   		  switch (typeof time) {
@@ -156,6 +158,10 @@
 			</center>
 			
 			<script>
+			
+				var viewed=${notice.viewed};
+				isviewed.push(viewed);
+				
 				var noticeTime=${notice.timestamp};
 				setTime('noticeTimeStamp${noticeLoop.index}',noticeTime);
 				
@@ -167,6 +173,115 @@
 			<hr>
 		</c:if>
 	</c:forEach>
+	
+	<script>
+		
+		var elements = document.querySelectorAll(".notice");
+		var length = elements.length;
+		var flag= new Array(length);
+        
+		function reveal()
+        {
+
+            for(var count = 0; count < length; count++)
+           {
+               /* offsetParent may not be the body if the element container is positioned. Therefore we need to find the distance from the body by adding all the offsetTop's of all offsetParent's.  */
+            var offsetParentTop = 0;
+            var temp = elements[count];
+			var temp1 = elements[count];
+			var outerheight=$(temp1).outerHeight(true);
+			//console.log(outerheight);
+               do
+               {
+                   if(!isNaN(temp.offsetTop))
+                   {
+                        offsetParentTop += temp.offsetTop;
+                   }
+               }while(temp = temp.offsetParent);
+               
+			//   console.log("parent"+offsetParentTop);
+               var pageYOffset = window.pageYOffset;
+               var viewportHeight = window.innerHeight;       
+               
+               if( offsetParentTop < (pageYOffset + viewportHeight) && flag[count]== undefined && (offsetParentTop + outerheight >= pageYOffset || offsetParentTop > pageYOffset))
+               {	flag[count]= true;
+                   console.log(elements[count].id+ " is visible");
+				   window.setTimeout(isViewed,1000,count);
+                }
+				else if(flag[count]==true && ((offsetParentTop + outerheight) <= pageYOffset || offsetParentTop>=pageYOffset+viewportHeight))
+				{
+				    flag[count]= undefined;
+					console.log(elements[count].id+ " is out of view");
+				}
+            }
+        }
+        
+        /* Attach event handlers to resize and scroll event */
+        window.addEventListener("resize",reveal);
+        window.addEventListener("scroll",reveal);
+		
+        var countIndex;
+		function isViewed(count)
+		{
+			if(flag[count]==true)
+			{
+				if(isviewed[count]==false)
+				{
+					countIndex=count;
+					countAsView(count);
+					console.log("This Is Viewed-->>"+count);
+				}
+			
+				else
+				console.log("Already Viewed-->>"+count);
+			}
+			else
+				console.log("This Is Not Viewed-->>"+count);
+		}
+		
+		function getXmlHttpRequestObject()
+		{
+			var xmlHttpReq;
+	
+			if(window.XMLHttpRequest)
+			{
+			    request=new window.XMLHttpRequest();
+			}
+			else if(window.ActiveXObject)
+			{
+			    request=new window.ActiveXObject();
+			}
+			else
+			{
+			    request=null;
+			}
+			
+			return request;
+		}
+
+		function countAsView(x)
+		{   
+		    var val=x
+		    
+		    request=getXmlHttpRequestObject();
+		    request.onreadystatechange=viewed;
+		    request.open("post","CountAsNoticeView",true);
+		    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");
+		    var data="noticeId=";
+		    request.send(data);
+		}
+
+		function viewed()
+		{
+		    if(request.readyState===4 && request.status===200)
+		    {
+		    	isviewed[countIndex]=true;
+		        document.getElementsByClassName("viewcount")[countIndex].innerHTML=request.responseText;
+		    }
+		}
+		
+    </script>
+	
 	
 </body>
 </html>

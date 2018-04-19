@@ -352,9 +352,10 @@
 	 	</c:forEach>
 	</select>
 	
-<a href="../../MyFeed">MY FEED</a>
-<a href="showNotices">NOTICE</a>
-<a href="showMyPosts">My-Posts</a>
+<a href="../../MyFeed">MY FEED</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="showNotices">NOTICE</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="showMyPosts">MY POSTS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="showSavedPosts">SAVED POSTS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <hr>
 <h3>CHOOSE YOUR POST TYPE...</h3>
 <a href="../../poll/createpoll.jsp?var=classpoll"><button id="create_poll">Create Poll</button></a>

@@ -8,7 +8,7 @@ public interface NoticeService {
 
 	int saveNotice(Notice notice);
 
-	List<Notice> getClassNotices(String classId);
+	List<Notice> getClassNotices(String classId,String viewerId);
 
 	Notice showNotice(Integer nid);
 
