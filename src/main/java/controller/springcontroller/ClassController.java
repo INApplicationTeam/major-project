@@ -142,7 +142,7 @@ public class ClassController implements ServletContextAware
 				theModel.addAttribute("pinnedPost",pinnedPoll);
 			}
 			
-			List<Notice> classNotices=noticeservice.getClassNotices(classid);
+			List<Notice> classNotices=noticeservice.getClassNotices(classid,sm.getSid());
 			theModel.addAttribute("classNotices",classNotices);
 			
 			theModel.addAttribute("bindingNotice",new Notice());
@@ -229,7 +229,7 @@ public class ClassController implements ServletContextAware
 			theModel.addAttribute("pinnedPost",pinnedPoll);
 		}
 		
-		List<Notice> classNotices=noticeservice.getClassNotices(classid);
+		List<Notice> classNotices=noticeservice.getClassNotices(classid,sm.getSid());
 		theModel.addAttribute("classNotices",classNotices);
 
 		theModel.addAttribute("bindingNotice",new Notice());
@@ -307,7 +307,7 @@ public class ClassController implements ServletContextAware
 		ClassPosts pinnedClassPost=new ClassPosts();
 		theModel.addAttribute("pinnedClassPost",pinnedClassPost);
 		
-		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		List<Notice> classNotices=noticeservice.getClassNotices(classId,fid);
 		theModel.addAttribute("classNotices",classNotices);
 		
 		theModel.addAttribute("bindingNotice",new Notice());
@@ -393,7 +393,6 @@ public class ClassController implements ServletContextAware
 	@GetMapping("/addEventForm")
 	public String addEventForm(Model theModel,HttpServletRequest request,@RequestParam(name="type", required=false)String type)
 	{	
-		HttpSession session=request.getSession();
 		Events theEvents = new Events();
 		
 		if(type!=null && type.equals("faculty"))
@@ -826,7 +825,7 @@ public class ClassController implements ServletContextAware
 			theModel.addAttribute("pinnedPost",pinnedPoll);
 		}
 		
-		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		List<Notice> classNotices=noticeservice.getClassNotices(classId,fid);
 		theModel.addAttribute("classNotices",classNotices);
 		
 		theModel.addAttribute("bindingNotice",new Notice());
@@ -923,11 +922,12 @@ public class ClassController implements ServletContextAware
 		int nid=notice.getNoticeId();
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
+		String viewerId=new UserModel().getUserId(session.getAttribute("userModel"));
 		
 		Notice currentNotice=noticeservice.showNotice(nid);
 		theModel.addAttribute("currentNotice",currentNotice);
 		
-		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		List<Notice> classNotices=noticeservice.getClassNotices(classId,viewerId);
 		theModel.addAttribute("classNotices",classNotices);
 		
 		return "noticePage";
@@ -938,11 +938,12 @@ public class ClassController implements ServletContextAware
 	{
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
+		String viewerId=new UserModel().getUserId(session.getAttribute("userModel"));
 		
 		Notice currentNotice=new Notice();
 		theModel.addAttribute("currentNotice",currentNotice);
 		
-		List<Notice> classNotices=noticeservice.getClassNotices(classId);
+		List<Notice> classNotices=noticeservice.getClassNotices(classId,viewerId);
 		theModel.addAttribute("classNotices",classNotices);
 		
 		return "noticePage";
@@ -1040,10 +1041,30 @@ public class ClassController implements ServletContextAware
 			e.printStackTrace();
 		}
 	}
-}
 
 
+	@GetMapping("/getCD")
+	public String showCD()
+	{
+		return "cd";
+	}
 	
+	@GetMapping("/showEventOnCalender")
+	public void show(HttpServletResponse response)
+	{
+		System.out.println("hello..");
+		try {
+			response.getWriter().println( "[{ \"date\" : \"2018-04-30\" , \"badge\" : \"true\" , \"title\" : \"MY EVENTS\" , \"body\":\"hellooo body\"}]");
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+}	
 	
 
 

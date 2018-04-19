@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import model.UserModel;
 
@@ -35,6 +36,17 @@ public class Notice {
 	
 	@Column(name="isClosed")
 	private Boolean closed;
+	
+	@Transient
+	private boolean viewed;
+
+	public boolean isViewed() {
+		return viewed;
+	}
+
+	public void setViewed(boolean viewed) {
+		this.viewed = viewed;
+	}
 
 	public int getNoticeId() {
 		return noticeId;

@@ -404,7 +404,6 @@ public class NotificationDao {
 	}
 
 	public ArrayList<NotificationModel> notifyBlog(NotificationModel nm, ServletContext context) {
-		// TODO Auto-generated method stub
 		
 		con=(Connection)context.getAttribute("datacon");
 		String qr="insert into notifications(message,timestamp) values(?,?)";
@@ -458,6 +457,7 @@ public class NotificationDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 		
   }
 	public ArrayList<NotificationModel> addClassPostNotification(NotificationModel nm, String classId,ServletContext context) 

@@ -24,8 +24,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	@Transactional
-	public List<Notice> getClassNotices(String classId) {
-		return noticeDAO.getClassNotices(classId);
+	public List<Notice> getClassNotices(String classId,String viewerId) {
+		return noticeDAO.getClassNotices(classId,viewerId);
 	}
 
 	@Override
