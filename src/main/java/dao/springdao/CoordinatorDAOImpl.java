@@ -8,9 +8,11 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import model.UserModel;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
 import model.springmodel.Coordinator;
+import model.springmodel.SubjectModel;
 
 @Repository
 public class CoordinatorDAOImpl implements CoordinatorDAO {
@@ -72,6 +74,28 @@ public class CoordinatorDAOImpl implements CoordinatorDAO {
 		List<ClassSubjectFaculty> faculty= qr.getResultList();
 		
 		return faculty;
+	}
+
+	@Override
+	public List<UserModel> searchName(String name) 
+	{
+		Session currentSession= sessionFactory.getCurrentSession();
+		Query<UserModel> qr= currentSession.createQuery(" from UserModel where uname like :name",UserModel.class);
+		
+		qr.setParameter("name", name+"%");
+		List<UserModel> names  =qr.getResultList();
+		
+		return names;
+		
+	}
+
+	@Override
+	public List<SubjectModel> getSubjects(String classId) {
+		Session currentSession= sessionFactory.getCurrentSession();
+		Query<SubjectModel> qr= currentSession.createQuery("select subject from ClassSubjectFaculty where classid=:classid",SubjectModel.class);
+		qr.setParameter("classid", classId);
+		List<SubjectModel> subjects= qr.getResultList();
+		return subjects;
 	}
 
 }

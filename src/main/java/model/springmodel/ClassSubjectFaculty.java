@@ -26,7 +26,6 @@ public class ClassSubjectFaculty implements Serializable
 	@OneToOne
 	@JoinColumn(name="uid")
 	private UserModel userModel;
-	
 	@Transient
 	private String branch;
 
@@ -141,5 +140,6 @@ public class ClassSubjectFaculty implements Serializable
 	}
 
 	
+
 
 }

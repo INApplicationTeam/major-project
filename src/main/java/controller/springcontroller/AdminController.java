@@ -1,9 +1,14 @@
 package controller.springcontroller;
 
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sound.midi.Soundbank;
 
@@ -19,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpServerErrorException;
 
+import model.UserModel;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
 import model.springmodel.Coordinator;
+import model.springmodel.SubjectModel;
 import service.springservice.CoordinatorService;
 
 
@@ -73,6 +80,7 @@ public class AdminController {
 		ClassRepresentative theCR = new ClassRepresentative();
 		theCR.setClassAttributes(classId);
 		
+		
 		theModel.addAttribute("CR",theCR);
 		return "addCR";
 	}
@@ -110,14 +118,25 @@ public class AdminController {
 		
 		ClassSubjectFaculty thefaculty= new ClassSubjectFaculty();
 		thefaculty.setClassAttributes(classId);
-		
+		List<SubjectModel> theSubjects=coordinatorService.getSubjects(classId);
+		List<String> theSubjectName=new ArrayList<String>();
+		List<Integer> theSubjectCode=new ArrayList<Integer>();
+		for(SubjectModel sm: theSubjects)
+		{
+			theSubjectName.add(sm.getSubject());
+			theSubjectCode.add(sm.getSubcode());
+		}
+		theModel.addAttribute("subjectCode", theSubjectCode);
+		theModel.addAttribute("subjectname", theSubjectName);
 		theModel.addAttribute("faculty",thefaculty);
 		return "addsubjectfaculty";
 	}
 	
 	@PostMapping("/addFaculty")
 	public String addCR(@ModelAttribute ("faculty") ClassSubjectFaculty theFaculty)
-	{	
+	{			
+		int year=Calendar.getInstance().get(Calendar.YEAR);
+		theFaculty.setYearOfTeaching(year);
 		theFaculty.setClassid();
 		coordinatorService.addFaculty(theFaculty);
 		return "addsubjectfaculty";	
@@ -134,6 +153,28 @@ public class AdminController {
 		
 		return "showfaculty";
 	}
+	
+	@PostMapping("/searchName")
+	public void searchName(@RequestParam("searchedname")String name,HttpServletResponse response)
+	{
+		List <UserModel> names=coordinatorService.searchName(name);
+		
+		try {
+			PrintWriter out= response.getWriter();
+			for(UserModel um : names)
+			out.println("id:"+um.getUid() +"name  :"+  um.getUname());
+			
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+
 	
 	
 }

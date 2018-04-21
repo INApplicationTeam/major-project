@@ -16,7 +16,8 @@
 				<table>
 				<tr>
 					<td><label>ID</label></td>
-					 <td><form:input path="userModel.uid"/></td>
+					 <td><form:input id="name"  path="userModel.uid" onkeyup="searchName()" />
+					 </td>
 				</tr>
 				
 				<tr>
@@ -46,8 +47,55 @@
 					
 				</tr>
 			</table>
-			
+			<p id="test"></p>
 		</form:form>
+		
+		
+<script>
+
+function getXmlHttpRequestObject()
+{
+var xmlHttpReq;
+
+if(window.XMLHttpRequest){
+    request=new window.XMLHttpRequest();
+}
+else if(window.ActiveXObject){
+    request=new window.ActiveXObject();
+}
+else{
+    request=null;
+}
+return request;
+}
+
+
+
+function searchName()
+{
+	var name=document.getElementById("name").value;
+	console.log(name);
+	request=getXmlHttpRequestObject();
+	request.onreadystatechange=threadNames;
+    request.open("post","searchName",true);
+    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
+    var data="searchedname="+name;
+    request.send(data);
+}
+
+
+function threadNames()
+{
+	if(request.readyState===4 && request.status===200)
+    {
+		
+		document.getElementById("test").innerHTML=request.responseText;
+           }
+	
+}
+
+
+</script>
 
 </body>
 </html>
