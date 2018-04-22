@@ -3,6 +3,7 @@ package service.springservice;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,14 @@ public class EventServiceImpl implements EventService {
 	public ArrayList<CalenderEvents> eventsForCalender(Integer year, Integer month,String scope, String classId) {
 		return eventDAO.eventsForCalender(year,month,scope,classId);
 	}
+
+	@Override
+	@Transactional
+	public List<Events> showEventsOfDay(ArrayList<Integer> idList) {
+		return eventDAO.showEventsOfDay(idList);
+	}
+	
+	
 
 	
 }

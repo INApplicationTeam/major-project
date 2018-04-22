@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -503,6 +504,23 @@ public class ClassController implements ServletContextAware {
 		return "classevents";
 
 	}
+	
+	@GetMapping("/ShowEventOfDay")
+	public String showEventOfDay(@RequestParam("id")String id,Model theModel)
+	{
+		StringTokenizer tokens=new StringTokenizer(id,",");
+		ArrayList<Integer> idList=new ArrayList<>();
+		
+		while(tokens.hasMoreTokens())
+		{
+			idList.add(Integer.parseInt(tokens.nextToken()));
+		}	
+		
+		List<Events> eventlist = eventservice.showEventsOfDay(idList);
+		theModel.addAttribute("eventlist", eventlist);
+		
+		return "classevents";
+	}
 
 	@PostMapping("/postComment")
 	public String postComment(@RequestParam("disId") int disId,
@@ -741,6 +759,9 @@ public class ClassController implements ServletContextAware {
 
 		List<FacultyModel> theClassCoordinator = classservice.showClassCoordinator(sm);
 		theModel.addAttribute("classCoordinator", theClassCoordinator);
+		
+		List<ClassSubjectFaculty> theClassSubjectFaculty = classservice.showClassSubjectFaculty(sm);
+		theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
 
 		List<Boolean> checkPinned = new ArrayList<>();
 		List<Object> allClassPosts = classservice.showClassPosts(classId, false, fid, checkPinned);
