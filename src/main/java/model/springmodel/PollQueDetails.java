@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import model.UserModel;
 
@@ -45,6 +46,19 @@ public class PollQueDetails {
 	@Column(name="showResult")
 	private String showResult;
 	
+	@Transient
+	private Boolean isVoted;
+
+	
+	
+	
+	public Boolean getIsVoted() {
+		return isVoted;
+	}
+
+	public void setIsVoted(Boolean isVoted) {
+		this.isVoted = isVoted;
+	}
 
 	public Long getDeadline() {
 		return deadline;

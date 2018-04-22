@@ -6,6 +6,6 @@ import model.springmodel.PollQueDetails;
 
 public interface PollService {
 
-	List<PollQueDetails> showPoll(String classid);
+	List<PollQueDetails> showPoll(String classid, String uid);
 
 }

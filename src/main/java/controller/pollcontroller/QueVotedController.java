@@ -35,16 +35,20 @@ public class QueVotedController extends HttpServlet implements Servlet {
         try (PrintWriter out = response.getWriter()) {
           
                   ServletContext context=getServletContext();
-            
+            System.out.println("QueVotedController");
+            String scope=request.getParameter("scope");
+            System.out.println(scope);
            /* 
             System.out.println(" QUE VOTED CONTROLLER");
             
             System.out.println(" optid "+request.getParameter("opt") );*/
            // int queid=Integer.parseInt(request.getParameter("queid"));
             String optque=request.getParameter("opt");
+            System.out.println(optque);
             String[] optque1 = optque.split(",");
             int optid=Integer.parseInt(optque1[0]);
             int queid=Integer.parseInt(optque1[1]);
+    
             //System.out.println(" QUEid "+ queid);
 /*            System.out.println(" optid "+ optid);
 */            
@@ -57,8 +61,13 @@ public class QueVotedController extends HttpServlet implements Servlet {
              boolean flag;
              QueVotedDao qd=new QueVotedDao();
              flag=qd.insertvote(cm,context, session);
-             if(flag)
+             if(flag==true && scope.equalsIgnoreCase("global"))
                  response.sendRedirect("VotePollController");
+             else if(flag==true && scope.equalsIgnoreCase("class"))
+             {
+            	 System.out.println("Sucess....");
+            	 response.sendRedirect("/korero-maven/major/class/showPoll");
+             }
         }
 
 	}

@@ -29,6 +29,7 @@
 		<div id="editor"></div><br>
 			
 		<input type="submit" value="ISSUE"/>
+		<input type="file" name="fileUpload" size="50" />
 	</form:form>
 	
 	<script>

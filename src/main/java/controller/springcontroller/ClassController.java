@@ -385,7 +385,12 @@ public class ClassController implements ServletContextAware
 	{	
 		HttpSession session=request.getSession();
 		String classid= (String) session.getAttribute("classid");
-		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid);
+		Object obj	= session.getAttribute("userModel");
+		
+		UserModel um =new UserModel();
+		String uid=um.getUserId(obj);
+		
+		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid,uid);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
 		return "showpoll";
 	}
