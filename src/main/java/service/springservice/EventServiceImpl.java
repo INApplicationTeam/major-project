@@ -1,5 +1,6 @@
 package service.springservice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.springdao.EventDAO;
+import model.springmodel.CalenderEvents;
 import model.springmodel.Events;
 
 @Service
@@ -29,4 +31,11 @@ public class EventServiceImpl implements EventService {
 		return eventDAO.showEvents(classid);
     }
 
+	@Override
+	@Transactional
+	public ArrayList<CalenderEvents> eventsForCalender(Integer year, Integer month,String scope, String classId) {
+		return eventDAO.eventsForCalender(year,month,scope,classId);
+	}
+
+	
 }

@@ -37,8 +37,19 @@ public class Notice {
 	@Column(name="isClosed")
 	private Boolean closed;
 	
+	@Column(name="viewers")
+	private int viewers; 
+	
 	@Transient
 	private boolean viewed;
+	
+	public int getViewers() {
+		return viewers;
+	}
+
+	public void setViewers(int viewers) {
+		this.viewers = viewers;
+	}
 
 	public boolean isViewed() {
 		return viewed;
