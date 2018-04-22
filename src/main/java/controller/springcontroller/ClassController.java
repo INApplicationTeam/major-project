@@ -1039,7 +1039,7 @@ public class ClassController implements ServletContextAware {
 
 	@GetMapping("/getCD")
 	public String showCD() {
-		return "cd";
+		return "Notice_Page";
 	}
 
 	@GetMapping("/showEventOnCalender")
