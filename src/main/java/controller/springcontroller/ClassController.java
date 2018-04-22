@@ -365,10 +365,16 @@ public class ClassController implements ServletContextAware {
 	}
 
 	@GetMapping("/showPoll")
-	public String showPoll(HttpServletRequest request, Model theModel) {
-		HttpSession session = request.getSession();
-		String classid = (String) session.getAttribute("classid");
-		List<PollQueDetails> theCreateNewPollModel = pollservice.showPoll(classid);
+	public String showPoll(HttpServletRequest request, Model theModel)
+	{	
+		HttpSession session=request.getSession();
+		String classid= (String) session.getAttribute("classid");
+		Object obj	= session.getAttribute("userModel");
+		
+		UserModel um =new UserModel();
+		String uid=um.getUserId(obj);
+		
+		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid,uid);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
 		return "showpoll";
 	}

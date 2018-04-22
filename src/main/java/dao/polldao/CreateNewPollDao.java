@@ -52,7 +52,7 @@ public class CreateNewPollDao {
             qr1="insert into pollquedetails values(?,?,?,?,?,?,?)";
             
             PreparedStatement ps;
-            ps=con.prepareStatement(qr1);
+            ps=con.prepareStatement(qr1,Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, null);
             ps.setString(2, c.getQue());
             ps.setString(3,creator_id);
@@ -61,17 +61,25 @@ public class CreateNewPollDao {
             ps.setString(6,c.getDescription());
             ps.setString(7,c.getShowresult());
 
-            ps.executeUpdate();
-            
-            PreparedStatement ps11;
-            String qr33="select queid from pollquedetails where question=?";
-            System.out.println("cc"+c.getQue());
-            ps11=con.prepareStatement(qr33);
-            ps11.setString(1,c.getQue());
-            ResultSet rs11 = ps11.executeQuery();
             int pollqueid = 0;
-            while(rs11.next())
-            pollqueid=rs11.getInt(1);
+            if(ps.executeUpdate()>0)
+            {
+            	ResultSet rs=ps.getGeneratedKeys();
+            	if(rs.next())
+            	{
+            		pollqueid=rs.getInt(1);
+            	}
+            }
+            
+//            PreparedStatement ps11;
+//            String qr33="select queid from pollquedetails where question=?";
+//            System.out.println("cc"+c.getQue());
+//            ps11=con.prepareStatement(qr33);
+//            ps11.setString(1,c.getQue());
+//            ResultSet rs11 = ps11.executeQuery();
+//            int pollqueid = 0;
+//            while(rs11.next())
+//            pollqueid=rs11.getInt(1);
             
             c.setPollqueid(pollqueid);
             System.out.println("wwwwww="+pollqueid);

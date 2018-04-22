@@ -18,9 +18,9 @@ public class PollServiceImpl implements PollService {
 	
 	@Override
 	@Transactional
-	public List<PollQueDetails> showPoll(String classid) {
+	public List<PollQueDetails> showPoll(String classid,String uid) {
 		
-		return pollDAO.showPoll(classid);
+		return pollDAO.showPoll(classid,uid);
 		
 	}
 

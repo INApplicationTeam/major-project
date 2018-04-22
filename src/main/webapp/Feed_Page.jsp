@@ -343,6 +343,7 @@ pre {
 							<p>Book Advisory</p>
 					</a></li>
 
+					
 					<li><a id="CDF" href="major/class/CDFhome<%=utype%>"> <i
 							class="material-icons text-gray">school</i>
 							<p>Class Discussion</p>

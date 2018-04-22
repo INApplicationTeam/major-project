@@ -549,6 +549,7 @@ $(function(){
 <!--                  <input type ="text" id="queid" name="queid" value="" >-->
              
                      <input type="text" id="opt1" name="opt" >
+                     <input type="text" name="scope" value="global">
                 <input type=SUBMIT value="SUBMIT" id="submitpoll">
                  </div>
 

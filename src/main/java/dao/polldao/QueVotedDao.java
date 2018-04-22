@@ -52,6 +52,7 @@ public class QueVotedDao {
             ps.setInt(2, cm.getPollqueid());
             ps.setInt(3, status);
             ps.executeUpdate();
+            System.out.println(ps);
             String qr1="update pollvoteresult set count=count+1 where queid=? and opid=?";
             PreparedStatement ps1;
             ps1=con.prepareStatement(qr1);
