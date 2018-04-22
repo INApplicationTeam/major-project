@@ -315,13 +315,15 @@ $.fn.zabuto_calendar = function (options) {
         /* ----- Modal functions ----- */
 
         function createModal(id, title, body, footer) {
-            var $modalHeaderButton = $('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>');
-            var $modalHeaderTitle = $('<h4 class="modal-title" id="' + id + '_modal_title">' + title + '</h4>');
+        	
+        	 var $modalHeaderButton = $('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+             var $modalHeaderTitle = $('<h4 class="modal-title" id="' + id + '_modal_title">' + title + '</h4>');
 
-            var $modalHeader = $('<div class="modal-header"></div>');
-            $modalHeader.append($modalHeaderButton);
-            $modalHeader.append($modalHeaderTitle);
-
+             var $modalHeader = $('<div class="modal-header"></div>');
+             $modalHeader.append($modalHeaderTitle);
+             $modalHeader.append($modalHeaderButton);
+            
+           
             var $modalBody = $('<div class="modal-body" id="' + id + '_modal_body">' + body + '</div>');
 
             var $modalFooter = $('<div class="modal-footer" id="' + id + '_modal_footer"></div>');
@@ -439,11 +441,12 @@ $.fn.zabuto_calendar = function (options) {
 
                         if (modalUse === true) {
                             $dowElement.addClass('event-clickable');
-
                             var $modalElement = createModal(id, value.title, value.body, value.footer);
                             $('body').append($modalElement);
 
                             $('#' + id).click(function () {
+                            	var idList=document.getElementById(id + '_modal_body').innerHTML
+                            	window.location.href="MyFeed?id="+idList;
                                 $('#' + id + '_modal').modal();
                             });
                         }

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.springdao.NoticeDAO;
+import model.UserModel;
 import model.springmodel.Notice;
+import model.springmodel.NoticeViewers;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -30,8 +32,21 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	@Transactional
-	public Notice showNotice(Integer nid) {
-		return noticeDAO.showNotice(nid);
+	public Notice showNotice(Integer nid,String classId,String viewerId) {
+		return noticeDAO.showNotice(nid,classId,viewerId);
+	}
+
+	@Override
+	@Transactional
+	public void addViewer(NoticeViewers viewer) {
+		noticeDAO.addViewer(viewer);
+		
+	}
+
+	@Override
+	@Transactional
+	public List<UserModel> showAllViewers(Integer noticeId) {
+		return noticeDAO.showAllViewers(noticeId);
 	}
 	
 	

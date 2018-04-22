@@ -16,7 +16,7 @@
     <link href="${pageContext.request.contextPath}/kext/css/style.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/sidebar.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/calendar.css">
-</head>
+ </head>
 
 <body class="blue-grey lighten-5">
 
