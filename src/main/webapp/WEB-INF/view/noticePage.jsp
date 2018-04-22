@@ -132,29 +132,17 @@
 <body>
 
 	<center><h1>CLASS NOTICES</h1></center>
-	
-	<center>
-	<a href="#no">${currentNotice.creator.uname}</a> Issued <span id="currentNoticeTimeStamp"></span>
-	<h2>${currentNotice.title}</h2>
-	<div id="currentNoticeEditor" class="notice" style="width: 750px"></div>
-	</center>
-	<script>
-		var currentNoticeTime=${currentNotice.timestamp};
-		setTime('currentNoticeTimeStamp',currentNoticeTime);
-		
-		var noticeText=${currentNotice.noticeText};
-		var id="#currentNoticeEditor";
-		
-		instantiateEditor(id,noticeText);
-	</script>
-	<hr>
+
 	<c:forEach var="notice" items="${classNotices}" begin="0" varStatus="noticeLoop">
 		
 		<c:if test="${notice.noticeId != currentNotice.noticeId}">
 			<center>
+			<span id="noticeId${noticeLoop.index}" style="display:none">${notice.noticeId}</span>
 			<a href="#no">${notice.creator.uname}</a> Issued <span id="noticeTimeStamp${noticeLoop.index}"></span>
 			<h2>${notice.title}</h2>
 			<div id="noticeEditor${noticeLoop.index}" class="notice" style="width: 750px"></div>
+			VIEWS <span>${notice.viewers}</span><br>
+			<a href="#no" onclick="showViewers(${notice.noticeId})">SHOW VIEWERS</a> 
 			</center>
 			
 			<script>
@@ -262,12 +250,12 @@
 		function countAsView(x)
 		{   
 		    var val=x
-		    
+		    var nid=document.getElementById('noticeId'+x).innerHTML;
 		    request=getXmlHttpRequestObject();
 		    request.onreadystatechange=viewed;
 		    request.open("post","CountAsNoticeView",true);
 		    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");
-		    var data="noticeId=";
+		    var data="noticeId="+nid+"&count="+x;
 		    request.send(data);
 		}
 
@@ -275,11 +263,30 @@
 		{
 		    if(request.readyState===4 && request.status===200)
 		    {
+		    	countIndex=request.responseText;
 		    	isviewed[countIndex]=true;
-		        document.getElementsByClassName("viewcount")[countIndex].innerHTML=request.responseText;
+		    	console.log(countIndex);
 		    }
 		}
 		
+		function showViewers(noticeId)
+		{   
+		    request=getXmlHttpRequestObject();
+		    request.onreadystatechange=viewerShown;
+		    request.open("post","showAllViewers",true);
+		    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");
+		    var data="noticeId="+noticeId;
+		    request.send(data);
+		}
+
+		function viewerShown()
+		{
+		    if(request.readyState===4 && request.status===200)
+		    {
+		    	console.log(request.responseText);
+		    }
+		}
+
     </script>
 	
 	
