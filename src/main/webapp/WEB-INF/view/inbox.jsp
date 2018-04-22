@@ -1,13 +1,39 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" type="image/png" href="../MDB Free/img/img1.png" />
+
+<!-- Font Awesome -->
+<link
+	href="${pageContext.request.contextPath}/kext/font-awesome-4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link
+	href="${pageContext.request.contextPath}/kext/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="${pageContext.request.contextPath}/kext/css/mdb.min.css"
+	rel="stylesheet">
+<!-- Your custom styles (optional) -->
+<link href="${pageContext.request.contextPath}/kext/css/style.css"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/kext/css/sidebar.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Inbox</title>
 
@@ -61,102 +87,231 @@ function time_ago(time) {
 
         </script>
 
-
-<style>
-table {
-    font-family: arial, sans-serif;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-</style>
-
 </head>
 <body>
-<input type="text" id="searchname" onkeyup="searchName()" placeholder="search name here....">
+	<%@include file="navBarAndSideBar.jsp"%>
 
-				<table id="threadname" >
+	<main class="pt-4 mx-lg-5" id="blur">
+	<div class="container-fluid mt-5 pt-3 ml-3 pr-0">
+
+		<div class="row mx-2">
+			<!-- First column -->
+			<div class="col-4">
+
+				<div class="list-group" id="list-tab" role="tablist"
+					style="max-height: 83vh; overflow-y: scroll;">
+					<a class="list-group-item disabled"><h3 class="h3-responsive">Messages</h3></a>
+					<div class="list-group-item px-0 py-0" style="border-top: none;">
+						<label class="sr-only" for="searchname">Username</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text blue lighten-4">@</div>
+							</div>
+							<input type="text" class="form-control" id="searchname"
+								onkeyup="searchName()" placeholder="Username">
+						</div>
+					</div>
+
+
+					<div id="threadname">
+
+
+						<c:forEach var="temp" items="${threads}" begin="0"
+							varStatus="loop">
+
+
+							<a class="list-group-item list-group-item-action"
+								id="list-home-list" data-toggle="list"
+								href="<c:url value="inbox?id=${temp.key}&name=${temp.value}" />" role="tab"
+								aria-controls="home" style="border-top: none;"> 
+								<img src="../../ImageLoader?uid=${temp.key}"
+								class="img-fluid z-depth-1 rounded-circle avatar mr-2"
+								alt="Responsive image">${temp.value}</a>
+
+
+
+
+
+						</c:forEach>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<!-- Second column -->
+			<div class="col-8">
+
+				<!-- Content -->
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="list-home"
+						role="tabpanel" aria-labelledby="list-home-list">
+						<!--Panel-->
+						<div class="card" id="messageScroll"
+							style="max-height: 70vh; overflow-y: scroll; border-bottom-left-radius: 0px;">
+							<div class="card-header">
+								<h4 class="pb-0 mb-0">
+									<a class="blue-text" id="list-home">${threadName}</a>
+								</h4>
+							</div>
+							<div class="card-body">
+							
+							<c:if test="${fn:length(conversation) gt 0}">
+							<c:forEach var="temp" items="${conversation}" begin="0" varStatus="loop">
+							<!-- Other Person -->
+							<c:if test="${temp.sender.uid!= userID }">
+								<div class="row mt-3">
+									<div class="col-md-1">
+										<img
+											src="../../ImageLoader?uid=${temp.sender.uid}"
+											class="img-fluid z-depth-1 rounded-circle avatar"
+											alt="Responsive image">
+									</div>
+									<div class="col-md-9 pl-0">
+										<div class="card card-body py-2 px-3">
+											<p class="card-text black-text">
+												${temp.message}<small
+													class="grey-text inline pl-2"><span id="time${loop.index}"></span></small>
+											</p>
+										</div>
+									</div>
+								</div>
+								
+								</c:if>																
+								<c:if test="${temp.sender.uid == userID }">
+								<!-- Person who is logged in -->
+								<div class="row mt-3">
+									<div class="col-md-2"></div>
+									<div class="col-md-9 pr-0">
+										<div class="card card-body py-2 px-3">
+											<p class="card-text black-text">${temp.message}<small
+													class="grey-text inline pl-2"><span id="time${loop.index}"></span></small>
+											</p>
+										</div>
+									</div>
+									<div class="col-md-1">
+										<img
+											src="../../ImageLoader?uid=${userID}"
+											class="img-fluid z-depth-1 rounded-circle avatar"
+											alt="Responsive image">
+									</div>
+								</div>
+							</c:if>
+							
+							<script>
+				document.getElementById("time${loop.index}").innerHTML=time_ago(new Date (${temp.timestamp}) ) ;
+				</script>
 				
-				
-			<c:forEach var="temp" items="${threads}" begin="0" varStatus="loop"> 
-				
-				
-			<tr>
-			
-				<td><a href="<c:url value="inbox?id=${temp.key}" />">${temp.value}</a></td>
-				
-			</tr>
-			
-			</c:forEach>	
-			
-				
-			</table>						
-			<center>
-		<c:if test="${fn:length(conversation) gt 0}">
-			
-			<table>
-			<tr>
-		<th>Messages</th>
-		<th>By</th>
-		<th>At</th>
-		</tr>
-		<c:forEach var="temp" items="${conversation}" begin="0" varStatus="loop"> 
-				
-				
-			<tr>
-				<td> ${temp.message}</td>
-				<td> ${temp.sender.uname} </td>
-				<td id="time${loop.index}" ></td>
-				
-			</tr>
-			
-			
-			
-			<script>
-				document.getElementById("time${loop.index}").innerHTML=time_ago(new Date (${temp.timestamp}) ) +" " +new Date(${temp.timestamp});
+							</c:forEach>
+							</c:if>
+							</div>
+						</div>
+						<!--/.Panel-->
+						<div class="card"
+							style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: 1px solid rgba(0, 0, 255, .45);">
+							<!-- Auto-resizing textarea -->
+							<div class="form mx-3 mb-3">
+								<div class="form-row">
+									<div class="col-11 mr-0 pr-0">
+									<form:form action="sendDM?id=${message.receiver.uid}&name=${message.receiver.uname}" modelAttribute="message" method="POST">
+										<label for="exampleFormControlTextarea1"><small>Send
+												a message</small></label>
+									<form:hidden path="receiver.uid" />
+									<div style="display:none">
+									<input type="submit" value="SEND" id="submitMsg"/>
+									</div>
+										<form:textarea cssClass="form-control"
+											id="exampleFormControlTextarea1" rows="1" path="message"/>
+										</form:form>	
+									</div>
+									<div class="col-1">
+										<br>
+										<br> <a class="ml-4 pt-3"><i
+											class="fa fa-send blue-text" onclick="submitMessage()"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<<%-- center>
+			<c:if test="${fn:length(conversation) gt 0}">
+
+				<table>
+					<tr>
+						<th>Messages</th>
+						<th>By</th>
+						<th>At</th>
+					</tr>
+					<c:forEach var="temp" items="${conversation}" begin="0"
+						varStatus="loop">
+
+
+						<tr>
+							<td>${temp.message}</td>
+							<td>${temp.sender.uname}</td>
+							<td id="time${loop.index}"></td>
+
+						</tr>
+
+
+						</div>
+						<script>
+				document.getElementById("time${loop.index}").innerHTML=time_ago(new Date (${temp.timestamp}) ;
 				console.log(time_ago(new Date (${temp.timestamp})));
 				</script>
-			</c:forEach>
-			</table>
-			
-			
-		
-		</c:if>
-		
-		
-		
-						<c:if test="${flag==true}">
-						
-			<form:form action="sendDM?id=${message.receiver.uid}" modelAttribute="message" method="POST">
+					</c:forEach>
+				</table>
+
+			</c:if>
+
+ --%>
+
+
+
+	<!--  		<c:if test="${flag==true}">
+
+				<form:form action="sendDM?id=${message.receiver.uid}"
+					modelAttribute="message" method="POST">
 					<br>
-					<form:hidden path="receiver.uid"/>
-				<label>Message</label><br>
-				<form:textarea path="message"/>
-				<br>
-						
+					<form:hidden path="receiver.uid" />
+					<label>Message</label>
+					<br>
+					<form:textarea path="message" />
+					<br>
+
 					<input type="submit" value="SEND" />
-					
-			
-		</form:form>
-		</c:if>
-		
-		
-		<c:if test="${flag==false}">
-		<h2>Welcome to messaging</h2>
-		</c:if>
-		
-		
+
+
+				</form:form>
+			</c:if>
+
+
+			<c:if test="${flag==false}">
+				<h2>Welcome to messaging</h2>
+			</c:if>
+-->
+
 		</center>
 
-<script>
+	</div>
+	</main>
 
+	<script>
+	$('#messageScroll').scrollTop($('#messageScroll')[0].scrollHeight);
+
+	function submitMessage()
+	{
+		$('#submitMsg').click();
+	}
+	
 function getXmlHttpRequestObject()
 {
 var xmlHttpReq;
@@ -199,7 +354,7 @@ function threadNames()
 }
 
 
-</script>			
-			
+</script>
+
 </body>
 </html>

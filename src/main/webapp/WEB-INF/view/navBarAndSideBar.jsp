@@ -91,7 +91,7 @@
 		onmouseover="javascript:document.getElementById('blur').style.filter='blur(3px)';"
 		onmouseout="javascript:document.getElementById('blur').style.filter='blur(0)';">
 		<div class="text-center" style="padding: 10px;">
-			<img src="ImageLoader?uid=<%=uid%>"
+			<img src="../../ImageLoader?uid=<%=uid%>"
 				class="img-fluid z-depth-1 rounded-circle"
 				style="max-height: 150px;" alt="Responsive image">
 		</div>
