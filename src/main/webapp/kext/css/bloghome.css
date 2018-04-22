@@ -1,0 +1,106 @@
+
+
+.top-nav-collapse {
+  background-color: rgba(255,255,255,0.9); !important;
+}
+
+.navbar:not(.top-nav-collapse) {
+  background: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .navbar:not(.top-nav-collapse) {
+    background: #424f95 !important;
+  }
+}
+
+.rgba-gradient {
+  background: -moz-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: -webkit-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: -webkit-gradient(linear, 45deg, from(rgba(42, 27, 161, 0.7)), to(rgba(29, 210, 177, 0.7)));
+  background: -o-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+}
+            
+ .title-arch {
+    text-align: center;
+    margin: 50px 0;
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+.project {
+  width: 100%;
+  height: 300px;
+  background-image: url('../img/1.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 0 !important;
+  float:left;
+}
+
+.project-2 {
+  background-image: url('../img/2.jpg');
+}
+
+.project-3 {
+  background-image: url('../img/3.jpg');
+}
+
+.project-4 {
+  background-image: url('../img/4.jpg');
+}
+
+.project-hover {
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  opacity: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: rgba(0,123,255,0.7);
+  padding: 7% 20px !important;
+}
+
+.project-hover hr {
+  height: 30px;
+  width: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: rgba(255, 255, 255, 1);
+  border: 0;
+}
+
+.project-hover a {
+  color: rgba(255, 255, 255, 1);
+  padding: 2px 20px;
+  line-height: 40px;
+    border: 2px solid rgba(255, 255, 255, 1);
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.project-hover a:hover {
+  color: rgba(51, 51, 51, 1);
+background-color: rgba(255,255,255,0.7);  /* fallback for old browsers */
+
+}
+
+.project:hover .project-hover {
+  opacity: 1;
+}
+
+.project:hover .project-hover hr {
+  width: 100%;
+  height: 5px;
+}
+.avatar{
+  height: 40px;
+  width: 40px;
+}
