@@ -7,7 +7,7 @@ public class CalenderEvents {
 	
 	private String date;
 	
-	private boolean badge;
+	private boolean badge=true;
 	
 	private String title;
 	

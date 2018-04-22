@@ -446,7 +446,7 @@ $.fn.zabuto_calendar = function (options) {
 
                             $('#' + id).click(function () {
                             	var idList=document.getElementById(id + '_modal_body').innerHTML
-                            	window.location.href="MyFeed?id="+idList;
+                            	window.location.href="ShowEventOfDay?id="+idList;
                                 $('#' + id + '_modal').modal();
                             });
                         }

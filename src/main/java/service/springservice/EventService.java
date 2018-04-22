@@ -14,4 +14,6 @@ public interface EventService {
 
 	ArrayList<CalenderEvents> eventsForCalender(Integer year, Integer month,String scope,String classId);
 
+	List<Events> showEventsOfDay(ArrayList<Integer> idList);
+
 }

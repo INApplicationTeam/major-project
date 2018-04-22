@@ -73,5 +73,16 @@ public class EventDAOImpl implements EventDAO {
 		return qr.getResultList();
 	}
 
+	@Override
+	public List<Events> showEventsOfDay(ArrayList<Integer> idList) {
+		
+		Session currentSession= sessionFactory.getCurrentSession();
+		Query<Events> qr= currentSession.createQuery("from Events where eid in (:idList) order by eid desc",Events.class);
+		qr.setParameterList("idList",idList);
+		return qr.getResultList();
+	}
+
+	
+	
 
 }
