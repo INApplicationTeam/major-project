@@ -269,6 +269,8 @@
 
                 
                 <div class="col-md-9">
+                
+                <c:forEach var="discussion" items="${discussionsList}" begin="0" varStatus="loop">
                     <!--CARD 1 -->
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
@@ -350,6 +352,7 @@
                         </div>
                     </div>
                     <!--CARD 1 -->
+                </c:forEach>
 
                 </div>
                 <div class="col-md-3 mx-0 my-0 px-0 py-0">
