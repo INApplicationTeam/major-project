@@ -8,6 +8,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import model.FacultyModel;
+import model.StudentModel;
 import model.UserModel;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
@@ -77,25 +79,38 @@ public class CoordinatorDAOImpl implements CoordinatorDAO {
 	}
 
 	@Override
-	public List<UserModel> searchName(String name) 
+	public List<StudentModel> searchName(String name) 
 	{
 		Session currentSession= sessionFactory.getCurrentSession();
-		Query<UserModel> qr= currentSession.createQuery(" from UserModel where uname like :name",UserModel.class);
+		Query<StudentModel> qr= currentSession.createQuery(" from StudentModel where name like :name",StudentModel.class);
 		
 		qr.setParameter("name", name+"%");
-		List<UserModel> names  =qr.getResultList();
+		List<StudentModel> names  =qr.getResultList();
 		
 		return names;
 		
 	}
 
 	@Override
-	public List<SubjectModel> getSubjects(String classId) {
+	public List<SubjectModel> getSubjects(int sem,String branch) {
 		Session currentSession= sessionFactory.getCurrentSession();
-		Query<SubjectModel> qr= currentSession.createQuery("select subject from ClassSubjectFaculty where classid=:classid",SubjectModel.class);
-		qr.setParameter("classid", classId);
+		Query<SubjectModel> qr= currentSession.createQuery("from SubjectModel where sem=:sem and branch=:branch",SubjectModel.class);
+		qr.setParameter("sem", sem);
+		qr.setParameter("branch", branch);
 		List<SubjectModel> subjects= qr.getResultList();
+		System.out.println("subjects------->"+subjects);
 		return subjects;
+	}
+
+	@Override
+	public List<FacultyModel> searchFName(String name) {
+		Session currentSession= sessionFactory.getCurrentSession();
+		Query<FacultyModel> qr= currentSession.createQuery(" from FacultyModel where name like :name",FacultyModel.class);
+		
+		qr.setParameter("name", name+"%");
+		List<FacultyModel> names  =qr.getResultList();
+		
+		return names;
 	}
 
 }
