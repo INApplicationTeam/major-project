@@ -2,6 +2,8 @@ package dao.springdao;
 
 import java.util.List;
 
+import model.FacultyModel;
+import model.StudentModel;
 import model.UserModel;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
@@ -22,9 +24,11 @@ public interface CoordinatorDAO {
 
 	List<ClassSubjectFaculty> showFaculty(String classid);
 
-	List<UserModel> searchName(String name);
+	List<StudentModel> searchName(String name);
 
-	List<SubjectModel> getSubjects(String classId);
+	List<SubjectModel> getSubjects(int sem,String branch);
+
+	List<FacultyModel> searchFName(String term);
 
 	 
 

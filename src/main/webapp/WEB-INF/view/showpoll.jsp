@@ -29,7 +29,7 @@
         <title>Korero</title>
      
                      </head>
-    <body>
+    <body class="blue-grey lighten-5">
     
     <%@include file="navBarAndSideBar.jsp" %>
         <h1>VOTE FOR POLL</h1>

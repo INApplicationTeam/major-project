@@ -24,6 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpServerErrorException;
 
+import com.google.gson.Gson;
+
+import model.FacultyModel;
+import model.StudentModel;
 import model.UserModel;
 import model.springmodel.ClassRepresentative;
 import model.springmodel.ClassSubjectFaculty;
@@ -91,11 +95,15 @@ public class AdminController {
 		HttpSession session=request.getSession();
 		String classId=(String)session.getAttribute("classid");
 		Integer year=(Integer)session.getAttribute("year");
-		
+		UserModel um=theCR.getUserModel();
+		String studDetails[]=um.getUid().split("-");
+		String uid=studDetails[1];
 		theCR.setClassid();
+		um.setUid(uid);
+		theCR.setUserModel(um);
 		coordinatorService.addCR(theCR);
 		
-		return "redirect:/major/class/classdiscussionfaculty?classId="+classId+"&year="+year;
+		return "redirect:/major/class/redirectFacultyHome";
 	}
 	
 	@GetMapping("/showCR")
@@ -118,7 +126,9 @@ public class AdminController {
 		
 		ClassSubjectFaculty thefaculty= new ClassSubjectFaculty();
 		thefaculty.setClassAttributes(classId);
-		List<SubjectModel> theSubjects=coordinatorService.getSubjects(classId);
+		int sem=thefaculty.getSem();
+		String branch=thefaculty.getBranch();
+		List<SubjectModel> theSubjects=coordinatorService.getSubjects(sem,branch);
 		List<String> theSubjectName=new ArrayList<String>();
 		List<Integer> theSubjectCode=new ArrayList<Integer>();
 		for(SubjectModel sm: theSubjects)
@@ -138,8 +148,12 @@ public class AdminController {
 		int year=Calendar.getInstance().get(Calendar.YEAR);
 		theFaculty.setYearOfTeaching(year);
 		theFaculty.setClassid();
+		UserModel um=theFaculty.getUserModel();
+		String id[]= um.getUid().split("-");
+		um.setUid(id[1]);
+		theFaculty.setUserModel(um);
 		coordinatorService.addFaculty(theFaculty);
-		return "addsubjectfaculty";	
+		return "redirect:/major/class/redirectFacultyHome";
 		
 	}
 	
@@ -154,16 +168,42 @@ public class AdminController {
 		return "showfaculty";
 	}
 	
-	@PostMapping("/searchName")
-	public void searchName(@RequestParam("searchedname")String name,HttpServletResponse response)
+	@GetMapping("/searchName")
+	public void searchName(HttpServletRequest request,HttpServletResponse response)
 	{
-		List <UserModel> names=coordinatorService.searchName(name);
+        String term=request.getParameter("term");
+		List <StudentModel> names=coordinatorService.searchName(term);
+		List <String> searchname=new ArrayList<>();
 		
 		try {
-			PrintWriter out= response.getWriter();
-			for(UserModel um : names)
-			out.println("id:"+um.getUid() +"name  :"+  um.getUname());
+			for(StudentModel um : names)
+			{searchname.add(um.getName()+"-"+um.getSid());
+			}
+            String searchList = new Gson().toJson(searchname);
+            response.getWriter().write(searchList);
 			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@GetMapping("/searchFName")
+	public void searchFName(HttpServletRequest request,HttpServletResponse response)
+	{
+        String term=request.getParameter("term");
+		List <FacultyModel> names=coordinatorService.searchFName(term);
+		List <String> searchname=new ArrayList<>();
+		
+		try {
+			for(FacultyModel um : names)
+			{searchname.add(um.getName()+"-"+um.getFid());
+			}
+            String searchList = new Gson().toJson(searchname);
+            response.getWriter().write(searchList);
 			
 			
 			
