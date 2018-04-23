@@ -255,7 +255,7 @@
 						endLineCounter++;	
 					}
 					
-					if(endLineCounter<9)
+					if(endLineCounter<4)
 					{
 						count1=0;
 						content=content+del.insert.substr(1,del.insert.length);
@@ -276,7 +276,7 @@
 						endLineCounter++;	
 					}
 					
-					if(endLineCounter<9)
+					if(endLineCounter<4)
 					{
 						content=content+del.insert;
 					}
@@ -296,7 +296,7 @@
 							
 			if(imgObj!== undefined)
 			{
-				var opsarr={"ops":[{"insert":""}]};
+				/* var opsarr={"ops":[{"insert":""}]};
 				opsarr.ops[0].insert=imgObj;
 				quillque.setContents(opsarr);
 				var imgarea=document.getElementsByClassName("noticeImg")[index];
@@ -312,14 +312,14 @@
 					var imgTag=imgarea.getElementsByTagName('p')[0];
 					imgTag.removeChild(imgarea.getElementsByTagName('p')[0].childNodes[0]);
 				}
-				imgObj=undefined;							
+				imgObj=undefined; */							
 			}                                               
         
 			var c=document.getElementsByClassName("notice");
                                  
-        	if(content.length>500)
+        	if(content.length>100)
         	{
-          		c[index].innerText=content.substr(0,500)+"...";
+          		c[index].innerText=content.substr(0,100)+"...";
         	}
                                
         	else if(isStillLeft)
@@ -330,7 +330,7 @@
         	else
        	 	{
           		c[index].innerText=content;
-          		document.getElementsByClassName("readNotice")[index].innerHTML="";
+          		//document.getElementsByClassName("readNotice")[index].innerHTML="";
         	}
         	
         }
@@ -485,22 +485,14 @@
                         <div class="btn-group">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 8th sem
-                                <span class="sr-only">Toggle Dropdown</span>
                             </a>
-                            <div class="dropdown-menu" style="overflow-y: visible;">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
                         </div>
                         </span>
                     </h4>
-                    <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
-                    <button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button>
-                    <button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button>
-                    <button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button>
+                   <a href="../../poll/createpoll.jsp?var=classpoll"> <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button></a>
+                   <a href="startClassDiscussion"><button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button></a>
+                   <a href="addEventForm"><button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button></a>
+                   <a href="../../Post_Question.jsp?classQue=true"><button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button></a>
 <!--                   <form class="d-flex justify-content-center">
                         <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
                         <button class="btn btn-primary btn-sm my-0 p" type="submit">
@@ -509,8 +501,8 @@
                  </form>
 -->
                     <div>
-                    <a href=""><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
-                    <a href=""><i class="fa fa-circle" aria-hidden="true"></i> Pending Posts&nbsp;</a>
+                    <a href="showSavedPosts"><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
+                    <a href="showPendingPosts"><i class="fa fa-circle" aria-hidden="true"></i> Pending Posts&nbsp;</a>
                     <div class="btn-group">
                             <a class="dropdown-toggle blue-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-filter" aria-hidden="true"></i>
@@ -547,110 +539,92 @@
                     <!--Slides-->
                     <div class="carousel-inner" role="listbox">
                         <!--First slide-->
+                        <c:if test="${fn:length(classNotices) gt 3}">
                         <div class="carousel-item active">
                         <div class="widget-wrapper wow fadeIn" data-wow-delay="0.4s">
                         <br>
                         <div class="card-deck">
                         <!-- Card -->
-                        <div class="card card-image">
-                            <!-- Content -->
-                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
-                                <div>
-                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                        </div>
+                        <c:forEach begin="0" end="2" varStatus="noticeFirstLoop">
+	                        <div class="card card-image">
+	                         <!-- Content -->
+	                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
+	                                <div>
+	                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
+	                                    <h3 class="card-title pt-2"><strong>${classNotices.get(noticeFirstLoop.index).title }</strong></h3>
+	                                    <p class="notice" id="noticeEditor${noticeFirstLoop.index}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+	                                    <a class="btn btn-primary" onclick="submitFirstNotice('submit${noticeFirstLoop.index}')"><i class="fa fa-clone left"></i> View Notice</a>
+	                                    
+	                                    <form:form action="showNotices" method="POST" modelAttribute="bindingNotice">
+											<form:hidden path="noticeId" value="${classNotices.get(noticeFirstLoop.index).noticeId}"/>
+											<input id="submit${noticeFirstLoop.index}" style="display: none" type="submit" class="readNotice" value="View More"><br>
+										</form:form>
+	                                </div>
+	                            </div>
+	                            <!-- Content -->
+	                        </div>
+	                        <script>
+	                        function submitFirstNotice(id)
+	                        {
+	                        	document.getElementById(id).click();
+	                        }
+	                        var index=${noticeFirstLoop.index};
+	            			var noticeText=${classNotices.get(noticeFirstLoop.index).noticeText};
+	            			setNoticeContent(index,index,noticeText);
+	                        </script>
+                        </c:forEach>
                         <!-- Card -->
-                        <!-- Card -->
-                        <div class="card card-image">
-                            <!-- Content -->
-                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
-                                <div>
-                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                        </div>
-                        <!-- Card -->
-                        <!-- Card -->
-                        <div class="card card-image">
-                            <!-- Content -->
-                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
-                                <div>
-                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                        </div>
-                        <!-- Card -->
+                       
 
                         </div>
                         </div>
                         </div>
+                        </c:if>
                         <!--/First slide-->
                         <!--Second slide-->
+                        <c:if test="${fn:length(classNotices) gt 6}">
                         <div class="carousel-item">
                         <div class="widget-wrapper wow fadeIn" data-wow-delay="0.4s">
                         <br>
                         <div class="card-deck">
                         <!-- Card -->
+                        <c:forEach begin="3" end="5" varStatus="noticeSecondLoop">
                         <div class="card card-image">
                             <!-- Content -->
                             <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
                                 <div>
                                     <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
+                                    <h3 class="card-title pt-2"><strong>${classNotices.get(noticeSecondLoop.index).title }</strong></h3>
+                                    <p class="notice" id="noticeEditor${noticeSecondLoop.index}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <a class="btn btn-primary" onclick="submitSecondNotice('submit${noticeSecondLoop.index}')"><i class="fa fa-clone left"></i> View Notice</a>
+                                    
+                                    <form:form action="showNotices" method="POST" modelAttribute="bindingNotice">
+											<form:hidden path="noticeId" value="${classNotices.get(noticeSecondLoop.index).noticeId}"/>
+											<input id="submit${noticeSecondLoop.index}" style="display: none" type="submit" class="readNotice" value="View More"><br>
+									</form:form>
                                 </div>
                             </div>
                             <!-- Content -->
                         </div>
+                        <script>
+	                        function submitSecondNotice(id)
+	                        {
+	                        	document.getElementById(id).click();
+	                        }
+	                        var index=${noticeSecondLoop.index};
+	            			var noticeText=${classNotices.get(noticeSecondLoop.index).noticeText};
+	            			setNoticeContent(index,index,noticeText);
+	                        </script>
+                        </c:forEach>
                         <!-- Card -->
-                        <!-- Card -->
-                        <div class="card card-image">
-                            <!-- Content -->
-                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
-                                <div>
-                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                        </div>
-                        <!-- Card -->
-                        <!-- Card -->
-                        <div class="card card-image">
-                            <!-- Content -->
-                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
-                                <div>
-                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                        </div>
-                        <!-- Card -->
-
+                       
                         </div>
                     </div>
                         </div>
+                        </c:if>
                         <!--/Second slide-->
                         <!--Third slide-->
+                        <c:if test="${fn:length(classNotices) gt 9}">
                         <div class="carousel-item">
                         <div class="widget-wrapper wow fadeIn" data-wow-delay="0.4s">
                         <br>
@@ -658,49 +632,37 @@
                         <!-- Card -->
                         <div class="card card-image">
                             <!-- Content -->
+                            <c:forEach begin="6" end="8" varStatus="noticeThirdLoop">
                             <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
                                 <div>
                                     <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
+                                    <h3 class="card-title pt-2"><strong>${classNotices.get(noticeThirdLoop.index).title }</strong></h3>
+                                    <p class="notice" id="noticeEditor${noticeThirdLoop.index}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <a class="btn btn-primary" onclick="submitThirdNotice('submit${noticeThirdLoop.index}')"><i class="fa fa-clone left"></i> View Notice</a>
+                               		
+                               		<form:form action="showNotices" method="POST" modelAttribute="bindingNotice">
+											<form:hidden path="noticeId" value="${classNotices.get(noticeThirdLoop.index).noticeId}"/>
+											<input id="submit${noticeThirdLoop.index}" style="display: none" type="submit" class="readNotice" value="View More"><br>
+									</form:form>
                                 </div>
                             </div>
+                            <script>
+	                        function submitThirdNotice(id)
+	                        {
+	                        	document.getElementById(id).click();
+	                        }
+	                        var index=${noticeThirdLoop.index};
+	            			var noticeText=${classNotices.get(noticeThirdLoop.index).noticeText};
+	            			setNoticeContent(index,index,noticeText);
+	                        </script>
+                            </c:forEach>
                             <!-- Content -->
                         </div>
                         <!-- Card -->
-                        <!-- Card -->
-                        <div class="card card-image">
-                            <!-- Content -->
-                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
-                                <div>
-                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                        </div>
-                        <!-- Card -->
-                        <!-- Card -->
-                        <div class="card card-image">
-                            <!-- Content -->
-                            <div class="text-center d-flex align-items-center rgba-white-light py-5 px-4">
-                                <div>
-                                    <h5 class="primary-text"><i class="fa fa-newspaper-o"></i> Notice</h5>
-                                    <h3 class="card-title pt-2"><strong>This is card title</strong></h3>
-                                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a class="btn btn-primary"><i class="fa fa-clone left"></i> View Notice</a>
-                                </div>
-                            </div>
-                            <!-- Content -->
-                        </div>
-                        <!-- Card -->
-
                         </div>
                     </div>
                         </div>
+                        </c:if>
                         <!--/Third slide-->
                     </div>
                     <!--/.Slides-->
@@ -727,7 +689,16 @@
                         <div class="card-body pb-0">
                             <small>
                                 <a href="">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="">${posts.domain.dname}</a>
-               
+               					
+               					<c:if test="${checkPinned[postLoop.index]==false}">
+									<a class="blue-text" onclick="pinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+				
+								<c:if test="${checkPinned[postLoop.index]==true}">
+									<a class="blue-text" onclick="unPinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right blue-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+               					
+               					
                                 <a class="blue-text" onclick="saveAsBookmark('${posts.qid}','${postLoop.index}');"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a href="../question/allAnswers?qid=${posts.qid}" style="color:black">${posts.que}</a></h4>
@@ -781,7 +752,16 @@
 			<div class="card mb-3 mt-3">
 				<div class="card-body pb-0">
 					<small> <a href="">${posts.userModel.uname}</a> created this poll 
+						<c:if test="${checkPinned[postLoop.index]==false}">
+									<a class="blue-text" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+				
+								<c:if test="${checkPinned[postLoop.index]==true}">
+									<a class="blue-text" onclick="unPinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right blue-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+               	
 						   <a class="blue-text" onclick="saveAsBookmark('${posts.queid}','${postLoop.index}');"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
+							
 					</small> <strong>
 						<h4 style="font-size: 24px;" class="mt-2">
 							<a>Q. ${posts.question}</a>
@@ -830,7 +810,14 @@
                         <div class="card-body pb-0">
                             <small>
                                 <a href="">${posts.userModel.uname}</a> created this poll</a>
-                              
+                              <c:if test="${checkPinned[postLoop.index]==false}">
+									<a class="blue-text" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+				
+								<c:if test="${checkPinned[postLoop.index]==true}">
+									<a class="blue-text" onclick="unPinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right blue-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+               	
                                 <a class="blue-text" onclick="saveAsBookmark('${posts.queid}','${postLoop.index}');"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
                             </small>
                             
@@ -865,7 +852,14 @@
                         <div class="card-body pb-0">
                             <small>
                                 <a href="">${posts.userModel.uname} </a> initiated discussion <span id="discussionTime${postLoop.index}"></span>
-                              
+                              <c:if test="${checkPinned[postLoop.index]==false}">
+									<a class="blue-text" onclick="pinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+				
+								<c:if test="${checkPinned[postLoop.index]==true}">
+									<a class="blue-text" onclick="unPinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right blue-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+               	
                                 <a class="blue-text" onclick="saveAsBookmark('${posts.id}','${postLoop.index}');"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a>${posts.title}</a></h4>
@@ -966,7 +960,14 @@
                         <div class="card-body pb-2">
                             <small>
                                 <a href="">${posts.userModel.uname}</a> created event <span id="eventtimestamp${postLoop.index}"></span>
-                                
+                                <c:if test="${checkPinned[postLoop.index]==false}">
+									<a class="blue-text" onclick="pinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+				
+								<c:if test="${checkPinned[postLoop.index]==true}">
+									<a class="blue-text" onclick="unPinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right float-right blue-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
+								</c:if>
+               	
                             
                                 <a class="blue-text" onclick="saveAsBookmark('${posts.eid}','${postLoop.index}');"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
                             </small>
@@ -1008,30 +1009,36 @@
                 <div class="col-md-3 mx-0 my-0 px-0 py-0">
 
 				<div class="list-group mt-4 ml-2">
-				    <a href="#" class="list-group-item list-group-item-action waves-effect blue lighten-5 waves-effect">
+				    <a href="issueNotice" class="list-group-item list-group-item-action waves-effect blue lighten-5 waves-effect">
 				        <i class="fa fa-plus pr-1" aria-hidden="true"></i> Issue notice
 				    </a>
-				    <a class="list-group-item list-group-item-action waves-effect blue lighten-4"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change class representative</a>
-				    <a href="#" class="list-group-item list-group-item-action waves-effect blue lighten-3"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change subject faculty</a>
+				    <a href="../admin/addCRForm" class="list-group-item list-group-item-action waves-effect blue lighten-4"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change class representative</a>
+				    <a href="../admin/addformFaculty" class="list-group-item list-group-item-action waves-effect blue lighten-3"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change subject faculty</a>
 				    <a href="#" class="list-group-item list-group-item-action waves-effect blue lighten-2 white-text"><i class="fa fa-asterisk pr-1" aria-hidden="true"></i>My all posts</a>
 				</div>
                 
                 <ul class="list-group mt-4 ml-2 mb-4 wow tada">
+                    
                     <li class="list-group-item d-flex justify-content-between align-items-center primary-color">
                         <h4 class="mb-0 pb-0 white-text"><strong>Pinned Posts</strong></h4>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Cras justo odio
-                        <span class="badge badge-primary badge-pill">event</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Dapibus ac facilisis in
-                        <span class="badge badge-primary badge-pill">poll</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Morbi leo risus
-                        <span class="badge badge-primary badge-pill">discussion</span>
-                    </li>
+                    
+                    <c:forEach var="pinPost" items="${allPinnedPosts}" begin="0" varStatus="pendingPostLoop">
+						<c:if test="${pinPost.post_type.toUpperCase() == 'QUESTION'}">
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+                        		<a href="../question/allAnswers?qid=${pinPost.postid}" style="color:black;">${pinPost.title}</a>
+                        		<span class="badge badge-primary badge-pill">${pinPost.post_type.toUpperCase()}</span>
+                    		</li>
+						</c:if>
+						
+						<c:if test="${pinPost.post_type.toUpperCase() != 'QUESTION'}">
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+                        		<a href="showPinnedPost?postId=${pinPost.postid}&postType=${pinPost.post_type}" style="color:black;">${pinPost.title}</a>
+                        		<span class="badge badge-primary badge-pill">${pinPost.post_type.toUpperCase()}</span>
+                    		</li>
+						</c:if>
+					</c:forEach>
+			                    
                 </ul>
                 <div id="my-calendar" style="margin-left: 10px;"></div>
                 </div>
@@ -1259,7 +1266,7 @@ function postPinned()
 		if(request.responseText==1)
 		{
 			console.log("pinned");
-			document.getElementById('pin'+setIndex).innerHTML="UNPIN POST";
+			document.getElementById('iconPin'+setIndex).setAttribute("class","fa fa-thumb-tack float-right blue-text mr-2");
 			document.getElementById('pin'+setIndex).setAttribute("onclick","unPinPost("+setPostId+","+setIndex+")");
 		}
     }
@@ -1272,7 +1279,7 @@ function postUnPinned()
 		if(request.responseText==1)
 		{
 			console.log("unpinned");
-			document.getElementById('pin'+setIndex).innerHTML="PIN POST";
+			document.getElementById('iconPin'+setIndex).setAttribute("class","fa fa-thumb-tack float-right grey-text mr-2");
 			document.getElementById('pin'+setIndex).setAttribute("onclick","pinPost("+setPostId+","+setIndex+")");
 		}
     }
