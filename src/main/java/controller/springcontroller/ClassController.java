@@ -263,17 +263,7 @@ public class ClassController implements ServletContextAware {
 		StudentModel sm = new StudentModel();
 		sm.setClassAttributes(classId);
 
-		List<StudentModel> theClassMembers = classservice.showClassMembers(sm);
-		theModel.addAttribute("classmembers", theClassMembers);
-
-		List<ClassRepresentative> theCR = classservice.showClassCR(sm);
-		theModel.addAttribute("CR", theCR);
-
-		List<FacultyModel> theClassCoordinator = classservice.showClassCoordinator(sm);
-		theModel.addAttribute("classCoordinator", theClassCoordinator);
-
-		List<ClassSubjectFaculty> theClassSubjectFaculty = classservice.showClassSubjectFaculty(sm);
-		theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
+	
 
 		List<Boolean> checkPinned = new ArrayList<>();
 		List<Object> allClassPosts = classservice.showClassPosts(classId, false, fid, checkPinned);
@@ -1057,6 +1047,54 @@ public class ClassController implements ServletContextAware {
 			e.printStackTrace();
 		}
 
+	}
+	
+	@GetMapping("/aboutClass")
+	public String aboutClass(HttpServletRequest request,Model theModel)
+	{
+		HttpSession session = request.getSession();
+		Object object = session.getAttribute("userModel");
+		StudentModel sm = null;
+
+		if (object instanceof StudentModel) {
+			sm = (StudentModel) object;
+			String classid = sm.getBranch() + "-" + sm.getSemester() + "-" + sm.getSection() + "-" + sm.getBatch();
+			session.setAttribute("classid", classid);
+
+			List<StudentModel> theClassMembers = classservice.showClassMembers(sm);
+			theModel.addAttribute("classmembers", theClassMembers);
+
+			List<ClassRepresentative> theCR = classservice.showClassCR(sm);
+			theModel.addAttribute("CR", theCR);
+
+			List<ClassSubjectFaculty> theClassSubjectFaculty = classservice.showClassSubjectFaculty(sm);
+			theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
+
+			List<FacultyModel> theClassCoordinator = classservice.showClassCoordinator(sm);
+			theModel.addAttribute("classCoordinator", theClassCoordinator);
+
+		}
+		String classId = (String) session.getAttribute("classid");
+		if(object instanceof FacultyModel)
+		{
+			StudentModel sm1 = new StudentModel();
+			sm.setClassAttributes(classId);
+
+			List<StudentModel> theClassMembers = classservice.showClassMembers(sm1);
+			theModel.addAttribute("classmembers", theClassMembers);
+
+			List<ClassRepresentative> theCR = classservice.showClassCR(sm1);
+			theModel.addAttribute("CR", theCR);
+
+			List<FacultyModel> theClassCoordinator = classservice.showClassCoordinator(sm1);
+			theModel.addAttribute("classCoordinator", theClassCoordinator);
+			
+			List<ClassSubjectFaculty> theClassSubjectFaculty = classservice.showClassSubjectFaculty(sm1);
+			theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
+
+		}
+		
+		return "aboutclass";
 	}
 
 }
