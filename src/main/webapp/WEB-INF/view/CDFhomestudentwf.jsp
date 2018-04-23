@@ -1,20 +1,19 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Class Discussion forum</title>
+<title>Discussion Forum</title>
 		
 		<script src="https://cdn.quilljs.com/1.2.3/quill.js"></script>
         <script src="https://cdn.quilljs.com/1.2.3/quill.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css" rel="stylesheet">
         <link href="https://cdn.quilljs.com/1.1.3/quill.bubble.css" rel="stylesheet">
-        
         <style>
         a{
         	color: #0099cc;
@@ -31,7 +30,8 @@
   				height:90px;
   				float: right;
   				margin:10px;
-		}	
+		}
+			
 		.card img {
     			width: auto;
     			height: auto;
@@ -69,50 +69,14 @@
 		}
         
         </style>
+                
 </head>
 <body>
-
-<h1>Welcome to Class ${classid}</h1>
-	<c:choose>
-		<c:when test="${type=='coordinator' && isCurrentYear==true}">
-			<a href="../admin/addCRForm">Add Class Representative</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="../admin/showCR">Show Class Representative</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-			<a href="../admin/addformFaculty">Add Subject Faculty</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-			<a href="../admin/showFaculty">Show Subject Faculty</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="showPendingPosts">Show Pending Posts</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-			<h3>CHOOSE YOUR POST TYPE...</h3>
-			<a href="../../poll/createpoll.jsp?var=classpoll"><button id="create_poll">Create Poll</button></a>
-			<a href="../../Post_Question.jsp?classQue=true"><button id="create_que">Ask question</button></a>
-			<a href="addEventForm"><button id="create_event">Create Event</button></a>
-			<a href="startClassDiscussion"><button id="create_disc">Start Discussion</button></a>
-			<a href="issueNotice"><button id="create_notice">Issue Notice</button></a>
-		</c:when>
-		
-		<c:when test="${type=='coordinator' && isCurrentYear==false}">
-			<a href="../admin/showCR">Show Class Representative</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="../admin/showFaculty">Show Subject Faculty</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		</c:when>
-		
-		<c:when test="${type=='faculty' && isCurrentYear==false}">
-			FACULTY
-		</c:when>
-		
-		<c:when test="${type=='faculty' && isCurrentYear==true}">
-			FACULTY
-			<h3>CHOOSE YOUR POST TYPE...</h3>
-			<a href="../../poll/createpoll.jsp?var=classpoll"><button id="create_poll">Create Poll</button></a>
-			<a href="../../Post_Question.jsp?classQue=true"><button id="create_que">Ask question</button></a>
-			<a href="addEventForm"><button id="create_event">Create Event</button></a>
-			<a href="startClassDiscussion"><button id="create_disc">Start Discussion</button></a>
-			<a href="issueNotice"><button id="create_notice">Issue Notice</button></a>
-		</c:when>
-	</c:choose>
 	
 	<div id="toolbarque" style="display: none"></div>
     <div id="editorque" style="display: none"></div>
     
-   <script>
+    <script>
         function time_ago(time) {
 
   		  switch (typeof time) {
@@ -164,13 +128,11 @@
         {
         	document.getElementById(id).innerHTML=time_ago(new Date(time));
         }
-       
         
         var quillAnswers=[];
-        
         var quillNotices=[];
-        
         var postTypes=[];
+        
         
         var configque = {
             "theme": "snow",
@@ -198,7 +160,6 @@
            document.getElementsByClassName("ansImg")[index].innerHTML="";
            document.getElementsByClassName("read")[index].innerHTML="";
         }
-        
        
         function setNoOne(index,postIndex)
     	{
@@ -364,6 +325,7 @@
         	}
         	
         }
+    
         
         function setDiscussion(index,discussionContent)
         {
@@ -379,16 +341,27 @@
         	quillShowEvent.enable(false);
         }
       
-        var post_type,post_id;
-        
         </script>
     
 
 <h1>CLASS DISCUSSION FORUM</h1>
+	<select name="Session" onchange="location = this.value;">
+    	<option selected disabled>Semester</option>
+    	<c:forEach varStatus="sem" begin="1" end="${currentsem}">	
+	 		<option value="showSession?sem=${sem.index}">${sem.index}</option> 
+	 	</c:forEach>
+	</select>
 	
 <a href="../../MyFeed">MY FEED</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="showNotices">NOTICE</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="showMyPosts">MY POSTS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="showSavedPosts">SAVED POSTS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<hr>
+<h3>CHOOSE YOUR POST TYPE...</h3>
+<a href="../../poll/createpoll.jsp?var=classpoll"><button id="create_poll">Create Poll</button></a>
+<a href="../../Post_Question.jsp?classQue=true"><button id="create_que">Ask question</button></a>
+<a href="addEventForm?type=student"><button id="create_event">Create Event</button></a>
+<a href="startClassDiscussion"><button id="create_disc">Start Discussion</button></a>
 
 	<select name="SHOW" onchange="location = this.value;">
     	<option selected disabled>Show</option>
@@ -517,8 +490,7 @@
 			
 			<i><a href="">${pinnedPost.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="pinnedeventtimestamp"></span><br>
 			<h4>Title : <i>${pinnedPost.title}</i></h4> 
-			<p>
-			<b>Description:</b><br>
+			<p><b>Description:</b> <br>
 			<div id="eventEditor-1"></div>
 			</p>
 			<b>Start Date:</b> <span id="pinnedstartdate"></span><br><br>
@@ -530,7 +502,7 @@
 				var pinendDate=${pinnedPost.enddate};
 				var pincreationDate=${pinnedPost.timestamp};
 				var eventContent=${pinnedPost.description};
-			
+				
 				setTime('pinnedstartdate',pinstartDate);
 				setTime('pinnedlastdate',pinendDate);
 				setTime('pinnedeventtimestamp',pincreationDate);
@@ -548,24 +520,13 @@
 		
 		</c:if>
 		
-	<hr>
-	
+		<hr>
 	<center><h1>CLASS POSTS</h1></center>
 	<c:set var="countQue" value="-1" scope="page" />
 	
 	<c:forEach var="posts" items="${allClassPosts}" begin="0" varStatus="postLoop">
-	
+		
 		<c:if test="${posts.getClass().name == 'model.springmodel.ClassDiscussion'}">
-			
-			<div id="PinDiv${postLoop.index}">
-				<c:if test="${checkPinned[postLoop.index]==false}">
-					<a href="#no" onclick="pinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
-				</c:if>
-				
-				<c:if test="${checkPinned[postLoop.index]==true}">
-					<a href="#no" onclick="unPinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
-				</c:if>
-			</div>
 			
 			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.id}','${postLoop.index}');">Save As Bookmark</a><br>
 			
@@ -624,22 +585,13 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
 			
-			<div id="PinDiv${postLoop.index}">
-				<c:if test="${checkPinned[postLoop.index]==false}">
-					<a href="#no" onclick="pinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
-				</c:if>
-				
-				<c:if test="${checkPinned[postLoop.index]==true}">
-					<a href="#no" onclick="unPinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
-				</c:if>
-			</div>
-			
 			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.eid}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>EVENT</b> <span id="eventtimestamp${postLoop.index}"></span><br>
 			<h4>Title : <i>${posts.title}</i></h4> 
-			<b>Description:</b><br>
-			<div id="eventEditor${postLoop.index}"></div>   
+			<p><b>Description:</b> <br>
+			<div id="eventEditor${postLoop.index}"></div>
+			</p>
 			<b>Start Date:</b> <span id="startdate${postLoop.index}"></span><br><br>
 			<b>Last Date:</b> <span id="lastdate${postLoop.index}"></span><br><br>
 			<hr>
@@ -655,22 +607,11 @@
 				setTime('lastdate${postLoop.index}',endDate);
 				setTime('eventtimestamp${postLoop.index}',creationDate);
 				setEventContent('${postLoop.index}',eventContent);
-				
 			</script>
 		</c:if>
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.PollQueDetails'}">
-			
-			<div id="PinDiv${postLoop.index}">
-				<c:if test="${checkPinned[postLoop.index]==false}">
-					<a href="#no" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
-				</c:if>
 				
-				<c:if test="${checkPinned[postLoop.index]==true}">
-					<a href="#no" onclick="unPinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
-				</c:if>
-			</div>
-			
 			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.queid}','${postLoop.index}');">Save As Bookmark</a><br>
 			
 			<i><a href="">${posts.userModel.uname}</a></i> Posted <b>POLL</b><br>
@@ -687,18 +628,7 @@
 		
 		<c:if test="${posts.getClass().name == 'model.springmodel.Question'}">
 			
-			<div id="PinDiv${postLoop.index}">
-				<c:if test="${checkPinned[postLoop.index]==false}">
-					<a href="#no" onclick="pinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}">PIN POST</a>
-				</c:if>
-				
-				<c:if test="${checkPinned[postLoop.index]==true}">
-					<a href="#no" onclick="unPinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}">UNPIN POST</a>
-				</c:if>
-			</div>
-			
 			<a href="#no" style="float: right" onclick="saveAsBookmark('${posts.qid}','${postLoop.index}');">Save As Bookmark</a><br>
-			
 			
 			<c:set var="countQue" value="${countQue + 1}" scope="page"/>
 			
@@ -733,7 +663,7 @@
 			<script>
 				postTypes.push("question");
 			</script>
-		</c:if>				
+		</c:if>	
 	</c:forEach>
     <script>
     	if('${selectedsem}'!='${currentsem}')
@@ -770,6 +700,7 @@
 			
 			if(innerText=='Like')
 			{	
+				
 			    request=getXmlHttpRequestObject();
 			    request.onreadystatechange=commentLiked;
 			    request.open("post","LikeComment",true);
@@ -818,63 +749,6 @@
 		    }
 		}
 
-		var setIndex,setPostId;
-		function pinPost(postId,index)
-		{
-			if(confirm('Do You Want To Pin This Post?'))
-			{
-				setIndex=index;
-				setPostId=postId;
-				request=getXmlHttpRequestObject();
-			    request.onreadystatechange=postPinned;
-			    request.open("post","pinClassPost",true);
-			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
-			    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
-			    request.send(data);
-			}
-		}
-		
-		function unPinPost(postId,index)
-		{
-			if(confirm('Do You Want To Un-Pin This Post?'))
-			{
-				setIndex=index;
-				setPostId=postId;
-				request=getXmlHttpRequestObject();
-			    request.onreadystatechange=postUnPinned;
-			    request.open("post","unPinClassPost",true);
-			    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");    
-			    var data="postId="+parseInt(postId)+"&postType="+postTypes[index];
-			    request.send(data);
-			}
-		}
-		
-		function postPinned()
-		{
-			if(request.readyState===4 && request.status===200)
-		    {
-				if(request.responseText==1)
-				{
-					console.log("pinned");
-					document.getElementById('pin'+setIndex).innerHTML="UNPIN POST";
-					document.getElementById('pin'+setIndex).setAttribute("onclick","unPinPost("+setPostId+","+setIndex+")");
-				}
-		    }
-		}
-		
-		function postUnPinned()
-		{
-			if(request.readyState===4 && request.status===200)
-		    {
-				if(request.responseText==1)
-				{
-					console.log("unpinned");
-					document.getElementById('pin'+setIndex).innerHTML="PIN POST";
-					document.getElementById('pin'+setIndex).setAttribute("onclick","pinPost("+setPostId+","+setIndex+")");
-				}
-		    }
-		}
-		
 		function saveAsBookmark(postId,index)
 		{
 			request=getXmlHttpRequestObject();
@@ -901,7 +775,10 @@
 				}
 		    }
 		}
-		</script>
 	
+		
+		
+		</script>
+
 </body>
 </html>
