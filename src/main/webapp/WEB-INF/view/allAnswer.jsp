@@ -163,6 +163,26 @@
     	 max-width: 50%;
          max-height: 50%;
         }
+        
+        .ui-widget-content a {
+    color: #000000;
+    background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+}
+.ui-widget {
+    font-family: Roboto;
+    font-size: 1.1em;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+border-bottom-right-radius: 0px;
+border-bottom-left-radius: 0px;
+border-top-right-radius: 0px;
+border-top-left-radius: 0px;
+}
+        .ui-menu .ui-menu-item {
+
+list-style-image: none;
+
+}
     </style>
  
 </head>
@@ -231,35 +251,38 @@ function setReportButton(x)
     <header>
 
         <!--Navbar-->
-        <nav class="navbar fixed-top navbar-toggleable-md navbar-dark bg-info" >
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-dark bg-default" >
             <div class="container" >
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                 <a class="navbar-brand" href="../../MyFeed">
-                <img src="${pageContext.request.contextPath}/MDB Free/img/logo.png" class="img-fluid" style="width: 180px">
-            </a>
+                
+                <a class="navbar-brand waves-effect"
+				href="../../MyFeed"
+				target="_blank"> <strong class="blue-text">Korero</strong>
+			</a>
+             
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../../MyFeed">Home</a>
+                            <a class="nav-link" href="../../MyFeed" style="color:black">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../MyProfile">Profile</a>
+                            <a class="nav-link" href="../../MyProfile" style="color:black">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../Post_Question.jsp">Ask a question</a>
+                            <a class="nav-link" href="../../Post_Question.jsp" style="color:black">Ask a question</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../AboutUs.jsp">About Us</a>
+                            <a class="nav-link" href="../../AboutUs.jsp" style="color:black">About Us</a>
                         </li>
                         
                         
                     </ul>
                 
                     
-                    <ul class="navbar-nav ml-auto">
-                    <form class="form-inline waves-effect waves-light navbar-form navbar-right" action="AskQuestion" role="search">
+                    <ul class="navbar-nav ml-auto" >
+                    <form class="form-inline waves-effect waves-light navbar-form navbar-right" action="../../AskQuestion" role="search">
                         <input class="form-control" type="text" placeholder="Search -- Question,  @Username,  #Workspaces" id="search" name="search" style="width:400px"  >
                        <button type="submit" class="btn btn-info btn-sm" >
 								<i class="fa fa-search"></i><div class="ripple-container"></div>

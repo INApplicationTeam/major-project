@@ -252,7 +252,12 @@ function time_ago(time) {
 								aria-controls="home" style="border-top: none;"> 
 								<img src="../../ImageLoader?uid=${temp.key}"
 								class="img-fluid z-depth-1 rounded-circle avatar mr-2"
-								alt="Responsive image">${temp.value} (${onlineUsers.get(loop.index)})</a>
+								alt="Responsive image">${temp.value} 
+								
+								<c:if test="${onlineUsers.get(loop.index)==true}">
+								<i class = "fa fa-circle pull-right mt-2 green-text"></i>
+								</c:if>
+								</a>
 
 
 
@@ -278,12 +283,12 @@ function time_ago(time) {
 													<c:if test="${fn:length(conversation) gt 0}">
 						<div class="card" id="messageScroll"
 							style="max-height: 70vh; overflow-y: scroll; border-bottom-left-radius: 0px;">
-							<div class="card-header">
+							<div class="card-header" style="position:fixed;background-color:white;z-index:1000;width:770px">
 								<h4 class="pb-0 mb-0">
 									<a class="blue-text" id="list-home">${threadName}</a>
 								</h4>
 							</div>
-							<div class="card-body">
+							<div class="card-body" style="margin-top: 70px">
 							
 
 							<c:forEach var="temp" items="${conversation}" begin="0" varStatus="loop">
