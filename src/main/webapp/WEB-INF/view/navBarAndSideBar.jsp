@@ -98,28 +98,42 @@
 		<div class="item">
 			<span class="fa fa-bel"></span><%=uname%>
 		</div>
+		
 		<a href="../../MyProfile">
 			<div class="item">
 				<span class="fa fa-user"></span> Profile
 			</div>
-		</a> <a href="../../MyFeed">
+		</a> 
+		
+		<a href="../../MyFeed">
 
 			<div class="item">
 				<span class="fa fa-pie-chart"></span> My Feed
 			</div>
-		</a> <a href="../../book advisory/bookhome.jsp">
+		</a> 
+		
+		<a href="../../book advisory/bookhome.jsp">
 			<div class="item active">
 				<span class="fa fa-institution"></span> Book Advice
 			</div>
-		</a> <a href="../../poll/pollhome.jsp">
+		</a>
+		
+		 <a href="../../poll/pollhome.jsp">
 			<div class="item">
 				<span class="fa fa-bar-chart-o"></span> Polling
 			</div>
-		</a> <a href="CDFhome<%=utype%>">
+		</a> 
+		
+		<a href="CDFhome<%=utype%>">
 			<div class="item">
 				<span class="fa fa-graduation-cap"></span> Class Discussion
 			</div>
 		</a>
+		
+		<div class="item">
+                <span class="fa fa-sign-out"></span>
+                LogOut
+            </div> 
 	</div>
 	<!-- Sidebar -->
 

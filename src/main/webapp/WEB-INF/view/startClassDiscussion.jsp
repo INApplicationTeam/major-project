@@ -31,11 +31,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	
 </head>
-<body>
+<body class="blue-grey lighten-5">
 
 <%@include file="navBarAndSideBar.jsp"%>
+
  <main class="pt-4 mx-lg-5" id="blur">
 <div class="conatiner-fluid">
+
     <div class="row mt-10">
     <div class="col-md-1"></div>
         <div class="col-md-10">

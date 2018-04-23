@@ -484,7 +484,7 @@ public class ClassController implements ServletContextAware {
 
 		List<ClassDiscussion> discussionsList = discussionservice.showDiscussions(classId, userId);
 		model.addAttribute("discussionsList", discussionsList);
-
+		model.addAttribute("userId", userId);
 		return "classDiscussions";
 	}
 
