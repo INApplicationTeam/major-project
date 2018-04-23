@@ -2,6 +2,7 @@ package dao.springdao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.sound.midi.Soundbank;
 
@@ -57,7 +58,7 @@ public class DirectMessageDAOImpl implements DirectMessageDAO {
 
 
 	@Override
-	public HashMap<String, String> getMessageThreads(String id) 
+	public TreeMap<String, String> getMessageThreads(String id) 
 	{
 		Session currentSession= sessionFactory.getCurrentSession();
 		Query<Object[]> qr= currentSession.createQuery("select distinct sender.uid, sender.uname from Message where (receiverid =:id) order by timestamp ",Object[].class);
@@ -71,7 +72,7 @@ public class DirectMessageDAOImpl implements DirectMessageDAO {
 		List<Object[]> threads1  =qr1.getResultList();
 		threads.addAll(threads1);
 		
-		HashMap<String, String> conversation = new HashMap<>();	
+		TreeMap<String, String> conversation = new TreeMap<>();	
 		for(Object[] o: threads)
 		{
 			

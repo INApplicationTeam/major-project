@@ -2,6 +2,7 @@ package service.springservice;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.transaction.Transactional;
 
@@ -38,7 +39,7 @@ public class DirectMessageServiceImpl implements DirectMessageService {
 
 	@Override
 	@Transactional
-	public HashMap<String, String> getMessageThreads(String id) {
+	public TreeMap<String, String> getMessageThreads(String id) {
 		return dmDAO.getMessageThreads(id);
 	}
 

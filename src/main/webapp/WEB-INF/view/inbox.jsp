@@ -126,7 +126,7 @@ function time_ago(time) {
 								aria-controls="home" style="border-top: none;"> 
 								<img src="../../ImageLoader?uid=${temp.key}"
 								class="img-fluid z-depth-1 rounded-circle avatar mr-2"
-								alt="Responsive image">${temp.value}</a>
+								alt="Responsive image">${temp.value} (${onlineUsers.get(loop.index)})</a>
 
 
 
@@ -218,7 +218,7 @@ function time_ago(time) {
 									<form:form action="sendDM?id=${message.receiver.uid}&name=${message.receiver.uname}" modelAttribute="message" method="POST">
 										<label for="exampleFormControlTextarea1"><small>Send
 												a message</small></label>
-									<form:hidden path="receiver.uid" />
+									<form:hidden path="receiver.uid" id="receiverId"/>
 									<div style="display:none">
 									<input type="submit" value="SEND" id="submitMsg"/>
 									</div>
@@ -303,7 +303,7 @@ function time_ago(time) {
 
 	</div>
 	</main>
-
+	<script src="${pageContext.request.contextPath}/js/Notifications.js"></script>
 	<script>
 	$('#messageScroll').scrollTop($('#messageScroll')[0].scrollHeight);
 
@@ -349,10 +349,9 @@ function threadNames()
     {
 		
 		document.getElementById("threadname").innerHTML=request.responseText;
-           }
+    }
 	
 }
-
 
 </script>
 
