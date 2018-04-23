@@ -12,7 +12,26 @@ import java.util.ArrayList;
  * @author rohan
  */
 public class DomainModel {
-    private ArrayList<String> domainList;
+	
+	private int did;
+	private String dname;
+    public int getDid() {
+		return did;
+	}
+
+	public void setDid(int did) {
+		this.did = did;
+	}
+
+	public String getDname() {
+		return dname;
+	}
+
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
+
+	private ArrayList<String> domainList;
     private ArrayList<Integer> domainIdList;
     private ArrayList<String> domainImg;
     private ArrayList<String> keyList;

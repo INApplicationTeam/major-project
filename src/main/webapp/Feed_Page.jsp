@@ -36,55 +36,28 @@ String notificationsJson=(String)session.getAttribute("usernotifications");
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 <title>Korero</title>
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="js/jquery-1.10.2.js"></script>
 
-    <script src="js/jquery-ui.js"></script>
-    <link rel="stylesheet" href="js/jquery-ui.css">
-<script>
-$(document).ready(function() {
-	$(function() {
-		$("#search").autocomplete({
-
-			source : function(request, response) {
-				$.ajax({
-					url : "SearchAutoComplete",
-					type : "get",
-					data : {
-						term : request.term
-					},
-					dataType : "json",
-					success : function(data) {
-						response(data);
-					}
-				});
-			}
-                         
-		});
-	});
-        
-        
-});
-</script>
-    
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/autocompleter.js"></script>
+<link rel="stylesheet" href="js/jquery-ui.css">
 <meta
 	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
 	name='viewport' />
 <meta name="viewport" content="width=device-width" />
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="MDB Free/font-awesome-4.7.0/css/font-awesome.min.css">
 
-  <!-- Font Awesome -->
-<link href="kext/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<!-- Bootstrap core CSS -->
-<link href="kext/css/bootstrap.min.css" rel="stylesheet">
-<!-- Material Design Bootstrap -->
-<link href="kext/css/mdb.min.css" rel="stylesheet">
-<!-- Your custom styles (optional) -->
-<link href="kext/css/style.css"
-	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="kext/css/sidebar.css">
-    <link rel="stylesheet" type="text/css" href="kext/css/calendar.css">
-	
-	
+
+<!-- Bootstrap core CSS     -->
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+
+<!--  Material Dashboard CSS    -->
+<link href="css/material-dashboard.css" rel="stylesheet" />
+
+<!--  CSS for Demo Purpose, don't include it in your project     -->
+<link href="css/demo.css" rel="stylesheet" />
 
 <script src="https://cdn.quilljs.com/1.2.3/quill.js"></script>
 <script src="https://cdn.quilljs.com/1.2.3/quill.min.js"></script>
@@ -117,7 +90,10 @@ img.resize {
 	float: right;
 }
 
-
+.card img {
+	width: auto;
+	height: auto;
+}
 
 b, strong {
 	font-weight: bold;
@@ -125,8 +101,8 @@ b, strong {
 
 .ans {
 	font-family: "roboto";
-	font-size: 16px;
-	font-weight: 400;
+	font-size: 21px;
+	font-weight: 300;
 	word-wrap: break-word;
 }
 
@@ -142,40 +118,13 @@ pre {
 	max-width: 50%;
 	max-height: 50%;
 }
-
-.ui-widget-content a {
-    color: #000000;
-    background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
-}
-.ui-widget {
-    font-family: Roboto;
-    font-size: 1.1em;
-}
-.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
-border-bottom-right-radius: 0px;
-border-bottom-left-radius: 0px;
-border-top-right-radius: 0px;
-border-top-left-radius: 0px;
-}
-
-
-.ui-menu .ui-menu-item {
-
-list-style-image: none;
-
-}
 </style>
 </head>
 
-
-
-	
-
-	
-<body class="rgba-grey-slight">
-
+<body>
 	<div id="toolbarque" style="display: none"></div>
 	<div id="editorque" style="display: none"></div>
+
 	<script>
          
          	var quillAnswers=[];
@@ -200,8 +149,8 @@ list-style-image: none;
                      
         
         </script>
- 
- <script>
+
+	<script>
             
             var configForShow = {
                 "theme": "snow",
@@ -281,171 +230,206 @@ list-style-image: none;
       	
             
         </script>
- 
-<!--Main Navigation-->
-<header>
 
-	<!-- Navbar -->
-	<nav
-		class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
-		style="margin-left: 30px; box-shadow: none;">
+
+	<nav class="navbar navbar-fixed-top navbar-info" role="navigation">
 		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="MyFeed"> <img
+					src="MDB Free/img/logo.png" class="img-fluid" style="width: 180px">
+				</a>
 
-			<!-- Brand -->
-			<a class="navbar-brand waves-effect"
-				href="https://mdbootstrap.com/material-design-for-bootstrap/"
-				target="_blank"> <strong class="blue-text">Korero</strong>
-			</a>
+			</div>
 
-			<!-- Collapse -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="MyFeed">Home</a></li>
+			        		<li><a href="MyProfile">Profile</a></li>
+			        		<li><a href="Post_Question.jsp">Ask a question</a></li>
+			        		<%if(utype.equals("faculty"))
+							{ %>
+							
+						<li><a href="major/class/addEventForm?type=<%=utype%>">Create Event</a></li>
+							
+							<%} %>
+							
+							<li><a
+											href="major/message/inbox">
 
-			<!-- Links -->
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+												Message 
+												
+												
+						    </a></li>
+							
+                                                 <li><a href="AboutUs.jsp">About Us</a></li>
+				    		</ul>
+						<ul class="nav navbar-nav navbar-right">
+							
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="showNotifications()"><i class="material-icons">notifications</i>
+									<span class="notification" id="notificationCount"></span>
+								</a>
+			        			<ul class="dropdown-menu" id="notifications">
+								 
+								 
+								 
+			        			</ul>
+								
+							</li>
+							<li class="dropdown">
+			        			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">person</i></a>
+			        			<ul class="dropdown-menu">
+								 
+								 
+								  <li><a href="EditProfile">Edit Profile</a></li>
+								  <li class="divider"></li>
+								  <li><a href="ChangePassword.jsp?uid=<%=uid%>">Change Password</a></li>
+								  <li class="divider"></li>
+							      <li><a onclick="destroyHandler()">Log Out</a></li>
+			        			</ul>
+			        		</li>
+										
+						</ul>
 
-				<!-- Left -->
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link waves-effect"
-						href="../../MyFeed">Home <span class="sr-only">(current)</span>
-					</a></li>
-					<li class="nav-item"><a class="nav-link waves-effect"
-						href="major/message/inbox"
-						target="_blank">Message</a></li>
-					<li class="nav-item"><a class="nav-link waves-effect"
-						href="Post_Question.jsp">Ask a question</a>
-					</li>
-					<li class="nav-item"><a class="nav-link waves-effect"
-						href="AboutUs.jsp">About Us</a>
-					</li>
-				</ul>
-
-				<!-- Right -->
-				<ul class="navbar-nav nav-flex-icons">
-					<li class="nav-item mr-4">
-							<div class="md-form mt-0">
-								<form class="navbar-form navbar-right" role="search" action="AskQuestion">
-								<i class="fa fa-search" aria-hidden="true"></i>
-                                    <input class="form-control" type="text" placeholder="Search -- Question,  @Username,  #Workspaces" id="search" name="search" aria-label="Search" style="width: 400px;">
-							<span class="material-input"></span>
-							 <button type="submit" class="btn btn-info btn-sm" >
-								<i class="fa fa-search"></i><div class="ripple-container"></div>
+						<form class="navbar-form navbar-right" role="search" action="AskQuestion">
+							<div class="form-group  is-empty">
+								<input type="text" class="form-control search" placeholder="Search -- Question,  @Username,  #Workspaces" id="search" name="search" style="width: 400px;">
+								<span class="material-input"></span>
+							</div>
+							<button type="submit" class="btn btn-white btn-round btn-just-icon">
+								<i class="material-icons">search</i>
+                                                                <!--<div class="ripple-container"></div>-->
 							</button>
 						</form>
-							</div>
-					</li>
-					<li class="nav-item mr-2">
-						<!-- Basic dropdown -->
-						<div class="btn-group">
-							<a class="dropdown-toggle nav-link" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false" onclick="showNotifications()"> <i
-								class="fa fa-bell"></i>
-								<span class="notification" id="notificationCount"></span>
-							</a>
+					</div>
+				</div>
+			</nav>
 
-							<div class="dropdown-menu dropdown-pull-right" id="notifications">
-							</div>
-						</div> 
-					</li>
+	<div class="wrapper">
+
+		<div class="sidebar" data-color="blue" data-image="img/testd.jpg"
+			style="margin-top: 50px;">
+			<!--
+		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+
+		        Tip 2: you can also add an image using data-image tag
+		    -->
+
+			<div class="sidebar-wrapper">
+				<ul class="nav">
+					<li class="container-fluid"><img
+						src="ImageLoader?uid=<%=uid%>" alt="Circle Image"
+						class="img-circle img-responsive" style="padding: 0px 35px;">
+						<div class="content text-center">
+							<h6 class="category text-gray"><%=utype%></h6>
+							<h4 class="card-title"><%= uname %></h4>
+						</div></li>
+					<li class="active"><a> <i class="material-icons">dashboard</i>
+							<p>My Feed</p>
+					</a></li>
+					<li><a href="EditProfile"> <i class="material-icons">person</i>
+							<p>Edit Profile</p>
+					</a></li>
+					<li><a href="poll/pollhome.jsp"> <i class="material-icons">list</i>
+							<p>Polling</p>
+					</a></li>
+					<li><a href="book advisory/bookhome.jsp"> <i
+							class="material-icons text-gray">book</i>
+							<p>Book Advisory</p>
+					</a></li>
+
+					
+					<li><a id="CDF" href="major/class/CDFhome<%=utype%>"> <i
+							class="material-icons text-gray">school</i>
+							<p>Class Discussion</p>
+					</a></li>
+
 				</ul>
-
 			</div>
-
 		</div>
-	</nav>
-	<!-- Navbar -->
 
-	<!-- Sidebar -->
-	<div class="leftside pt-2"
-		onmouseover="javascript:document.getElementById('blur').style.filter='blur(3px)';"
-		onmouseout="javascript:document.getElementById('blur').style.filter='blur(0)';">
-		<div class="text-center" style="padding: 10px;">
-			<img src="ImageLoader?uid=<%=uid%>"
-				class="img-fluid z-depth-1 rounded-circle"
-				style="max-height: 150px;" alt="Responsive image">
-		</div>
-		<div class="item">
-			<span class="fa fa-bel"></span><%=uname%>
-		</div>
-		
-		<a href="MyProfile">
-			<div class="item">
-				<span class="fa fa-user"></span> Profile
-			</div>
-		</a> 
-		
-		<a href="MyFeed">
+		<div class="main-panel">
 
-			<div class="item">
-				<span class="fa fa-pie-chart"></span> My Feed
-			</div>
-		</a> 
-		
-		<a href="book advisory/bookhome.jsp">
-			<div class="item active">
-				<span class="fa fa-institution"></span> Book Advice
-			</div>
-		</a>
-		
-		 <a href="poll/pollhome.jsp">
-			<div class="item">
-				<span class="fa fa-bar-chart-o"></span> Polling
-			</div>
-		</a> 
-		
-		<a href="major/class/CDFhome<%=utype%>">
-			<div class="item">
-				<span class="fa fa-graduation-cap"></span> Class Discussion
-			</div>
-		</a>
-		
-		<a onclick="destroyHandler()">
-		<div class="item">
-                <span class="fa fa-sign-out"></span>
-                LogOut
-            </div>
-           </a>
-	</div>
-	<!-- Sidebar -->
+			<div class="content" style="padding-top: 50px; margin-top: 20px;">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-9">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-sm-6">
+									<div class="card card-stats animated fadeInDown">
+										<div class="card-header" data-background-color="orange">
+											<i class="material-icons">mood</i>
+										</div>
+										<div class="card-content">
+											<p class="category">Total VoilÃ 's!</p>
+											<h3 class="title"><%=uvc%></h3>
+										</div>
+										<div class="card-footer">
+											<div class="stats">
+												<i class="material-icons">mood</i> hey, get going!
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6">
+									<div class="card card-stats animated fadeInDown">
+										<div class="card-header" data-background-color="green">
+											<i class="material-icons">stars</i>
+										</div>
+										<div class="card-content">
+											<p class="category">Area of interests</p>
+											<h3 class="title"><%=tc%></h3>
+										</div>
+										<div class="card-footer">
+											<div class="stats">
+												<i class="material-icons">stars</i> keep surfing :)
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--card-1-->
 
-</header>
-<!--Main Navigation-->
+							<!--card-1-->
+							<%if(rlqm!=null){int i=0;for(QuestionModel qm: rlqm.getRelatedque()){%>
+							<div class="card animated fadeInDown"
+								style="animation-delay:<%=i%6%>s;">
+								<div class="card-content">
+									<div class="category">
+										<a href="UserProfile?uid=<%= qm.getUid() %>"
+											style="color: #0099cc;"> <%= qm.getUname() %></a> asked in <label
+											class="label label-info"><a
+											href="WorkSpaceContent?did=<%= qm.getDomain() %>&dname=<%= qm.getdName() %>"
+											style="color: #FFFFFF;"> <%= qm.getdName() %></a></label> with
+										<%for(String tags: qm.getTags() ){%>
+										<label class="label" style="background-color: #F80;"><%=tags%></label>
+										<%}%>
+									</div>
+									<h3
+										style="margin-top: 5px; margin-bottom: 5px; font-weight: bold;">
+										<a href="major/question/allAnswers?qid=<%=qm.getQid()%>"
+											style="color: black"><%= qm.getQue() %></a>
+									</h3>
 
-<main class="pt-4 mx-lg-5" id="blur">
-	<div class="conatiner-fluid mt-5 pt-3 ml-3 pr-0">
+									<div class="row" style="padding-left: 5px;">
 
-            <div class="row wow fadeIn">
-                <div class="col-md-9">
-            <!-- Heading -->
-         
-            <div class="card card-body py-2 mt-2">
-                    <a class="card-text black-text"><%String name[]=uname.split(" ");%>
-                    <h4 class="h4-responsive pt-2">Hi <%=name[0] %> !</h4></a>
-                </div>
-                        
-
-                    <!--CARD 1 -->
-                    <%if(rlqm!=null){int i=0;for(QuestionModel qm: rlqm.getRelatedque()){%>
-                    <div class="card mb-3">
-                        <div class="card-body pb-0">
-                            <small>
-                                <a href="UserProfile?uid=<%= qm.getUid() %>"><%= qm.getUname() %></a> posted <span id="<%=i%>"></span> in
-                                 <a href="WorkSpaceContent?did=<%= qm.getDomain() %>&dname=<%= qm.getdName() %>"><%= qm.getdName() %></a>
-                            </small>
-                            <h4 style="font-size: 24px"  class="mt-2"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color: black"><%= qm.getQue() %></a></h4>
-                            <div class="white" style="border-style: round;border-radius: 20px;display: inline-block;">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
-                                <a class="pl-1" href="ImageLoader?uid=<%= qm.getTopAnswerer() %>">
-									<%if(qm.getAnswererName().equals("No one")){%><a style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
-											<%}else{%><a href="UserProfile?uid=<%= qm.getTopAnswerer() %>" style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
-											<%}%></a><small> answered</small>
-                            </div>
-                            <p class="pl-5">
-                            <span class="ansImg"></span>
+										<div class="col-md-1 col-sm-1">
+											<img src="ImageLoader?uid=<%= qm.getTopAnswerer() %>"
+												alt="Circle Image" class="img-circle img-responsive">
+										</div>
+										<div class="col-md-11 col-sm-11" style="padding-left: 1px;">
+											<%if(qm.getAnswererName().equals("No one")){%><a
+												style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
+											<%}else{%><a href="UserProfile?uid=<%= qm.getTopAnswerer() %>"
+												style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
+											<%}%>
+											answered <br>
+											<span class="ansImg"></span>
 											<div class="lead ans" style="margin-bottom: 1px;"></div>
 											<a class="read" href="#no" style="color: #0099cc;"
 												onclick="instantiateEditor('<%=i%>')">Read more</a><br>
@@ -498,9 +482,9 @@ list-style-image: none;
 																							}
 		                                                                                    var c=document.getElementsByClassName("ans");
 		                                                                                    
-		                                                                                    if(content.length>300)
+		                                                                                    if(content.length>100)
 	                                                                                        {
-		                                                                                    	c[<%=i%>].innerText=content.substr(0,300)+"...";
+		                                                                                    	c[<%=i%>].innerText=content.substr(0,100)+"...";
 		                                                                                    	isFullShow.push(false);
 	                                                                                        }
 		                                                                                    
@@ -511,14 +495,18 @@ list-style-image: none;
 		                                                                                    	
 		                                                                                    }
                                                                                         </script>
-                      <!--           <a class="blue-text"><i class="fa fa-angle-double-right pl-2"></i> More</a>
-                        -->
-                            </p>
-                        </div>
-                      
+										</div>
 
-                    </div>
-                    <script type="text/javascript">
+
+									</div>
+								</div>
+								<div class="card-footer">
+									<div class="stats">
+										<i class="material-icons">update</i> <span id="<%=i%>"></span>
+									</div>
+								</div>
+							</div>
+							<script type="text/javascript">
         		    setTime(<%=i%>,<%=qm.getQuedate()%>)
         		    </script>
 							<%i++;}%>
@@ -537,112 +525,60 @@ list-style-image: none;
             }
         
          }</script>
-                    <%}%>
-                    <!-- Card 1 ends-->
-
-                    
-                </div>
-                
-                <div class="col-md-3">
-                <div id="my-calendar"></div> 
-                <% if(utype.equals("faculty")){ %>
-                <div class="card card-body py-2 mt-2">
-                    <a class="card-text blue-text" href="major/class/addEventForm?type=<%=utype%>"><i class="fa fa-plus"></i> Add global event</a>
-                </div>
-                <%} %>
-                <div class="list-group mt-4">
-                    <a href="#" class="list-group-item disabled black-text"><h5 class="h5-responsive"><strong>Questions for you</strong></h5></a>
-                   		<%if(rlqm1!=null && rlqm1.getRelatedque()!=null ){int i=0;for(QuestionModel qm: rlqm1.getRelatedque()){ %>
-                   
-                    <a href="major/question/allAnswers?qid=<%=qm.getQid()%>" class="list-group-item"><%= qm.getQue() %></a>
-                    <%i++;
-                       if(i==10)
-                    	   break;
-                   		}}%>
-                </div>
-                                
-                </div>
-            </div>
-
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-sm my-0 py-0" id='modalbtn' data-toggle="modal" data-target="#exampleModal" style="visibility: hidden;">
-                Launch demo modal
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Choose your class</h5>
-
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!--Table-->
-                            <table class="table table-sm table-responsive-md btn-table">
-
-                                <!--Table head-->
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Class</th>
-                                        <th>batch</th>
-                                        <th>Subject</th>
-                                    </tr>
-                                </thead>
-                                <!--Table head-->
-
-                                <!--Table body-->
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button><span class="badge indigo">Coordinator</span></td>
-                                        <td>2018</td>
-                                        <td>Operating system</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button></td>
-                                        <td>2017</td>
-                                        <td>Soft computing</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button></td>
-                                        <td>2016</td>
-                                        <td>ho gaya</td>
-                                    </tr>
-                                </tbody>
-                                <!--Table body-->
-
-                            </table>
-                            <!--Table-->
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
+							<%}%>
+						</div>
 
 
 
-</div>
-</main>
-</body>
+
+						<div class="col-md-3 col-sm-12 animated fadeInDown">
+							<div class="card">
+								<div class="card-content card-title">
+									<h4>Questions For You</h4>
+									<%if(rlqm1!=null && rlqm1.getRelatedque()!=null ){int i=0;for(QuestionModel qm: rlqm1.getRelatedque()){ %>
+									<p>
+										<a href="major/question/allAnswers?qid=<%=qm.getQid()%>"
+											style="color: #0099cc;"><%= qm.getQue() %></a>
+									</p>
+									<%i++;}}%>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<nav></nav>
+					<p class="copyright pull-right">
+						&copy;
+						<script>document.write(new Date().getFullYear())</script>
+						, made with love <i class="fa fa-heart"></i> by team Korero
+					</p>
+				</div>
+			</footer>
+
+		</div>
+
+
+
+
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/material.min.js" type="text/javascript"></script>
+
+		<!--  Notifications Plugin    -->
+		<script src="js/bootstrap-notify.js"></script>
+
+
+		<!-- Material Dashboard javascript methods -->
+		<script src="js/material-dashboard.js"></script>
+
+		<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+		<script src="js/demo.js"></script>
+		<script src="MDB Free/js/limittext.js"></script>
 
 		<script src="js/Notifications.js"></script>
 
@@ -671,21 +607,9 @@ list-style-image: none;
 
 	
 	</script>
-	  <!--Main layout-->
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="kext/js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="kext/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="kext/js/mdb.min.js"></script>
-    <script type="text/javascript" src="kext/js/calendar.js"></script>
-
-    <!-- Initializations -->
 		<script type="text/javascript">
 	
-//		new WOW().init();
+	
 
 	
 	function getXmlHttpRequestObject()
@@ -759,8 +683,8 @@ list-style-image: none;
 			document.getElementById("notifications").innerHTML="";
 			console.log("notifiying..");
 			for(var i=notifications.length-1;i>=0;i--)
-			{																																										
-				document.getElementById("notifications").innerHTML=document.getElementById("notifications").innerHTML+'<a class="dropdown-item" onClick=viewNotification('+i+')>'+notifications[i].message+"\t"+time_ago(new Date(notifications[i].timestamp))+'</a><div class="dropdown-divider"></div>';	
+			{
+				document.getElementById("notifications").innerHTML=document.getElementById("notifications").innerHTML+'<li><a onClick=viewNotification('+i+')>'+notifications[i].message+"\t"+time_ago(new Date(notifications[i].timestamp))+'</a></li><li class="divider"></li>';	
 			}
 
 		}
@@ -783,11 +707,8 @@ list-style-image: none;
 		    }
 		}
 
-		
-
-
 	</script>
-
+</body>
 
 <!--   Core JS Files   -->
 <!--<script src="js/jquery-3.1.0.min.js" type="text/javascript"></script>-->

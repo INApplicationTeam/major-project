@@ -339,6 +339,24 @@ public class ClassDAOImpl implements ClassDAO {
 				poll=qrForPoll.getSingleResult();
 				classPostsDetails.add(poll);
 				
+				Query<Integer> qr1 = currentSession.createQuery("select votestatus from PollVoteStatus where ccode =:uid and queid =:pid", Integer.class);
+
+				qr1.setParameter("uid", userId);
+				qr1.setParameter("pid", classPost.getPostid());
+				try {
+
+					int status = qr1.getSingleResult();
+					poll.setIsVoted(true);
+				} catch (NoResultException e) {
+					System.out.println("not voted poll");
+					poll.setIsVoted(false);
+
+				} catch (Exception e) {
+					System.out.println("not voted poll");
+					poll.setIsVoted(false);
+				}
+
+				
 					if(isPinned!=null && !isPending && (userId.startsWith("F") || userId.startsWith("f")))
 					{
 						isPinned.add(classPost.isPinned());
@@ -481,6 +499,24 @@ public class ClassDAOImpl implements ClassDAO {
 			
 			try{
 				poll=qrForPoll.getSingleResult();
+				
+				Query<Integer> qr1 = currentSession.createQuery("select votestatus from PollVoteStatus where ccode =:uid and queid =:pid", Integer.class);
+
+				qr1.setParameter("uid", userId);
+				qr1.setParameter("pid", postId);
+				try {
+
+					int status = qr1.getSingleResult();
+					poll.setIsVoted(true);
+				} catch (NoResultException e) {
+					System.out.println("not voted poll");
+					poll.setIsVoted(false);
+
+				} catch (Exception e) {
+					System.out.println("not voted poll");
+					poll.setIsVoted(false);
+				}
+
 				return poll;
 			}
 			catch(NoResultException noResultException)
@@ -533,6 +569,34 @@ public class ClassDAOImpl implements ClassDAO {
 		
 		try{
 			myPosts=qr.getResultList();
+			
+			if(postType.equals("poll"))
+			{
+				for(Object poll: myPosts)
+				{
+					PollQueDetails pqd=null;
+					
+					if(poll instanceof PollQueDetails)
+					pqd=(PollQueDetails)poll;
+					
+					Query<Integer> qr1 = currentSession.createQuery("select votestatus from PollVoteStatus where ccode =:uid and queid =:pid", Integer.class);
+
+					qr1.setParameter("uid", userId);
+					qr1.setParameter("pid", pqd.getQueid());
+					try {
+						int status = qr1.getSingleResult();
+						pqd.setIsVoted(true);
+					} catch (NoResultException e) {
+						System.out.println("not voted poll");
+						pqd.setIsVoted(false);
+	
+					} catch (Exception e) {
+						System.out.println("not voted poll");
+						pqd.setIsVoted(false);
+					}
+				}
+
+			}
 		}
 		catch(NoResultException noResultException)
 		{
@@ -658,6 +722,24 @@ public class ClassDAOImpl implements ClassDAO {
 					try{
 						poll=qrForPoll.getSingleResult();
 						savedPosts.add(poll);
+						
+						Query<Integer> qr1 = currentSession.createQuery("select votestatus from PollVoteStatus where ccode =:uid and queid =:pid", Integer.class);
+
+						qr1.setParameter("uid", userId);
+						qr1.setParameter("pid", postId);
+						try {
+
+							int status = qr1.getSingleResult();
+							poll.setIsVoted(true);
+						} catch (NoResultException e) {
+							System.out.println("not voted poll");
+							poll.setIsVoted(false);
+
+						} catch (Exception e) {
+							System.out.println("not voted poll");
+							poll.setIsVoted(false);
+						}
+
 					}
 					catch(NoResultException noResultException)
 					{

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpSession;
 import dao.BlogDao;
 import model.AllBlogModel;
 import model.BlogModel;
+import model.DomainModel;
+import model.FacultyModel;
+import model.StudentModel;
+import model.UserModel;
 
 /**
  * Servlet implementation class BlogContentSingle
@@ -45,9 +50,32 @@ public class BlogContentSingle extends HttpServlet {
            BlogDao bd=new BlogDao();
            System.out.println("innnnnnnnn servlet ");
            BlogModel bm=bd.getBlogById(bid, context);
+           ArrayList<BlogModel> albm=bd.getRecentBlogs(bm.getDid(),context);
+           
+           String utype=(String)session.getAttribute("utype");
+           StudentModel sm;
+           FacultyModel fm;
+           String id="";
+           if(utype.equals("student"))
+           { 
+               sm=(StudentModel)session.getAttribute("userModel");
+               id=sm.getSid();
+           }
+           
+           else if(utype.equals("faculty"))
+           { 
+               fm=(FacultyModel)session.getAttribute("userModel");
+               id=fm.getFid();
+           }
+           
+           String status=bd.getBlogStatusForUser(id,bid,context);
+           
            bm.setBlogId(bid);
            System.out.println("innnnnnnnn servlet ");
            session.setAttribute("blogmodel",bm);
+           session.setAttribute("recentblogsmodel", albm);
+           session.setAttribute("status", status);
+           
            response.sendRedirect("Blog_Page.jsp");
     }
 	}
