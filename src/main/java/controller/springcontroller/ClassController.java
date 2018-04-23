@@ -1078,8 +1078,8 @@ public class ClassController implements ServletContextAware {
 		if(object instanceof FacultyModel)
 		{
 			StudentModel sm1 = new StudentModel();
-			sm.setClassAttributes(classId);
-
+			sm1.setClassAttributes(classId);
+			String classname= sm1.getBranch() +" - "+ sm1.getSection();
 			List<StudentModel> theClassMembers = classservice.showClassMembers(sm1);
 			theModel.addAttribute("classmembers", theClassMembers);
 
@@ -1091,7 +1091,11 @@ public class ClassController implements ServletContextAware {
 			
 			List<ClassSubjectFaculty> theClassSubjectFaculty = classservice.showClassSubjectFaculty(sm1);
 			theModel.addAttribute("classSubjectFaculty", theClassSubjectFaculty);
-
+			theModel.addAttribute("classname", classname);
+			System.out.println("CR"+theCR);
+			System.out.println("classCoordinator"+theClassCoordinator);
+			System.out.println("classMembers"+theClassMembers);
+			System.out.println("subject faculty"+theClassSubjectFaculty);
 		}
 		
 		return "aboutclass";
