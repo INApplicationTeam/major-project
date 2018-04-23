@@ -83,7 +83,13 @@
     		      else
     		        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
     		    }
-    		  return "on "+new Date(time).toDateString();
+    		  
+    		  var options = {  
+    				    weekday: "long", year: "numeric", month: "short",  
+    				    day: "numeric", hour: "2-digit", minute: "2-digit"  
+    				};
+    		  
+    		  return new Date(time).toLocaleTimeString("en-us",options);
     		}
 
         function instantiateEditor(index,eventText)
@@ -128,10 +134,21 @@
                         </div>
                         </span>
                     </h4>
+                    <a href="../../poll/createpoll.jsp?var=classpoll">
                     <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
+                    </a>
+                    
+                   <a href="startClassDiscussion">
                     <button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button>
+                    </a>
+                    
+                    <a href="addEventForm">
                     <button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button>
+                    </a>
+                    
+                    <a href="../../Post_Question.jsp?classQue=true">
                     <button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button>
+                    </a>
 <!--                   <form class="d-flex justify-content-center">
                         <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
                         <button class="btn btn-primary btn-sm my-0 p" type="submit">
@@ -158,7 +175,7 @@
  <div class="card mb-3 mt-4">
                         <div class="card-body pb-2">
                             <small>
-                                <a href="">${events.userModel.uname }</a> created event <span id="createddate${loop.index}"></span>
+                                <a href="">${events.userModel.uname }</a> created event on <span id="createddate${loop.index}"></span>
                                 <i class="fa fa-eye float-right mr-2 ml-1" aria-hidden="true"> 18</i>
                                 <a class="blue-text"><i class="fa fa-thumb-tack float-right blue-text mr-2" aria-hidden="true"></i></a>
                                 <a class="blue-text"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
@@ -168,11 +185,11 @@
                                 <strong>Description: </strong><div id="eventEditor${loop.index}"></div>	
                             </small>
                             <div class="text-center" style='overflow:hidden; white-space:nowrap;'>
-                                <strong class="pr-1 wow bounceInLeft" data-wow-delay="0.4s" ><span id="startdate${loop.index}"></span></strong>
+                                <strong class="pr-1 wow bounceInLeft" data-wow-delay="0.4s" >from <span id="startdate${loop.index}"></span></strong>
                                 <i class="fa fa-circle-o" aria-hidden="true" style="display: inline-block;vertical-align: middle;"></i>
-                                <hr style='display:inline-block; width:60%;vertical-align: middle;' />
+                                <hr style='display:inline-block; width:30%;vertical-align: middle;' />
                                 <i class="fa fa-circle-o" aria-hidden="true" style="display: inline-block;vertical-align: middle;"></i>
-                                <strong class="pr-1 wow bounceInRight" data-wow-delay="0.4s"><span id="lastdate${loop.index}"></strong>
+                                <strong class="pr-1 wow bounceInRight" data-wow-delay="0.4s">to <span id="lastdate${loop.index}"></strong>
                             </div>
 	<script>
 		var endDate=${events.enddate};

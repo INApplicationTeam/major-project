@@ -42,7 +42,7 @@ public class MyBlogFeed extends HttpServlet {
            ServletContext context=getServletContext();
            HttpSession session=request.getSession();
            
-           String uid="s14cs105";
+           String uid=request.getParameter("uid");
            
            ArrayList<BlogModel> arbm;
            

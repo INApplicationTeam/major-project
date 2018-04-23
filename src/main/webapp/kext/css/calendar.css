@@ -77,7 +77,7 @@ div.zabuto_calendar .table tr td div.day {
 /* actions and events */
 div.zabuto_calendar .table tr td.event div.day,
 div.zabuto_calendar ul.legend li.event {
-    background-color: #fff0c3;
+    background-color: #ffffff;
 }
 
 div.zabuto_calendar .table tr td.dow-clickable,
@@ -95,7 +95,7 @@ div.zabuto_calendar div.legend span.badge-today {
 
 div.zabuto_calendar .badge-event,
 div.zabuto_calendar div.legend span.badge-event {
-    background-color: #ff9b08;
+    background-color: #81d4fa;
     color: #ffffff;
     text-shadow: none;
 }

@@ -13,8 +13,17 @@ import java.util.ArrayList;
  */
 public class BlogModel {
     private int blogId,upvotes,did,downvotes;
-    private String blogContent,uid,uname,dname,title;
-    private ArrayList<BlogCommentModel> arbcm;
+    private String blogContent,uid,uname,dname,title,dimgpath;
+    public String getDimgpath() {
+		return dimgpath;
+	}
+
+
+	public void setDimgpath(String dimgpath) {
+		this.dimgpath = dimgpath;
+	}
+
+	private ArrayList<BlogCommentModel> arbcm;
     private Long timestamp;
 
   @Override

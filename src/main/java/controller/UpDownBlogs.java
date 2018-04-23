@@ -53,12 +53,14 @@ public class UpDownBlogs extends HttpServlet {
             JsonObject jsObj;
             int up=0,down=0;
             
-            AllBlogModel abm=(AllBlogModel)session.getAttribute("domainblogs");
-            ArrayList<BlogModel> albm=abm.getAbm();
+            //AllBlogModel abm=(AllBlogModel)session.getAttribute("domainblogs");
+            //ArrayList<BlogModel> albm=abm.getAbm();
             
             String status=request.getParameter("status");
             int bid=Integer.parseInt(request.getParameter("bid"));
-            int index=Integer.parseInt(request.getParameter("index"));
+            //int index=Integer.parseInt(request.getParameter("index"));
+            
+            BlogModel bm = null;
             
            if(!flag)
             {
@@ -81,7 +83,7 @@ public class UpDownBlogs extends HttpServlet {
                }
                 
                
-                BlogModel bm=new BlogModel();
+                bm=new BlogModel();
                 bm.setBlogId(bid);
                
                 BlogDao bd=new BlogDao();
@@ -95,10 +97,10 @@ public class UpDownBlogs extends HttpServlet {
 	            bd.decVote(bm,context,id);
 	            }
 	            
-	            albm.remove(index);
-	            albm.add(index, bm);
-	            abm.setAbm(albm);
-	            session.setAttribute("domainblogs", abm);
+//	            albm.remove(index);
+//	            albm.add(index, bm);
+//	            abm.setAbm(albm);
+//	            session.setAttribute("domainblogs", abm);
 	            
 	            up=bm.getUpvotes();
 	            down=bm.getDownvotes();
@@ -114,12 +116,12 @@ public class UpDownBlogs extends HttpServlet {
            else
            {
         	   System.out.println("-------------yououu cannot voooote-----------------");
-        	   BlogModel bm=albm.get(index);
-        	   jsObj =  (JsonObject) new Gson().toJsonTree(bm);
-               jsObj.addProperty("uvotes",bm.getUpvotes());
-               jsObj.addProperty("dvotes",bm.getDownvotes());
+        	   
+//        	   jsObj =  (JsonObject) new Gson().toJsonTree(bm);
+//               jsObj.addProperty("uvotes",bm.getUpvotes());
+//               jsObj.addProperty("dvotes",bm.getDownvotes());
                
-               out.println(jsObj);
+//               out.println(jsObj);
            }
         }
 

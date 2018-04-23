@@ -9,9 +9,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<% 
-BlogModel bm=(BlogModel)session.getAttribute("blogmodel");
-ArrayList<BlogCommentModel> arbcm=bm.getArbcm();
+<%
+	BlogModel bm = (BlogModel) session.getAttribute("blogmodel");
+	ArrayList<BlogCommentModel> arbcm = bm.getArbcm();
+	ArrayList<BlogModel> albm = (ArrayList<BlogModel>) session.getAttribute("recentblogsmodel");
+	String status=(String)session.getAttribute("status");
+	System.out.println(status);
 %>
 
 <head>
@@ -70,6 +73,62 @@ pre {
 }
 </style>
 
+<script>
+
+function time_ago(time) {
+
+	  switch (typeof time) {
+	    case 'number':
+	      break;
+	    case 'string':
+	      time = +new Date(time);
+	      break;
+	    case 'object':
+	      if (time.constructor === Date) time = time.getTime();
+	      break;
+	    default:
+	      time = +new Date();
+	  }
+	  var time_formats = [
+	    [60, 'seconds', 1], // 60
+	    [120, '1 minute ago', '1 minute from now'], // 60*2
+	    [3600, 'minutes', 60], // 60*60, 60
+	    [7200, '1 hour ago', '1 hour from now'], // 60*60*2
+	    [86400, 'hours', 3600], // 60*60*24, 60*60
+	    [172800, 'Yesterday', 'Tomorrow'], // 60*60*24*2
+	    [604800, 'days', 86400], // 60*60*24*7, 60*60*24
+	  ];
+	  var seconds = (+new Date() - time) / 1000,
+	    token = 'ago',
+	    list_choice = 1;
+
+	  if (seconds == 0) {
+	    return 'Just now'
+	  }
+	  if (seconds < 0) {
+	    seconds = Math.abs(seconds);
+	    token = 'from now';
+	    list_choice = 2;
+	  }
+	  var i = 0,
+	    format;
+	  while (format = time_formats[i++])
+	    if (seconds < format[0]) {
+	      if (typeof format[2] == 'string')
+	        return format[list_choice];
+	      else
+	        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
+	    }
+	  return "on "+new Date(time).toDateString();
+	}
+  
+  function setTime(id,time)
+  {
+  	document.getElementById(id).innerHTML=time_ago(new Date(time));
+  }
+
+</script>
+
 </head>
 
 <body class="grey lighten-3">
@@ -83,7 +142,7 @@ pre {
 			<div class="container">
 
 				<!-- Brand -->
-				<a class="navbar-brand waves-effect" href="" target="_blank"> <strong
+				<a class="navbar-brand waves-effect" href="MyFeed"> <strong
 					class="blue-text">Korero</strong>
 				</a>
 
@@ -101,17 +160,13 @@ pre {
 					<!-- Left -->
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item"><a class="nav-link waves-effect"
-							href="#">Home </a></li>
+							href="MyFeed">Home </a></li>
 						<li class="nav-item"><a class="nav-link waves-effect"
-							href="https://mdbootstrap.com/material-design-for-bootstrap/"
-							target="_blank">Profile</a></li>
+							href="MyProfile">Profile</a></li>
 						<li class="nav-item"><a class="nav-link waves-effect active"
-							href="https://mdbootstrap.com/getting-started/" target="_blank">Blogs</a>
-
-						</li>
+							href="LoadBlogFeed" target="_blank">Blogs</a></li>
 						<li class="nav-item"><a class="nav-link waves-effect"
-							href="https://mdbootstrap.com/bootstrap-tutorial/"
-							target="_blank">Ask a Question</a></li>
+							href="Post_Question.jsp">Ask a Question</a></li>
 					</ul>
 
 					<!-- Right -->
@@ -152,37 +207,61 @@ pre {
 
 
 							<h2 style="display: inline-block;">
-								<% if(bm.getTitle()!=null){ %>
-								<%= bm.getTitle() %>
-								<%}%>
+								<%
+									if (bm.getTitle() != null) {
+								%>
+								<%=bm.getTitle()%>
+								<%
+									}
+								%>
 							</h2>
-							<small class="text-muted" style="display: inline-block;">written
-								<% if(bm.getTimestamp()!=null){ %> <%= bm.getTimestamp() %> <%}%>
-							</small>
-							<div class="text-muted pull-right" style="display: inline-block;">
-								by <a class="blue-text">
-									<% if(bm.getUname() !=null){ %> <%= bm.getUname() %> <%}%>
+							<small class="text-muted" style="display: inline-block;"
+								id="blog"> </small>
+							<script type="text/javascript">
+        		    setTime("blog",<%=bm.getTimestamp()%>)
+        		    </script>
+							<br>
+							<div class="text-muted" style="display: inline-block;">
+								by <a class="blue-text"
+									href="UserProfile?uid=<%=bm.getUid()%>"> <%
+ 	if (bm.getUname() != null) {
+ %>
+									<%=bm.getUname()%> <%
+ 	}
+ %>
 								</a>
 							</div>
 
 							<p>
 							<div id="toolbar"></div>
 							<div id="editor"></div>
-							<br>
-							<br>
+							<br> <br>
 							</p>
-
-							<a><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i>
-								<%=bm.getUpvotes() %></a> <a><i
-								class="fa fa-thumbs-o-down pl-3 fa-lg" aria-hidden="true"></i> <%=bm.getDownvotes() %></a>
+							<%
+								System.out.println(bm.getBlogId() + "***");
+							
+								
+							%>
+							<a value="" id="up" onclick="upvote()"><i
+								class="fa fa-thumbs-o-up fa-lg" id="upi"
+								aria-hidden="true"></i> <span id="upvotecount"> <%=bm.getUpvotes()%>
+							</span></a> <a value="downvote&bid=<%=bm.getBlogId()%>" id="down"
+								onclick="downvote()"><i
+								class="fa fa-thumbs-o-down pl-3 fa-lg"
+								id="downi" aria-hidden="true"></i> <span id="downvotecount">
+									<%=bm.getDownvotes()%></span></a>
 
 							<div class="blue lighten-4 pull-right"
 								style="border-style: round; border-radius: 20px; display: inline-block;">
-								<img
-									src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg"
+								<img src="imagesdomain/<%=bm.getDimgpath()%>"
 									class="avatar img-fluid z-depth-1 rounded-circle"
-									alt="Responsive image" /> <a class="pl-1 mr-3" href="">
-									<% if(bm.getDname()!=null){ %> <%= bm.getDname() %> <%}%>
+									alt="Responsive image" /> <a class="pl-1 mr-3"
+									href="WorkSpaceContent?did=<%=bm.getDid()%>&dname=<%=bm.getDname()%>">
+									<%
+										if (bm.getDname() != null) {
+									%> <%=bm.getDname()%> <%
+ 	}
+ %>
 								</a>
 							</div>
 
@@ -194,21 +273,30 @@ pre {
 
 					<!--Comments-->
 					<div class="card card-comments mb-3 wow fadeIn">
-						<div class="card-header font-weight-bold"><%=arbcm.size() %>
+						<div class="card-header font-weight-bold"><%=arbcm.size()%>
 							Comment(s)
 						</div>
 						<div class="card-body">
-							<% System.out.println(bm.getBlogId()); if(arbcm!=null){ for(BlogCommentModel bcm : arbcm){ if(bcm!=null){ %>
+							<%
+								System.out.println(bm.getBlogId());
+								if (arbcm != null) {
+									for (BlogCommentModel bcm : arbcm) {
+										if (bcm != null) {
+							%>
 							<div class="media d-block d-md-flex mt-4">
 								<img class="d-flex mb-3 mx-auto rounded-circle"
-									src="ImageLoader?uid=<%=bcm.getUid() %>"
+									src="ImageLoader?uid=<%=bcm.getUid()%>"
 									alt="Generic placeholder image">
 								<div class="media-body text-center text-md-left ml-md-3 ml-0">
-									<h5 class="mt-0 font-weight-bold"><%=bcm.getUname() %></h5>
-									<%=bcm.getComment() %>
+									<h5 class="mt-0 font-weight-bold"><%=bcm.getUname()%></h5>
+									<%=bcm.getComment()%>
 								</div>
 							</div>
-							<%}}} %>
+							<%
+								}
+									}
+								}
+							%>
 
 						</div>
 					</div>
@@ -251,39 +339,35 @@ pre {
 					<!--Card-->
 					<div class="card mb-4 wow fadeIn">
 
-						<div class="card-header">Related articles</div>
+						<div class="card-header">Recent Blogs</div>
 
 						<!--Card content-->
 						<div class="card-body">
 
 							<ul class="list-unstyled">
-								<li class="media"><img class="d-flex mr-3"
-									src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-									alt="Generic placeholder image">
+								<%
+									int i = 0;
+									for (BlogModel bm1 : albm) {
+								%>
+								<li class="media">
 									<div class="media-body">
-										<a href="">
-											<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-												object</h5>
-										</a> Cras sit amet nibh libero, in gravida nulla (...)
-									</div></li>
-								<li class="media my-4"><img class="d-flex mr-3"
-									src="https://mdbootstrap.com/img/Photos/Others/placeholder6.jpg"
-									alt="An image">
-									<div class="media-body">
-										<a href="">
-											<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-												object</h5>
-										</a> Cras sit amet nibh libero, in gravida nulla (...)
-									</div></li>
-								<li class="media"><img class="d-flex mr-3"
-									src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg"
-									alt="Generic placeholder image">
-									<div class="media-body">
-										<a href="">
-											<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-												object</h5>
-										</a> Cras sit amet nibh libero, in gravida nulla (...)
-									</div></li>
+
+										<h5 class="mt-0 mb-1 font-weight-bold">
+											<a href="BlogContentSingle?bid=<%=bm1.getBlogId()%>"><%=bm1.getTitle()%></a>
+										</h5>
+										<small id="<%=i%>"></small>
+
+									</div>
+								</li>
+
+								<script type="text/javascript">
+        		    setTime(<%=i%>,<%=bm1.getTimestamp()%>)
+        		    </script>
+								<li><br></li>
+								<%
+									i++;
+									}
+								%>
 							</ul>
 
 						</div>
@@ -313,12 +397,13 @@ pre {
 };
 	
 	
-	var obj=<%=bm.getBlogContent()%>;
-	console.log(typeof obj);
+	
+	//console.log(typeof obj);
 	var quill;
     quill=new Quill('#editor',configForShow);
     console.log(quill);
-    quill.setContents(obj);
+    console.log(typeof '<%=bm.getBlogContent()%>');
+    quill.setContents(<%=bm.getBlogContent()%>);
     quill.enable(false);
 	
 	</script> </main>
@@ -352,6 +437,163 @@ pre {
         // Animations initialization
         new WOW().init();
     </script>
+
+
+	<script>
+            
+            var index;
+            
+            
+function getXmlHttpRequestObject()
+{
+var xmlHttpReq;
+
+if(window.XMLHttpRequest){
+    request=new window.XMLHttpRequest();
+}
+else if(window.ActiveXObject){
+    request=new window.ActiveXObject();
+}
+else{
+    request=null;
+}
+return request;
+}
+
+var state='<%=status%>';
+
+function upvote()
+{   
+	
+    var up=document.getElementById("up");
+    var val=up.value;
+    request=getXmlHttpRequestObject();
+    request.onreadystatechange=showVoteCount;
+    request.open("post","UpDownBlogs",true);
+    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");
+    
+
+	if(state=="up")
+	{
+	uicon=document.getElementById("upi");
+	dicon=document.getElementById("downi");
+	
+	uicon.setAttribute("class","fa fa-thumbs-o-up fa-lg");
+	dicon.setAttribute("class","fa fa-thumbs-o-down pl-3 fa-lg");
+	
+	state="none";
+	}
+	else if(state=="down")
+	{
+	uicon=document.getElementById("upi");
+	dicon=document.getElementById("downi");
+	
+	uicon.setAttribute("class","fa fa-thumbs-up fa-lg");
+	dicon.setAttribute("class","fa fa-thumbs-o-down pl-3 fa-lg");
+	
+	state="up";
+	}
+	else
+		{
+		uicon=document.getElementById("upi");
+		dicon=document.getElementById("downi");
+		
+		uicon.setAttribute("class","fa fa-thumbs-up fa-lg");
+		dicon.setAttribute("class","fa fa-thumbs-o-down pl-3 fa-lg");
+		
+		state="up";
+		}
+    
+    
+    var data="status=upvote&bid="+"<%=bm.getBlogId()%>";
+    console.log(data);
+    request.send(data);
+}
+
+function downvote()
+{   
+	
+	
+    
+    var down=document.getElementById("down");
+    var val=down.value;
+    request=getXmlHttpRequestObject();
+    request.onreadystatechange=showVoteCount;
+    request.open("post","UpDownBlogs",true);
+    request.setRequestHeader ("Content-Type", "application/x-www-form-urlencoded");
+    
+    if(state=="up")
+	{
+	uicon=document.getElementById("upi");
+	dicon=document.getElementById("downi");
+	
+	uicon.setAttribute("class","fa fa-thumbs-o-up fa-lg");
+	dicon.setAttribute("class","fa fa-thumbs-down pl-3 fa-lg");
+	
+	state="down";
+	}
+	else if(state=="down")
+	{
+	uicon=document.getElementById("upi");
+	dicon=document.getElementById("downi");
+	
+	uicon.setAttribute("class","fa fa-thumbs-o-up fa-lg");
+	dicon.setAttribute("class","fa fa-thumbs-o-down pl-3 fa-lg");
+	
+	state="none";
+	}
+	else
+		{
+		uicon=document.getElementById("upi");
+		dicon=document.getElementById("downi");
+		
+		uicon.setAttribute("class","fa fa-thumbs-o-up fa-lg");
+		dicon.setAttribute("class","fa fa-thumbs-down pl-3 fa-lg");
+		
+		state="down";
+		}
+    
+    var data="status=downvote&bid="+"<%=bm.getBlogId()%>";
+			console.log(data);
+			request.send(data);
+	}
+
+		function showVoteCount() {
+			if (request.readyState === 4 && request.status === 200) {
+				var p = document.getElementById("upvotecount");
+				var q = document.getElementById("downvotecount");
+				var updowncount = JSON.parse(request.responseText);
+				console.log(request.responseText);
+				p.innerHTML = updowncount.uvotes;
+				q.innerHTML = updowncount.dvotes;
+			}
+		}
+	console.log(state);
+		function setState(){
+		if(state=="up")
+			{
+			uicon=document.getElementById("upi");
+			dicon=document.getElementById("downi");
+			
+			uicon.setAttribute("class","fa fa-thumbs-up fa-lg");
+			dicon.setAttribute("class","fa fa-thumbs-o-down pl-3 fa-lg");
+			}
+		else if(state=="down")
+			{
+			uicon=document.getElementById("upi");
+			dicon=document.getElementById("downi");
+			
+			uicon.setAttribute("class","fa fa-thumbs-o-up fa-lg");
+			dicon.setAttribute("class","fa fa-thumbs-down pl-3 fa-lg");
+			}
+		}
+		setState();
+	</script>
+
+
+
+
+
 </body>
 
 </html>
