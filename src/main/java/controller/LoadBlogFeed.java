@@ -19,10 +19,12 @@ import dao.NotificationDao;
 import dao.QuestionDao;
 import dao.UserDao;
 import model.BlogModel;
+import model.DomainModel;
 import model.FacultyModel;
 import model.NotificationModel;
 import model.RelatedQuestionModel;
 import model.StudentModel;
+import model.UserModel;
 
 /**
  * Servlet implementation class LoadBlogFeed
@@ -49,28 +51,44 @@ public class LoadBlogFeed extends HttpServlet {
 	          HttpSession session=request.getSession();
 	          ServletContext context=getServletContext();
 	          
-	          String utype=(String)session.getAttribute("utype");
-	          StudentModel sm;
-	          FacultyModel fm;
-	          String id="",name;
 	          
-	          if(utype.equals("student"))
-	          {
-	              sm=(StudentModel)session.getAttribute("userModel");
-	              id=sm.getSid();
-	              
-	          }
-	          else if(utype.equals("faculty"))
-	          {
-	              fm=(FacultyModel)session.getAttribute("userModel");
-	              id=fm.getFid();
-	          }
+	          
+	         
+		          String utype=(String)session.getAttribute("utype");
+		          StudentModel sm;
+		          FacultyModel fm;
+		          String uid="",name;
+		          
+		          if(utype.equals("student"))
+		          {
+		              sm=(StudentModel)session.getAttribute("userModel");
+		              uid=sm.getSid();
+		              
+		          }
+		          else if(utype.equals("faculty"))
+		          {
+		              fm=(FacultyModel)session.getAttribute("userModel");
+		              uid=fm.getFid();
+		          }
+	          
+	          
+
+	          
+	          
 	          
 	          BlogDao bd=new BlogDao();
 	          
-	          ArrayList<BlogModel> albm=bd.getBlogFeed(id, context);
+	          ArrayList<BlogModel> albm=bd.getBlogFeed(uid, context);
+	          ArrayList<DomainModel> dm=bd.getActiveWorkspaces(context);
+	          long blogsCount=bd.getBlogCount(context);
+	          ArrayList<UserModel> um=bd.getTopWriters(context);
+	          ArrayList<BlogModel> albm1=bd.getTopBlogs(context);
 	          
 	          session.setAttribute("bloglist", albm);
+	          session.setAttribute("activedomainmodel",dm);
+	          session.setAttribute("blogcount",blogsCount);
+	          session.setAttribute("usermodel",um);
+	          session.setAttribute("topbloglist",albm1);
 	          
 	          response.sendRedirect("Blog_Feed.jsp");
 	          
