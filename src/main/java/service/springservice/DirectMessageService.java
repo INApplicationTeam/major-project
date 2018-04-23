@@ -3,6 +3,7 @@ package service.springservice;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import model.UserModel;
 import model.springmodel.Message;
@@ -20,7 +21,7 @@ public interface DirectMessageService {
 
 
 
-	HashMap<String, String> getMessageThreads(String id);
+	TreeMap<String, String> getMessageThreads(String id);
 
 
 
