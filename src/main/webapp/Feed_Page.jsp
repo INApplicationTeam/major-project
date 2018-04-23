@@ -403,6 +403,12 @@ list-style-image: none;
 			</div>
 		</a>
 		
+		<a href="LoadBlogFeed">
+			<div class="item">
+				<span class="fa fa-pencil-square"></span> Blogs
+			</div>
+		</a>
+		
 		<a onclick="destroyHandler()">
 		<div class="item">
                 <span class="fa fa-sign-out"></span>

@@ -2,11 +2,11 @@
 <%@page import="java.util.ArrayList"%>
 
 <%
-ArrayList<BlogModel> albm=(ArrayList<BlogModel>)session.getAttribute("bloglist");
-ArrayList<DomainModel> aldm=(ArrayList<DomainModel>)session.getAttribute("activedomainmodel");
-long bg=(Long)session.getAttribute("blogcount");
-ArrayList<BlogModel> albm1=(ArrayList<BlogModel>)session.getAttribute("topbloglist");
-ArrayList<UserModel> alum=(ArrayList<UserModel>)session.getAttribute("usermodel");
+	ArrayList<BlogModel> albm = (ArrayList<BlogModel>) session.getAttribute("bloglist");
+	ArrayList<DomainModel> aldm = (ArrayList<DomainModel>) session.getAttribute("activedomainmodel");
+	long bg = (Long) session.getAttribute("blogcount");
+	ArrayList<BlogModel> albm1 = (ArrayList<BlogModel>) session.getAttribute("topbloglist");
+	ArrayList<UserModel> alum = (ArrayList<UserModel>) session.getAttribute("usermodel");
 %>
 
 <!DOCTYPE html>
@@ -50,11 +50,9 @@ iframe {
 	margin: 10px;
 }
 
-
 b, strong {
 	font-weight: bold;
 }
-
 
 .blog {
 	font-family: "roboto";
@@ -78,59 +76,54 @@ pre {
 </style>
 
 <script>
+	function time_ago(time) {
 
-function time_ago(time) {
+		switch (typeof time) {
+		case 'number':
+			break;
+		case 'string':
+			time = +new Date(time);
+			break;
+		case 'object':
+			if (time.constructor === Date)
+				time = time.getTime();
+			break;
+		default:
+			time = +new Date();
+		}
+		var time_formats = [ [ 60, 'seconds', 1 ], // 60
+		[ 120, '1 minute ago', '1 minute from now' ], // 60*2
+		[ 3600, 'minutes', 60 ], // 60*60, 60
+		[ 7200, '1 hour ago', '1 hour from now' ], // 60*60*2
+		[ 86400, 'hours', 3600 ], // 60*60*24, 60*60
+		[ 172800, 'Yesterday', 'Tomorrow' ], // 60*60*24*2
+		[ 604800, 'days', 86400 ], // 60*60*24*7, 60*60*24
+		];
+		var seconds = (+new Date() - time) / 1000, token = 'ago', list_choice = 1;
 
-	  switch (typeof time) {
-	    case 'number':
-	      break;
-	    case 'string':
-	      time = +new Date(time);
-	      break;
-	    case 'object':
-	      if (time.constructor === Date) time = time.getTime();
-	      break;
-	    default:
-	      time = +new Date();
-	  }
-	  var time_formats = [
-	    [60, 'seconds', 1], // 60
-	    [120, '1 minute ago', '1 minute from now'], // 60*2
-	    [3600, 'minutes', 60], // 60*60, 60
-	    [7200, '1 hour ago', '1 hour from now'], // 60*60*2
-	    [86400, 'hours', 3600], // 60*60*24, 60*60
-	    [172800, 'Yesterday', 'Tomorrow'], // 60*60*24*2
-	    [604800, 'days', 86400], // 60*60*24*7, 60*60*24
-	  ];
-	  var seconds = (+new Date() - time) / 1000,
-	    token = 'ago',
-	    list_choice = 1;
-
-	  if (seconds == 0) {
-	    return 'Just now'
-	  }
-	  if (seconds < 0) {
-	    seconds = Math.abs(seconds);
-	    token = 'from now';
-	    list_choice = 2;
-	  }
-	  var i = 0,
-	    format;
-	  while (format = time_formats[i++])
-	    if (seconds < format[0]) {
-	      if (typeof format[2] == 'string')
-	        return format[list_choice];
-	      else
-	        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
-	    }
-	  return "on "+new Date(time).toDateString();
+		if (seconds == 0) {
+			return 'Just now'
+		}
+		if (seconds < 0) {
+			seconds = Math.abs(seconds);
+			token = 'from now';
+			list_choice = 2;
+		}
+		var i = 0, format;
+		while (format = time_formats[i++])
+			if (seconds < format[0]) {
+				if (typeof format[2] == 'string')
+					return format[list_choice];
+				else
+					return Math.floor(seconds / format[2]) + ' ' + format[1]
+							+ ' ' + token;
+			}
+		return "on " + new Date(time).toDateString();
 	}
-  
-  function setTime(id,time)
-  {
-  	document.getElementById(id).innerHTML=time_ago(new Date(time));
-  }
 
+	function setTime(id, time) {
+		document.getElementById(id).innerHTML = time_ago(new Date(time));
+	}
 </script>
 
 
@@ -143,122 +136,104 @@ function time_ago(time) {
 	<div id="editorque" style="display: none"></div>
 
 
-<script>
-	
-	var configque = {
-            "theme": "snow",
-            "modules": {
-            "toolbar": false
-}
-            
-};
-    
-    var quillBlogs=[];
-    
-    var quillque=new Quill('#editorque',configque);
-    
-    function setBlogContent(index,postIndex,blogText)
-    {
-    	console.log(blogText);
-		quillBlogs.push(blogText);									
-    	window.delta=blogText;
-    	var content="";
-    	var imgObj,count=0,count1=0;
-    	var endLineCounter=0;
-    	var isStillLeft=false;
-    	
-    	for(var i=0;i<delta.ops.length;i++)
-		{
-			var del=delta.ops[i];
-				
-			if(typeof del.insert!=='object' && count1==1)
-			{
-				if(del.insert.indexOf("\n")!=-1)
-				{
-					endLineCounter++;	
-				}
-				
-				if(endLineCounter<5)
-				{
-					count1=0;
-					content=content+del.insert.substr(1,del.insert.length);
-					continue;
-				}
-				else
-				{
-					isStillLeft=true;
-					break;
-				}
-				
+	<script>
+		var configque = {
+			"theme" : "snow",
+			"modules" : {
+				"toolbar" : false
 			}
-		
-			if(typeof del.insert !== 'object')
-			{
-				if(del.insert.indexOf("\n")!=-1)
-				{
-					endLineCounter++;	
+
+		};
+
+		var quillBlogs = [];
+
+		var quillque = new Quill('#editorque', configque);
+
+		function setBlogContent(index, postIndex, blogText) {
+			console.log(blogText);
+			quillBlogs.push(blogText);
+			window.delta = blogText;
+			var content = "";
+			var imgObj, count = 0, count1 = 0;
+			var endLineCounter = 0;
+			var isStillLeft = false;
+
+			for (var i = 0; i < delta.ops.length; i++) {
+				var del = delta.ops[i];
+
+				if (typeof del.insert !== 'object' && count1 == 1) {
+					if (del.insert.indexOf("\n") != -1) {
+						endLineCounter++;
+					}
+
+					if (endLineCounter < 5) {
+						count1 = 0;
+						content = content
+								+ del.insert.substr(1, del.insert.length);
+						continue;
+					} else {
+						isStillLeft = true;
+						break;
+					}
+
 				}
-				
-				if(endLineCounter<5)
-				{
-					content=content+del.insert;
+
+				if (typeof del.insert !== 'object') {
+					if (del.insert.indexOf("\n") != -1) {
+						endLineCounter++;
+					}
+
+					if (endLineCounter < 5) {
+						content = content + del.insert;
+					} else {
+						isStillLeft = true;
+						break;
+					}
+				} else if (count == 0) {
+					count++;
+					imgObj = del.insert;
+					count1 = 1;
 				}
-				else
-				{
-					isStillLeft=true;
-					break;
-				}
-			}						
-			else if(count==0)
-			{
-				count++;
-				imgObj=del.insert;
-				count1=1;
 			}
+
+			if (imgObj !== undefined) {
+				var opsarr = {
+					"ops" : [ {
+						"insert" : ""
+					} ]
+				};
+				opsarr.ops[0].insert = imgObj;
+				quillque.setContents(opsarr);
+				var imgarea = document.getElementsByClassName("blogImg")[index];
+				imgarea.innerHTML = quillque.root.innerHTML;
+
+				if (imgObj.hasOwnProperty('image')) {
+					var imgTag = imgarea.getElementsByTagName('p')[0].childNodes[0];
+					imgTag.setAttribute("class", "resize");
+				} else {
+					var imgTag = imgarea.getElementsByTagName('p')[0];
+					imgTag
+							.removeChild(imgarea.getElementsByTagName('p')[0].childNodes[0]);
+				}
+				imgObj = undefined;
+			}
+
+			var c = document.getElementsByClassName("blog");
+
+			if (content.length > 250) {
+				c[index].innerText = content.substr(0, 250) + "...";
+			}
+
+			else if (isStillLeft) {
+				c[index].innerText = content;
+			}
+
+			else {
+				c[index].innerText = content;
+				//document.getElementsByClassName("readBlog")[index].innerHTML="";
+			}
+
 		}
-						
-		if(imgObj!== undefined)
-		{
-			var opsarr={"ops":[{"insert":""}]};
-			opsarr.ops[0].insert=imgObj;
-			quillque.setContents(opsarr);
-			var imgarea=document.getElementsByClassName("blogImg")[index];
-			imgarea.innerHTML=quillque.root.innerHTML;
-			
-			if(imgObj.hasOwnProperty('image'))
-			{
-				var imgTag=imgarea.getElementsByTagName('p')[0].childNodes[0];
-				imgTag.setAttribute("class","resize");
-			}
-			else
-			{
-				var imgTag=imgarea.getElementsByTagName('p')[0];
-				imgTag.removeChild(imgarea.getElementsByTagName('p')[0].childNodes[0]);
-			}
-			imgObj=undefined;							
-		}                                               
-    
-		var c=document.getElementsByClassName("blog");
-                             
-    	if(content.length>250)
-    	{
-      		c[index].innerText=content.substr(0,250)+"...";
-    	}
-                           
-    	else if(isStillLeft)
-    	{
-    		c[index].innerText=content;
-    	}
-    	
-    	else
-   	 	{
-      		c[index].innerText=content;
-      		//document.getElementsByClassName("readBlog")[index].innerHTML="";
-    	}
-    	
-    }
-	
-	
 	</script>
 
 
@@ -305,17 +280,19 @@ function time_ago(time) {
 				<div class="project-hover">
 					<h3>MOST ACTIVE WORKSPACE</h3>
 					<hr />
-					<%  
-					
-					for(DomainModel dm:aldm){  %>
+					<%
+						for (DomainModel dm : aldm) {
+					%>
 					<h3>
 						<span class="badge"><a
-							href="WorkSpaceContent?did=<%= dm.getDid() %>&dname=<%= dm.getDname() %>"><%=dm.getDname() %></a></span>
+							href="WorkSpaceContent?did=<%=dm.getDid()%>&dname=<%=dm.getDname()%>"><%=dm.getDname()%></a></span>
 
 					</h3>
 
 
-					<%} %>
+					<%
+						}
+					%>
 				</div>
 			</div>
 			<div
@@ -324,7 +301,7 @@ function time_ago(time) {
 					<h2>TOTAL NUMBER OF BLOGS</h2>
 					<hr />
 					<h1>
-						<p class="badge"><%=bg %></p>
+						<p class="badge"><%=bg%></p>
 					</h1>
 					<p>Thank you for your contribution. Korero rewards all the blog
 						writers heads up!</p>
@@ -336,17 +313,21 @@ function time_ago(time) {
 				<div class="project-hover">
 					<h2>TOP WRITERS</h2>
 					<hr />
-					<%for(UserModel um:alum){ %>
+					<%
+						for (UserModel um : alum) {
+					%>
 					<p>
 					<div class="blue lighten-4"
 						style="border-style: round; border-radius: 20px; display: inline-block;">
-						<img src="ImageLoader?uid=<%= um.getUid() %>"
+						<img src="ImageLoader?uid=<%=um.getUid()%>"
 							class="avatar img-fluid z-depth-1 rounded-circle"
 							alt="Responsive image" /> <a class="pl-1 mr-3"
-							href="UserProfile?uid=<%= um.getUid() %>"><strong><%=um.getUname() %></strong></a>
+							href="UserProfile?uid=<%=um.getUid()%>"><strong><%=um.getUname()%></strong></a>
 					</div>
 					</p>
-					<%} %>
+					<%
+						}
+					%>
 				</div>
 			</div>
 			<div
@@ -354,14 +335,18 @@ function time_ago(time) {
 				<div class="project-hover">
 					<h2>TOP BLOGS</h2>
 					<hr />
-					<%for(BlogModel bm1:albm1){ %>
+					<%
+						for (BlogModel bm1 : albm1) {
+					%>
 					<p>
 					<h3>
 						<span class="badge"><a
-							href="BlogContentSingle?bid=<%=bm1.getBlogId()%>"><%=bm1.getTitle() %></a></span>
+							href="BlogContentSingle?bid=<%=bm1.getBlogId()%>"><%=bm1.getTitle()%></a></span>
 					</h3>
 					</p>
-					<%} %>
+					<%
+						}
+					%>
 
 				</div>
 			</div>
@@ -373,20 +358,27 @@ function time_ago(time) {
 		<div class="row">
 
 			<div class="col-md-9">
-				<%if(albm!=null){ for(int i=0;i<albm.size();i+=3){ %>
+				<%
+					if (albm != null) {
+						for (int i = 0; i < albm.size(); i += 3) {
+				%>
 				<div class="card-deck mt-4">
 					<!--Panel-->
-					<% BlogModel bm=albm.get(i); %>
+					<%
+					BlogModel bm;
+					if(i<albm.size()){
+						bm = albm.get(i);
+					%>
 					<div class="card ">
 						<div class="card-body">
 							<h4 class="card-title pt-2 mb-0">
-								<a href="BlogContentSingle?bid=<%=bm.getBlogId() %>"><strong><%=bm.getTitle() %></strong></a>
+								<a href="BlogContentSingle?bid=<%=bm.getBlogId()%>"><strong><%=bm.getTitle()%></strong></a>
 							</h4>
 							<small>- by</small> <a href="" class="mt-0 pt-0"
-								style="display: inline-block;"> <%=bm.getUname() %></a> in
+								style="display: inline-block;"> <%=bm.getUname()%></a> in
 							<div class="blue lighten-4"
 								style="border-style: round; border-radius: 20px; display: inline-block;">
-								<img src="imagesdomain/<%=bm.getDimgpath() %>"
+								<img src="imagesdomain/<%=bm.getDimgpath()%>"
 									class="avatar img-fluid z-depth-1 rounded-circle"
 									alt="Responsive image" />
 							</div>
@@ -394,130 +386,162 @@ function time_ago(time) {
 							<br>
 							<div class="card-text mb-1">
 								<span class="blogImg"></span>
-								<div class="blog" style="margin-bottom: 1px; height:176px;"
+								<div class="blog" style="margin-bottom: 1px; height: 176px;"
 									id="blogEditor<%=i%>"></div>
 							</div>
-							
-							
-<script>
-			
-			var index=<%=i%>;
-			var blogText=<%=bm.getBlogContent() %>;
-			setBlogContent(index,index,blogText);
-		</script>
-							
+
+
+							<script>
+								var index =
+							<%=i%>
+								;
+								var blogText =
+							<%=bm.getBlogContent()%>
+								;
+								setBlogContent(index, index, blogText);
+							</script>
+
 						</div>
 						<div class="card-footer">
-						<p class="card-text pt-1">
-								<small class="text-muted" id="<%=i%>"></small>  <span
+							<p class="card-text pt-1">
+								<small class="text-muted" id="<%=i%>"></small> <span
 									class="badge badge-danger float-right"><i
-										class="fa fa-thumbs-up px-1 py-1" aria-hidden="true"></i><%=bm.getUpvotes() %></span>
-								
+									class="fa fa-thumbs-up px-1 py-1" aria-hidden="true"></i><%=bm.getUpvotes()%></span>
+
 							</p>
 							<script type="text/javascript">
-        		    setTime(<%=i%>,<%=bm.getTimestamp() %>)
-        		    </script>
+								setTime(
+							<%=i%>
+								,
+							<%=bm.getTimestamp()%>
+								)
+							</script>
 						</div>
 					</div>
-
+<%} %>
 					<!--/.Panel-->
 					<!--Panel-->
-					<% bm=albm.get(i+1); %>
+					<%
+					if(i+1<albm.size()){
+						bm = albm.get(i + 1);
+					%>
 					<div class="card ">
 						<div class="card-body">
 							<h4 class="card-title pt-2 mb-0">
-								<a href="BlogContentSingle?bid=<%=bm.getBlogId() %>"><strong><%=bm.getTitle() %></strong></a>
+								<a href="BlogContentSingle?bid=<%=bm.getBlogId()%>"><strong><%=bm.getTitle()%></strong></a>
 							</h4>
 							<small>- by</small> <a href="" class="mt-0 pt-0"
-								style="display: inline-block;"> <%=bm.getUname() %></a> in
+								style="display: inline-block;"> <%=bm.getUname()%></a> in
 							<div class="blue lighten-4"
 								style="border-style: round; border-radius: 20px; display: inline-block;">
-								<img src="imagesdomain/<%=bm.getDimgpath() %>"
+								<img src="imagesdomain/<%=bm.getDimgpath()%>"
 									class="avatar img-fluid z-depth-1 rounded-circle"
 									alt="Responsive image" />
 							</div>
 
-							
+
 							<br>
 							<div class="card-text mb-1">
 								<span class="blogImg"></span>
-			<div class="blog" style="margin-bottom: 1px; height:176px;" id="blogEditor<%=i+1%>"></div>
-		</div>
-							
-				<script>
-			
-			var index=<%=i+1%>;
-			var blogText=<%=bm.getBlogContent() %>;
-			setBlogContent(index,index,blogText);
-		</script>
+								<div class="blog" style="margin-bottom: 1px; height: 176px;"
+									id="blogEditor<%=i + 1%>"></div>
+							</div>
 
-							
+							<script>
+								var index =
+							<%=i + 1%>
+								;
+								var blogText =
+							<%=bm.getBlogContent()%>
+								;
+								setBlogContent(index, index, blogText);
+							</script>
+
+
 						</div>
 						<div class="card-footer">
-						<p class="card-text pt-1">
-								<small class="text-muted" id="<%=i+1%>"></small>  <span
+							<p class="card-text pt-1">
+								<small class="text-muted" id="<%=i + 1%>"></small> <span
 									class="badge badge-danger float-right"><i
-										class="fa fa-thumbs-up px-1 py-1" aria-hidden="true"></i><%=bm.getUpvotes() %></span>
-								
+									class="fa fa-thumbs-up px-1 py-1" aria-hidden="true"></i><%=bm.getUpvotes()%></span>
+
 							</p>
 							<script type="text/javascript">
-        		    setTime(<%=i+1%>,<%=bm.getTimestamp() %>)
-        		    </script>
+								setTime(
+							<%=i + 1%>
+								,
+							<%=bm.getTimestamp()%>
+								)
+							</script>
 						</div>
-						
-					</div>
 
+					</div>
+<%} %>
 					<!--/.Panel-->
 					<!--Panel-->
-					<% bm=albm.get(i+2); %>
+					<%
+					if(i+2<albm.size()){
+						bm = albm.get(i + 2);
+					%>
 					<div class="card ">
 						<div class="card-body">
 							<h4 class="card-title pt-2 mb-0">
-								<a href="BlogContentSingle?bid=<%=bm.getBlogId() %>"><strong><%=bm.getTitle() %></strong></a>
+								<a href="BlogContentSingle?bid=<%=bm.getBlogId()%>"><strong><%=bm.getTitle()%></strong></a>
 							</h4>
 							<small>- by</small> <a href="" class="mt-0 pt-0"
-								style="display: inline-block;"> <%=bm.getUname() %></a> in
+								style="display: inline-block;"> <%=bm.getUname()%></a> in
 							<div class="blue lighten-4"
 								style="border-style: round; border-radius: 20px; display: inline-block;">
-								<img src="imagesdomain/<%=bm.getDimgpath() %>"
+								<img src="imagesdomain/<%=bm.getDimgpath()%>"
 									class="avatar img-fluid z-depth-1 rounded-circle"
 									alt="Responsive image" />
 							</div>
 							<br>
 							<div class="card-text mb-1">
-							
-							
+
+
 								<span class="blogImg"></span>
-			<div class="blog" style="margin-bottom: 1px; height:176px;" id="blogEditor<%=i+2%>"></div>
-		
+								<div class="blog" style="margin-bottom: 1px; height: 176px;"
+									id="blogEditor<%=i + 2%>"></div>
+
 							</div>
 							<script>
-			
-			var index=<%=i+2%>;
-			var blogText=<%=bm.getBlogContent() %>;
-			setBlogContent(index,index,blogText);
-		</script>
+								var index =
+							<%=i + 2%>
+								;
+								var blogText =
+							<%=bm.getBlogContent()%>
+								;
+								setBlogContent(index, index, blogText);
+							</script>
 
-							
+
 						</div>
 						<div class="card-footer">
-						<p class="card-text pt-1">
-								<small class="text-muted" id="<%=i+2%>"></small> <span
+							<p class="card-text pt-1">
+								<small class="text-muted" id="<%=i + 2%>"></small> <span
 									class="badge badge-danger float-right"><i
-										class="fa fa-thumbs-up px-1 py-1" aria-hidden="true"></i><%=bm.getUpvotes() %></span>
-								
+									class="fa fa-thumbs-up px-1 py-1" aria-hidden="true"></i><%=bm.getUpvotes()%></span>
+
 							</p>
 							<script type="text/javascript">
-        		    setTime(<%=i+2%>,<%=bm.getTimestamp() %>)
-        		    </script>
+								setTime(
+							<%=i + 2%>
+								,
+							<%=bm.getTimestamp()%>
+								)
+							</script>
 						</div>
 					</div>
-
+<%} %>
 					<!--/.Panel-->
 
 
 				</div>
-				<%}} %>
+				<%
+					}
+					}
+				%>
 			</div>
 
 
@@ -542,14 +566,14 @@ function time_ago(time) {
 								<br>
 								<div class="list-group">
 									<a href="WorkSpaceContent?did=1&dname=Computer Science"
-										class="list-group-item active">Computer Science</a>
-									<a href="WorkSpaceContent?did=3&dname=Information Technology"
-										class="list-group-item">Information Technology</a>
-									<a href="WorkSpaceContent?did=2&dname=Mechanical"
-										class="list-group-item">Mechanical</a> 
-									<a href="WorkSpaceContent?did=8&dname=Civil"
-										class="list-group-item">Civil</a> 
-									<a href="WorkSpaceContent?did=14&dname=Scholarship"
+										class="list-group-item active">Computer Science</a> <a
+										href="WorkSpaceContent?did=3&dname=Information Technology"
+										class="list-group-item">Information Technology</a> <a
+										href="WorkSpaceContent?did=2&dname=Mechanical"
+										class="list-group-item">Mechanical</a> <a
+										href="WorkSpaceContent?did=8&dname=Civil"
+										class="list-group-item">Civil</a> <a
+										href="WorkSpaceContent?did=14&dname=Scholarship"
 										class="list-group-item">Scholarship</a>
 								</div>
 							</div>
@@ -563,14 +587,14 @@ function time_ago(time) {
 								<br>
 								<div class="list-group">
 									<a href="WorkSpaceContent?did=19&dname=Dance"
-										class="list-group-item active">Dance</a> 
-									<a href="WorkSpaceContent?did=18&dname=Music"
-										class="list-group-item">Music</a> 
-										<a href="WorkSpaceContent?did=20&dname=Literary Club"
-										class="list-group-item">Literary Club</a> 
-										<a href="WorkSpaceContent?did=16&dname=Hostel"
-										class="list-group-item">Hostel</a> 
-										<a href="WorkSpaceContent?did=10&dname=Sports"
+										class="list-group-item active">Dance</a> <a
+										href="WorkSpaceContent?did=18&dname=Music"
+										class="list-group-item">Music</a> <a
+										href="WorkSpaceContent?did=20&dname=Literary Club"
+										class="list-group-item">Literary Club</a> <a
+										href="WorkSpaceContent?did=16&dname=Hostel"
+										class="list-group-item">Hostel</a> <a
+										href="WorkSpaceContent?did=10&dname=Sports"
 										class="list-group-item">Sports</a>
 								</div>
 							</div>
@@ -585,10 +609,10 @@ function time_ago(time) {
 									<a href="WorkSpaceContent?did=7&dname=Chemical"
 										class="list-group-item active">Chemical</a> <a
 										href="WorkSpaceContent?did=5&dname=Electronics"
-										class="list-group-item">Electronic &
-										Communication</a> <a href="WorkSpaceContent?did=9&dname=Library"
-										class="list-group-item">Library</a>
-									<a href="WorkSpaceContent?did=11&dname=Placement Cell"
+										class="list-group-item">Electronic & Communication</a> <a
+										href="WorkSpaceContent?did=9&dname=Library"
+										class="list-group-item">Library</a> <a
+										href="WorkSpaceContent?did=11&dname=Placement Cell"
 										class="list-group-item">Placement cell</a> <a
 										href="WorkSpaceContent?did=25&dname=Others"
 										class="list-group-item">Others</a>
@@ -616,7 +640,7 @@ function time_ago(time) {
 	</div>
 	</div>
 
-	 </main>
+	</main>
 	<!--Footer-->
 	<footer class="page-footer transparent mt-4">
 		<!--Copyright-->
@@ -637,14 +661,12 @@ function time_ago(time) {
 	<script type="text/javascript" src="kext/js/mdb.min.js"></script>
 
 	<script>
+		$('.carousel').carousel({
+			interval : 3000
+		})
 
-$('.carousel').carousel({
-  interval: 3000
-})
-
-new WOW().init();
-
-    </script>
+		new WOW().init();
+	</script>
 
 </body>
 </html>

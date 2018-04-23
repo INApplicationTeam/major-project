@@ -291,7 +291,9 @@ pre {
 				<div class="card-deck mt-4">
 					<!--Panel-->
 					<%
-						BlogModel bm = albm.get(i);
+						BlogModel bm;
+						if(i<albm.size()){
+						bm = albm.get(i);
 					%>
 					<div class="card ">
 						<div class="card-body">
@@ -299,9 +301,7 @@ pre {
 								<a href="BlogContentSingle?bid=<%=bm.getBlogId()%>"><strong><%=bm.getTitle()%></strong></a>
 							</h4>
 							<small>- by</small> <a href="" class="mt-0 pt-0"
-								style="display: inline-block;"> <%=bm.getUname()%></a>
-							
-							<br>
+								style="display: inline-block;"> <%=bm.getUname()%></a> <br>
 							<div class="card-text mb-1">
 								<span class="blogImg"></span>
 								<div class="blog" style="margin-bottom: 1px;"
@@ -337,10 +337,11 @@ pre {
 							</script>
 						</div>
 					</div>
-
+					<%} %>
 					<!--/.Panel-->
 					<!--Panel-->
 					<%
+					if(i+1<albm.size()){
 						bm = albm.get(i + 1);
 					%>
 					<div class="card ">
@@ -349,9 +350,7 @@ pre {
 								<a href="BlogContentSingle?bid=<%=bm.getBlogId()%>"><strong><%=bm.getTitle()%></strong></a>
 							</h4>
 							<small>- by</small> <a href="" class="mt-0 pt-0"
-								style="display: inline-block;"> <%=bm.getUname()%></a>
-							
-							<br>
+								style="display: inline-block;"> <%=bm.getUname()%></a> <br>
 							<div class="card-text mb-1">
 								<span class="blogImg"></span>
 								<div class="blog" style="margin-bottom: 1px;"
@@ -386,10 +385,11 @@ pre {
 							</script>
 						</div>
 					</div>
-
+					<%} %>
 					<!--/.Panel-->
 					<!--Panel-->
 					<%
+					if(i+2<albm.size()){
 						bm = albm.get(i + 2);
 					%>
 					<div class="card ">
@@ -398,8 +398,7 @@ pre {
 								<a href="BlogContentSingle?bid=<%=bm.getBlogId()%>"><strong><%=bm.getTitle()%></strong></a>
 							</h4>
 							<small>- by</small> <a href="" class="mt-0 pt-0"
-								style="display: inline-block;"> <%=bm.getUname()%></a>
-							<br>
+								style="display: inline-block;"> <%=bm.getUname()%></a> <br>
 							<div class="card-text mb-1">
 								<span class="blogImg"></span>
 								<div class="blog" style="margin-bottom: 1px;"
@@ -434,7 +433,7 @@ pre {
 							</script>
 						</div>
 					</div>
-
+					<%} %>
 					<!--/.Panel-->
 
 
