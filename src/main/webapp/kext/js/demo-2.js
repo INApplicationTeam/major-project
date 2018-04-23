@@ -7,8 +7,8 @@
     addListeners();
 
     function initHeader() {
-        width = window.innerWidth;
-        height = window.innerHeight;
+        width = 750;
+        height = 50;
         target = {x: 0, y: height};
 
         largeHeader = document.getElementById('large-header');
@@ -40,8 +40,8 @@
     }
 
     function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
+        width = 750;
+        height = 50;
         largeHeader.style.height = height+'px';
         canvas.width = width;
         canvas.height = height;
@@ -84,7 +84,7 @@
             _this.alpha -= 0.0005;
             ctx.beginPath();
             ctx.arc(_this.pos.x, _this.pos.y, _this.scale*10, 0, 2 * Math.PI, false);
-            ctx.fillStyle = 'rgba(255,255,255,'+ _this.alpha+')';
+            ctx.fillStyle = 'rgba(3,169,244,'+ _this.alpha+')';
             ctx.fill();
         };
     }

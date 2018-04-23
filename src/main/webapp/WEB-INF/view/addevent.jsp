@@ -15,6 +15,19 @@
         <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css" rel="stylesheet">
         <link href="https://cdn.quilljs.com/1.1.3/quill.bubble.css" rel="stylesheet">
         
+          <!-- Font Awesome -->
+    <link href="${pageContext.request.contextPath}/kext/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="${pageContext.request.contextPath}/kext/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="${pageContext.request.contextPath}/kext/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="${pageContext.request.contextPath}/kext/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/sidebar.css">
+        
+        	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        
+        
         <style>
         a{
         	color: #0099cc;
@@ -58,7 +71,72 @@
         </style>
 
 </head>
-<body>
+<body class="blue-grey lighten-5">
+<%@include file="navBarAndSideBar.jsp"%>
+
+ <main class="pt-4 mx-lg-5" id="blur">
+<div class="conatiner-fluid">
+
+<div class="row mt-10">
+    <div class="col-md-1"></div>
+        <div class="col-md-10">
+<div class="card mt-5 mb-5">
+
+    <!-- Card body -->
+    <div class="card-body">
+
+        <!-- Default form subscription -->
+	<form:form action="addEvent" modelAttribute="Events" method="POST" onsubmit=" return setFormFields()">			
+            <p class="h4 text-center py-4">Create Event</p>
+
+            <!-- Default input name -->
+            <label for="defaultFormCardNameEx" class="font-weight-light">Title</label>
+            <form:input path="title" type="text" id="defaultFormCardNameEx" cssClass="form-control"/>
+            
+            <br>
+  
+            <!-- Default input email -->
+           <label for="defaultFormCardEmailEx" class="font-weight-light">Description</label>
+			 <form:hidden path="description" id="contentid" cssClass="form-control"/>
+	
+			<div id="eventToolbar"></div>
+			<div id="eventEditor" style="height: 200px"></div>
+		
+			<br/>
+			
+			<label for="defaultFormCardEmailEx" class="font-weight-light">Start Date</label>
+			<input type="datetime-local"  id="start"/>
+			 <form:hidden id="startLong" path="startdate" cssClass="form-control"/>
+			 
+			 
+			 <label for="defaultFormCardEmailEx" class="font-weight-light">End Date</label>
+			 <input type="datetime-local"  id="end"/>
+			 <form:hidden id="endLong" path="enddate" cssClass="form-control"/>
+			 
+			 <div style="display: none">
+	              <form:select path="scope" >
+				<form:option value="${Events.scope}">${Events.scope}</form:option>
+				</form:select>
+				
+				<input type="submit" value="POST EVENT" id="submitEvent" />		 
+			 </div>
+
+            <div class="text-center py-4 mt-3">
+                <button class="btn btn-outline-primary" type="submit" onclick="addEvent()">Post<i class="fa fa-paper-plane-o ml-2"></i></button>
+            </div>
+        </form:form>
+        <!-- Default form subscription -->
+
+    </div>
+    <!-- Card body -->
+                      
+  </div>
+  </div>
+  </div>
+  </div>
+  </main>
+
+<!-- 
 	<h1>CREATE EVENT</h1>
 	<form:form action="addEvent" modelAttribute="Events" method="POST" onsubmit=" return setFormFields()">			
 			<table>
@@ -106,8 +184,15 @@
 			</table>
   
   	</form:form>
-  	
+  	 -->
+  	 
   	<script type="text/javascript">
+  	
+  	function addEvent()
+  	{
+  		$('#submitEvent').click();
+  	}
+  	
   		function setlongdates()
   		{
   			document.getElementById("startLong").value=new Date(document.getElementById("start").value).getTime();

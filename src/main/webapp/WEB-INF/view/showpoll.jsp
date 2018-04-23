@@ -21,6 +21,8 @@
     <!-- Your custom styles (optional) -->
     <link href="${pageContext.request.contextPath}/kext/css/style.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/sidebar.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/calendar.css">
+    
         
         <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -32,21 +34,83 @@
     <body class="blue-grey lighten-5">
     
     <%@include file="navBarAndSideBar.jsp" %>
-        <h1>VOTE FOR POLL</h1>
-         
-            
 
  <main class="pt-4 mx-lg-5" id="blur">
         <div class="container-fluid mt-5 pt-3 ml-3 pr-0">
 
 
+            <!-- Heading -->
+            <div class="card">
+
+                <!--Card content-->
+                <div class="card-body d-sm-flex justify-content-between py-3">
+
+                    <h4 class="mb-2 mb-sm-0">
+                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">CS-B/</a>
+                        <span>
+                        <!-- Split button -->
+                        <div class="btn-group">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                8th sem
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+                        </span>
+                    </h4>
+                    <a href="../../poll/createpoll.jsp?var=classpoll">
+                    <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
+                    </a>
+                    
+                   <a href="startClassDiscussion">
+                    <button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button>
+                    </a>
+                    
+                    <a href="addEventForm">
+                    <button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button>
+                    </a>
+                    
+                    <a href="../../Post_Question.jsp?classQue=true">
+                    <button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button>
+                    </a>
+                    <div>
+                    <a href=""><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
+                    <a href=""><i class="fa fa-circle" aria-hidden="true"></i> My Posts&nbsp;</a>
+                        <div class="btn-group">
+                            <a class="dropdown-toggle blue-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-pull-right mr-3">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Heading -->
+
+
 	<!--CARD 1 -->
-	<c:forEach var="poll" items="${showpoll}">
  <div class="row wow fadeIn">
+ 	
+ 
   <div class="col-md-9">
+	<c:forEach var="poll" items="${showpoll}">
 		<c:if test="${poll.isVoted}">
 
-			<div class="card mb-3">
+			 <div class="card mb-3 mt-4">
 				<div class="card-body pb-0">
 					<small> <a href="">${poll.userModel.uname}</a> created this poll <i
 						class="fa fa-eye float-right mr-2 ml-1" aria-hidden="true"> 18</i>
@@ -67,8 +131,7 @@
 					<c:forEach var="optiondetails" items="${poll.options}" begin="0" varStatus="innerloop">
 
 						<form:form action="votepoll" method="post" modelattribute="poll">
-								 <fmt:parseNumber var = "i" type = "number" value = "${optiondetails.pollResult.count/totalcount *100}" />
-					
+								 <fmt:formatNumber var = "i" type = "number" value = "${optiondetails.pollResult.count/totalcount *100}"  minFractionDigits="0" maxFractionDigits="0"/>
 						
 							<div class="row">
                                 <div class="col-md-11 pr-0 pb-4">
@@ -97,7 +160,7 @@
 		<c:if test="${!poll.isVoted}">
 			 <!--CARD 1 -->
 			 
-                    <div class="card mb-3">
+                    <div class="card mb-3 mt-4">
                         <div class="card-body pb-0">
                             <small>
                                 <a href="">${poll.userModel.uname}</a> created this poll</a>
@@ -122,12 +185,47 @@
                      <!--CARD 1 -->
 		
 		</c:if>
-		</div>
-	</div>
 	</c:forEach>
+		</div>
+
+			<div class="col-md-3 mx-0 my-0 px-0 py-0">
+
+                <ul class="list-group mt-4 ml-2 mb-4 wow tada">
+                    <li class="list-group-item d-flex justify-content-between align-items-center primary-color">
+                        <h4 class="mb-0 pb-0 white-text"><strong>Pinned Posts</strong></h4>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Cras justo odio
+                        <span class="badge badge-primary badge-pill">event</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Dapibus ac facilisis in
+                        <span class="badge badge-primary badge-pill">poll</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Morbi leo risus
+                        <span class="badge badge-primary badge-pill">discussion</span>
+                    </li>
+                </ul>
+                <div id="my-calendar" style="margin-left: 10px;"></div>
+                </div>
+
+	
+	</div>
+	
+	      <!--Grid row-->
+
+            <!--Grid row-->
+            <div class="row wow fadeIn"></div>
+            <!--Grid row-->
+
+            <!--Grid row-->
+            <div class="row wow fadeIn"></div>
+            <!--Grid row-->
 	<!--CARD 1 -->
 	</div>
 	</main>
+	
 	
 	<div  class="abc" style="display: none">
 	<form action="../../QueVotedController" id="pollSubmit" method="post" >
@@ -142,6 +240,16 @@
 
 	<a href="CDFhomestudent">Back</a>
 </body>
+ <!-- JQuery -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/mdb.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/calendar.js"></script>
+    <!-- Initializations -->
 <script type="text/javascript">
 function setPollIdAndOptionId(opid, queid)
 {

@@ -456,8 +456,7 @@ pre {
 										<li><a href="#blog" role="tab" data-toggle="tab"> <i
 												class="material-icons">favorite</i> My blogs
 										</a></li>
-										<li><a href="major/message/inbox"> My Messages </a></li>
-
+										
 									</ul>
 
 									<div class="tab-content gallery">
