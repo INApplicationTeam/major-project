@@ -38,8 +38,7 @@ public class PollDAOImpl implements PollDAO {
 			System.out.println("poll qid----->>>>"+pollqueid);
 			PollQueDetails pqd = currentSession.get(PollQueDetails.class, pollqueid);
 System.out.println(pqd);
-			Query<Integer> qr1 = currentSession.createQuery(
-					"select votestatus from PollVoteStatus where ccode =:uid and queid =:pid", Integer.class);
+			Query<Integer> qr1 = currentSession.createQuery("select votestatus from PollVoteStatus where ccode =:uid and queid =:pid", Integer.class);
 
 			qr1.setParameter("uid", uid);
 			qr1.setParameter("pid", pollqueid);

@@ -562,7 +562,7 @@ $.fn.zabuto_calendar_defaults = function () {
         month: month,
         show_previous: true,
         show_next: true,
-        cell_border: false,
+        cell_border: true,
         today: true,
         show_days: true,
         weekstartson: 1,
@@ -605,14 +605,7 @@ $.fn.zabuto_calendar_language = function (lang) {
 
    $(document).ready(function () {
     $("#my-calendar").zabuto_calendar({
-      legend: [
-        {type: "text", label: "Special event", badge: "00"},
-        {type: "block", label: "Regular event", classname: "purple"},
-        {type: "spacer"},
-        {type: "text", label: "Bad"},
-        {type: "list", list: ["grade-1", "grade-2", "grade-3", "grade-4"]},
-        {type: "text", label: "Good"}
-      ],
+      
       ajax: {
         url: "showEventOnCalender",
     	modal:true,
