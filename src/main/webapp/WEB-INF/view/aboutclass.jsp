@@ -1,3 +1,7 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,16 +10,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Material Design Bootstrap</title>
-    <!-- Font Awesome -->
-    <link href="${pageContext.request.contextPath}/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <title>About Class</title>
+       <!-- Font Awesome -->
+    <link href="${pageContext.request.contextPath}/kext/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/kext/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="${pageContext.request.contextPath}/css/mdb.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/kext/css/mdb.min.css" rel="stylesheet">
     <!-- Your custom styles (optional) -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+    <link href="${pageContext.request.contextPath}/kext/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/sidebar.css">
   <style type="text/css">
     @media (min-width: 800px) and (max-width: 850px) {
             .navbar:not(.top-nav-collapse) {
@@ -50,150 +54,79 @@
         <div class="container-fluid mt-5 pt-3 ml-3 pr-0 pl-5">
       <section>
 
-        <h4 class="h4 ml-5 display-4">CS-B</h4>
+        <h4 class="h4 ml-5 display-4">${classname}</h4>
         <hr class="mb-4">
         <h3 class="h3 mb-5 pl-5" style="display: inline-block;">Faculty List</h3>
+        <h3 class="h3 mb-5 pull-right pl-5 mr-5" style="padding-right: 100px;">Class Coordinator</h3>
         <h3 class="h3 mb-5 pull-right pl-5 mr-5" style="padding-right: 100px;">Class Representative</h3>
 
         <!--Grid row-->
         <div class="row wow fadeIn">
 
-          <!--Grid column-->
+          <!--Grid column -1 faculty-->
           <div class="col-lg-4 col-md-12 px-4">
-
+		<c:forEach var="faculty" items="${classSubjectFaculty}">
+		
             <!--First row-->
             <div class="row">
               <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
+                <img src="../../ImageLoader?uid=${faculty.userModel.uid }" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
               </div>
               <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">Operating System</span><span class="badge badge-danger ml-3">class coordinator</span></p>
+                <h5 class="feature-title">${faculty.userModel.uname }</h5>
+                <p class="grey-text"><span class="badge badge-primary">${faculty.subject.subject}</span></p>
               </div>
             </div>
             <!--/First row-->
 
             <div style="height:30px"></div>
-
-            <!--Second row-->
-            <div class="row">
-              <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">Operating System</span><span class="badge badge-danger ml-3">class coodinator</span></p>
-              </div>
-            </div>
-            <!--/Second row-->
-
-            <div style="height:30px"></div>
-
-            <!--Third row-->
-            <div class="row">
-              <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">Operating System</span></p>
-              </div>
-            </div>
-            <!--/Third row-->
-
+			
+            </c:forEach>
           </div>
           <!--/Grid column-->
 
-          <!--Grid column-->
+          <!--Grid column-2 CR 2-->
           <div class="col-lg-4 col-md-12 border-right">
-
+			<c:forEach var="cr" items="${CR}">
+			
             <!--First row-->
             <div class="row">
               <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
+                <img src="../../ImageLoader?uid=${cr.userModel.uid }" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
               </div>
               <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">Operating System</span></p>
+                <h5 class="feature-title">${cr.userModel.uname }</h5>
+               
               </div>
             </div>
             <!--/First row-->
 
             <div style="height:30px"></div>
-
-            <!--Second row-->
-            <div class="row">
-              <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">Operating System</span></p>
-              </div>
-            </div>
-            <!--/Second row-->
-
-            <div style="height:30px"></div>
-
-            <!--Third row-->
-            <div class="row">
-              <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">Operating System</span></p>
-              </div>
-            </div>
-            <!--/Third row-->
+			</c:forEach>
+          
 
           </div>
           <!--/Grid column-->
 
-          <!--Grid column-->
+          <!--Grid column coordinator-->
           <div class="col-lg-4 col-md-12">
-
+			<c:forEach var="coordinator" items="${classCoordinator}">
             <!--First row-->
             <div class="row">
 
               <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
+                <img src="../../ImageLoader?uid=${coordinator.fid }" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
               </div>
               <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">student</span><span class="badge badge-danger ml-3">class coodinator</span></p>
+                <h5 class="feature-title">${coordinator.name }</h5>
+                <p class="grey-text"><span class="badge badge-danger ml-3">class coordinator</span></p>
               </div>
             </div>
             <!--/First row-->
 
             <div style="height:30px"></div>
-
-            <!--Second row-->
-            <div class="row">
-              <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">student</span><span class="badge badge-danger ml-3">class coodinator</span></p>
-              </div>
-            </div>
-            <!--/Second row-->
-
-            <div style="height:30px"></div>
-
-            <!--Third row-->
-            <div class="row">
-              <div class="col-1 mr-3">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10">
-                <h5 class="feature-title">Rohit Jangid</h5>
-                <p class="grey-text"><span class="badge badge-primary">student</span><span class="badge badge-danger ml-3">class coodinator</span></p>
-              </div>
-            </div>
-            <!--/Third row-->
-
+			</c:forEach>
+            
           </div>
           <!--/Grid column-->
 
@@ -210,271 +143,30 @@
 
         <h2 class="my-5 h3 text-center">Student List</h2>
 
-        <!--First row-->
         <div class="row features-small wow fadeIn">
-
+	
+		<c:forEach var = "members" items="${classmembers }">
+        <!--First row-->
+        
           <!--Grid column-->
           <div class="col-xl-3 col-lg-6">
             <!--Grid row-->
-            <div class="row">
+            <div class="row" style="height:80px">
               <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
+                <img src="../../ImageLoader?uid=${members.sid }" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
               </div>
               <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
+                <h5 class="feature-title">${members.name}</h5>
               </div>
             </div>
             <!--/Grid row-->
           </div>
           <!--/Grid column-->
 
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-        </div>
         <!--/First row-->
+	</c:forEach>
 
-        <!--Second row-->
-        <div class="row features-small mt-4 wow fadeIn">
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-        </div>
-        <!--/Second row-->
-
-
-        <!--Second row-->
-        <div class="row features-small mt-4 wow fadeIn">
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-        </div>
-        <!--/Second row-->
-
-        <!--Second row-->
-        <div class="row features-small mt-4 wow fadeIn">
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-          <!--Grid column-->
-          <div class="col-xl-3 col-lg-6">
-            <!--Grid row-->
-            <div class="row">
-              <div class="col-2">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle avatar mr-2" alt="Responsive image">
-              </div>
-              <div class="col-10 mb-2 pl-3">
-                <h5 class="feature-title">Rohit Jangid</h5>
-              </div>
-            </div>
-            <!--/Grid row-->
-          </div>
-          <!--/Grid column-->
-
-        </div>
-        <!--/Second row-->
-
+       </div>
       </section>
       <!--Section: More-->
 
