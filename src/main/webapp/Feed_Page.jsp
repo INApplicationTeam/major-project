@@ -395,11 +395,13 @@ list-style-image: none;
 			</div>
 		</a> 
 		
+		
 		<a href="major/class/CDFhome<%=utype%>">
 			<div class="item">
 				<span class="fa fa-graduation-cap"></span> Class Discussion
 			</div>
 		</a>
+		
 		
 		<a href="LoadBlogFeed">
 			<div class="item">
@@ -568,80 +570,6 @@ list-style-image: none;
                 </div>
             </div>
 
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-sm my-0 py-0" id='modalbtn' data-toggle="modal" data-target="#exampleModal" style="visibility: hidden;">
-                Launch demo modal
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Choose your class</h5>
-
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!--Table-->
-                            <table class="table table-sm table-responsive-md btn-table">
-
-                                <!--Table head-->
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Class</th>
-                                        <th>batch</th>
-                                        <th>Subject</th>
-                                    </tr>
-                                </thead>
-                                <!--Table head-->
-
-                                <!--Table body-->
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button><span class="badge indigo">Coordinator</span></td>
-                                        <td>2018</td>
-                                        <td>Operating system</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button></td>
-                                        <td>2017</td>
-                                        <td>Soft computing</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button></td>
-                                        <td>2016</td>
-                                        <td>ho gaya</td>
-                                    </tr>
-                                </tbody>
-                                <!--Table body-->
-
-                            </table>
-                            <!--Table-->
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-<!-- ************************************************************************************************************* -->
-
 
 
 </div>
@@ -771,6 +699,7 @@ list-style-image: none;
 		
 		function viewNotification(i)
 		{   
+			console.log("in view"+i);
 		    request=getXmlHttpRequestObject();
 		    request.onreadystatechange=notificationViewed;
 		    request.open("post","ViewNotification",true);

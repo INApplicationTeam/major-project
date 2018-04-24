@@ -352,121 +352,7 @@
         var post_type,post_id;
         
         </script>
-	
-
-    <!--Main Navigation-->
-    <header>
-
-        <!-- Navbar -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar" style="margin-left: 30px;box-shadow: none;">
-            <div class="container-fluid">
-
-                <!-- Brand -->
-                <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">
-                    <strong class="blue-text">Korero</strong>
-                </a>
-
-                <!-- Collapse -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Links -->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                    <!-- Left -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link waves-effect" href="#">Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect" href="aboutClass">About this class</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect" href="https://mdbootstrap.com/getting-started/" target="_blank">Blogs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect" href="https://mdbootstrap.com/bootstrap-tutorial/" target="_blank">Notice</a>
-                        </li>
-                    </ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav nav-flex-icons">
-                        <li class="nav-item mr-4">
-                            <form class="form-inline ml-auto">
-                                <div class="md-form mt-0">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                </div>
-                            </form>
-                        </li>
-                        <li class="nav-item mr-2">
-                            <!-- Basic dropdown -->
-                            <div class="btn-group">
-                                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-bell"></i>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-pull-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action Another action Another action Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
-                            </div>
-                
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-
-            </div>
-        </nav>
-        <!-- Navbar -->
-
-                <!-- Sidebar -->
-        <div class="leftside pt-2" onmouseover="javascript:document.getElementById('blur').style.filter='blur(3px)';" onmouseout="javascript:document.getElementById('blur').style.filter='blur(0)';">
-            <div class="text-center" style="padding: 10px;">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle" style="max-height: 150px;"  alt="Responsive image">
-            </div>
-            <div class="item">
-                <span class="fa fa-bel"></span>
-                Shreeya Nagar
-            </div>
-            <div class="item">
-                <span class="fa fa-user"></span>
-                 Profile
-            </div>
-            <div class="item">
-                <span class="fa fa-pie-chart"></span>
-                Dashboard
-            </div>
-            <div class="item active">
-                <span class="fa fa-institution"></span>
-                Book Advice
-            </div>
-            <div class="item">
-                <span class="fa fa-bar-chart-o"></span>
-                Polling
-            </div>
-            <div class="item">
-                <span class="fa fa-graduation-cap"></span>
-                Class Discussion
-            </div> 
-            <div class="item">
-                <span class="fa fa-sign-out"></span>
-                LogOut
-            </div> 
-        </div>
-
-                <!-- Sidebar -->
-
-    </header>
-    <!--Main Navigation-->
+	   <%@include file="navBarAndSideBar.jsp" %>
 
     <!--Main layout-->
     <main class="pt-4 mx-lg-5" id="blur">
@@ -477,18 +363,10 @@
 
                 <!--Card content-->
                 <div class="card-body d-sm-flex justify-content-between py-3">
-
-                    <h4 class="mb-2 mb-sm-0">
-                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">CS-B/</a>
-                        <span>
-                        <!-- Split button -->
-                        <div class="btn-group">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                8th sem
-                            </a>
-                        </div>
-                        </span>
-                    </h4>
+                    <h5 class="mb-2 mb-sm-0">
+                        ${branchsec}/ ${sem } sem
+                        
+                    </h5>
                    <a href="../../poll/createpoll.jsp?var=classpoll"> <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button></a>
                    <a href="startClassDiscussion"><button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button></a>
                    <a href="addEventForm"><button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button></a>
@@ -687,7 +565,7 @@
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="">${posts.domain.dname}</a>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="">${posts.domain.dname}</a>
                					
                					<c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
@@ -750,7 +628,7 @@
 
 			<div class="card mb-3 mt-3">
 				<div class="card-body pb-0">
-					<small> <a href="">${posts.userModel.uname}</a> created this poll 
+					<small> <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created this poll 
 						<c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>
@@ -808,7 +686,7 @@
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="">${posts.userModel.uname}</a> created this poll</a>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created this poll</a>
                               <c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>
@@ -850,7 +728,7 @@
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="">${posts.userModel.uname} </a> initiated discussion <span id="discussionTime${postLoop.index}"></span>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname} </a> initiated discussion <span id="discussionTime${postLoop.index}"></span>
                               <c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>
@@ -958,7 +836,7 @@
                     <div class="card my-3">
                         <div class="card-body pb-2">
                             <small>
-                                <a href="">${posts.userModel.uname}</a> created event <span id="eventtimestamp${postLoop.index}"></span>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created event <span id="eventtimestamp${postLoop.index}"></span>
                                 <c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>

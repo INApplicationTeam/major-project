@@ -158,8 +158,8 @@
                 <div class="card-body d-sm-flex justify-content-between">
 
                     <h4 class="mb-2 mb-sm-0">
-                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">CS-B/</a>
-                        <span>8th sem/</span>
+                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">${branchsec }/</a>
+                        <span>${sem} sem/</span>
                         <span></span>
                     </h4>
 
@@ -184,7 +184,7 @@
 	                <div class="d-flex align-items-center py-4 px-4">
 	                    <div>
 	                    	<h5 class="blue-text" style="display: inline-block;"><i class="fa fa-pie-chart"></i></h5>
-	                    	<a href="">${notice.creator.uname}</a> issued <span id="noticeTimeStamp${noticeLoop.index}"></span> 
+	                    	<a href="../../UserProfile?uid=${notice.creator.uid }">${notice.creator.uname}</a> issued <span id="noticeTimeStamp${noticeLoop.index}"></span> 
 	                        <small class="float-right"><a href="#no" onclick="showViewers(${notice.noticeId})"><i class="fa fa-eye"></i></a>   ${notice.viewers}</small>
 	                        <h3 class="card-title pt-2"><strong>${notice.title}</strong></h3>
 	                        <p>

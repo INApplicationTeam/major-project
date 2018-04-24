@@ -289,6 +289,13 @@ public class ClassController implements ServletContextAware {
 		theModel.addAttribute("classNotices", classNotices);
 
 		theModel.addAttribute("bindingNotice", new Notice());
+		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 
 		return "CDFhomefaculty";
 
@@ -326,6 +333,8 @@ public class ClassController implements ServletContextAware {
 			theModel.addAttribute("coordinatorClassList", coordinatorClassList);
 			theModel.addAttribute("currentYear", year);
 			theModel.addAttribute("choosedClass", new ClassSubjectFaculty());
+			
+			
 
 		}
 		return "chooseclass";
@@ -501,11 +510,13 @@ public class ClassController implements ServletContextAware {
 	}
 	
 	@GetMapping("/ShowEventOfDay")
-	public String showEventOfDay(@RequestParam("id")String id,Model theModel)
+	public String showEventOfDay(@RequestParam("id")String id,Model theModel,HttpServletRequest request)
 	{
 		StringTokenizer tokens=new StringTokenizer(id,",");
 		ArrayList<Integer> idList=new ArrayList<>();
 		
+		HttpSession session =request.getSession();
+		String classId= (String)session.getAttribute("classid");
 		while(tokens.hasMoreTokens())
 		{
 			idList.add(Integer.parseInt(tokens.nextToken()));
@@ -513,6 +524,13 @@ public class ClassController implements ServletContextAware {
 		
 		List<Events> eventlist = eventservice.showEventsOfDay(idList);
 		theModel.addAttribute("eventlist", eventlist);
+		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 		
 		return "classevents";
 	}
@@ -796,6 +814,14 @@ public class ClassController implements ServletContextAware {
 		theModel.addAttribute("classNotices", classNotices);
 
 		theModel.addAttribute("bindingNotice", new Notice());
+		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		System.out.println("branch sec"+branchsec);
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 
 		return "CDFhomefaculty";
 
@@ -882,13 +908,19 @@ public class ClassController implements ServletContextAware {
 		HttpSession session = request.getSession();
 		String classId = (String) session.getAttribute("classid");
 		String viewerId = new UserModel().getUserId(session.getAttribute("userModel"));
+		
 
 		Notice currentNotice = noticeservice.showNotice(nid,classId,viewerId);
 
 		List<Notice> classNotices = new ArrayList<>();
 		classNotices.add(currentNotice);
-		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
 		theModel.addAttribute("classNotices", classNotices);
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 		
 		return "noticePage";
 	}
@@ -1010,6 +1042,16 @@ public class ClassController implements ServletContextAware {
 
 		ClassDiscussionReply cdr = new ClassDiscussionReply();
 		theModel.addAttribute("ClassReplyModel", cdr);
+		
+		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		System.out.println("branch sec"+branchsec);
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
+
 
 		return "savedPosts";
 	}

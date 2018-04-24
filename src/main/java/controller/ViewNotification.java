@@ -36,6 +36,8 @@ public class ViewNotification extends HttpServlet {
 		String nid=request.getParameter("nid");
 		String uid=request.getParameter("uid");
 		
+		
+		
 		NotificationDao nd=new NotificationDao();
 		nd.notificationViewed(nid,uid,context);
 		

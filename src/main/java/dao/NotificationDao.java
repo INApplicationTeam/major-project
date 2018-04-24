@@ -361,6 +361,7 @@ public class NotificationDao {
 			ps.setBoolean(1,true);
 			ps.setString(2,nid);
 			ps.setString(3,uid);
+			System.out.println(ps);
 			return ps.executeUpdate()>0;
 		}
 		catch(SQLException e)

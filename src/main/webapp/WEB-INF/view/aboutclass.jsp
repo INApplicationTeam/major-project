@@ -42,7 +42,7 @@
   </style>
 </head>
 
-<body>
+<body class="rgba-grey-slight">
 
     <!--Main Navigation-->
 <%@include file="navBarAndSideBar.jsp" %>

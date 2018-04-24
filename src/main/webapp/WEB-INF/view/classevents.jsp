@@ -162,25 +162,10 @@
                 <!--Card content-->
                 <div class="card-body d-sm-flex justify-content-between py-3">
 
-                    <h4 class="mb-2 mb-sm-0">
-                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">CS-B/</a>
-                        <span>
-                        <!-- Split button -->
-                        <div class="btn-group">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                8th sem
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </div>
-                        </span>
-                    </h4>
+                    <h5 class="mb-2 mb-sm-0">
+                       ${branchsec}/ ${sem } sem
+                             
+                    </h5>
                     <a href="../../poll/createpoll.jsp?var=classpoll">
                     <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
                     </a>
