@@ -427,7 +427,7 @@ list-style-image: none;
                 <div class="col-md-9">
             <!-- Heading -->
          
-            <div class="card card-body py-2 mt-2">
+            <div class="card card-body py-2 mt-2 wow fadeInLeft">
                     <a class="card-text black-text"><%String name[]=uname.split(" ");%>
                     <h4 class="h4-responsive pt-2">Hi <%=name[0] %> !</h4></a>
                 </div>
@@ -435,7 +435,7 @@ list-style-image: none;
 
                     <!--CARD 1 -->
                     <%if(rlqm!=null){int i=0;for(QuestionModel qm: rlqm.getRelatedque()){%>
-                    <div class="card mb-3">
+                    <div class="card mb-3 wow fadeInLeft">
                         <div class="card-body pb-0">
                             <small>
                                 <a href="UserProfile?uid=<%= qm.getUid() %>"><%= qm.getUname() %></a> posted <span id="<%=i%>"></span> in
@@ -548,7 +548,7 @@ list-style-image: none;
                     
                 </div>
                 
-                <div class="col-md-3">
+                <div class="col-md-3 wow fadeInRight">
                 <div id="my-calendar"></div> 
                 <% if(utype.equals("faculty")){ %>
                 <div class="card card-body py-2 mt-2">
@@ -616,7 +616,7 @@ list-style-image: none;
     <!-- Initializations -->
 		<script type="text/javascript">
 	
-//		new WOW().init();
+	new WOW().init();
 
 	
 	function getXmlHttpRequestObject()

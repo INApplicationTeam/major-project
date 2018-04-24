@@ -315,9 +315,9 @@ function setReportButton(x)
                         </mark>
                         <h3 class="h3-responsive mt-1"><strong>${question.que}</strong></h3>
                         <hr class="my-2">
-                        <p>On date ${question.timestamp} in <mark class="mr-2"><a href="../../WorkSpaceContent?did=${question.domain.did}&dname=${question.domain.dname}">${question.domain.dname}</a></mark>
+                        <p><span id="queTime"></span> in <mark class="mr-2"><a href="../../WorkSpaceContent?did=${question.domain.did}&dname=${question.domain.dname}">${question.domain.dname}</a></mark>
                         </p>
-                        
+                        <script>setTime('queTime',${question.timestamp})</script>
                         <p>
                             <c:forEach var="tag" items="${question.tags}">
                         		<span class=" orange badge badge-primary" >${tag.kname}</span>
@@ -357,7 +357,7 @@ function setReportButton(x)
                                 </a>
                                 <div class="media-body">
                                     <h5 class="media-heading"><a href="../../UserProfile?uid=${answer.userModel.uid}">${answer.userModel.uname}</a></h5>
-                                    <small class="text-muted">answered on ${answer.timestamp}</small>
+                                    <small class="text-muted">answered <span id="ansTime${answerLoop.index}"></span></small>
                                     <br><br>
                                     <p>
                                         <div class="toolbarans" id="toolbar${answerLoop.index}"></div>
@@ -373,6 +373,7 @@ function setReportButton(x)
                                     <button value="qid=${question.qid}&uid=${answer.userModel.uid}" class="report btn btn-danger " onclick="report(${answerLoop.index})">REPORT ABUSE <i class="fa fa-ban float-right"></i></button>    
                                     <input type="text" style="display:none" value="&uid=${answer.userModel.uid}&views=${answer.views}" id="hiddenanswer${answerLoop.index}"/>
                                     <script>
+                                    	setTime('ansTime${answerLoop.index}',${answer.timestamp});
                                     	setReportButton('${answerLoop.index}'); 
                                     	var view=${answer.viewed};
                                     	isviewed.push(view); 

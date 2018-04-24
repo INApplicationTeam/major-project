@@ -57,6 +57,30 @@ $(document).ready(function() {
 
 </script>
 
+<style type="text/css">
+.ui-widget-content a {
+    color: #000000;
+    background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+}
+.ui-widget {
+    font-family: Roboto;
+    font-size: 1.1em;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+border-bottom-right-radius: 0px;
+border-bottom-left-radius: 0px;
+border-top-right-radius: 0px;
+border-top-left-radius: 0px;
+}
+
+
+.ui-menu .ui-menu-item {
+
+list-style-image: none;
+
+}
+
+</style>
 
 <title>ADD CR</title>
 </head>

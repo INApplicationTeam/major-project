@@ -553,6 +553,224 @@
                 </div>
                 <!--/.Carousel Wrapper-->
                     <!--CARD 1 start -->
+                    <c:if test="${pinnedPostType == 'discussion'}">
+                    
+                    <div class="card mb-3 mt-3">
+                        <div class="card-body pb-0">
+                            <small>
+                                <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname} </a> initiated discussion <span id="discussionTime-1"></span>
+               	
+                            </small>
+                            <h4 style="font-size: 24px;" class="mt-2"><a>${pinnedPost.title}</a></h4>
+                            <small class="">
+                            	<strong>Description: </strong>
+                            	
+                            </small>
+                            <div id="disEditor-1" class="discEditor"></div>
+                            <script>
+								var pinDisContent=${pinnedPost.content};
+								setDiscussion('-1',pinDisContent);
+							</script>
+						
+                        </div>
+                        <div class="card-footer bg-transparent py-2 pl-2">
+                            
+                            <a onclick="showComments('first-1','firsthide-1')" id='firsthide-1' class="float-right blue-text"><i class="fa fa-angle-double-down ml-4" aria-hidden="true"></i><small> Show Comments</small></a>
+                            <a><i class="fa fa-angle-double-up float-right blue-text" aria-hidden="true" id="first-1" onclick="closeComments('first-1','firsthide-1')" style="display: none;"> Hide Comments</i></a>                            
+                        </div>
+                        <div class="card-footer bg-transparent py-2 pl-2 first-1" style="display: none;font-size: 15px;">
+                       
+                        <c:forEach var="classComment" items="${pinnedPost.classCommentList}" begin="0" varStatus="commentLoop">
+                            <div class="media d-block d-md-flex mt-2 ml-5">
+                                <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg" alt="Generic placeholder image">
+                                <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                    <a class="mt-0 blue-text">${classComment.userModel.uname}</a>
+                                    <a class="mt-0 blue-text pull-right" onclick="showReplyBox('replyBox-1${commentLoop.index}')"><i class="fa fa-reply" aria-hidden="true"></i></a>
+
+                                   	${classComment.commentText}
+									<br>
+									
+									<a href="#no" id="likeComment-1${commentLoop.index}" onclick="likeComment('-1${commentLoop.index}','${classComment.commentId}','${classComment.liked}')"><i class="fa fa-thumbs-o-up pl-4" aria-hidden="true" id="likeIcon-1${commentLoop.index}"></i> &nbsp;<span id="showLikes-1${commentLoop.index}"> ${classComment.likes}</span></a>
+                                  
+                                    <small id="commenttimestamp-1${commentLoop.index}" class="text-muted pull-right"></small>
+									
+								<c:forEach var="commentReply" items="${classComment.commentReplyList}" begin="0" varStatus="replyLoop">
+                                    <div class="media d-block d-md-flex mt-3">
+                                        <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                        <div class="media-body text-center text-md-left ml-md-3 ml-0">
+                                            <a class="mt-0 blue-text">${commentReply.userModel.uname}</a>
+                                            ${commentReply.replyText}
+                                            <br>
+                                            <small id="replytimestamp-1${commentLoop.index}${replyLoop.index}" class="text-muted pull-right">3 minutes ago</small>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+										var replytimestamp=${commentReply.timestamp};
+										document.getElementById('replytimestamp-1${commentLoop.index}${replyLoop.index}').innerHTML=time_ago(new Date(replytimestamp));
+									</script>
+								</c:forEach>
+                                    
+                                    <div class="media d-block d-md-flex mt-3">
+                                        <div id="replyBox-1${commentLoop.index}" class="media-body text-center text-md-left ml-md-3 ml-0" style="display:none;">
+                                                <label for="replyFormComment">Your Reply</label>
+                                                <form:form action="postCommentReply?commentId=${classComment.commentId}" modelAttribute="ClassReplyModel" method="POST">
+                                                	<form:textarea cssClass="form-control" rows="2" path="replyText"/>
+                                                	<button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-comment"></i> Reply</button>
+                                                </form:form>
+       
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+								if('${classComment.liked}'=='true')
+								{
+									document.getElementById('likeIcon-1${commentLoop.index}').setAttribute("class","fa fa-thumbs-up pl-4");
+								}
+								
+								var commenttimestamp=${classComment.timestamp};
+								document.getElementById('commenttimestamp-1${commentLoop.index}').innerHTML=time_ago(new Date(commenttimestamp));
+							</script>
+                       	</c:forEach> 
+                            
+                            <div class="form-group ml-5 mb-4">
+                                <label for="replyFormComment">Your comment</label>
+                                <form:form action="postComment?disId=${pinnedPost.id}" modelAttribute="ClassCommentModel" method="POST">
+                                	<form:textarea cssClass="form-control" path="commentText" id="replyFormComment" rows="3"/>
+                                	<button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-comment"></i> Post</button>
+                                </form:form>
+                                <script type="text/javascript">
+									var discussionTime=${pinnedPost.timeStamp};
+									setTime('discussionTime-1',discussionTime);
+								</script>
+                            </div>
+                        </div>
+                    </div>
+                   </c:if>
+                   
+                   <c:if test="${pinnedPostType == 'event'}">
+                     <div class="card my-3">
+                        <div class="card-body pb-2">
+                            <small>
+                                <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname}</a> created event <span id="eventtimestamp-1"></span>
+                           
+                            </small>
+                            <h4 style="font-size: 24px;" class="mt-2"><a>${pinnedPost.title}</a></h4>
+                            <small>
+                                <strong>Description: </strong>
+                                
+                            </small>
+                            <div id="eventEditor-1" class="eveEditor"></div>
+                            <div class="text-center" style='overflow:hidden; white-space:nowrap;'>
+                                <strong class="pr-1 wow bounceInLeft" data-wow-delay="0.4s"><span id="startdate-1"></span></strong>
+                                <i class="fa fa-circle-o" aria-hidden="true" style="display: inline-block;vertical-align: middle;"></i>
+                                <hr style='display:inline-block; width:60%;vertical-align: middle;' />
+                                <i class="fa fa-circle-o" aria-hidden="true" style="display: inline-block;vertical-align: middle;"></i>
+                                <strong class="pr-1 wow bounceInRight" data-wow-delay="0.4s"><span id="lastdate-1"></span></strong>
+                            </div>
+
+                        </div>
+                        
+
+                    </div>
+                    <script>
+						
+						var startDate=${pinnedPost.startdate};
+						var endDate=${pinnedPost.enddate};
+						var creationDate=${pinnedPost.timestamp};
+						var eventContent=${pinnedPost.description};
+					
+						setTime('startdate-1',startDate);
+						setTime('lastdate-1',endDate);
+						setTime('eventtimestamp-1',creationDate);
+						setEventContent('-1',eventContent);
+						
+					</script>
+                   </c:if>
+                   
+                   <c:if test="${pinnedPostType == 'poll'}">
+                   	<c:if test="${pinnedPost.isVoted}">
+
+			<div class="card mb-3 mt-3">
+				<div class="card-body pb-0">
+					<small> <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname}</a> created this poll 
+						
+               	
+				
+							
+					</small> <strong>
+						<h4 style="font-size: 24px;" class="mt-2">
+							<a>Q. ${pinnedPost.question}</a>
+						</h4>
+					</strong>
+					<c:set var = "totalcount" scope = "page" value = "0"/>
+					<c:forEach var="optiondetails" items="${pinnedPost.options}" begin="0" varStatus="innerloop">
+						<c:set var = "totalcount" scope = "page" value = "${totalcount + optiondetails.pollResult.count}"/>
+					</c:forEach>
+					
+					<c:forEach var="optiondetails" items="${pinnedPost.options}" begin="0" varStatus="innerloop">
+
+						<form:form action="votepoll" method="post" modelattribute="poll">
+						
+								 <fmt:formatNumber var = "i" type = "number" value = "${optiondetails.pollResult.count/totalcount *100}" minFractionDigits="0" maxFractionDigits="0"/>
+					
+						
+							<div class="row">
+                                <div class="col-md-11 pr-0 pb-4">
+                                    <div class="progress" style="height: 25px;border-bottom-right-radius: 0px;border-top-right-radius: 0;">
+                                        <div class="progress-bar success" role="progressbar" style="width: 0%" data-percentage="${i}" aria-valuemin="0" aria-valuemax="100">
+                                            <div style="position: absolute;float: left;margin-left: 20px;font-size: 20px;">
+                                                <strong class="black-text">${ optiondetails.options}</strong>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 pl-0">
+                                    <span class="badge cyan" style="font-size: 18px;display: block;"><strong>${i }%</strong></span>
+                                </div>
+                            </div>
+                            
+                            
+
+						</form:form>
+					</c:forEach>
+
+				</div>
+			</div>
+		</c:if>
+		
+		<c:if test="${!pinnedPost.isVoted}">
+			 <!--CARD 1 -->
+			 
+                    <div class="card mb-3 mt-3">
+                        <div class="card-body pb-0">
+                            <small>
+                                <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname}</a> created this poll</a>
+                              
+                              
+                            </small>
+                            
+                            <strong>
+                            <h4 style="font-size: 24px;" class="mt-2"><a>${pinnedPost.question}</a></h4>                                
+                            </strong>
+                            <c:forEach var="optiondetails" items="${pinnedPost.options}" begin="0" varStatus="innerloop">
+                            
+                            <div class="row mb-2">
+                                <div class="col-md-12 pr-3 pb-4 pt-1">
+                                    <button type="button" class="btn btn-default btn-lg btn-block pb-2 pt-2 mb-2" onclick="setPollIdAndOptionId(${optiondetails.pollResult.opid},${pinnedPost.queid})"><i class="fa fa-mail-forward pull-left" aria-hidden="true"></i>${optiondetails.options}</button>
+                                </div>
+                            </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                     <!--CARD 1 -->
+		
+		</c:if>
+                   	
+                   </c:if>
+                    
                   <c:set var="countQue" value="-1" scope="page" />
 
 			<c:forEach var="posts" items="${allClassPosts}" begin="0" varStatus="postLoop">

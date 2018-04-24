@@ -549,6 +549,7 @@ public class ClassDAOImpl implements ClassDAO {
 		Session currentSession=sessionFactory.getCurrentSession();
 		Query<Object>qr=null;
 		Question que=null;
+		ClassDiscussion discussion=null;
 		
 		List<Object> myPosts=null;
 		
@@ -571,10 +572,29 @@ public class ClassDAOImpl implements ClassDAO {
 		try{
 			myPosts=qr.getResultList();
 			
-			if(postType.equals(""))
+			if(postType.equals("discussion"))
 			{
+				for(Object disc:myPosts )
+				{
+					discussion=(ClassDiscussion)disc;
+					CommentLikers commentLikers=null;
 				
+					for(ClassDiscussionComment comment:discussion.getClassCommentList())
+					{
+						commentLikers=currentSession.get(CommentLikers.class,new CommentLikers(comment.getCommentId(),userId));
+						
+						if(commentLikers!=null)
+						{
+							comment.setLiked(true);
+						}
+						else
+						{
+							comment.setLiked(false);
+						}
+					}
+				}
 			}
+			
 			if(postType.equals("question"))
 			{
 				for(Object question: myPosts)

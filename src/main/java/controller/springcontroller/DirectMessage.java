@@ -3,11 +3,13 @@ package controller.springcontroller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,10 +25,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
+import dao.NotificationDao;
+import model.NotificationModel;
 import model.UserModel;
 import model.springmodel.Message;
 import model.springmodel.Question;
@@ -36,12 +41,20 @@ import service.springservice.DirectMessageService;
 
 @Controller
 @RequestMapping("/message")
-public class DirectMessage 
+public class DirectMessage implements ServletContextAware
 {
 
 	@Autowired
 	private DirectMessageService dmservice;
-		
+	
+	@Autowired
+	private ServletContext context;
+
+	@Override
+	public void setServletContext(ServletContext context) {
+		this.context = context;
+
+	}
 	
 	@PostMapping("/sendDM")
 	public String sendDM(@ModelAttribute ("message") Message themessage, HttpServletRequest request,Model theModel,@RequestParam (name="id",required=false) String receiverid,@RequestParam (name="name",required=false) String receivername,RedirectAttributes redirectAttributes)
@@ -51,22 +64,38 @@ public class DirectMessage
 		UserModel sender= new UserModel();
 		Object object=session.getAttribute("userModel");
 		String senderid=sender.getUserId(object);
+		String senderName=sender.getUserName(object);
 		sender.setUid(senderid);		
+		sender.setUname(senderName);
 		themessage.setSender(sender);
 		
 		Long timestamp= System.currentTimeMillis();
 		themessage.setTimestamp(timestamp);
 		dmservice.sendDM(themessage);
 		
-		System.out.println("rec=="+receivername);
+		NotificationModel nm = new NotificationModel();
+		nm.setMessage(themessage.getSender().getUname()+" messaged you");
+		nm.setTimestamp(new Date().getTime());
+		nm.setViewed(false);
+		nm.setUid(themessage.getReceiver().getUid());
+
+		NotificationDao notificationDao = new NotificationDao();
+		notificationDao.onMessageNotification(nm,context);
+
+		ArrayList<NotificationModel> alnm=new ArrayList<>();
+		alnm.add(nm);
 		
-        return "redirect:/major/message/inbox?id="+receiverid+"&name="+receivername 	;	
+		String msgJSON=new Gson().toJson(alnm);
+		
+		System.out.println("rec=="+receivername);
+		session.setAttribute("msgJSON",msgJSON);
+        return "redirect:/major/message/inbox?id="+receiverid+"&name="+receivername;
 	}
 	
 	
 	
 	@GetMapping("/inbox")
-	public String myMessages(HttpServletRequest request, Model theModel, @RequestParam (name="id",required=false) String receiverid,@RequestParam (name="name",required=false) String threadname)
+	public String myMessages(HttpServletRequest request, Model theModel,@RequestParam (name="id",required=false) String receiverid,@RequestParam (name="name",required=false) String threadname)
 	{
 		HttpSession session=request.getSession();
 
@@ -121,6 +150,8 @@ public class DirectMessage
 		theModel.addAttribute("userID", senderid);
 		theModel.addAttribute("threadName", threadname);
 		
+		String msgJSON=(String)session.getAttribute("msgJSON");
+		theModel.addAttribute("msgJSON",msgJSON);
 		return "inbox";
 		
 	}

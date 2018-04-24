@@ -389,12 +389,16 @@ public class ClassController implements ServletContextAware {
 		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid,uid);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
 		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classid, false, null);
+		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
+    
 		ClassSubjectFaculty csf= new ClassSubjectFaculty();
 		csf.setClassAttributes(classid);
 		String branchsec=csf.getBranch()+" - "+ csf.getSec();
 		int sem=csf.getSem();
 		theModel.addAttribute("branchsec", branchsec);
 		theModel.addAttribute("sem", sem);
+
 		return "showpoll";
 	}
 
@@ -505,6 +509,10 @@ public class ClassController implements ServletContextAware {
 		List<ClassDiscussion> discussionsList = discussionservice.showDiscussions(classId, userId);
 		model.addAttribute("discussionsList", discussionsList);
 		model.addAttribute("userId", userId);
+		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classId, false, null);
+		model.addAttribute("allPinnedPosts", allPinnedPosts);
+
 		ClassSubjectFaculty csf= new ClassSubjectFaculty();
 		csf.setClassAttributes(classId);
 		String branchsec=csf.getBranch()+" - "+ csf.getSec();
@@ -533,6 +541,9 @@ public class ClassController implements ServletContextAware {
 		List<Events> eventlist = eventservice.showEvents(classid);
 		theModel.addAttribute("eventlist", eventlist);
 		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classid, false, null);
+		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
+
 		ClassSubjectFaculty csf= new ClassSubjectFaculty();
 		csf.setClassAttributes(classid);
 		String branchsec=csf.getBranch()+" - "+ csf.getSec();
@@ -650,6 +661,9 @@ public class ClassController implements ServletContextAware {
 		List<Question> classQuestions = questionservice.showClassQuestions(classId);
 		theModel.addAttribute("questionList", classQuestions);
 		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classId, false, null);
+		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
+
 		ClassSubjectFaculty csf= new ClassSubjectFaculty();
 		csf.setClassAttributes(classId);
 		String branchsec=csf.getBranch()+" - "+ csf.getSec();
