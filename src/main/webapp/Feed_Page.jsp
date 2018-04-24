@@ -422,7 +422,7 @@ list-style-image: none;
 <!--Main Navigation-->
 
 <main class="pt-4 mx-lg-5" id="blur">
-	<div class="conatiner-fluid mt-5 pt-3 ml-3 pr-0">
+	<div class="conatiner-fluid mt-5 pt-3 ml-4 pl-1 pr-0">
 
             <div class="row wow fadeIn">
                 <div class="col-md-9">
