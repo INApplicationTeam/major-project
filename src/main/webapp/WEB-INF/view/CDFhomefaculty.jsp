@@ -955,7 +955,7 @@
                     
 					<!-- event start -->
 					<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
-                    <div class="card mb-3">
+                    <div class="card my-3">
                         <div class="card-body pb-2">
                             <small>
                                 <a href="">${posts.userModel.uname}</a> created event <span id="eventtimestamp${postLoop.index}"></span>
@@ -1008,12 +1008,12 @@
                 <div class="col-md-3 mx-0 my-0 px-0 py-0">
 
 				<div class="list-group mt-4 ml-2">
-				    <a href="issueNotice" class="list-group-item list-group-item-action waves-effect blue lighten-5 waves-effect">
-				        <i class="fa fa-plus pr-1" aria-hidden="true"></i> Issue notice
+				    <a href="issueNotice" class="list-group-item list-group-item-action waves-effect waves-effect">
+				        <i class="fa fa-plus pr-1 blue-text" aria-hidden="true"></i> Issue notice
 				    </a>
-				    <a href="../admin/addCRForm" class="list-group-item list-group-item-action waves-effect blue lighten-4"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change class representative</a>
-				    <a href="../admin/addformFaculty" class="list-group-item list-group-item-action waves-effect blue lighten-3"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change subject faculty</a>
-				    <a href="showMyDiscussions" class="list-group-item list-group-item-action waves-effect blue lighten-2 white-text"><i class="fa fa-asterisk pr-1" aria-hidden="true"></i>My all posts</a>
+				    <a href="../admin/addCRForm" class="list-group-item list-group-item-action waves-effect"><i class="fa fa-plus pr-1 blue-text" aria-hidden="true"></i>Add/Change class representative</a>
+				    <a href="../admin/addformFaculty" class="list-group-item list-group-item-action waves-effect"><i class="fa fa-plus pr-1 blue-text" aria-hidden="true"></i>Add/Change subject faculty</a>
+				    <a href="showMyDiscussions" class="list-group-item list-group-item-action waves-effect"><i class="fa fa-asterisk pr-1 blue-text" aria-hidden="true"></i>My all posts</a>
 				</div>
                 
                 <ul class="list-group mt-4 ml-2 mb-4 wow tada">

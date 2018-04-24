@@ -284,7 +284,7 @@ function time_ago(time) {
 										if (bcm != null) {
 							%>
 							<div class="media d-block d-md-flex mt-4">
-								<img class="d-flex mb-3 mx-auto rounded-circle"
+								<img class="d-flex mb-3 mx-auto rounded-circle" style="width:40px;height:40px;"
 									src="ImageLoader?uid=<%=bcm.getUid()%>"
 									alt="Generic placeholder image">
 								<div class="media-body text-center text-md-left ml-md-3 ml-0">

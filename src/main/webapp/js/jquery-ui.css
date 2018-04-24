@@ -62,7 +62,7 @@ and open the template in the editor.
 }
 
 .ui-front {
-	z-index: 100;
+	z-index: 1500;
 }
 
 

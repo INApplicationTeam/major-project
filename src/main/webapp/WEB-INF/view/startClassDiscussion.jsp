@@ -12,6 +12,40 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <link href="https://cdn.quilljs.com/1.1.3/quill.snow.css" rel="stylesheet">
         <link href="https://cdn.quilljs.com/1.1.3/quill.bubble.css" rel="stylesheet">
+        <style>
+		
+		iframe{
+				width:180px;
+  				height:90px;
+  				float: right;
+  				margin:10px;
+		}	
+		
+		b, strong {
+    			font-weight: bolder;
+		}
+
+		#editor{
+		  		font-family: "Roboto";
+		  		font-size: 16px;
+		  		font-weight: 400;
+		  		word-wrap: break-word;
+		}
+		
+		
+		pre{
+				font-size: 90%;
+		}
+
+		
+		.ql-snow .ql-editor img {
+    			max-width: 35%;
+    			max-height: 35%;
+		}
+        
+        </style>
+
+        
         
            <!-- Font Awesome -->
 <link href="${pageContext.request.contextPath}/kext/font-awesome-4.7.0/css/font-awesome.min.css"

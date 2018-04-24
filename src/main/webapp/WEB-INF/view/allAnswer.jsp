@@ -251,7 +251,7 @@ function setReportButton(x)
     <header>
 
         <!--Navbar-->
-        <nav class="navbar fixed-top navbar-toggleable-md navbar-dark bg-default" >
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-light white" >
             <div class="container" >
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -265,16 +265,16 @@ function setReportButton(x)
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../../MyFeed" style="color:black">Home</a>
+                            <a class="nav-link" href="../../MyFeed" >Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../MyProfile" style="color:black">Profile</a>
+                            <a class="nav-link" href="../../MyProfile" >Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../Post_Question.jsp" style="color:black">Ask a question</a>
+                            <a class="nav-link" href="../../Post_Question.jsp">Ask a question</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../../AboutUs.jsp" style="color:black">About Us</a>
+                            <a class="nav-link" href="../../AboutUs.jsp" >About Us</a>
                         </li>
                         
                         
@@ -300,7 +300,7 @@ function setReportButton(x)
 
     </header>
 
-    <main class="mt-3" style="margin-right: 0px;">
+    <main class="mt-5" style="margin-right: 0px;">
 
         <!--Main layout-->
         <div class="container" style="margin-left: 60px;margin-right:0px;">
@@ -313,7 +313,7 @@ function setReportButton(x)
                     <div class="jumbotron">
                         <mark> <a href="../../UserProfile?uid=${question.userModel.uid}">${question.userModel.uname}</a> asked
                         </mark>
-                        <h1 class="h1-responsive"><strong>${question.que}</strong></h1>
+                        <h3 class="h3-responsive mt-1"><strong>${question.que}</strong></h3>
                         <hr class="my-2">
                         <p>On date ${question.timestamp} in <mark class="mr-2"><a href="../../WorkSpaceContent?did=${question.domain.did}&dname=${question.domain.dname}">${question.domain.dname}</a></mark>
                         </p>
@@ -323,7 +323,8 @@ function setReportButton(x)
                         		<span class=" orange badge badge-primary" >${tag.kname}</span>
                         	</c:forEach>
                         </p>
-                      <button class="btn btn-info btn-sm" onclick="show()" id="ansbtn" style="font-size: 16px"></button>	<button class="btn btn-info btn-sm" id="followbtn" style="font-size: 16px" onclick="followQuestion('${question.qid}')"></button>
+                      <button class="btn btn-info btn-sm" onclick="show()" id="ansbtn" style="font-size: 16px"></button>
+                      	<button class="btn btn-info btn-sm" id="followbtn" style="font-size: 16px" onclick="followQuestion('${question.qid}')"></button>
                         <form style="display: none" id="answerarea">
                             <div id="toolbar"></div>
                             <div id="editor"></div>
@@ -352,7 +353,7 @@ function setReportButton(x)
                             <!--First review-->
                             <div class="media mb-1">
                                 <a class="media-left waves-light">
-                                    <img class="rounded-circle" src="<%="../../ImageLoader?uid="%>${answer.userModel.uid}"  alt="Generic placeholder image" class="img-circle img-responsive" style="width:100px; height: 100px;">
+                                    <img class="rounded-circle" style="width:50px;hieght:50px" src="<%="../../ImageLoader?uid="%>${answer.userModel.uid}"  alt="Generic placeholder image" class="img-circle img-responsive" style="width:100px; height: 100px;">
                                 </a>
                                 <div class="media-body">
                                     <h5 class="media-heading"><a href="../../UserProfile?uid=${answer.userModel.uid}">${answer.userModel.uname}</a></h5>
