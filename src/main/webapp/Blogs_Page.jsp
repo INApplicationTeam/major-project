@@ -274,9 +274,14 @@ pre {
 	</header>
 	<!-- Main navigation -->
 	<main class="mt-5"> <br>
-	<h3>
-		<strong><%=dname%></strong>
+	<div class="card mx-4 mt-3 stylish-color">
+		<div class="card-body">
+			<h3 class=" text-center white-text">
+		<strong>#<%=dname%></strong>
 	</h3>
+		
+		</div>
+	</div>
 
 
 	<div class="container-fluid mt-5">

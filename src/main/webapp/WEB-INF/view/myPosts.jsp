@@ -866,7 +866,7 @@
                   </c:if>
                     <!-- card end -->
                 </div>
-                <div class="col-md-3 mx-0 my-0 px-0 py-0">
+                <div class="col-md-3 mx-0 my-3 px-0 py-0">
 
                 <div id="my-calendar" style="margin-left: 10px;"></div>
                 </div>

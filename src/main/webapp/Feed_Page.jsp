@@ -329,11 +329,10 @@ list-style-image: none;
 					<li class="nav-item mr-4">
 							<div class="md-form mt-0">
 								<form class="navbar-form navbar-right" role="search" action="AskQuestion">
-								<i class="fa fa-search" aria-hidden="true"></i>
-                                    <input class="form-control" type="text" placeholder="Search -- Question,  @Username,  #Workspaces" id="search" name="search" aria-label="Search" style="width: 400px;">
+								    <input class="form-control" type="text" placeholder="Search -- Question,  @Username,  #Workspaces" id="search" name="search" aria-label="Search" style="width: 400px;">
 							<span class="material-input"></span>
 							 <button type="submit" class="btn btn-info btn-sm" >
-								<i class="fa fa-search"></i><div class="ripple-container"></div>
+								<i class="fa fa-search"></i>
 							</button>
 						</form>
 							</div>
@@ -387,7 +386,7 @@ list-style-image: none;
 		
 		<a href="book advisory/bookhome.jsp">
 			<div class="item active">
-				<span class="fa fa-institution"></span> Book Advice
+				<span class="fa fa-book"></span> Book Advice
 			</div>
 		</a>
 		
@@ -405,7 +404,7 @@ list-style-image: none;
 		
 		<a href="LoadBlogFeed">
 			<div class="item">
-				<span class="fa fa-pencil-square"></span> Blogs
+				<span class="fa fa-pencil"></span> Blogs
 			</div>
 		</a>
 		

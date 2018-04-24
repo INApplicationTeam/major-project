@@ -26,6 +26,39 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/sidebar.css">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<style>
+		
+		iframe{
+				width:180px;
+  				height:90px;
+  				float: right;
+  				margin:10px;
+		}	
+		
+		b, strong {
+    			font-weight: bolder;
+		}
+
+		#editor{
+		  		font-family: "Roboto";
+		  		font-size: 16px;
+		  		font-weight: 400;
+		  		word-wrap: break-word;
+		}
+		
+		
+		pre{
+				font-size: 90%;
+		}
+
+		
+		.ql-snow .ql-editor img {
+    			max-width: 35%;
+    			max-height: 35%;
+		}
+        
+        </style>
+
 	
         
 </head>
@@ -59,7 +92,7 @@
 			<div id="editor" style="height: 200px"></div>
 			
             <div class="text-center py-4 mt-3">
-                <button class="btn btn-outline-primary" type="submit" onclick="submitNotice()">Post<i class="fa fa-paper-plane-o ml-2"></i></button>
+                <button class="btn btn-outline-primary" onclick="return submitNotice();">Post<i class="fa fa-paper-plane-o ml-2"></i></button>
             </div>
             
             <div style="display:none">
@@ -97,7 +130,17 @@
 	
 	function submitNotice()
 	{
-		$('#submitNoticeInput').click();
+		console.log(checkNotice());
+		if(checkNotice())
+			{
+			$('#submitNoticeInput').click();
+			return true;
+			}
+		else
+			{
+			alert("Information you want to convey through notice must have more than 100 characters");
+			return false;
+			}
 	}
 	
             var toolbarOptions =[
@@ -127,6 +170,32 @@
            	{
            		document.getElementById("contentid").value=JSON.stringify(quill.getContents());
            	}        
+           	
+           	
+            var TT;
+            
+            function checkNotice()
+            {
+             
+             window.delta=quill.getContents();
+     		var content="";
+     		for(var i=0;i<delta.ops.length;i++)
+     		{
+     			var del=delta.ops[i];
+     			content=content+del.insert;
+     		}
+     	
+     		if(content.replace(/\n/g, '').trim().length<=100)
+     		{
+     			return false;
+     		}
+     		else
+     		{	
+              return true;
+     		}
+
+            }
+               
 	</script>
 </body>
 </html>

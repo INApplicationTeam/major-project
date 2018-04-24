@@ -28,16 +28,7 @@
         	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         
         
-        <style>
-        a{
-        	color: #0099cc;
-        }
-        
-        img.resize {
-  				max-width:15%;
-  				max-height:15%;
-  				float: right;
-		}
+       <style>
 		
 		iframe{
 				width:180px;
@@ -45,30 +36,31 @@
   				float: right;
   				margin:10px;
 		}	
-		.card img {
-    			width: auto;
-    			height: auto;
-		}
-
+		
 		b, strong {
-    			font-weight: bold;
+    			font-weight: bolder;
 		}
 
+		#eventEditor{
+		  		font-family: "Roboto";
+		  		font-size: 16px;
+		  		font-weight: 400;
+		  		word-wrap: break-word;
+		}
+		
 		
 		pre{
 				font-size: 90%;
 		}
 
-		.ql-container.ql-snow {
-    			border: 1px solid #ccc;
-		}
-
+		
 		.ql-snow .ql-editor img {
     			max-width: 35%;
     			max-height: 35%;
 		}
         
         </style>
+
 
 </head>
 <body class="blue-grey lighten-5">
