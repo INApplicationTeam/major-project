@@ -104,8 +104,7 @@ $(document).ready(function() {
 						href="../../MyFeed">Home <span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
-						href="https://mdbootstrap.com/material-design-for-bootstrap/"
-						target="_blank">About this class</a></li>
+						href="aboutClass">About this class</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
 						href="https://mdbootstrap.com/getting-started/">Blogs</a>
 					</li>

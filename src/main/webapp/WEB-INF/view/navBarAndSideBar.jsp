@@ -40,8 +40,7 @@
 						href="../../MyFeed">Home <span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
-						href="https://mdbootstrap.com/material-design-for-bootstrap/"
-						target="_blank">About this class</a></li>
+						href="aboutClass">About this class</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
 						href="https://mdbootstrap.com/getting-started/">Blogs</a>
 					</li>
@@ -130,13 +129,21 @@
 			</div>
 		</a>
 		
+		<a onclick="destroyHandler()">
 		<div class="item">
                 <span class="fa fa-sign-out"></span>
                 LogOut
-            </div> 
+            </div>
+           </a> 
 	</div>
 	<!-- Sidebar -->
 
 </header>
 <!--Main Navigation-->
+<<script type="text/javascript">
+function destroyHandler()
+{
+	     	window.location="../../LogOut";
+}
+</script>
 
