@@ -509,11 +509,10 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </a>
                             <div class="dropdown-menu dropdown-pull-right mr-3">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                                <a class="dropdown-item" href="showPoll">Polls</a>
+                                <a class="dropdown-item" href="showDiscussions">Discussions</a>
+                                <a class="dropdown-item" href="showEvents">Events</a>
+                                <a class="dropdown-item" href="showClassQuestions">Questions</a>
                             </div>
                         </div>
 
@@ -1014,7 +1013,7 @@
 				    </a>
 				    <a href="../admin/addCRForm" class="list-group-item list-group-item-action waves-effect blue lighten-4"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change class representative</a>
 				    <a href="../admin/addformFaculty" class="list-group-item list-group-item-action waves-effect blue lighten-3"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add/Change subject faculty</a>
-				    <a href="#" class="list-group-item list-group-item-action waves-effect blue lighten-2 white-text"><i class="fa fa-asterisk pr-1" aria-hidden="true"></i>My all posts</a>
+				    <a href="showMyDiscussions" class="list-group-item list-group-item-action waves-effect blue lighten-2 white-text"><i class="fa fa-asterisk pr-1" aria-hidden="true"></i>My all posts</a>
 				</div>
                 
                 <ul class="list-group mt-4 ml-2 mb-4 wow tada">

@@ -548,6 +548,7 @@ public class ClassDAOImpl implements ClassDAO {
 		
 		Session currentSession=sessionFactory.getCurrentSession();
 		Query<Object>qr=null;
+		Question que=null;
 		
 		List<Object> myPosts=null;
 		
@@ -569,6 +570,19 @@ public class ClassDAOImpl implements ClassDAO {
 		
 		try{
 			myPosts=qr.getResultList();
+			
+			if(postType.equals(""))
+			{
+				
+			}
+			if(postType.equals("question"))
+			{
+				for(Object question: myPosts)
+				{
+					que=(Question)question;
+					System.out.println(que.getMostUpvotedAnswer());
+				}
+			}
 			
 			if(postType.equals("poll"))
 			{

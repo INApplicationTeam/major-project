@@ -402,7 +402,6 @@ function time_ago(time) {
 	var quill;
     quill=new Quill('#editor',configForShow);
     console.log(quill);
-    console.log(typeof '<%=bm.getBlogContent()%>');
     quill.setContents(<%=bm.getBlogContent()%>);
     quill.enable(false);
 	

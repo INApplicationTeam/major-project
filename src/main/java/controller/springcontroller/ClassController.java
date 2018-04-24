@@ -905,27 +905,72 @@ public class ClassController implements ServletContextAware {
 		return "noticePage";
 	}
 
-	@GetMapping("/showMyPosts")
-	public String showMyPosts(HttpServletRequest request, Model theModel) {
+	@GetMapping("/showMyDiscussions")
+	public String showMyDiscussions(HttpServletRequest request, Model theModel) {
+		HttpSession session = request.getSession();
+
+		String userId = new UserModel().getUserId(session.getAttribute("userModel"));
+		String classId = (String) session.getAttribute("classid");
+
+		ClassDiscussionComment cdc = new ClassDiscussionComment();
+		theModel.addAttribute("ClassCommentModel", cdc);
+
+		ClassDiscussionReply cdr = new ClassDiscussionReply();
+		theModel.addAttribute("ClassReplyModel", cdr);
+
+		List<Object> myDiscussions = classservice.getMyPosts(classId, userId, "discussion");
+		theModel.addAttribute("allMyPosts", myDiscussions);
+
+		theModel.addAttribute("postType","discussion");
+		
+		return "myPosts";
+	}
+	
+	@GetMapping("/showMyQuestions")
+	public String showMyQuestions(HttpServletRequest request, Model theModel) {
 		HttpSession session = request.getSession();
 
 		String userId = new UserModel().getUserId(session.getAttribute("userModel"));
 		String classId = (String) session.getAttribute("classid");
 
 		List<Object> myQuestions = classservice.getMyPosts(classId, userId, "question");
-		theModel.addAttribute("myQuestions", myQuestions);
+		theModel.addAttribute("allMyPosts", myQuestions);
 
-		List<Object> myPolls = classservice.getMyPosts(classId, userId, "poll");
-		theModel.addAttribute("myPolls", myPolls);
-
-		List<Object> myEvents = classservice.getMyPosts(classId, userId, "event");
-		theModel.addAttribute("myEvents", myEvents);
-
-		List<Object> myDiscussions = classservice.getMyPosts(classId, userId, "discussion");
-		theModel.addAttribute("myDiscussion", myDiscussions);
+		theModel.addAttribute("postType","question");
 
 		return "myPosts";
 	}
+	
+	@GetMapping("/showMyPolls")
+	public String showMyPolls(HttpServletRequest request, Model theModel) {
+		HttpSession session = request.getSession();
+
+		String userId = new UserModel().getUserId(session.getAttribute("userModel"));
+		String classId = (String) session.getAttribute("classid");
+
+		List<Object> myPolls = classservice.getMyPosts(classId, userId, "poll");
+		theModel.addAttribute("allMyPosts", myPolls);
+		
+		theModel.addAttribute("postType","poll");
+
+		return "myPosts";
+	}
+	
+	@GetMapping("/showMyEvents")
+	public String showMyEvents(HttpServletRequest request, Model theModel) {
+		HttpSession session = request.getSession();
+
+		String userId = new UserModel().getUserId(session.getAttribute("userModel"));
+		String classId = (String) session.getAttribute("classid");
+
+		List<Object> myEvents = classservice.getMyPosts(classId, userId, "event");
+		theModel.addAttribute("allMyPosts", myEvents);
+		
+		theModel.addAttribute("postType","event");
+		
+		return "myPosts";
+	}
+
 
 	@PostMapping("/saveAsBookmark")
 	public void saveAsBookmark(HttpServletRequest request, HttpServletResponse response,
