@@ -26,9 +26,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/sidebar.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/kext/css/calendar.css">
 	
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-	<style>
+	 <style>
         
         img.resize {
   				max-width:15%;
@@ -75,6 +73,7 @@
 		}
         
         </style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         
         
         <script type="text/javascript">
@@ -163,39 +162,13 @@
                 <div class="card-body d-sm-flex justify-content-between py-3">
 
                     <h4 class="mb-2 mb-sm-0">
-                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">CS-B/</a>
+                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">GLOBAL EVENT</a>
                         <span>
                         <!-- Split button -->
-                        <div class="btn-group">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                8th sem
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </div>
+                        
                         </span>
                     </h4>
-                    <a href="../../poll/createpoll.jsp?var=classpoll">
-                    <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
-                    </a>
                     
-                   <a href="startClassDiscussion">
-                    <button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button>
-                    </a>
-                    
-                    <a href="addEventForm">
-                    <button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button>
-                    </a>
-                    
-                    <a href="../../Post_Question.jsp?classQue=true">
-                    <button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button>
-                    </a>
 <!--                   <form class="d-flex justify-content-center">
                         <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
                         <button class="btn btn-primary btn-sm my-0 p" type="submit">
@@ -203,10 +176,7 @@
                         </button>
                  </form>
 -->
-                    <div>
-                    <a href=""><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
-                    <a href=""><i class="fa fa-circle" aria-hidden="true"></i> My Posts</a>
-                    </div>
+                    
                 </div>
             </div>
             <!-- Heading -->
@@ -222,16 +192,14 @@
  <div class="card mb-3 mt-4">
                         <div class="card-body pb-2">
                             <small>
-                                <a href="">${events.userModel.uname }</a> created event on <span id="createddate${loop.index}"></span>
-                                <i class="fa fa-eye float-right mr-2 ml-1" aria-hidden="true"> 18</i>
-                                <a class="blue-text"><i class="fa fa-thumb-tack float-right blue-text mr-2" aria-hidden="true"></i></a>
-                                <a class="blue-text"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
+                                <a href="">${events.userModel.uname }</a> created event <span id="createddate${loop.index}"></span>
+                                
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a>${events.title}</a></h4>
                             <small>
-                                <strong>Description: </strong>
+                                <strong>Description: </strong>	
                             </small>
-                            <div id="eventEditor${loop.index}" class="eveEditor"></div>	
+                            <div id="eventEditor${loop.index}" class="eveEditor"></div>
                             <div class="text-center" style='overflow:hidden; white-space:nowrap;'>
                                 <strong class="pr-1 wow bounceInLeft" data-wow-delay="0.4s" >From <span id="startdate${loop.index}"></span></strong>
                                 <i class="fa fa-circle-o" aria-hidden="true" style="display: inline-block;vertical-align: middle;"></i>
@@ -268,24 +236,8 @@
                         
                    <div class="col-md-3 mx-0 my-0 px-0 py-0">
 
-                <ul class="list-group mt-4 ml-2 mb-4">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0 pb-0"><strong>Pinned Posts</strong></h4>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Cras justo odio
-                        <span class="badge badge-primary badge-pill">event</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Dapibus ac facilisis in
-                        <span class="badge badge-primary badge-pill">poll</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Morbi leo risus
-                        <span class="badge badge-primary badge-pill">discussion</span>
-                    </li>
-                </ul>
-                <div id="my-calendar" style="margin-left: 10px;"></div>
+                
+                <div id="my-calendar" style="margin-left: 10px; margin-top:20px"></div>
                 </div>
                 </div>
                 
@@ -310,7 +262,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/mdb.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/calendar.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/calendar1.js"></script>
     <!-- Initializations -->
 <!-- 
 	<hr>

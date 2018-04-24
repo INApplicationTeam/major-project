@@ -685,7 +685,7 @@ list-style-image: none;
     <script type="text/javascript" src="kext/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="kext/js/mdb.min.js"></script>
-    <script type="text/javascript" src="kext/js/calendar.js"></script>
+    <script type="text/javascript" src="js/calendar.js"></script>
 
     <!-- Initializations -->
 		<script type="text/javascript">

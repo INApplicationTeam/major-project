@@ -31,12 +31,23 @@ public class EventDAOImpl implements EventDAO {
 	public ArrayList<CalenderEvents> eventsForCalender(Integer year, Integer month, String scope, String classId) {
 	
 		Session currentSession= sessionFactory.getCurrentSession();
-		Query<Object[]> qr=currentSession.createQuery("select eid,title,DATE_FORMAT(FROM_UNIXTIME(startdate/1000),'%Y-%m-%d') from Events where eid in (select postid from ClassPosts where post_type=:post_type and classid=:classid) and EXTRACT(MONTH from FROM_UNIXTIME(startdate/1000))=:month and EXTRACT(YEAR from FROM_UNIXTIME(startdate/1000))=:year order by startdate",Object[].class);
-		qr.setParameter("post_type","event");
-		qr.setParameter("classid",classId);
-		qr.setParameter("month",month);
-		qr.setParameter("year",year);
-		
+		Query<Object[]> qr=null;
+		if(scope.equals("class"))
+		{
+			qr=currentSession.createQuery("select eid,title,DATE_FORMAT(FROM_UNIXTIME(startdate/1000),'%Y-%m-%d') from Events where eid in (select postid from ClassPosts where post_type=:post_type and classid=:classid) and EXTRACT(MONTH from FROM_UNIXTIME(startdate/1000))=:month and EXTRACT(YEAR from FROM_UNIXTIME(startdate/1000))=:year order by startdate",Object[].class);
+			qr.setParameter("post_type","event");
+			qr.setParameter("classid",classId);
+			qr.setParameter("month",month);
+			qr.setParameter("year",year);
+		}
+		else if(scope.equals("global"))
+		{
+			qr=currentSession.createQuery("select eid,title,DATE_FORMAT(FROM_UNIXTIME(startdate/1000),'%Y-%m-%d') from Events where scope=:scope and EXTRACT(MONTH from FROM_UNIXTIME(startdate/1000))=:month and EXTRACT(YEAR from FROM_UNIXTIME(startdate/1000))=:year order by startdate",Object[].class);
+			qr.setParameter("scope",scope);
+			qr.setParameter("month",month);
+			qr.setParameter("year",year);
+		}
+			
 		List<Object[]> events=qr.getResultList();
 		ArrayList<CalenderEvents> calenderEventList=new ArrayList<>();
 		CalenderEvents calenderEvent=null;
