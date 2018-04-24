@@ -314,8 +314,7 @@ list-style-image: none;
 						href="../../MyFeed">Home <span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
-						href="major/message/inbox"
-						target="_blank">Message</a></li>
+						href="major/message/inbox">Message</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
 						href="Post_Question.jsp">Ask a question</a>
 					</li>
@@ -444,7 +443,7 @@ list-style-image: none;
                             </small>
                             <h4 style="font-size: 24px"  class="mt-2"><a href="major/question/allAnswers?qid=<%=qm.getQid()%>" style="color: black"><%= qm.getQue() %></a></h4>
                             <div class="white" style="border-style: round;border-radius: 20px;display: inline-block;">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
+                                <img src="ImageLoader?uid=<%= qm.getTopAnswerer() %>" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
                                 <a class="pl-1" href="ImageLoader?uid=<%= qm.getTopAnswerer() %>">
 									<%if(qm.getAnswererName().equals("No one")){%><a style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
 											<%}else{%><a href="UserProfile?uid=<%= qm.getTopAnswerer() %>" style="color: #0099cc;"> <%= qm.getAnswererName() %></a>
