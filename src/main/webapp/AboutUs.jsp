@@ -79,22 +79,21 @@
             <h2 class="h2-responsive wow fadeInDown">Contact us</h2>
         </div>
 
-        <!--Section: Contact-->
         <section id="contact">
             <div class="row">
                 <!--First column-->
                 <div class="col-md-3">
                 <div class="card-container">
                     
-                <div class="cardr">
+                <div class="cardr" style="display:none;">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/riya.jpg"/>
+                            <img src="images/rotating_card_profile3.png"/>
                         </div>
                         <div class="content">
                             <div class="main">
                                 <h3 class="name">Riya Godwani</h3>
-                                <p class="profession">Designer</p>
+                                <p class="profession"></p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -104,7 +103,7 @@
                     </div> <!-- end front panel -->
                     <div class="back">
                         <div class="header">
-                            <h5 class="motto">"Hey there! I am Riya.May you enjoy your experiences at Korero"</h5>
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
                         <div class="content">
                             <div class="main">
@@ -149,18 +148,18 @@
                 <!--/First column-->
 
                 <!--second column-->
-                <div class="col-md-3">
+                <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/rohan.jpg"/>
+                            <img src="kext/img/11.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Rohan Shrimal</h3>
-                                <p class="profession">Back-end Developer</p>
+                                <h3 class="name">Rohit jangid</h3>
+                                <p class="profession">CEO</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -170,7 +169,7 @@
                     </div> <!-- end front panel -->
                     <div class="back">
                         <div class="header">
-                            <h5 class="motto">"Hey there! I am Rohan.May you enjoy your experiences at Korero"</h5>
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
                         <div class="content">
                             <div class="main">
@@ -215,18 +214,18 @@
                 <!--/second column-->
 
                 <!--third column-->
-                <div class="col-md-3">
+                <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/sarthak1.jpg"/>
+                            <img src="kext/img/22.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Sarthak Jain</h3>
-                                <p class="profession">Back-end Developer</p>
+                                <h3 class="name">Pranavkant Trivedi</h3>
+                                <p class="profession">co-developer</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -235,9 +234,9 @@
                         </div>
                     </div> <!-- end front panel -->
                     <div class="back">
-                        <div class="header"> <h5 class="motto">"Hey there! I am Sarthak.May you enjoy your experiences at Korero"</h5>
+                        <div class="header">
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
-                            <h5 class="motto">
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
@@ -281,18 +280,18 @@
                 <!--/third column-->
 
                 <!--fourth column-->
-                <div class="col-md-3">
+                <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
-                <div class="cardr">
+                <div class="cardr" style="display:none;">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/shreeya.jpg"/>
+                            <img src="images/rotating_card_profile3.png"/>
                         </div>
                         <div class="content">
                             <div class="main">
                                 <h3 class="name">Shreeya Nagar</h3>
-                                <p class="profession">Front-end Developer</p>
+                                <p class="profession"></p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -302,7 +301,7 @@
                     </div> <!-- end front panel -->
                     <div class="back">
                         <div class="header">
-                            <h5 class="motto">"Hey there! I am Shreeya.May you enjoy your experiences at Korero"</h5>
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
                         <div class="content">
                             <div class="main">
