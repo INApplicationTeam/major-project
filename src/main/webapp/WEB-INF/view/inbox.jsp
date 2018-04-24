@@ -330,6 +330,7 @@ function time_ago(time) {
 											alt="Responsive image">
 									</div>
 								</div>
+								
 							</c:if>
 							
 							<script>
@@ -340,10 +341,37 @@ function time_ago(time) {
 							
 							</div>
 						</div>
-						
-						</c:if>
-						
-						<c:if test="${fn:length(conversation) gt 0}">
+						<div class="card"
+							style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: 1px solid rgba(0, 0, 255, .45);">
+							<!-- Auto-resizing textarea -->
+							<div class="form mx-3 mb-3">
+								<div class="form-row">
+									<div class="col-11 mr-0 pr-0">
+									<form:form action="sendDM?id=${message.receiver.uid}&name=${message.receiver.uname}" modelAttribute="message" method="POST">
+										<label for="exampleFormControlTextarea1"><small>Send
+												a message</small></label>
+									<form:hidden path="receiver.uid" id="receiverId"/>
+									<div style="display:none">
+									<input type="submit" value="SEND" id="submitMsg"/>
+									</div>
+										<form:textarea cssClass="form-control"
+											id="exampleFormControlTextarea1" rows="1" path="message"/>
+										</form:form>	
+									</div>
+									<div class="col-1">
+										<br>
+										<br> <a class="ml-4 pt-3"><i
+											class="fa fa-send blue-text" onclick="submitMessage()"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:if>
+					
+						<c:if test="${flag ==true }">
+					<c:if test="${fn:length(conversation) == 0}">
+					
+					
 						<!--/.Panel-->
 						<div class="card"
 							style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: 1px solid rgba(0, 0, 255, .45);">
@@ -372,9 +400,12 @@ function time_ago(time) {
 						</div>
 						
 					</c:if>
+					</c:if>
 					</div>
-					<c:if test="${fn:length(conversation)==0}">
+					<c:if test="${fn:length(conversation)==0 }">
+					<c:if test="${flag == false}">
 					<h1> Welcome to Messaging</h1>
+					</c:if>
 					</c:if>
 				</div>
 			</div>

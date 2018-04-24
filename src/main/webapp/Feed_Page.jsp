@@ -396,11 +396,13 @@ list-style-image: none;
 			</div>
 		</a> 
 		
+		
 		<a href="major/class/CDFhome<%=utype%>">
 			<div class="item">
 				<span class="fa fa-graduation-cap"></span> Class Discussion
 			</div>
 		</a>
+		
 		
 		<a href="LoadBlogFeed">
 			<div class="item">
@@ -606,25 +608,38 @@ list-style-image: none;
 
                                 <!--Table body-->
                                 <tbody>
+                                <c:forEach var="coordinator" items="${coordinatorClassList}">
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button><span class="badge indigo">Coordinator</span></td>
-                                        <td>2018</td>
-                                        <td>Operating system</td>
+                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0" onclick="coordinatorFunction()">${coordinator.branch}-${coordinator.sec}</button></td>
+                                        <td>${coordinator.batch}</td>
+                                        <td><span class="badge indigo">Coordinator</span></td>
                                     </tr>
+				                 <form:form action="classdiscussionfaculty" modelAttribute="choosedClass" method="POST">
+									<form:hidden path="classid" value="${coordinator.classid}"/>
+									<form:hidden path="yearOfTeaching" value="${currentYear}"/>
+									<input type="submit" value="Go To Class" id="submitCoordinator">
+								</form:form>
+                                    </c:forEach>
+                                    
+                                    <c:forEach var="subjectClass" items="${subjectClassList}">
                                     <tr>
                                         <th scope="row">2</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button></td>
-                                        <td>2017</td>
-                                        <td>Soft computing</td>
+                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0" onclick="facultyFunction()">${subjectClass.branch}-${subjectClass.sec}</button></td>
+                                        <td>${subjectClass.batch}</td>
+                                        <td><span class="badge indigo">${subjectClass.subject.subject}</span></td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">CS-B</button></td>
-                                        <td>2016</td>
-                                        <td>ho gaya</td>
-                                    </tr>
+                                    		<form:form action="classdiscussionfaculty" modelAttribute="choosedClass" method="POST">
+												<form:hidden path="classid" value="${subjectClass.classid}"/>
+												<form:hidden path="yearOfTeaching" value="${currentYear}"/>
+												<input type="submit" value="Go To Class" id="submitFaculty">
+											</form:form>
+                                    </c:forEach>
+                                    
+             
                                 </tbody>
+                                <!--Table body-->
+
                                 <!--Table body-->
 
                             </table>
@@ -772,6 +787,7 @@ list-style-image: none;
 		
 		function viewNotification(i)
 		{   
+			console.log("in view"+i);
 		    request=getXmlHttpRequestObject();
 		    request.onreadystatechange=notificationViewed;
 		    request.open("post","ViewNotification",true);
