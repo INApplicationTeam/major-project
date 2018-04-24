@@ -145,6 +145,13 @@ public class ClassController implements ServletContextAware {
 			theModel.addAttribute("classNotices", classNotices);
 
 			theModel.addAttribute("bindingNotice", new Notice());
+			
+			ClassSubjectFaculty csf= new ClassSubjectFaculty();
+			csf.setClassAttributes(classid);
+			String branchsec=csf.getBranch()+" - "+ csf.getSec();
+			int sem=csf.getSem();
+			theModel.addAttribute("branchsec", branchsec);
+			theModel.addAttribute("sem", sem);
 
 			return "CDFhomestudent";
 		}
@@ -226,6 +233,13 @@ public class ClassController implements ServletContextAware {
 		theModel.addAttribute("classNotices", classNotices);
 
 		theModel.addAttribute("bindingNotice", new Notice());
+		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classid);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 
 		return "CDFhomestudent";
 	}
@@ -377,9 +391,14 @@ public class ClassController implements ServletContextAware {
 		
 		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classid, false, null);
 		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
+    
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classid);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 
-		
-		
 		return "showpoll";
 	}
 
@@ -494,6 +513,13 @@ public class ClassController implements ServletContextAware {
 		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classId, false, null);
 		model.addAttribute("allPinnedPosts", allPinnedPosts);
 
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		model.addAttribute("branchsec", branchsec);
+		model.addAttribute("sem", sem);
+		
 		return "classDiscussions";
 	}
 
@@ -518,6 +544,12 @@ public class ClassController implements ServletContextAware {
 		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classid, false, null);
 		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
 
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classid);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 
 		return "classevents";
 
@@ -632,7 +664,13 @@ public class ClassController implements ServletContextAware {
 		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classId, false, null);
 		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
 
-
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
+		
 		return "showClassQuestions";
 	}
 
@@ -648,7 +686,13 @@ public class ClassController implements ServletContextAware {
 		theModel.addAttribute("pendingPosts", pendingPostsList);
 
 		theModel.addAttribute("acceptOrReject", new ClassPosts());
-
+		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
 		return "showPendingPosts";
 	}
 
@@ -951,7 +995,10 @@ public class ClassController implements ServletContextAware {
 
 		List<Notice> classNotices = noticeservice.getClassNotices(classId, viewerId);
 		theModel.addAttribute("classNotices", classNotices);
-		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
 		return "noticePage";
 	}
 
@@ -972,6 +1019,14 @@ public class ClassController implements ServletContextAware {
 		theModel.addAttribute("allMyPosts", myDiscussions);
 
 		theModel.addAttribute("postType","discussion");
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
+
+
 		
 		return "myPosts";
 	}
@@ -987,6 +1042,14 @@ public class ClassController implements ServletContextAware {
 		theModel.addAttribute("allMyPosts", myQuestions);
 
 		theModel.addAttribute("postType","question");
+		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
+
 
 		return "myPosts";
 	}
@@ -1003,6 +1066,14 @@ public class ClassController implements ServletContextAware {
 		
 		theModel.addAttribute("postType","poll");
 
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
+
+
 		return "myPosts";
 	}
 	
@@ -1018,6 +1089,14 @@ public class ClassController implements ServletContextAware {
 		
 		theModel.addAttribute("postType","event");
 		
+		ClassSubjectFaculty csf= new ClassSubjectFaculty();
+		csf.setClassAttributes(classId);
+		String branchsec=csf.getBranch()+" - "+ csf.getSec();
+		int sem=csf.getSem();
+		theModel.addAttribute("branchsec", branchsec);
+		theModel.addAttribute("sem", sem);
+
+
 		return "myPosts";
 	}
 
@@ -1066,7 +1145,6 @@ public class ClassController implements ServletContextAware {
 		csf.setClassAttributes(classId);
 		String branchsec=csf.getBranch()+" - "+ csf.getSec();
 		int sem=csf.getSem();
-		System.out.println("branch sec"+branchsec);
 		theModel.addAttribute("branchsec", branchsec);
 		theModel.addAttribute("sem", sem);
 

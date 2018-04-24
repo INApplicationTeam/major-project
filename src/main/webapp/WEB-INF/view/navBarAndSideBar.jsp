@@ -41,9 +41,9 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
 						href="aboutClass">About this class</a></li>
-					<li class="nav-item"><a class="nav-link waves-effect"
-						href="../../LoadBlogFeed">Blogs</a>
-					</li>
+						<li class="nav-item"><a class="nav-link waves-effect"
+						href="../message/inbox">Message</a></li>
+					
 					<li class="nav-item"><a class="nav-link waves-effect"
 						href="showNotices">Notice</a>
 					</li>
@@ -100,6 +100,12 @@
 			</div>
 		</a>
 		
+		<a href="../../LoadBlogFeed">
+			<div class="item">
+				<span class="fa fa-pencil"></span> Blogs
+			</div>
+		</a>
+		
 		<a onclick="destroyHandler()">
 		<div class="item">
                 <span class="fa fa-sign-out"></span>
@@ -111,7 +117,7 @@
 
 </header>
 <!--Main Navigation-->
-<<script type="text/javascript">
+<script type="text/javascript">
 function destroyHandler()
 {
 	     	window.location="../../LogOut";

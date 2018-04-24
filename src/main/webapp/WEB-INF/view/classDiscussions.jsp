@@ -138,25 +138,9 @@
                 <!--Card content-->
                 <div class="card-body d-sm-flex justify-content-between py-3">
 
-                    <h4 class="mb-2 mb-sm-0">
-                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">CS-B/</a>
-                        <span>
-                        <!-- Split button -->
-                        <div class="btn-group">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                8th sem
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </div>
-                        </span>
-                    </h4>
+                    <h5 class="mb-2 mb-sm-0">
+                        ${branchsec }/${sem } sem
+                    </h5>
                     <a href="../../poll/createpoll.jsp?var=classpoll">
                     <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
                     </a>
@@ -173,19 +157,17 @@
                     <button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button>
                     </a>
                     <div>
-                    <a href=""><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
-                    <a href=""><i class="fa fa-circle" aria-hidden="true"></i> My Posts&nbsp;</a>
+            <a href="showSavedPosts"><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
                         <div class="btn-group">
                             <a class="dropdown-toggle blue-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-filter" aria-hidden="true"></i>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </a>
                             <div class="dropdown-menu dropdown-pull-right mr-3">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                                 <a class="dropdown-item" href="showPoll">Polls</a>
+                                <a class="dropdown-item" href="showDiscussions">Discussions</a>
+                                <a class="dropdown-item" href="showEvents">Events</a>
+                                <a class="dropdown-item" href="showClassQuestions">Questions</a>
                             </div>
                         </div>
 
@@ -205,10 +187,8 @@
                     <div class="card mb-3 mt-4">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="">${discussion.userModel.uname} </a> initiated discussion <span id="timestamp${loop.index}"></span>
-                              
-                                <a class="blue-text"><i class="fa fa-thumb-tack float-right blue-text mr-2" aria-hidden="true"></i></a>
-                                <a class="blue-text"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
+                                <a href="../../UserProfile?uid=${discussion.userModel.uid}">${discussion.userModel.uname} </a> initiated discussion <span id="timestamp${loop.index}"></span>
+                            
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a>${discussion.title}</a></h4>
                             <small class="">
@@ -227,9 +207,9 @@
                        
                         <c:forEach var="classComment" items="${discussion.classCommentList}" begin="0" varStatus="innerloop">
                             <div class="media d-block d-md-flex mt-2 ml-5">
-                                <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg" alt="Generic placeholder image">
+                                <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="../../ImageLoader?uid=${classComment.userModel.uid}" alt="Generic placeholder image">
                                 <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                    <a class="mt-0 blue-text">${classComment.userModel.uname}</a>
+                                    <a class="mt-0 blue-text" href="../../UserProfile?uid=${classComment.userModel.uid}">${classComment.userModel.uname}</a>
                                     <a class="mt-0 blue-text pull-right" onclick="showReplyBox('replyBox${loop.index}${innerloop.index}')"><i class="fa fa-reply" aria-hidden="true"></i></a>
 
                                    	${classComment.commentText}
@@ -241,9 +221,9 @@
 									
 								<c:forEach var="commentReply" items="${classComment.commentReplyList}" begin="0" varStatus="replyLoop">
                                     <div class="media d-block d-md-flex mt-3">
-                                        <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                        <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="../../ImageLoader?uid=${commentReply.userModel.uid}" alt="Generic placeholder image">
                                         <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                            <a class="mt-0 blue-text">${commentReply.userModel.uname}</a>
+                                            <a class="mt-0 blue-text" href="../../UserProfile?uid=${classComment.userModel.uid}">${commentReply.userModel.uname}</a>
                                             ${commentReply.replyText}
                                             <br>
                                             <small id="replytimestamp${loop.index}${innerloop.index}${replyLoop.index}" class="text-muted pull-right">3 minutes ago</small>
