@@ -350,119 +350,7 @@
         var post_type,post_id;
         
         </script>
-
-    <!--Main Navigation-->
-    <header>
-
-        <!-- Navbar -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar" style="margin-left: 30px;box-shadow: none;">
-            <div class="container-fluid">
-
-                <!-- Brand -->
-                <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">
-                    <strong class="blue-text">Korero</strong>
-                </a>
-
-                <!-- Collapse -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Links -->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                    <!-- Left -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect" href="#">Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect" href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">About this class</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect" href="https://mdbootstrap.com/getting-started/" target="_blank">Blogs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect" href="https://mdbootstrap.com/bootstrap-tutorial/" target="_blank">Notice</a>
-                        </li>
-                    </ul>
-                    <!-- Right -->
-                    <ul class="navbar-nav nav-flex-icons">
-                        <li class="nav-item mr-4">
-                            <form class="form-inline ml-auto">
-                                <div class="md-form mt-0">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                </div>
-                            </form>
-                        </li>
-                        <li class="nav-item mr-2">
-                            <!-- Basic dropdown -->
-                            <div class="btn-group">
-                                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-bell"></i>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-pull-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action Another action Another action Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
-                            </div>
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-
-            </div>
-        </nav>
-        <!-- Navbar -->
-
-                <!-- Sidebar -->
-        <div class="leftside pt-2" onmouseover="javascript:document.getElementById('blur').style.filter='blur(3px)';" onmouseout="javascript:document.getElementById('blur').style.filter='blur(0)';">
-            <div class="text-center" style="padding: 10px;">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-fluid z-depth-1 rounded-circle" style="max-height: 150px;"  alt="Responsive image">
-            </div>
-            <div class="item">
-                <span class="fa fa-bel"></span>
-                Shreeya Nagar
-            </div>
-            <div class="item">
-                <span class="fa fa-user"></span>
-                 Profile
-            </div>
-            <div class="item">
-                <span class="fa fa-pie-chart"></span>
-                Dashboard
-            </div>
-            <div class="item active">
-                <span class="fa fa-institution"></span>
-                Book Advice
-            </div>
-            <div class="item">
-                <span class="fa fa-bar-chart-o"></span>
-                Polling
-            </div>
-            <div class="item">
-                <span class="fa fa-graduation-cap"></span>
-                Class Discussion
-            </div> 
-            <div class="item">
-                <span class="fa fa-sign-out"></span>
-                LogOut
-            </div> 
-        </div>
-
-                <!-- Sidebar -->
-
-    </header>
-    <!--Main Navigation-->
+	   <%@include file="navBarAndSideBar.jsp" %>
 
     <!--Main layout-->
     <main class="pt-4 mx-lg-5" id="blur">
@@ -474,29 +362,13 @@
                 <!--Card content-->
                 <div class="card-body d-sm-flex justify-content-between py-3">
 
-                    <h4 class="mb-2 mb-sm-0">
-                        <a href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">CS-B/</a>
-                        <span>
-                        <!-- Split button -->
-                        <div class="btn-group">
-                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                8th sem
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </div>
-                        </span>
-                    </h4>
-                    <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
-                    <button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button>
-                    <button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button>
-                    <button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button>
+                    <h5 class="mb-2 mb-sm-0">
+                      ${branchsec}/ ${sem } sem 
+                    </h5>
+                    <a href="../../poll/createpoll.jsp?var=classpoll"> <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button></a>
+                   <a href="startClassDiscussion"><button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button></a>
+                   <a href="addEventForm"><button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button></a>
+                   <a href="../../Post_Question.jsp?classQue=true"><button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button></a>
 <!--                   <form class="d-flex justify-content-center">
                         <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
                         <button class="btn btn-primary btn-sm my-0 p" type="submit">
@@ -504,20 +376,18 @@
                         </button>
                  </form>
 -->
-                    <div>
-                    <a href=""><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
-                    <a href=""><i class="fa fa-circle" aria-hidden="true"></i> My Posts&nbsp;</a>
-                        <div class="btn-group">
+               <div>
+                    <a href="showSavedPosts"><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
+                    <div class="btn-group">
                             <a class="dropdown-toggle blue-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-filter" aria-hidden="true"></i>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </a>
                             <div class="dropdown-menu dropdown-pull-right mr-3">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                                <a class="dropdown-item" href="showPoll">Polls</a>
+                                <a class="dropdown-item" href="showDiscussions">Discussions</a>
+                                <a class="dropdown-item" href="showEvents">Events</a>
+                                <a class="dropdown-item" href="showClassQuestions">Questions</a>
                             </div>
                         </div>
 
@@ -689,10 +559,10 @@
                   <c:if test="${posts.getClass().name == 'model.springmodel.Question'}">
                    	
                    		<c:set var="countQue" value="${countQue + 1}" scope="page"/>
-                    <div class="card mb-3 mt-3">
+                <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="">${posts.domain.dname}</a>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="../../WorkSpaceContent?did=${posts.domain.did}&dname=${posts.domain.dname}">${posts.domain.dname}</a>
                					
                					<c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
@@ -707,7 +577,7 @@
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a href="../question/allAnswers?qid=${posts.qid}" style="color:black">${posts.que}</a></h4>
                             <div class="white" style="border-style: round;border-radius: 20px;display: inline-block;">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" id="answererImg${postLoop.index}" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
                                 <a class="pl-1" href="" id="answerer${postLoop.index}">Rohit Jangid</a><small> answered</small>
                             </div>
                             <p class="pl-5">
@@ -718,6 +588,7 @@
 								<script>
 					
 									setNoOne('${countQue}','${postLoop.index}');
+									document.getElementById("answererImg${postLoop.index}").setAttribute("src",'../../ImageLoader?uid=');
 								</script>
 							</c:if>
 					
@@ -727,6 +598,8 @@
 										<script>
 											var answer=${answer.answer};
 											setAnswer('${countQue}','${postLoop.index}',answer,'${answer.userModel.uname}');
+											document.getElementById("answererImg${postLoop.index}").setAttribute("src",'../../ImageLoader?uid=${answer.userModel.uid}');
+											document.getElementById("answerer${postLoop.index}").setAttribute("href",'../../UserProfile?uid=${answer.userModel.uid}');
 										</script>
 									</c:if>
 									
@@ -745,6 +618,7 @@
 				        </div>
                 
                     </div>
+                
                     </c:if>
                     <!-- question end -->
                     <!-- Card 1 ends-->
@@ -755,7 +629,7 @@
 
 			<div class="card mb-3 mt-3">
 				<div class="card-body pb-0">
-					<small> <a href="">${posts.userModel.uname}</a> created this poll 
+					<small> <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created this poll 
 						<c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>
@@ -813,7 +687,7 @@
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="">${posts.userModel.uname}</a> created this poll</a>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created this poll</a>
                               <c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.queid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>
@@ -855,7 +729,7 @@
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="">${posts.userModel.uname} </a> initiated discussion <span id="discussionTime${postLoop.index}"></span>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname} </a> initiated discussion <span id="discussionTime${postLoop.index}"></span>
                               <c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.id}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>
@@ -888,9 +762,9 @@
                        
                         <c:forEach var="classComment" items="${posts.classCommentList}" begin="0" varStatus="commentLoop">
                             <div class="media d-block d-md-flex mt-2 ml-5">
-                                <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg" alt="Generic placeholder image">
+                                <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="../../ImageLoader?uid=${classComment.userModel.uid}" alt="Generic placeholder image">
                                 <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                    <a class="mt-0 blue-text">${classComment.userModel.uname}</a>
+                                    <a class="mt-0 blue-text" href="../../UserProfile?uid=${classComment.userModel.uid}">${classComment.userModel.uname}</a>
                                     <a class="mt-0 blue-text pull-right" onclick="showReplyBox('replyBox${postLoop.index}${commentLoop.index}')"><i class="fa fa-reply" aria-hidden="true"></i></a>
 
                                    	${classComment.commentText}
@@ -902,9 +776,9 @@
 									
 								<c:forEach var="commentReply" items="${classComment.commentReplyList}" begin="0" varStatus="replyLoop">
                                     <div class="media d-block d-md-flex mt-3">
-                                        <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                        <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="../../ImageLoader?uid=${commentReply.userModel.uid}" alt="Generic placeholder image">
                                         <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                            <a class="mt-0 blue-text">${commentReply.userModel.uname}</a>
+                                            <a class="mt-0 blue-text" href="../../UserProfile?uid=${commentReply.userModel.uid}">${commentReply.userModel.uname}</a>
                                             ${commentReply.replyText}
                                             <br>
                                             <small id="replytimestamp${postLoop.index}${commentLoop.index}${replyLoop.index}" class="text-muted pull-right">3 minutes ago</small>
@@ -960,10 +834,10 @@
                     
 					<!-- event start -->
 					<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
-                    <div class="card mb-3">
+                    <div class="card my-3">
                         <div class="card-body pb-2">
                             <small>
-                                <a href="">${posts.userModel.uname}</a> created event <span id="eventtimestamp${postLoop.index}"></span>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created event <span id="eventtimestamp${postLoop.index}"></span>
                                 <c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.eid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
 								</c:if>

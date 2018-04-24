@@ -565,7 +565,7 @@
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="">${posts.domain.dname}</a>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="../../WorkSpaceContent?did=${posts.domain.did}&dname=${posts.domain.dname}">${posts.domain.dname}</a>
                					
                					<c:if test="${checkPinned[postLoop.index]==false}">
 									<a class="blue-text" onclick="pinPost('${posts.qid}','${postLoop.index}');" id="pin${postLoop.index}"><i class="fa fa-thumb-tack float-right grey-text mr-2" id="iconPin${postLoop.index}" aria-hidden="true"></i></a>
@@ -580,7 +580,7 @@
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a href="../question/allAnswers?qid=${posts.qid}" style="color:black">${posts.que}</a></h4>
                             <div class="white" style="border-style: round;border-radius: 20px;display: inline-block;">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" id="answererImg${postLoop.index}" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
                                 <a class="pl-1" href="" id="answerer${postLoop.index}">Rohit Jangid</a><small> answered</small>
                             </div>
                             <p class="pl-5">
@@ -591,6 +591,7 @@
 								<script>
 					
 									setNoOne('${countQue}','${postLoop.index}');
+									document.getElementById("answererImg${postLoop.index}").setAttribute("src",'../../ImageLoader?uid=');
 								</script>
 							</c:if>
 					
@@ -600,6 +601,8 @@
 										<script>
 											var answer=${answer.answer};
 											setAnswer('${countQue}','${postLoop.index}',answer,'${answer.userModel.uname}');
+											document.getElementById("answererImg${postLoop.index}").setAttribute("src",'../../ImageLoader?uid=${answer.userModel.uid}');
+											document.getElementById("answerer${postLoop.index}").setAttribute("href",'../../UserProfile?uid=${answer.userModel.uid}');
 										</script>
 									</c:if>
 									
@@ -761,9 +764,9 @@
                        
                         <c:forEach var="classComment" items="${posts.classCommentList}" begin="0" varStatus="commentLoop">
                             <div class="media d-block d-md-flex mt-2 ml-5">
-                                <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg" alt="Generic placeholder image">
+                                <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="../../ImageLoader?uid=${classComment.userModel.uid}" alt="Generic placeholder image">
                                 <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                    <a class="mt-0 blue-text">${classComment.userModel.uname}</a>
+                                    <a class="mt-0 blue-text" href="../../UserProfile?uid=${classComment.userModel.uid}">${classComment.userModel.uname}</a>
                                     <a class="mt-0 blue-text pull-right" onclick="showReplyBox('replyBox${postLoop.index}${commentLoop.index}')"><i class="fa fa-reply" aria-hidden="true"></i></a>
 
                                    	${classComment.commentText}
@@ -775,9 +778,9 @@
 									
 								<c:forEach var="commentReply" items="${classComment.commentReplyList}" begin="0" varStatus="replyLoop">
                                     <div class="media d-block d-md-flex mt-3">
-                                        <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg" alt="Generic placeholder image">
+                                        <img class="d-flex mb-3 mx-auto avatar rounded-circle" src="../../ImageLoader?uid=${commentReply.userModel.uid}" alt="Generic placeholder image">
                                         <div class="media-body text-center text-md-left ml-md-3 ml-0">
-                                            <a class="mt-0 blue-text">${commentReply.userModel.uname}</a>
+                                            <a class="mt-0 blue-text" href="../../UserProfile?uid=${commentReply.userModel.uid}">${commentReply.userModel.uname}</a>
                                             ${commentReply.replyText}
                                             <br>
                                             <small id="replytimestamp${postLoop.index}${commentLoop.index}${replyLoop.index}" class="text-muted pull-right">3 minutes ago</small>
