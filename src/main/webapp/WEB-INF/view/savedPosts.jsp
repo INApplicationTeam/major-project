@@ -371,13 +371,13 @@
                 <div class="card-body d-sm-flex justify-content-between py-3">
 
                     <h5 class="mb-2 mb-sm-0">
-                        ${branchsec }\ ${sem } sem
+                        ${branchsec }/ ${sem } sem
                     </h5>
-                    <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button>
-                    <button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button>
-                    <button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button>
-                    <button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button>
-<!--                   <form class="d-flex justify-content-center">
+                    <a href="../../poll/createpoll.jsp?var=classpoll"> <button type="button" class="btn btn-outline-primary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Create poll</button></a>
+                   <a href="startClassDiscussion"><button type="button" class="btn btn-outline-default waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Start Discussion</button></a>
+                   <a href="addEventForm"><button type="button" class="btn btn-outline-secondary waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Add event</button></a>
+                   <a href="../../Post_Question.jsp?classQue=true"><button type="button" class="btn btn-outline-success waves-effect my-0 btn-md mx-0"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Ask Question</button></a>
+<!--                   <!--                   <form class="d-flex justify-content-center">
                         <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
                         <button class="btn btn-primary btn-sm my-0 p" type="submit">
                             <i class="fa fa-search"></i>
@@ -385,21 +385,8 @@
                  </form>
 -->
                     <div>
-                    <a href=""><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
-                    <a href=""><i class="fa fa-circle" aria-hidden="true"></i> My Posts&nbsp;</a>
-                        <div class="btn-group">
-                            <a class="dropdown-toggle blue-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-filter" aria-hidden="true"></i>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-pull-right mr-3">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </div>
+                    <a href="showMyDiscussions"><i class="fa fa-circle" aria-hidden="true"></i> My Posts&nbsp;</a>
+                       
 
                     </div>
                 </div>
@@ -421,13 +408,13 @@
                     <div class="card mb-3 mt-3">
                         <div class="card-body pb-0">
                             <small>
-                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="">${posts.domain.dname}</a>
+                                <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="../../WorkSpaceContent?did=${posts.domain.did}&dname=${posts.domain.dname}">${posts.domain.dname}</a>
                
                                 <a class="blue-text" onclick="unSave('${posts.qid}','${postLoop.index}');"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a href="../question/allAnswers?qid=${posts.qid}" style="color:black">${posts.que}</a></h4>
                             <div class="white" style="border-style: round;border-radius: 20px;display: inline-block;">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" id="answererImg${postLoop.index}" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />
                                 <a class="pl-1" href="" id="answerer${postLoop.index}">Rohit Jangid</a><small> answered</small>
                             </div>
                             <p class="pl-5">
@@ -438,6 +425,7 @@
 								<script>
 					
 									setNoOne('${countQue}','${postLoop.index}');
+									document.getElementById("answererImg${postLoop.index}").setAttribute("src",'../../ImageLoader?uid=');
 								</script>
 							</c:if>
 					
@@ -447,6 +435,8 @@
 										<script>
 											var answer=${answer.answer};
 											setAnswer('${countQue}','${postLoop.index}',answer,'${answer.userModel.uname}');
+											document.getElementById("answererImg${postLoop.index}").setAttribute("src",'../../ImageLoader?uid=${answer.userModel.uid}');
+											document.getElementById("answerer${postLoop.index}").setAttribute("href",'../../UserProfile?uid=${answer.userModel.uid}');
 										</script>
 									</c:if>
 									

@@ -189,8 +189,19 @@
                  </form>
 -->
                     <div>
-                    <a href=""><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
-                    <a href=""><i class="fa fa-circle" aria-hidden="true"></i> My Posts</a>
+                    <a href="showSavedPosts"><i class="fa fa-thumb-tack" aria-hidden="true"></i> My Saved Posts&nbsp;&nbsp;</a>
+                        <div class="btn-group">
+                            <a class="dropdown-toggle blue-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-pull-right mr-3">
+                                 <a class="dropdown-item" href="showPoll">Polls</a>
+                                <a class="dropdown-item" href="showDiscussions">Discussions</a>
+                                <a class="dropdown-item" href="showEvents">Events</a>
+                                <a class="dropdown-item" href="showClassQuestions">Questions</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -207,10 +218,8 @@
  <div class="card mb-3 mt-4">
                         <div class="card-body pb-2">
                             <small>
-                                <a href="">${events.userModel.uname }</a> created event on <span id="createddate${loop.index}"></span>
-                                <i class="fa fa-eye float-right mr-2 ml-1" aria-hidden="true"> 18</i>
-                                <a class="blue-text"><i class="fa fa-thumb-tack float-right blue-text mr-2" aria-hidden="true"></i></a>
-                                <a class="blue-text"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
+                                <a href="../../UserProfile?uid=${events.userModel.uid}">${events.userModel.uname }</a> created event on <span id="createddate${loop.index}"></span>
+                            
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a>${events.title}</a></h4>
                             <small>

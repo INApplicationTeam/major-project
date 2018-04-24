@@ -134,7 +134,7 @@ public class DirectMessage
 			PrintWriter out= response.getWriter();
 			for(UserModel um : theThreads)
 //			out.println("<tr><td><a href='inbox?id="+um.getUid()+"'>"+um.getUname()+"</a></td></tr>");
-			out.println("<a class='list-group-item list-group-item-action' id='list-home-list' data-toggle='list' href='inbox?id="+um.getUid()+"&name="+um.getUname()+"' role='tab' aria-controls='home' style='border-top: none;'> <img src='https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg' class='img-fluid z-depth-1 rounded-circle avatar mr-2' alt='Responsive image'>"+um.getUname()+"</a>");
+			out.println("<a class='list-group-item list-group-item-action' id='list-home-list' data-toggle='list' href='inbox?id="+um.getUid()+"&name="+um.getUname()+"' role='tab' aria-controls='home' style='border-top: none;'> <img src='../../ImageLoader?uid="+um.getUid()+"' class='img-fluid z-depth-1 rounded-circle avatar mr-2' alt='Responsive image'>"+um.getUname()+"</a>");
 
 			/*String returnJson= new Gson().toJson(theThreads);
 			response.getWriter().println(returnJson);*/
