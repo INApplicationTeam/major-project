@@ -258,8 +258,7 @@ function setReportButton(x)
                 </button>
                 
                 <a class="navbar-brand waves-effect"
-				href="../../MyFeed"
-				target="_blank"> <strong class="blue-text">Korero</strong>
+				href="../../MyFeed"> <strong class="blue-text">Korero</strong>
 			</a>
              
                 <div class="collapse navbar-collapse" id="navbarNav1">

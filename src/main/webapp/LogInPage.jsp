@@ -66,21 +66,22 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
 <body>
     <header>
         <!--Navbar-->
-        <nav class="navbar navbar-toggleable-md navbar-dark fixed-top bg-info">
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-light white">
             <div class="container">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                 <a class="navbar-brand" href="index.html">
-                <img src="MDB Free/img/logo.png" class="img-fluid" style="width: 180px">
-            </a>
+                 <a class="navbar-brand waves-effect"
+				href="#"
+				target="_blank"> <strong class="blue-text">Powwow</strong>
+			</a>
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a href="index.html" class="nav-link">Home </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="GetStarted.jsp">Get started</a>
+                            <a class="nav-link" href="GetStartedupdated.jsp">Get started</a>
                         </li>
                          <li class="nav-item active">
                         <a class="nav-link">Log In<span class="sr-only">(current)</span></a>

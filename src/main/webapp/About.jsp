@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="icon" type="image/png" href="MDB Free/img/img1.png" />
-    <title>Welcome to korero!</title>
+    <title>Welcome to powwow!</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="MDB Free/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -29,21 +29,22 @@
 
 
         <!--Navbar-->
-        <nav class="navbar fixed-top navbar-toggleable-md navbar-dark bg-info">
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-light white">
             <div class="container">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                 <a class="navbar-brand" href="index.html">
-                <img src="MDB Free/img/logo.png" class="img-fluid" style="width: 180px">
-            </a>
+                 <a class="navbar-brand waves-effect"
+				
+				target="_blank"> <strong class="blue-text">Powwow</strong>
+			</a>
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="GetStarted.jsp">Get Started</a>
+                            <a class="nav-link" href="GetStartedupdated.jsp">Get Started</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="LogInContent">Log In</a>
@@ -69,7 +70,7 @@
             <p>We are CSE undergraduates who have made this website keeping in mind the problems we have faced in last three years, and tried our best 
             to help the college community to interact more and share their knowledge, views and experience.</p>
             <p>We welcome any suggestions, amendments or even criticism that you may have about this creation of ours. Feel free to connect and contact us for any inticacies you may have.</p>
-            <p>May you have the best experiences at Korero!</p>
+            <p>May you have the best experiences at Powwow!</p>
 
         </section>
         <!--Section: About-->
@@ -85,15 +86,15 @@
                 <div class="col-md-3">
                 <div class="card-container">
                     
-                <div class="cardr">
+                <div class="cardr" style="display:none;">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/riya.jpg"/>
+                            <img src="images/rotating_card_profile3.png"/>
                         </div>
                         <div class="content">
                             <div class="main">
                                 <h3 class="name">Riya Godwani</h3>
-                                <p class="profession">Designer</p>
+                                <p class="profession"></p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -103,7 +104,7 @@
                     </div> <!-- end front panel -->
                     <div class="back">
                         <div class="header">
-                            <h5 class="motto">"Hey there! I am Riya.May you enjoy your experiences at Korero"</h5>
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
                         <div class="content">
                             <div class="main">
@@ -148,18 +149,18 @@
                 <!--/First column-->
 
                 <!--second column-->
-                <div class="col-md-3">
+                <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/rohan.jpg"/>
+                            <img src="kext/img/11.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Rohan Shrimal</h3>
-                                <p class="profession">Back-end Developer</p>
+                                <h3 class="name">Rohit jangid</h3>
+                                <p class="profession">CEO</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -169,7 +170,7 @@
                     </div> <!-- end front panel -->
                     <div class="back">
                         <div class="header">
-                            <h5 class="motto">"Hey there! I am Rohan.May you enjoy your experiences at Korero"</h5>
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
                         <div class="content">
                             <div class="main">
@@ -214,18 +215,18 @@
                 <!--/second column-->
 
                 <!--third column-->
-                <div class="col-md-3">
+                <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/sarthak1.jpg"/>
+                            <img src="kext/img/22.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Sarthak Jain</h3>
-                                <p class="profession">Back-end Developer</p>
+                                <h3 class="name">Pranavkant Trivedi</h3>
+                                <p class="profession">co-developer</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -234,9 +235,9 @@
                         </div>
                     </div> <!-- end front panel -->
                     <div class="back">
-                        <div class="header"> <h5 class="motto">"Hey there! I am Sarthak.May you enjoy your experiences at Korero"</h5>
+                        <div class="header">
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
-                            <h5 class="motto">
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
@@ -280,18 +281,18 @@
                 <!--/third column-->
 
                 <!--fourth column-->
-                <div class="col-md-3">
+                <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
-                <div class="cardr">
+                <div class="cardr" style="display:none;">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/shreeya.jpg"/>
+                            <img src="images/rotating_card_profile3.png"/>
                         </div>
                         <div class="content">
                             <div class="main">
                                 <h3 class="name">Shreeya Nagar</h3>
-                                <p class="profession">Front-end Developer</p>
+                                <p class="profession"></p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -301,7 +302,7 @@
                     </div> <!-- end front panel -->
                     <div class="back">
                         <div class="header">
-                            <h5 class="motto">"Hey there! I am Shreeya.May you enjoy your experiences at Korero"</h5>
+                            <h5 class="motto">"To be or not to be, this is my awesome motto!"</h5>
                         </div>
                         <div class="content">
                             <div class="main">
@@ -349,7 +350,7 @@
             </div>
         </section>
         <!--Section: Contact--><div class="divider-new">
-            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">Korero</h2>
+            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">Powwow</h2>
         </div>
 
     </div>
@@ -375,7 +376,7 @@
 <footer class="page-footer center-on-small-only mt-0">
 
         <div class="container-fluid text-center" style="padding-bottom: 10px;">
-            © 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team Korero
+            © 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team Powwow
         </div>
     <!--/.Copyright-->
 
