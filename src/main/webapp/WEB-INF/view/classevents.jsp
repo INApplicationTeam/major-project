@@ -254,21 +254,25 @@
                    <div class="col-md-3 mx-0 my-0 px-0 py-0">
 
                 <ul class="list-group mt-4 ml-2 mb-4">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0 pb-0"><strong>Pinned Posts</strong></h4>
+                    <li class="list-group-item d-flex justify-content-between align-items-center primary-color">
+                        <h4 class="mb-0 pb-0 white-text"><strong>Pinned Posts</strong></h4>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Cras justo odio
-                        <span class="badge badge-primary badge-pill">event</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Dapibus ac facilisis in
-                        <span class="badge badge-primary badge-pill">poll</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Morbi leo risus
-                        <span class="badge badge-primary badge-pill">discussion</span>
-                    </li>
+                    
+                    <c:forEach var="pinPost" items="${allPinnedPosts}" begin="0" varStatus="pendingPostLoop">
+						<c:if test="${pinPost.post_type.toUpperCase() == 'QUESTION'}">
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+                        		<a href="../question/allAnswers?qid=${pinPost.postid}" style="color:black;">${pinPost.title}</a>
+                        		<span class="badge badge-primary badge-pill">${pinPost.post_type.toUpperCase()}</span>
+                    		</li>
+						</c:if>
+						
+						<c:if test="${pinPost.post_type.toUpperCase() != 'QUESTION'}">
+							<li class="list-group-item d-flex justify-content-between align-items-center">
+                        		<a href="showPinnedPost?postId=${pinPost.postid}&postType=${pinPost.post_type}" style="color:black;">${pinPost.title}</a>
+                        		<span class="badge badge-primary badge-pill">${pinPost.post_type.toUpperCase()}</span>
+                    		</li>
+						</c:if>
+					</c:forEach>
                 </ul>
                 <div id="my-calendar" style="margin-left: 10px;"></div>
                 </div>

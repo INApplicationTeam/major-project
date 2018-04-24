@@ -524,7 +524,12 @@ function threadNames()
     }
 	
 }
+console.log("--------");
+console.log(${msgJSON });
 
+
+	websocket.onmessage = function(e){ console.log(e.data); };
+	websocket.onopen = () => websocket.send('${msgJSON}');
 </script>
 
 </body>

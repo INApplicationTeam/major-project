@@ -374,6 +374,12 @@ public class ClassController implements ServletContextAware {
 		
 		List<PollQueDetails> theCreateNewPollModel =pollservice.showPoll(classid,uid);
 		theModel.addAttribute("showpoll", theCreateNewPollModel);
+		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classid, false, null);
+		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
+
+		
+		
 		return "showpoll";
 	}
 
@@ -484,6 +490,10 @@ public class ClassController implements ServletContextAware {
 		List<ClassDiscussion> discussionsList = discussionservice.showDiscussions(classId, userId);
 		model.addAttribute("discussionsList", discussionsList);
 		model.addAttribute("userId", userId);
+		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classId, false, null);
+		model.addAttribute("allPinnedPosts", allPinnedPosts);
+
 		return "classDiscussions";
 	}
 
@@ -504,6 +514,10 @@ public class ClassController implements ServletContextAware {
 
 		List<Events> eventlist = eventservice.showEvents(classid);
 		theModel.addAttribute("eventlist", eventlist);
+		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classid, false, null);
+		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
+
 
 		return "classevents";
 
@@ -614,6 +628,10 @@ public class ClassController implements ServletContextAware {
 
 		List<Question> classQuestions = questionservice.showClassQuestions(classId);
 		theModel.addAttribute("questionList", classQuestions);
+		
+		List<ClassPosts> allPinnedPosts = classservice.showPinnedPosts(classId, false, null);
+		theModel.addAttribute("allPinnedPosts", allPinnedPosts);
+
 
 		return "showClassQuestions";
 	}

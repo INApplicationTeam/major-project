@@ -522,4 +522,35 @@ public class NotificationDao {
 		return null;
 	}
 
+	public void onMessageNotification(NotificationModel nm, ServletContext context) 
+	{
+		con=(Connection)context.getAttribute("datacon");
+		qr="insert into notifications(message,timestamp) values(?,?)";
+		qr1="insert into usernotifications(nid,uid,isViewed) values(?,?,?)";
+		
+		try {
+			
+			 ps=con.prepareStatement(qr,Statement.RETURN_GENERATED_KEYS);
+			 ps.setString(1,nm.getMessage());
+			 ps.setLong(2,nm.getTimestamp());
+			 ps.executeUpdate();
+			 rs = ps.getGeneratedKeys();
+			 
+			 if(rs.next())
+			 {
+				 nm.setNid(rs.getInt(1));
+			 }
+			
+			 ps=con.prepareStatement(qr1);
+			 ps.setInt(1,nm.getNid());
+			 ps.setString(2,nm.getUid());
+			 ps.setBoolean(3,false);
+			 ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }

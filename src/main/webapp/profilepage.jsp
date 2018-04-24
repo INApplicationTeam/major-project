@@ -561,7 +561,7 @@ pre {
 														<div class="card-footer">
 															<div class="stats">
 																<i class="material-icons">update</i> <span id="q<%=i%>"></span>
-																<%= qm.getQuedate() %>
+																
 															</div>
 															<script type="text/javascript">setTime("q<%=i%>",<%=qm.getQuedate() %>)</script>
 														</div>

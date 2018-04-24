@@ -185,7 +185,7 @@
 	                    <div>
 	                    	<h5 class="blue-text" style="display: inline-block;"><i class="fa fa-pie-chart"></i></h5>
 	                    	<a href="../../UserProfile?uid=${notice.creator.uid }">${notice.creator.uname}</a> issued <span id="noticeTimeStamp${noticeLoop.index}"></span> 
-	                        <small class="float-right"><a href="#no" onclick="showViewers(${notice.noticeId})"><i class="fa fa-eye"></i></a>   ${notice.viewers}</small>
+	                        <small class="float-right"><a href="#no" data-toggle="modal" data-target="#exampleModal" onclick="showViewers(${notice.noticeId})"><i class="fa fa-eye"></i></a>   ${notice.viewers}</small>
 	                        <h3 class="card-title pt-2"><strong>${notice.title}</strong></h3>
 	                        <p>
 	                        <div id="noticeEditor${noticeLoop.index}" class="notice" style="width:1127px"></div>
@@ -213,6 +213,30 @@
             <!--Grid row-->
         </div>
     </main> 
+    
+    <!-- *********************************************************** -->
+    <div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Viewers</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                        <ul class="list-group list-group-flush" id="viewerModal">
+                                            
+                                      </ul>
+                                            </div>
+                                       </div>                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                <!-- ******************************************************** -->
     <!--Main layout-->
     <!-- SCRIPTS -->
     <!-- JQuery -->
@@ -393,7 +417,16 @@ $(function () {
 		{
 		    if(request.readyState===4 && request.status===200)
 		    {
-		    	console.log(request.responseText);
+		    	
+		    	var allViewers=JSON.parse(request.responseText);
+		    	var viewerModal=document.getElementById("viewerModal");
+		    	
+		    	viewerModal.innerHTML="";
+		    	
+		    	for(var i=0;i<allViewers.length;i++)
+		    	{
+		    		viewerModal.innerHTML=viewerModal.innerHTML+'<li class="list-group-item">'+'<img src="../../ImageLoader?uid='+allViewers[i].uid+'" class="avatar img-fluid z-depth-1 rounded-circle" alt="Responsive image" />     ' +   allViewers[i].uname+'</li>';  
+		    	}
 		    }
 		}
 
