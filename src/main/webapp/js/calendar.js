@@ -442,12 +442,12 @@ $.fn.zabuto_calendar = function (options) {
                         if (modalUse === true) {
                             $dowElement.addClass('event-clickable');
                             var $modalElement = createModal(id, value.title, value.body, value.footer);
-                            $('body').append($modalElement);
+                           $('body').append($modalElement);
 
                             $('#' + id).click(function () {
                             	var idList=document.getElementById(id + '_modal_body').innerHTML
-                            	window.location.href="ShowEventOfDay?id="+idList;
-                               // $('#' + id + '_modal').modal();
+                            	window.location.href="major/event/ShowGlobalEventOfDay?id="+idList;
+                                //$('#' + id + '_modal').modal();
                             });
                         }
                     }
@@ -607,7 +607,7 @@ $.fn.zabuto_calendar_language = function (lang) {
     $("#my-calendar").zabuto_calendar({
       
       ajax: {
-        url: "showEventOnCalender",
+        url: "major/event/showGlobalEventOnCalender",
     	modal:true,
       }
     });

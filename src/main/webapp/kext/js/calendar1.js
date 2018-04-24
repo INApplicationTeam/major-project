@@ -446,7 +446,7 @@ $.fn.zabuto_calendar = function (options) {
 
                             $('#' + id).click(function () {
                             	var idList=document.getElementById(id + '_modal_body').innerHTML
-                            	window.location.href="ShowEventOfDay?id="+idList;
+                            	window.location.href="ShowGlobalEventOfDay?id="+idList;
                                // $('#' + id + '_modal').modal();
                             });
                         }
@@ -607,7 +607,7 @@ $.fn.zabuto_calendar_language = function (lang) {
     $("#my-calendar").zabuto_calendar({
       
       ajax: {
-        url: "showEventOnCalender",
+        url: "showGlobalEventOnCalender",
     	modal:true,
       }
     });
