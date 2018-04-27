@@ -57,4 +57,5 @@ public interface ClassService {
 
   List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm);
 
+
 }

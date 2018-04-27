@@ -52,6 +52,8 @@ public class ImageUploader extends HttpServlet {
 	            /* TODO output your page here. You may use following sample code. */
 	            ServletContext context=getServletContext();
 	            DiskFileItemFactory factory=new DiskFileItemFactory();
+	            factory.setSizeThreshold(1);
+	            
 	            ServletFileUpload upload=new ServletFileUpload(factory);
 	            try {
 	                List<FileItem> item;
@@ -64,7 +66,7 @@ public class ImageUploader extends HttpServlet {
 	                    
 	                    if(s.equals("image"))
 	                    {
-	                        out.print("image");
+	                        out.println("image");
 	                        int size;
 	                        size = (int)items.getSize();
 	                        byte b[]=new byte[size];
@@ -73,6 +75,7 @@ public class ImageUploader extends HttpServlet {
 	                        }
 	                        
 	                       String fname=items.getName();
+	                       System.out.println("fname"+fname);
 	                        try (FileOutputStream fos = new FileOutputStream(getServletConfig().getServletContext().getRealPath("/")+"Images\\UserImg\\"+fname)) {
 	                            fos.write(b);
 	                        }

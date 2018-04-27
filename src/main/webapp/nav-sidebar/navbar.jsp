@@ -12,7 +12,7 @@
         
     </head>
     <body>
-<nav class="navbar fixed-top navbar-toggleable-md navbar-light white" role="navigation">
+<nav class="navbar navbar-fixed-top navbar-info" role="navigation">
 	<div class="container-fluid">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse">
@@ -21,10 +21,9 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						 <a class="navbar-brand waves-effect"
-				href="#"
-				target="_blank"> <strong class="blue-text">Powwow</strong>
-			</a>
+						 <a class="navbar-brand" href="../MyFeed">
+                <img src="../MDB Free/img/logo.png" class="img-fluid" style="width: 180px">
+            </a>
 <!--<img src="../images/blacklogonew.png" style="width: 80px; height: 50px;">-->
 					</div>
 					<div class="collapse navbar-collapse">

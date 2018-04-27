@@ -15,4 +15,5 @@ public interface QuestionService {
 
 	boolean isFollowed(Integer qid,String uid);
 
+
 }
