@@ -40,6 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
 	public boolean isFollowed(Integer qid,String uid) {
 		return questionDAO.isFollowed(qid,uid);
 	}
+
 	
 	
 	

@@ -164,7 +164,7 @@ function time_ago(time) {
 						<li class="nav-item"><a class="nav-link waves-effect"
 							href="MyProfile">Profile</a></li>
 						<li class="nav-item"><a class="nav-link waves-effect active"
-							href="LoadBlogFeed" target="_blank">Blogs</a></li>
+							href="LoadBlogFeed">Blogs</a></li>
 						<li class="nav-item"><a class="nav-link waves-effect"
 							href="Post_Question.jsp">Ask a Question</a></li>
 					</ul>
@@ -172,9 +172,7 @@ function time_ago(time) {
 					<!-- Right -->
 					<form class="form-inline">
 						<div class="md-form mt-0">
-							<input class="form-control mr-sm-2" type="text"
-								placeholder="Search" aria-label="Search">
-						</div>
+													</div>
 					</form>
 
 

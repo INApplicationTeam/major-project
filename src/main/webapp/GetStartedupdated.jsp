@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/png" href="MDB Free/img/img1.png" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Powwow</title>
+  <title>Korero</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap core CSS -->
@@ -40,7 +40,7 @@
       <div class="text-center white-text mx-5 wow fadeIn">
 
         <h1 class="display-4 my-2" style="font-family: 'myfont';font-size: 150px;line-height: 0.7">
-          Powwow
+          <img src="MDB Free/img/logo.png" class="img-fluid" style="width: 500px;"">
         </h1>
         <h6 class="mb-5">Where knowledge meets people!</h6>
         <a class="btn btn-default" href="LogInContent"> Sign up</a>
@@ -456,7 +456,7 @@
           <div class="col-md-4 flex-center">
                     <!--Card-->
                     <div class="card text-center px-4 mt-5">
-                        <h1 class="mt-5">@powwow</h1><br>
+                        <h1 class="mt-5">@Korero</h1><br>
                         <h1 style="font-family: 'myfont';font-size: 90px;">Faculty</h1>
                         <h2 style="font-family: 'myfont';font-size: 60px;">OR</h2>
                         <h1 style="font-family: 'myfont';font-size: 90px;">Student</h1><br>
@@ -576,7 +576,7 @@
               </div>
               <div class="col-10 mb-2 pl-3">
                 <h5 class="feature-title font-bold mb-1">Cross-browser compatibility</h5>
-                <p class="grey-text mt-2">Chrome, Firefox, IE, Safari, Opera, Microsoft Edge - Powwow loves all browsers; all browsers love Powwow.
+                <p class="grey-text mt-2">Chrome, Firefox, IE, Safari, Opera, Microsoft Edge - Korero loves all browsers; all browsers love Korero.
                 </p>
               </div>
             </div>
@@ -626,7 +626,7 @@
               </div>
               <div class="col-10 mb-2">
                 <h5 class="feature-title font-bold mb-1">Increase knowledge</h5>
-                <p class="grey-text mt-2">Powwow has content you will feel good about having read. It helps you understand why the college works the way it does, why people behave the way they do, and what we can all do to make the college better.</p>
+                <p class="grey-text mt-2">Korero has content you will feel good about having read. It helps you understand why the college works the way it does, why people behave the way they do, and what we can all do to make the college better.</p>
               </div>
             </div>
             <!--/Grid row-->
@@ -720,15 +720,15 @@
                 <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
-                <div class="cardr" style="display:none;">
+                <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="images/rotating_card_profile3.png"/>
+                            <img src="MDB Free/images/riya.jpg"/>
                         </div>
                         <div class="content">
                             <div class="main">
                                 <h3 class="name">Riya Godwani</h3>
-                                <p class="profession"></p>
+                                <p class="profession">Designer</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -743,7 +743,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+                                <p class="text-center">Web design , Documentation , Backend</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -770,9 +770,8 @@
                         </div>
                         <div class="footer">
                             <div class="social-links text-center">
-                                <a href="http://creative-tim.com" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                
+                                <a href="https://github.com/riyagodwani" class="github"><i class="fa fa-github fa-fw"></i></a>
                             </div>
                         </div>
                     </div> <!-- end back panel -->
@@ -789,11 +788,11 @@
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="kext/img/11.jpg" />
+                            <img src="MDB Free/images/rohan1.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Rohit jangid</h3>
+                                <h3 class="name">Rohan Shrimal</h3>
                                 <p class="profession">CEO</p>
                                 <br>
                                 <p class="text-center">
@@ -809,7 +808,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+                                <p class="text-center">Spring, Hibernate</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -825,7 +824,7 @@
                                         </p>
                                     </div>
                                     <div class="stats">
-                                        <h4>35</h4>
+                                        <h4>15</h4>
                                         <p>
                                             Projects
                                         </p>
@@ -836,9 +835,8 @@
                         </div>
                         <div class="footer">
                             <div class="social-links text-center">
-                                <a href="http://creative-tim.com" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                            
+                                <a href="https://github.com/rohanshrimal" class="github"><i class="fa fa-github fa-fw"></i></a>
                             </div>
                         </div>
                     </div> <!-- end back panel -->
@@ -855,12 +853,12 @@
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="kext/img/22.jpg" />
+                            <img src="MDB Free/images/sarthak1.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Pranavkant Trivedi</h3>
-                                <p class="profession">co-developer</p>
+                                <h3 class="name">Sarthak Jain</h3>
+                                <p class="profession">Head Backend Team</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -875,7 +873,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+                                <p class="text-center">Java & MySql</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -891,7 +889,7 @@
                                         </p>
                                     </div>
                                     <div class="stats">
-                                        <h4>35</h4>
+                                        <h4>15</h4>
                                         <p>
                                             Projects
                                         </p>
@@ -902,9 +900,7 @@
                         </div>
                         <div class="footer">
                             <div class="social-links text-center">
-                                <a href="http://creative-tim.com" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                                <a href="https://github.com/sarthak1997" class="github"><i class="fa fa-github fa-fw"></i></a>
                             </div>
                         </div>
                     </div> <!-- end back panel -->
@@ -918,15 +914,15 @@
                 <div class="col-md-3 wow fadeInUp">
                 <div class="card-container">
                     
-                <div class="cardr" style="display:none;">
+                <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="images/rotating_card_profile3.png"/>
+                            <img src="MDB Free/images/shreeya.jpg"/>
                         </div>
                         <div class="content">
                             <div class="main">
                                 <h3 class="name">Shreeya Nagar</h3>
-                                <p class="profession"></p>
+                                <p class="profession">Head Front End Team</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -941,7 +937,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+                                <p class="text-center">Web design, HTML5, CSS3, Bootstrap</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -957,7 +953,7 @@
                                         </p>
                                     </div>
                                     <div class="stats">
-                                        <h4>35</h4>
+                                        <h4>10</h4>
                                         <p>
                                             Projects
                                         </p>
@@ -968,9 +964,7 @@
                         </div>
                         <div class="footer">
                             <div class="social-links text-center">
-                                <a href="http://creative-tim.com" class="facebook"><i class="fa fa-facebook fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="google"><i class="fa fa-google-plus fa-fw"></i></a>
-                                <a href="http://creative-tim.com" class="twitter"><i class="fa fa-twitter fa-fw"></i></a>
+                               <a href="https://github.com/scott-sn" class="github"><i class="fa fa-github fa-fw"></i></a>
                             </div>
                         </div>
                     </div> <!-- end back panel -->
@@ -985,7 +979,7 @@
         </section>
         <!--Section: Contact-->
         <div class="divider-new">
-            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">Powwow</h2>
+            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">KORERO</h2>
         </div>
 
 
@@ -998,7 +992,7 @@
     <!--Copyright-->
     <div class="footer-copyright py-3">
       © 2018 Copyright:
-      <a href="#" target="_blank"> Powwow Inc.</a>
+      <a href="#" target="_blank"> Korero Inc.</a>
     </div>
     <!--/.Copyright-->
 

@@ -101,6 +101,9 @@ function time_ago(time) {
 </head>
 <body>
 
+	<!--Main Navigation-->
+<header>
+
 	<!-- Navbar -->
 	<nav
 		class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar"
@@ -109,8 +112,8 @@ function time_ago(time) {
 
 			<!-- Brand -->
 			<a class="navbar-brand waves-effect"
-				href="https://mdbootstrap.com/material-design-for-bootstrap/"
-				target="_blank"> <strong class="blue-text">Korero</strong>
+				href="../../MyFeed"
+				> <strong class="blue-text">Korero</strong>
 			</a>
 
 			<!-- Collapse -->
@@ -130,46 +133,17 @@ function time_ago(time) {
 						href="../../MyFeed">Home <span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
-						href="https://mdbootstrap.com/material-design-for-bootstrap/"
-						target="_blank">About this class</a></li>
+						href="../message/inbox">Message</a></li>
 					<li class="nav-item"><a class="nav-link waves-effect"
-						href="https://mdbootstrap.com/getting-started/">Blogs</a>
-					</li>
+						href="../../Post_Question.jsp">Ask a question</a></li>
+						
+					
 					<li class="nav-item"><a class="nav-link waves-effect"
-						href="showNotices">Notice</a>
+						href="../../AboutUs.jsp">About Us</a>
 					</li>
 				</ul>
 
-				<!-- Right -->
-				<ul class="navbar-nav nav-flex-icons">
-					<li class="nav-item mr-4">
-						<form class="form-inline ml-auto">
-							<div class="md-form mt-0">
-								<input class="form-control" type="text" placeholder="Search"
-									aria-label="Search">
-							</div>
-						</form>
-					</li>
-					<li class="nav-item mr-2">
-						<!-- Basic dropdown -->
-						<div class="btn-group">
-							<a class="dropdown-toggle nav-link" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false"> <i
-								class="fa fa-bell"></i>
-							</a>
-
-							<div class="dropdown-menu dropdown-pull-right">
-								<a class="dropdown-item" href="#">Action</a> <a
-									class="dropdown-item" href="#">Another action Another
-									action Another action Another action</a> <a class="dropdown-item"
-									href="#">Something else here</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
-							</div>
-						</div> </a>
-					</li>
-				</ul>
-
+				
 			</div>
 
 		</div>
@@ -188,31 +162,55 @@ function time_ago(time) {
 		<div class="item">
 			<span class="fa fa-bel"></span><%=uname%>
 		</div>
+		
 		<a href="../../MyProfile">
 			<div class="item">
 				<span class="fa fa-user"></span> Profile
 			</div>
-		</a> <a href="../../MyFeed">
+		</a> 
+		
+		<a href="../../MyFeed">
 
 			<div class="item">
 				<span class="fa fa-pie-chart"></span> My Feed
 			</div>
-		</a> <a href="../../book advisory/bookhome.jsp">
+		</a> 
+		
+		<a href="../../book advisory/bookhome.jsp">
 			<div class="item active">
 				<span class="fa fa-institution"></span> Book Advice
 			</div>
-		</a> <a href="../../poll/pollhome.jsp">
+		</a>
+		
+		 <a href="../../poll/pollhome.jsp">
 			<div class="item">
 				<span class="fa fa-bar-chart-o"></span> Polling
 			</div>
-		</a> <a href="../class/CDFhome<%=utype%>">
+		</a> 
+		
+		<a href="../class/CDFhome<%=utype%>">
 			<div class="item">
 				<span class="fa fa-graduation-cap"></span> Class Discussion
 			</div>
 		</a>
+		
+		<a href="../../LoadBlogFeed">
+			<div class="item">
+				<span class="fa fa-pencil"></span> Blogs
+			</div>
+		</a>
+		
+		<a onclick="destroyHandler()">
+		<div class="item">
+                <span class="fa fa-sign-out"></span>
+                LogOut
+            </div>
+           </a> 
 	</div>
 	<!-- Sidebar -->
-	
+
+</header>
+		
 	
 	
 	
@@ -530,6 +528,13 @@ console.log(${msgJSON });
 
 	websocket.onmessage = function(e){ console.log(e.data); };
 	websocket.onopen = () => websocket.send('${msgJSON}');
+</script>
+
+<script type="text/javascript">
+function destroyHandler()
+{
+	     	window.location="../../LogOut";
+}
 </script>
 
 </body>

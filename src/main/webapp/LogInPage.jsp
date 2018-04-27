@@ -73,7 +73,7 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
                 </button>
                  <a class="navbar-brand waves-effect"
 				href="#"
-				target="_blank"> <strong class="blue-text">Powwow</strong>
+				target="_blank"> <strong class="blue-text">Korero</strong>
 			</a>
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">

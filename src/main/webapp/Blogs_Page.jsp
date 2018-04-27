@@ -243,7 +243,7 @@ pre {
 		<!--Navbar-->
 		<nav
 			class="navbar navbar-expand-sm navbar-light fixed-top scrolling-navbar py-2 px-5">
-			<a class="navbar-brand" href="MyFeed"> <strong>Korero</strong>
+			<a class="navbar-brand blue-text" href="MyFeed"> <strong>Korero</strong>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent-7"
@@ -265,8 +265,7 @@ pre {
 				</ul>
 				<form class="form-inline">
 					<div class="md-form mt-0">
-						<input class="form-control mr-sm-2" type="text"
-							placeholder="Search" aria-label="Search">
+						
 					</div>
 				</form>
 			</div>

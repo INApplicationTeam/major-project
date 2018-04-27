@@ -426,7 +426,9 @@
 								</c:if>
                					
                					
-                                <a class="blue-text" onclick="saveAsBookmark('${posts.qid}','${postLoop.index}');"><i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
+                                <a class="blue-text" onclick="saveAsBookmark('${posts.qid}','${postLoop.index}');">
+                                <i class="fa fa-bookmark float-right mr-3" aria-hidden="true"></i></a>
+                                
                             </small>
                             <h4 style="font-size: 24px;" class="mt-2"><a href="../question/allAnswers?qid=${posts.qid}" style="color:black">${posts.que}</a></h4>
                             <div class="white" style="border-style: round;border-radius: 20px;display: inline-block;">

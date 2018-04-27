@@ -38,7 +38,7 @@ class Mailer{
           // message.setText(msg); 
            message.setContent(
               "<div align='center'><h1><br/><br/>YOUR USER-ID IS - <i>"+uid+"</i><br/><br/>YOUR TEMPORARY PASSWORD IS - <i>"+msg+"</i><br/><br/>" +
-                      "  LOG-IN DIRECTLY OR CLICK ON VERIFICATION LINK-> <br> http://localhost:8080/korero/OtpPage.jsp?uid="+uid+"&pwd="+msg+"</h1> </div>",
+                      "  LOG-IN DIRECTLY OR CLICK ON VERIFICATION LINK-> <br> http://localhost:8080/korero-maven/OtpPage.jsp?uid="+uid+"&pwd="+msg+"</h1> </div>",
              "text/html");
          
            //send message  

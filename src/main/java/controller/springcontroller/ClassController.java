@@ -1124,6 +1124,7 @@ public class ClassController implements ServletContextAware {
 		}
 	}
 
+	
 	@GetMapping("/showSavedPosts")
 	public String showSavedPosts(HttpServletRequest request, Model theModel) {
 		HttpSession session = request.getSession();

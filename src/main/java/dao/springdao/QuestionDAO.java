@@ -15,4 +15,5 @@ public interface QuestionDAO {
 
 	boolean isFollowed(Integer qid,String uid);
 
+
 }

@@ -164,6 +164,7 @@ public class ClassServiceImpl implements ClassService {
 	public List<ClassSubjectFaculty> showClassSubjectFaculty(StudentModel sm) {
 				return classdao.showClassSubjectFaculty(sm);
 	}
+
 	
 	
 	

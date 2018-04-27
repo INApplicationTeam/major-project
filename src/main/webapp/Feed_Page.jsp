@@ -293,7 +293,7 @@ list-style-image: none;
 
 			<!-- Brand -->
 			<a class="navbar-brand waves-effect"
-				href="#"> <strong class="blue-text">Korero</strong>
+				href="MyFeed"> <strong class="blue-text">Korero</strong>
 			</a>
 
 			<!-- Collapse -->
