@@ -555,7 +555,7 @@
                     <!--CARD 1 start -->
                     <c:if test="${pinnedPostType == 'discussion'}">
                     
-                    <div class="card mb-3 mt-3">
+                    <div class="card mb-3 mt-3 wow fadeInLeft">
                         <div class="card-body pb-0">
                             <small>
                                 <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname} </a> initiated discussion <span id="discussionTime-1"></span>
@@ -651,7 +651,7 @@
                    </c:if>
                    
                    <c:if test="${pinnedPostType == 'event'}">
-                     <div class="card my-3">
+                     <div class="card my-3 wow fadeInLeft">
                         <div class="card-body pb-2">
                             <small>
                                 <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname}</a> created event <span id="eventtimestamp-1"></span>
@@ -693,7 +693,7 @@
                    <c:if test="${pinnedPostType == 'poll'}">
                    	<c:if test="${pinnedPost.isVoted}">
 
-			<div class="card mb-3 mt-3">
+			<div class="card mb-3 mt-3 wow fadeInLeft">
 				<div class="card-body pb-0">
 					<small> <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname}</a> created this poll 
 						
@@ -717,7 +717,7 @@
 								 <fmt:formatNumber var = "i" type = "number" value = "${optiondetails.pollResult.count/totalcount *100}" minFractionDigits="0" maxFractionDigits="0"/>
 					
 						
-							<div class="row">
+							<div class="row wow fadeInLeft">
                                 <div class="col-md-11 pr-0 pb-4">
                                     <div class="progress" style="height: 25px;border-bottom-right-radius: 0px;border-top-right-radius: 0;">
                                         <div class="progress-bar success" role="progressbar" style="width: 0%" data-percentage="${i}" aria-valuemin="0" aria-valuemax="100">
@@ -744,7 +744,7 @@
 		<c:if test="${!pinnedPost.isVoted}">
 			 <!--CARD 1 -->
 			 
-                    <div class="card mb-3 mt-3">
+                    <div class="card mb-3 mt-3 wow fadeInLeft">
                         <div class="card-body pb-0">
                             <small>
                                 <a href="../../UserProfile?uid=${pinnedPost.userModel.uid}">${pinnedPost.userModel.uname}</a> created this poll</a>
@@ -758,7 +758,7 @@
                             <c:forEach var="optiondetails" items="${pinnedPost.options}" begin="0" varStatus="innerloop">
                             
                             <div class="row mb-2">
-                                <div class="col-md-12 pr-3 pb-4 pt-1">
+                                <div class="col-md-12 pr-3 pb-2 pt-1">
                                     <button type="button" class="btn btn-default btn-lg btn-block pb-2 pt-2 mb-2" onclick="setPollIdAndOptionId(${optiondetails.pollResult.opid},${pinnedPost.queid})"><i class="fa fa-mail-forward pull-left" aria-hidden="true"></i>${optiondetails.options}</button>
                                 </div>
                             </div>
@@ -777,7 +777,7 @@
                   <c:if test="${posts.getClass().name == 'model.springmodel.Question'}">
                    	
                    		<c:set var="countQue" value="${countQue + 1}" scope="page"/>
-                <div class="card mb-3 mt-3">
+                <div class="card mb-3 mt-3 wow fadeInLeft">
                         <div class="card-body pb-0">
                             <small>
                                 <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> posted on <span id="questiontime${postLoop.index}"></span> in <a href="../../WorkSpaceContent?did=${posts.domain.did}&dname=${posts.domain.dname}">${posts.domain.dname}</a>
@@ -845,7 +845,7 @@
           <c:if test="${posts.getClass().name == 'model.springmodel.PollQueDetails'}">          
             <c:if test="${posts.isVoted}">
 
-			<div class="card mb-3 mt-3">
+			<div class="card mb-3 mt-3 wow fadeInLeft">
 				<div class="card-body pb-0">
 					<small> <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created this poll 
 						<c:if test="${checkPinned[postLoop.index]==false}">
@@ -875,7 +875,7 @@
 								 <fmt:formatNumber var = "i" type = "number" value = "${optiondetails.pollResult.count/totalcount *100}" minFractionDigits="0" maxFractionDigits="0"/>
 					
 						
-							<div class="row">
+							<div class="row wow fadeInLeft">
                                 <div class="col-md-11 pr-0 pb-4">
                                     <div class="progress" style="height: 25px;border-bottom-right-radius: 0px;border-top-right-radius: 0;">
                                         <div class="progress-bar success" role="progressbar" style="width: 0%" data-percentage="${i}" aria-valuemin="0" aria-valuemax="100">
@@ -902,7 +902,7 @@
 		<c:if test="${!posts.isVoted}">
 			 <!--CARD 1 -->
 			 
-                    <div class="card mb-3 mt-3">
+                    <div class="card mb-3 mt-3 wow fadeInLeft">
                         <div class="card-body pb-0">
                             <small>
                                 <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created this poll</a>
@@ -922,7 +922,7 @@
                             </strong>
                             <c:forEach var="optiondetails" items="${posts.options}" begin="0" varStatus="innerloop">
                             
-                            <div class="row mb-2">
+                            <div class="row mb-1">
                                 <div class="col-md-12 pr-3 pb-4 pt-1">
                                     <button type="button" class="btn btn-default btn-lg btn-block pb-2 pt-2 mb-2" onclick="setPollIdAndOptionId(${optiondetails.pollResult.opid},${posts.queid})"><i class="fa fa-mail-forward pull-left" aria-hidden="true"></i>${optiondetails.options}</button>
                                 </div>
@@ -944,7 +944,7 @@
                      <!--CARD 1 -->
 						<!-- Discussion Start -->
 				<c:if test="${posts.getClass().name == 'model.springmodel.ClassDiscussion'}">
-                    <div class="card mb-3 mt-3">
+                    <div class="card mb-3 mt-3 wow fadeInLeft">
                         <div class="card-body pb-0">
                             <small>
                                 <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname} </a> initiated discussion <span id="discussionTime${postLoop.index}"></span>
@@ -1052,7 +1052,7 @@
                     
 					<!-- event start -->
 					<c:if test="${posts.getClass().name == 'model.springmodel.Events'}">
-                    <div class="card my-3">
+                    <div class="card my-3 wow fadeInLeft">
                         <div class="card-body pb-2">
                             <small>
                                 <a href="../../UserProfile?uid=${posts.userModel.uid}">${posts.userModel.uname}</a> created event <span id="eventtimestamp${postLoop.index}"></span>
@@ -1102,11 +1102,11 @@
                     </c:forEach>
                     <!-- card end -->
                 </div>
-                <div class="col-md-3 mx-0 my-0 px-0 py-0">
+                <div class="col-md-3 mx-0 my-0 px-0 py-0 wow fadeInRight">
 
 				
                 
-                <ul class="list-group mt-4 ml-2 mb-4 wow tada">
+                <ul class="list-group mt-4 ml-2 mb-4 wow">
                     
                     <li class="list-group-item d-flex justify-content-between align-items-center primary-color">
                         <h4 class="mb-0 pb-0 white-text"><strong>Pinned Posts</strong></h4>
@@ -1129,7 +1129,7 @@
 					</c:forEach>
 			                    
                 </ul>
-                <div id="my-calendar" style="margin-left: 10px;"></div>
+                <div id="my-calendar wow fadeInRight" style="margin-left: 10px;"></div>
                 </div>
             </div>
 
@@ -1166,6 +1166,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/kext/js/calendar.js"></script>
     <!-- Initializations -->
     <script type="text/javascript">
+	
+	new WOW().init();
+
       
         // Tooltips Initialization
 $(function () {

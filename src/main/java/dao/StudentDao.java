@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -34,7 +35,7 @@ public class StudentDao {
            ps.setString(1,s.getSid());
            rs=ps.executeQuery();
            
-           String qr="insert into student values (?,?,?,?,?,?,?,?,?,?)";
+           String qr="insert into student values (?,?,?,?,?,?,?,?,?,?,?)";
            String qr2="insert into allusers values (?,?,?,?)";
            String qr3="delete from tempuser where uid=?";
           if(rs.next())
@@ -50,6 +51,8 @@ public class StudentDao {
            ps.setString(8,rs.getString(8));
            ps.setString(9,rs.getString(9));
            ps.setString(10," ");
+           ps.setInt(11,Calendar.getInstance().get(Calendar.YEAR));
+           System.out.println(Calendar.getInstance().get(Calendar.YEAR));
            
            if(ps.executeUpdate()>0)
            {
