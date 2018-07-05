@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Class discussion forum</title>
+    <!-- Font Awesome -->
+    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="css/calendar.css">
+</head>
+<body>
+    <main>
+<div class="conatiner-fluid">
+    <div class="row mt-5">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+                                    <!--Form with header-->
+
+<!-- Card -->
+<div class="card">
+
+    <!-- Card body -->
+    <div class="card-body">
+
+        <!-- Material form register -->
+        <form>
+            <p class="h4 text-center py-4">Add class Representative</p>
+
+            <!-- Material input text -->
+            <div class="md-form">
+                <i class="fa fa-user prefix"></i>
+                <input type="text" id="materialFormCardNameEx" class="form-control">
+                <label for="materialFormCardNameEx" class="font-weight-light">ID</label>
+            </div>
+                                    <div class="md-form wow fadeInDown">
+                            <i class="fa fa-tag prefix"></i>
+                            <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle ml-5" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Branch</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <a class="dropdown-item" id="cs" onclick="myfunct1(this.id);">CS</a>
+                                    <a class="dropdown-item" id="it" onclick="myfunct1(this.id);">IT</a>
+                                    <a class="dropdown-item" id="ec" onclick="myfunct1(this.id);">EC</a>
+                                </div>
+                            </li>
+                            <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Semester</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <a class="dropdown-item" id="1" onclick="myfunct2(this.id);">1</a>
+                                    <a class="dropdown-item" id="2" onclick="myfunct2(this.id);">2</a>
+                                    <a class="dropdown-item" id="3" onclick="myfunct2(this.id);">3</a>
+                                    <a class="dropdown-item" id="4" onclick="myfunct2(this.id);">4</a>
+                                    <a class="dropdown-item" id="5" onclick="myfunct2(this.id);">5</a>
+                                    <a class="dropdown-item" id="6" onclick="myfunct2(this.id);">6</a>
+                                    <a class="dropdown-item" id="7" onclick="myfunct2(this.id);">7</a>
+                                    <a class="dropdown-item" id="8" onclick="myfunct2(this.id);">8</a>
+
+                                </div>
+                            </li>
+                            <li class="nav-item btn-group">
+                                <a class="nav-link dropdown-toggle" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Section</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                    <a class="dropdown-item" id="a" onclick="myfunct3(this.id);">A</a>
+                                    <a class="dropdown-item" id="b" onclick="myfunct3(this.id);">B</a>
+                                    <a class="dropdown-item" id="c" onclick="myfunct3(this.id);">C</a>
+                                </div>
+                            </li>
+                       </div>
+
+            <!-- Material input text -->
+            <div class="md-form">
+                <i class="fa fa-user prefix"></i>
+                <input type="text" id="materialFormCardNameEx" class="form-control">
+                <label for="materialFormCardNameEx" class="font-weight-light">batch</label>
+            </div>
+
+
+            <div class="text-center py-4 mt-3">
+                <button class="btn btn-cyan" type="submit">Register</button>
+            </div>
+        </form>
+        <!-- Material form register -->
+
+    </div>
+    <!-- Card body -->
+
+</div>
+<!-- Card -->
+
+
+
+<!-- Card -->
+<div class="card mt-5">
+
+    <!-- Card body -->
+    <div class="card-body">
+
+        <!-- Default form subscription -->
+        <form>
+            <p class="h4 text-center py-4">Start Discussion here</p>
+
+            <!-- Default input name -->
+            <label for="defaultFormCardNameEx" class="font-weight-light">Topic</label>
+            <input type="text" id="defaultFormCardNameEx" class="form-control">
+            
+            <br>
+
+            <!-- Default input email -->
+            <label for="defaultFormCardEmailEx" class="font-weight-light">Content</label>
+            <input type="email" id="defaultFormCardEmailEx" class="form-control">
+
+            <div class="text-center py-4 mt-3">
+                <button class="btn btn-outline-primary" type="submit">Post<i class="fa fa-paper-plane-o ml-2"></i></button>
+            </div>
+        </form>
+        <!-- Default form subscription -->
+
+    </div>
+    <!-- Card body -->
+                      
+  </div>
+<!-- Card -->                      
+
+<!-- Card -->
+<div class="card mt-5">
+
+    <!-- Card body -->
+    <div class="card-body">
+
+        <!-- Default form subscription -->
+        <form>
+            <p class="h4 text-center py-4">Create Event</p>
+
+            <!-- Default input name -->
+            <label for="defaultFormCardNameEx" class="font-weight-light">Title</label>
+            <input type="text" id="defaultFormCardNameEx" class="form-control">
+            
+            <br>
+
+            <!-- Default input email -->
+            <label for="defaultFormCardEmailEx" class="font-weight-light">Description</label>
+            <input type="email" id="defaultFormCardEmailEx" class="form-control">
+
+            <div class="text-center py-4 mt-3">
+                <button class="btn btn-outline-primary" type="submit">Post<i class="fa fa-paper-plane-o ml-2"></i></button>
+            </div>
+        </form>
+        <!-- Default form subscription -->
+
+    </div>
+    <!-- Card body -->
+                      
+  </div>
+
+<!-- Card -->
+<div class="card mt-5 mb-5">
+
+    <!-- Card body -->
+    <div class="card-body">
+
+        <!-- Default form subscription -->
+        <form>
+            <p class="h4 text-center py-4">Issue notice</p>
+
+            <!-- Default input name -->
+            <label for="defaultFormCardNameEx" class="font-weight-light">Title</label>
+            <input type="text" id="defaultFormCardNameEx" class="form-control">
+            
+            <br>
+
+            <!-- Default input email -->
+            <label for="defaultFormCardEmailEx" class="font-weight-light">Description</label>
+            <input type="email" id="defaultFormCardEmailEx" class="form-control">
+
+            <div class="text-center py-4 mt-3">
+                <button class="btn btn-outline-primary" type="submit">Post<i class="fa fa-paper-plane-o ml-2"></i></button>
+            </div>
+        </form>
+        <!-- Default form subscription -->
+
+    </div>
+    <!-- Card body -->
+                      
+  </div>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+<script type="text/javascript">
+    function myfunct1(id1) {
+    document.getElementById("dropdownMenu1").innerHTML = document.getElementById(id1).innerHTML;
+}
+function myfunct2(id2) {
+    document.getElementById("dropdownMenu2").innerHTML = document.getElementById(id2).innerHTML;
+}
+function myfunct3(id) {
+    document.getElementById("dropdownMenu3").innerHTML = document.getElementById(id).innerHTML;
+}
+function myfunct4(id) {
+    document.getElementById("dropdownMenu4").innerHTML = document.getElementById(id).innerHTML;
+}
+
+</script>
+</body>
+</html>
