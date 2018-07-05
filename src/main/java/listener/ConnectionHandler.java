@@ -63,7 +63,8 @@ public class ConnectionHandler implements ServletContextListener {
         }
 	System.out.println("loaded");
         try {
-        	 con=DriverManager.getConnection("jdbc:mysql://localhost:3307/minorproject","root","root");
+        	con = DriverManager.getConnection("jdbc:mysql://korerodb.mysql.database.azure.com:3306/majorproject?user=koreroadmin@korerodb&useSSL=false&requireSSL=false&autoReconnect=true","koreroadmin@korerodb","korero1234@");
+        	// con=DriverManager.getConnection("jdbc:mysql://localhost:3307/minorproject","root","root");
         //  con=DriverManager.getConnection("jdbc:mysql://localhost:54760/localdb","root","password");
           // con=DriverManager.getConnection("jdbc:mysql://64.62.211.131:3306/korero_admindb","korero_admin","123456789");
         //rohanazure// con=DriverManager.getConnection("jdbc:mysql://localhost:50493/localdb","root","password");
