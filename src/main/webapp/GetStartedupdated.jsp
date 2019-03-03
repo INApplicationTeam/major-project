@@ -723,12 +723,12 @@
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/riya.jpg"/>
+                            <img src="MDB Free/images/anilmanager.jpg"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Riya Godwani</h3>
-                                <p class="profession">Designer</p>
+                                <h3 class="name">Anil Ramachandra</h3>
+                                <p class="profession">Manager</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -743,7 +743,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Web design , Documentation , Backend</p>
+                                <p class="text-center">Technical Manager Managed Application Hosting</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -788,12 +788,12 @@
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/rohan1.jpg" />
+                            <img src="MDB Free/images/anilk.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Rohan Shrimal</h3>
-                                <p class="profession">CEO</p>
+                                <h3 class="name">Anil Kuruva</h3>
+                                <p class="profession">Senior Engineer</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -808,7 +808,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Spring, Hibernate</p>
+                                <p class="text-center">Application Engineer Managed Application Hosting</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -853,12 +853,12 @@
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/sarthak1.jpg" />
+                            <img src="MDB Free/images/amar.jpg" />
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Sarthak Jain</h3>
-                                <p class="profession">Head Backend Team</p>
+                                <h3 class="name">Amar Munaga</h3>
+                                <p class="profession">Associate Lead</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -873,7 +873,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Java & MySql</p>
+                                <p class="text-center">Application Engineer Managed Application Hosting</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -917,12 +917,12 @@
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/shreeya.jpg"/>
+                            <img src="MDB Free/images/ctlindia.jpg"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Shreeya Nagar</h3>
-                                <p class="profession">Head Front End Team</p>
+                                <h3 class="name">CTL India Team</h3>
+                                <p class="profession">Unix Middleware India</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -937,7 +937,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Web design, HTML5, CSS3, Bootstrap</p>
+                                <p class="text-center">Web Engg Support</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
