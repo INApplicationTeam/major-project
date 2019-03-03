@@ -263,7 +263,7 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
 <script>
     function setType(type)
     {
-        window.location.href="CenturyLinkContent?utype="+type;
+        window.location.href="KoreroContent?utype="+type;
     }
     var cat="<%=cat%>";
     if(cat!==null && cat==="invalid")
