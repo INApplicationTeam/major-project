@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" type="image/png" href="MDB Free/img/img1.png" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Korero</title>
+  <title>CenturyLink</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Bootstrap core CSS -->
@@ -456,7 +456,7 @@
           <div class="col-md-4 flex-center">
                     <!--Card-->
                     <div class="card text-center px-4 mt-5">
-                        <h1 class="mt-5">@Korero</h1><br>
+                        <h1 class="mt-5">@CenturyLink</h1><br>
                         <h1 style="font-family: 'myfont';font-size: 90px;">Faculty</h1>
                         <h2 style="font-family: 'myfont';font-size: 60px;">OR</h2>
                         <h1 style="font-family: 'myfont';font-size: 90px;">Student</h1><br>
@@ -576,7 +576,7 @@
               </div>
               <div class="col-10 mb-2 pl-3">
                 <h5 class="feature-title font-bold mb-1">Cross-browser compatibility</h5>
-                <p class="grey-text mt-2">Chrome, Firefox, IE, Safari, Opera, Microsoft Edge - Korero loves all browsers; all browsers love Korero.
+                <p class="grey-text mt-2">Chrome, Firefox, IE, Safari, Opera, Microsoft Edge - CenturyLink loves all browsers; all browsers love CenturyLink.
                 </p>
               </div>
             </div>
@@ -626,7 +626,7 @@
               </div>
               <div class="col-10 mb-2">
                 <h5 class="feature-title font-bold mb-1">Increase knowledge</h5>
-                <p class="grey-text mt-2">Korero has content you will feel good about having read. It helps you understand why the college works the way it does, why people behave the way they do, and what we can all do to make the college better.</p>
+                <p class="grey-text mt-2">CenturyLink has content you will feel good about having read. It helps you understand why the college works the way it does, why people behave the way they do, and what we can all do to make the college better.</p>
               </div>
             </div>
             <!--/Grid row-->
@@ -979,7 +979,7 @@
         </section>
         <!--Section: Contact-->
         <div class="divider-new">
-            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">KORERO</h2>
+            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">CenturyLink</h2>
         </div>
 
 
@@ -992,7 +992,7 @@
     <!--Copyright-->
     <div class="footer-copyright py-3">
       © 2018 Copyright:
-      <a href="#" target="_blank"> Korero Inc.</a>
+      <a href="#" target="_blank"> CenturyLink Inc.</a>
     </div>
     <!--/.Copyright-->
 
