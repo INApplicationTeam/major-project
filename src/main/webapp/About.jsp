@@ -88,12 +88,12 @@
                 <div class="cardr">
                     <div class="front">
                         <div class="cover" style="height: 250px;">
-                            <img src="MDB Free/images/riya.jpg"/>
+                            <img src="MDB Free/images/anilmanager.jpg"/>
                         </div>
                         <div class="content">
                             <div class="main">
-                                <h3 class="name">Riya Godwani</h3>
-                                <p class="profession">Designer</p>
+                                <h3 class="name">Anil Ramachandra</h3>
+                                <p class="profession">Manager</p>
                                 <br>
                                 <p class="text-center">
                                 <i class="fa fa-mail-forward"></i>More details
@@ -108,7 +108,7 @@
                         <div class="content">
                             <div class="main">
                                 <h4 class="text-center">Job Description</h4>
-                                <p class="text-center">Web design , Documentation , Backend</p>
+                                <p class="text-center">Technical Manager  –  Managed Application Hosting</p>
 
                                 <div class="stats-container">
                                     <div class="stats">
@@ -371,7 +371,7 @@
 <footer class="page-footer center-on-small-only mt-0">
 
         <div class="container-fluid text-center" style="padding-bottom: 10px;">
-            � 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team Korero
+            © 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team Korero
         </div>
     <!--/.Copyright-->
 
