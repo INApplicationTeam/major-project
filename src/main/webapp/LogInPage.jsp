@@ -47,7 +47,7 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
     <link rel="icon" type="image/png" href="MDB Free/img/img1.png" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
-    <title>Korero</title>
+    <title>CenturyLink</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="MDB Free/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -73,7 +73,7 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
                 </button>
                  <a class="navbar-brand waves-effect"
 				href="#"
-				target="_blank"> <strong class="blue-text">Korero</strong>
+				target="_blank"> <strong class="blue-text">CenturyLink</strong>
 			</a>
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">
@@ -117,7 +117,7 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
                           <span1 class="text-center">
                             
                             <label class="badge badge-info"><%=uc%>+ </label> Users<br />
-                            <label class="badge badge-info"><%=uvc%>+ </label> Voilà's<br />
+                            <label class="badge badge-info"><%=uvc%>+ </label> VoilÃ 's<br />
                             <label class="badge badge-info"><%=bc%>+ </label> Blogs<br />
                             <label class="badge badge-info"><%=pc%>+</label> Polls<br />
                             <label class="badge badge-info"><%=qc%>+</label> Questions<br />
@@ -216,7 +216,7 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
    <footer class="page-footer center-on-small-only mt-0 bg-info" id="footer">
 
         <div class="container-fluid text-center" style="padding-bottom: 10px;">
-            © 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team Korero
+            Â© 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team CenturyLink
         </div>
     <!--/.Copyright-->
 
@@ -263,7 +263,7 @@ if(umodel!=null && ustatus!=null && ustatus.trim().equals("4"))
 <script>
     function setType(type)
     {
-        window.location.href="KoreroContent?utype="+type;
+        window.location.href="CenturyLinkContent?utype="+type;
     }
     var cat="<%=cat%>";
     if(cat!==null && cat==="invalid")
