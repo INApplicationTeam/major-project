@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="icon" type="image/png" href="MDB Free/img/img1.png" />
-    <title>Welcome to Korero!</title>
+    <title>Welcome to CenturyLink!</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="MDB Free/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -36,7 +36,7 @@
                 </button>
                  <a class="navbar-brand waves-effect"
 				
-				target="_blank"> <strong class="blue-text">Korero</strong>
+				target="_blank"> <strong class="blue-text">CenturyLink</strong>
 			</a>
                 <div class="collapse navbar-collapse" id="navbarNav1">
                     <ul class="navbar-nav mr-auto">
@@ -69,7 +69,7 @@
 
             <p>We are CTL Web Engineering Team who have made this website as part of CICD Demo Project .</p>
             <p>We welcome any suggestions, amendments or even criticism that you may have about this creation of ours. Feel free to connect and contact us for any inticacies you may have.</p>
-            <p>May you have the best experiences at Korero!</p>
+            <p>May you have the best experiences at CenturyLink!</p>
 
         </section>
         <!--Section: About-->
@@ -344,7 +344,7 @@
         <!--Section: Contact-->
 
                 <!--Section: Contact--><div class="divider-new">
-            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">Korero</h2>
+            <h2 class="h2-responsive wow fadeInDown" style="font-family: 'myfont';font-weight: bold;">CenturyLink</h2>
         </div>
 
     </div>
@@ -370,7 +370,7 @@
 <footer class="page-footer center-on-small-only mt-0">
 
         <div class="container-fluid text-center" style="padding-bottom: 10px;">
-            © 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team Korero
+            © 2017 Made with <i class="fa fa-heart" aria-hidden="true" style="color: #ff4444;"></i> by team CenturyLink
         </div>
     <!--/.Copyright-->
 
