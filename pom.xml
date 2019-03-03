@@ -152,6 +152,6 @@
 	  
     </plugins>
     
-    <finalName>korero-maven</finalName>
+    <finalName>studentform</finalName>
   </build>
 </project>
