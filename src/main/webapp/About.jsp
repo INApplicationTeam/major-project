@@ -62,13 +62,12 @@
     <div class="container mt-5">
 
  <div class="divider-new">
-            <h2 class="h2-responsive wow bounceIn">About the developers</h2>
+            <h2 class="h2-responsive wow bounceIn">About the Engineers</h2>
         </div>
         <!--Section: About-->
         <section id="about" class="text-xs-center wow bounceIn" data-wow-delay="0.2s">
 
-            <p>We are CSE undergraduates who have made this website keeping in mind the problems we have faced in last three years, and tried our best 
-            to help the college community to interact more and share their knowledge, views and experience.</p>
+            <p>We are CTL Web Engineering Team who have made this website as part of CICD Demo Project .</p>
             <p>We welcome any suggestions, amendments or even criticism that you may have about this creation of ours. Feel free to connect and contact us for any inticacies you may have.</p>
             <p>May you have the best experiences at Korero!</p>
 
